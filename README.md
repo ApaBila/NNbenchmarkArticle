@@ -13,8 +13,8 @@ Akshaj's website repo                             : https://github.com/scarecrow
 Akshaj's website for NNbenchmark                  : https://akshajverma.com/NNbenchmarkWeb/index.html  
 
 **CREDITS**
-Fellow student: Akshaj Verma - Student 1, packages AMORE to LilRhino
-Mentors: 
-Christophe Dutang 
-John Nash 
-Patrice Kiener
+Fellow student: Akshaj Verma - Student 1, packages AMORE to LilRhino  
+Mentors:   
+Christophe Dutang |
+John Nash |
+Patrice Kiener 
