@@ -12,7 +12,7 @@ Companion repo for templates of the packages      : https://github.com/pkR-pkR/N
 Akshaj's website repo                             : https://github.com/scarecrow21/NNbenchmarkWeb  
 Akshaj's website for NNbenchmark                  : https://akshajverma.com/NNbenchmarkWeb/index.html  
 
-**CREDITS**
+**CREDITS**  
 Fellow student: Akshaj Verma - Student 1, packages AMORE to LilRhino  
 Mentors:   
 Christophe Dutang |
