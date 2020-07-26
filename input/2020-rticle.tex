@@ -1,17 +1,16 @@
 % !TeX root = RJwrapper.tex
-\title{=\textgreater{} To Be Discussed (Option - Validating Neural Network
-Packages in R with \pkg{NNbenchmark})}
-\author{by Author One, Author Two}
+\title{Validating Neural Network Packages in R with \pkg{NNbenchmark} --
+working title}
+\author{by Salsabila Mahdi, Patrice Kiener}
 
 \maketitle
 
 \abstract{%
-An abstract of less than 150 words. Possible format: 1) the overall
-purpose of the study and the research problem(s) you investigated; 2)
-the basic design of the study; 3) major findings or trends found as a
-result of your analysis; and, 4) a brief summary of your interpretations
-and conclusions.
+An abstract of less than 150 words.
 }
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
 
 \hypertarget{introduction}{%
 \subsection{Introduction}\label{introduction}}
@@ -62,7 +61,10 @@ Our research process was largely divided into teh following 3 phases.
 \hypertarget{phase-1---preparation}{%
 \subsection{Phase 1 - Preparation}\label{phase-1---preparation}}
 
-\textbf{Datasets =\textgreater{} NEED TO BE FINISHED}\\
+\hypertarget{datasets-need-to-be-finished}{%
+\subsubsection{Datasets =\textgreater{} NEED TO BE
+FINISHED}\label{datasets-need-to-be-finished}}
+
 All the datasets used are nonlinear. Linear data sets are more simple
 and can even be solved with OLS (Ordinary Least Squares) regression.
 This is why we believe to truly set apart the ability of neural networks
@@ -82,16 +84,16 @@ and Gauss2 have a low level of difficulty to solve. Gauss3 is average.
 Dmod1, Dmod2 are from \ldots{} Dreyfus1 is a pure neural network which
 has no error. This can make it difficult for algorithms that assume an
 error exists. Dreyfus2 is Dreyfus1 with errors. NeuroOne from \ldots{}\\
-Wood \ldots{} \textbf{Packages}\\
+Wood \ldots{}
+
+\hypertarget{packages}{%
+\subsubsection{Packages}\label{packages}}
+
 Searching through the thousands of packages title or the package
 description one by one would have taken a long time. With
 \CRANpkg{RWsearch} \citep{R-RWsearch} we were able to automate the
 process. All packages that have ``neural network'' as a keyword in the
 package title or in the package description were included.
-
-\hypertarget{packages-need-to-update-rjreferences-already-updated.}{%
-\subsection{Packages \textless= need to update, RJreferences already
-updated.}\label{packages-need-to-update-rjreferences-already-updated.}}
 
 (to use when needed in text, testing how long references will be) 1
 \CRANpkg{AMORE} \citep{R-AMORE}, 2 \CRANpkg{ANN2} \citep{R-ANN2}, 3
@@ -348,12 +350,15 @@ UNTESTED PACKAGES)
 
 \end{center}
 
-\textbf{Discussions} (NOTE TO MENTORS: based on latest 2019 Run 04 or
-Run 03) A. Recommended: 2nd order algorithms Out of all the algorithms,
-these second algorithms generally performed better in terms of
-convergence despite being set to a much lower number of iterations, 200,
-than the first-order algorithms. Moreover, they performed better in
-terms of speed. The best in this class were \CRANpkg{minpack.lm} and
+\hypertarget{discussion-and-recommandations}{%
+\subsection{Discussion and
+Recommandations}\label{discussion-and-recommandations}}
+
+A. Recommended: 2nd order algorithms Out of all the algorithms, these
+second algorithms generally performed better in terms of convergence
+despite being set to a much lower number of iterations, 200, than the
+first-order algorithms. Moreover, they performed better in terms of
+speed. The best in this class were \CRANpkg{minpack.lm} and
 \CRANpkg{nlsr}, tied at rank number 1. The Levenberg-Marquardt (LM)
 algorithm used is fast and converges well. stats::nls() is used.
 However, these packages require a handwritten formula that may not be
@@ -429,21 +434,38 @@ functions can also be tried out.
 \hypertarget{acknowledgements}{%
 \subsection{Acknowledgements}\label{acknowledgements}}
 
-This work was possible due to the support of Google during Summer of
-Code years 2019 and 2020.
+This work was possible due to the support of the Google Summer of Code
+initiative for R during years 2019 and 2020. Students Salsabila Madhi
+(2019 and 2020) and Akshaj Verma (2019) are grateful to Google for the
+financial support.
 
 \bibliography{RJreferences}
 
+\begin{itemize}
+\tightlist
+\item
+  The dreamed NN package: Recommandation to package authors
+\item
+  Conclusion
+\item
+  Acknowledgments
+\end{itemize}
+
+For the acknowledgements, maybe : « » + later some aknowledgements to
+the referees.
+
+How do we proceed?
+
 
 \address{%
-Author One\\
+Salsabila Mahdi\\
 Affiliation\\
 line 1\\ line 2\\
 }
 \href{mailto:author1@work}{\nolinkurl{author1@work}}
 
 \address{%
-Author Two\\
+Patrice Kiener\\
 Affiliation\\
 line 1\\ line 2\\
 }

@@ -13,6 +13,11 @@ author:
     - line 1
     - line 2
     email:  author2@work
+abstract: >
+  An abstract of less than 150 words.
+preamble: |
+  % Any extra LaTeX you need in the preamble
+output: rticles::rjournal_article
 ---
 
 
