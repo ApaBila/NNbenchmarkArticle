@@ -7,12 +7,28 @@ author:
     - line 1
     - line 2
     email:  author1@work
-  - name: Patrice Kiener
+  - name: Akshaj Verma
     affiliation: Affiliation
     address:
     - line 1
     - line 2
-    email:  author2@work
+    email:  akshajverma7@gmail.com
+  - name: John C. Nash
+    affiliation: Affiliation
+    address:
+    - line 1
+    - line 2
+    email:  jcnash@gmail.com
+  - name: Christophe Dutang
+    affiliation: University of Paris-Dauphine
+    address:
+    - line 1
+    - line 2
+    email:  dutang@ceremade.dauphine.fr
+  - name: Patrice Kiener
+    affiliation: InModelia
+    address: 5 rue Malebranche, 75005 Paris, France
+    email:  patrice.kiener@inmodelia.com
 abstract: >
   An abstract of less than 150 words.
 preamble: |
