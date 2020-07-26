@@ -18,7 +18,7 @@ author:
     address:
     - line 1
     - line 2
-    email:  jcnash@gmail.com
+    email:  nashjc@uottawa.ca
   - name: Christophe Dutang
     affiliation: University of Paris-Dauphine
     address:
