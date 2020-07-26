@@ -20,10 +20,9 @@ author:
     - line 2
     email:  nashjc@uottawa.ca
   - name: Christophe Dutang
-    affiliation: University of Paris-Dauphine
+    affiliation: Univ. Paris-Dauphine, Univ. PSL, CNRS, CEREMADE
     address:
-    - line 1
-    - line 2
+    - Place du Ml de Lattre de Tassigny, 75016 Paris, France
     email:  dutang@ceremade.dauphine.fr
   - name: Patrice Kiener
     affiliation: InModelia
