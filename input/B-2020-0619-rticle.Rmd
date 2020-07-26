@@ -1,24 +1,32 @@
 ---
-title: => To Be Discussed (Option - Validating Neural Network Packages in R with \pkg{NNbenchmark})
+title: Validating Neural Network Packages in R with \pkg{NNbenchmark} -- working title
 author:
-  - name: Author One
+  - name: Salsabila Mahdi
     affiliation: Affiliation
     address:
     - line 1
     - line 2
     email:  author1@work
-  - name: Author Two
+  - name: Patrice Kiener
     affiliation: Affiliation
     address:
     - line 1
     - line 2
     email:  author2@work
-abstract: >
-  An abstract of less than 150 words. Possible format: 1) the overall purpose of the study and the research problem(s) you investigated; 2) the basic design of the study; 3) major findings or trends found as a result of your analysis; and, 4) a brief summary of your interpretations and conclusions.
-preamble: |
-  % Any extra LaTeX you need in the preamble
-output: rticles::rjournal_article
 ---
+
+
+<!-- %% JN: the following parts of the headers caused my RStudio instance to fail, so they -->
+<!-- %%     have been put here as "comments" -->
+<!-- % abstract: > -->
+<!-- %   An abstract of less than 150 words. Possible format: 1) the overall purpose of the study and the research problem(s) you investigated; 2) the basic design of the study; 3) major findings or trends found as a result of your analysis; and, 4) a brief summary of your interpretations and  conclusions. -->
+<!-- % preamble: | -->
+<!--   % Any extra LaTeX you need in the preamble -->
+<!-- % output: rticles::rjournal_article -->
+
+
+## Abstract
+
 
 ## Introduction
 
@@ -55,7 +63,9 @@ the very least, this research will serve as a framework for future research on n
 Our research process was largely divided into teh following 3 phases.
 
 ## Phase 1 - Preparation
-**Datasets => NEED TO BE FINISHED**  
+
+### Datasets => NEED TO BE FINISHED
+
 All the datasets used are nonlinear. Linear data sets are more simple and can even be solved with OLS 
 (Ordinary Least Squares) regression. This is why we believe to truly set apart the ability of neural 
 networks we needed to go beyond linear regression. Varying difficulties between data sets helped to 
@@ -74,13 +84,16 @@ Dreyfus1 is a pure neural network which has no error. This can make it difficult
 that assume an error exists. Dreyfus2 is Dreyfus1 with errors.
 NeuroOne  from ...  
 Wood ...
-**Packages**  
+
+### Packages
+
 Searching through the thousands of packages title or the package description one by one would have 
 taken a long time. With \CRANpkg{RWsearch} \citep{R-RWsearch} we were able to automate the process. 
 All packages that have "neural network" as a keyword in the package title or in the package description 
 were included.
 
-## Packages <= need to update, RJreferences already updated.
+<!-- list may need to be updated. Already in bibliography RJreferences -->
+
 (to use when needed in text, testing how long references will be)
 1 \CRANpkg{AMORE} \citep{R-AMORE},
 2 \CRANpkg{ANN2} \citep{R-ANN2},
@@ -346,8 +359,13 @@ As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE))
 
 \end{center}
 
-**Discussions**
-(NOTE TO MENTORS: based on latest 2019 Run 04 or Run 03)
+
+## Discussion and Recommandations
+
+<!-- (NOTE TO MENTORS: based on latest 2019 Run 04 or Run 03) -->
+
+
+
 A. Recommended: 2nd order algorithms
 Out of all the algorithms, these second algorithms generally performed better in terms of convergence 
 despite being set to a much lower number of iterations, 200, than the first-order algorithms. Moreover, 
@@ -442,7 +460,21 @@ formats (classifier neural networks, recurrent neural networks, and so on). Diff
 different parameters for package functions can also be tried out.
 
 ## Acknowledgements
-This work was possible due to the support of Google during Summer of Code years 2019 and 2020.
-
+This work was possible due to the support of the Google Summer of Code initiative for R
+during years 2019 and 2020.
+Students Salsabila Madhi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
+Google for the financial support.
 
 \bibliography{RJreferences}
+
+- The dreamed NN package: Recommandation to package authors
+- Conclusion
+- Acknowledgments
+
+<!-- For the comments per package, I suggest one small text per package, at least for the best 12/15 packages, and some text for the significant bad or painful packages like tensorflow, keras, h2o. etc. -->
+
+For the acknowledgements, maybe : «  » + later some aknowledgements to the referees.
+
+How do we proceed?
+
+
