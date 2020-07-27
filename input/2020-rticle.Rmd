@@ -1,12 +1,10 @@
 ---
-title: Validating Neural Network Packages in R with \pkg{NNbenchmark} -- working title
+title: A review of R neural network packages with NNbenchmark$:$ ease of use and accuracy -- working title
 author:
   - name: Salsabila Mahdi
-    affiliation: Affiliation
-    address:
-    - line 1
-    - line 2
-    email:  author1@work
+    affiliation: Universitas Syiah Kuala
+    address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia
+    email:  bila.mahdi@mhs.unsyiah.ac.id
   - name: Akshaj Verma
     affiliation: Affiliation
     address:
@@ -29,24 +27,11 @@ author:
     address: 5 rue Malebranche, 75005 Paris, France
     email:  patrice.kiener@inmodelia.com
 abstract: >
-  An abstract of less than 150 words.
+  Possible format: 1) the overall purpose of the study and the research problem(s) you investigated; 2) the basic design of the study; 3) major findings or trends found as a result of your analysis; and, 4) a brief summary of your interpretations and  conclusions.
 preamble: |
   % Any extra LaTeX you need in the preamble
 output: rticles::rjournal_article
 ---
-
-
-<!-- %% JN: the following parts of the headers caused my RStudio instance to fail, so they -->
-<!-- %%     have been put here as "comments" -->
-<!-- % abstract: > -->
-<!-- %   An abstract of less than 150 words. Possible format: 1) the overall purpose of the study and the research problem(s) you investigated; 2) the basic design of the study; 3) major findings or trends found as a result of your analysis; and, 4) a brief summary of your interpretations and  conclusions. -->
-<!-- % preamble: | -->
-<!--   % Any extra LaTeX you need in the preamble -->
-<!-- % output: rticles::rjournal_article -->
-
-
-## Abstract
-
 
 ## Introduction
 
