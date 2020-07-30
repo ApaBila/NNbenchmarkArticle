@@ -6,10 +6,8 @@ author:
     address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia
     email:  bila.mahdi@mhs.unsyiah.ac.id
   - name: Akshaj Verma
-    affiliation: Affiliation
-    address:
-    - line 1
-    - line 2
+    affiliation: Manipal Institute of Technology
+    address: Navi Mumbai, Maharashtra, 400614, India
     email:  akshajverma7@gmail.com
   - name: John C. Nash
     affiliation: Telfer School of Management, University of Ottawa
@@ -17,8 +15,7 @@ author:
     email:  nashjc@uottawa.ca
   - name: Christophe Dutang
     affiliation: Univ. Paris-Dauphine, Univ. PSL, CNRS, CEREMADE
-    address:
-    - Place du Ml de Lattre de Tassigny, 75016 Paris, France
+    address: Place du Ml de Lattre de Tassigny, 75016 Paris, France
     email:  dutang@ceremade.dauphine.fr
   - name: Patrice Kiener
     affiliation: InModelia

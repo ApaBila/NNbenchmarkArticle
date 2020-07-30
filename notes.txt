@@ -1,0 +1,83 @@
+# ======== #
+# PACKAGES #
+# ======== #
+
+# ======
+# TESTED
+# ======
+
+Feedforward
+	McCulloch-Pitts
+	Perceptron
+
+MULTILAYER FEEDFORWARD NEURAL NETWORKS (1 HIDDEN LAYER)
+=================================================================
+	second-order
+	============
+	
+	first-order
+	===========
+
+MULTILAYER FEEDFORWARD NEURAL NETWORKS (MORE THAN 1 HIDDEN LAYER)
+=================================================================
+	second-order
+	============
+	
+	first-order
+	===========
+	
+	AMORE::train - "Artificial Neural Network Training and Simulating"
+	------------------------------------------------------------------ 	
+	Accuracy   	: ADAPT algorithms (18, 23), BATCH algorithms (38, 40)
+	Ease of use	: Example (yes - 1 newff) vignette (no) clear output/input (sometimes) 
+	Comment		: It's a shame that the focus of the paper behind this package, it's unique point, is not explained or documented well enough. An addition of some examples using the TAO option as the error criterium is needed so the TAO-robust learning algorithm can be used.
+
+	ANN2::train - "Artificial Neural Networks for Anomaly Detection"
+	----------------------------------------------------------------
+	Accuracy	: adam (15), rmsprop (22), sgd (26)
+	Ease of use : Example (yes - iris) vignette (no) clear output/input (yes)
+	Comment		: This package's implementation of adam is recommended for those who wish to use a first-order algorithm. It's not only quite accurate, but also quite fast. Functions for autoencoding are included to be used in anomaly detection.
+
+	GMDH - deep multilayer perceptron
+
+	automl::automl_train_manual - "Deep Learning with Metaheuristic"
+	----------------------------------------------------------------
+	Accuracy	: wpso (37), wgrad (44)
+	Ease of use : Example (yes - iris) vignette (yes) clear output/input (yes)
+	Comment		: 
+	
+EXTREME LEARNING MACHINE NEURAL NETWORKS
+========================================
+
+
+# ==========
+# NOT TESTED
+# ==========
+
+	Autoencoder - unsupervised
+	Probabilistic - four-layer feedforward neural network
+	Convolutional - variations of multilayer perceptron
+	Recurrent neural network
+	
+====================
+APPLICATION SPECIFIC
+====================
+
+	appnn - "Amyloid Propensity Prediction Neural Network"
+	------------------------------------------------------
+	Amyloidogenicity propensity predictions for the polypeptides queried using recursive feature selection and feed-forward neural networks in S3method code.
+	
+	autoencoder - "Sparse Autoencoder for Automatic Learning of Representative Features from Unlabeled Data"
+	--------------------------------------------------------------------------------------------------------
+	This package is a well documented implementation of an unsupervised learning algorithm to learn useful features which can help compress data or be used in other ways. Searching for local minimum is done through three methods in optim(), 'BFGS', 'L-BFGS-B', or 'CG'.
+	
+	
+	
+	
+=========
+UTILITIES
+=========
+
+netpredint
+NeuralSens
+caret
