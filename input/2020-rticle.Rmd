@@ -121,6 +121,8 @@ were included.
 <!-- list may need to be updated. Already in bibliography RJreferences -->
 <!-- JN?? I reran RWsearch. See RWSearch20200731.txt file on repo. Slight differences. -->
 
+The following is a list of packages we included in this study, with brief descriptions.
+
 1. \CRANpkg{AMORE} \citep{R-AMORE},
 2. \CRANpkg{ANN2} \citep{R-ANN2},
 3. \CRANpkg{appnn} \citep{R-appnn},
@@ -202,6 +204,12 @@ were included.
 77. \CRANpkg{tsensembler} \citep{R-tsensembler},
 78. \CRANpkg{validann} \citep{R-validann},
 80. \CRANpkg{zFactor} \citep{R-zFactor}. 
+
+In contrast, we consider the following packages to be ill-suited to our investigations, and include
+a brief description of each with a reason why we have excluded it.
+
+
+?? packages here.
 
 
 ## Phase 2 - Review of packages and development of a benchmarking template
