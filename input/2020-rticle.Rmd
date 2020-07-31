@@ -27,10 +27,11 @@ output: rticles::rjournal_article
 ---
 ## Abstract
 
-There are many R packages whose purpose is neural network modeling. With support of the Google Summer of Code initiative for 
+There are many R packages whose purpose is neural network modeling. With support of the Google Summer of Code 
+(GSoC) initiative for 
 R, two of the authors were supported, mentored by the other authors, to attempt to benchmark and report on as many of
 these packages as possible. This article presents the overall purpose of the study and the research problems investigated,
-the basic design of the study, the major findings or trends found as a result of our analysism  a brief summary of our interpretations and  conclusions.
+the basic design of the study, the major findings or trends found as a result of our analysism  a brief summary of our interpretations and  conclusions. These have been encapsulated in the NNbenchmark package.
 
 ## Introduction
 
@@ -65,6 +66,16 @@ and one output output layer.
 
 
 # Methodology
+
+??JN: ******************************
+
+In working on material below, I think we need to provide some explanation of goals
+- What does "convergence" mean in our context?
+- What do we mean by RMSE, other measures? Should define here for later use.
+- What do we mean by "performance"? Other goals?
+
+*************************************
+
 
 Our research process was divided into 3 phases.
 
@@ -103,124 +114,135 @@ Wood ...
 
 ### Packages
 
-Searching through the thousands of packages title or the package description one by one would have 
-taken a long time. With \CRANpkg{RWsearch} \citep{R-RWsearch} we were able to automate the process. 
+Using \CRANpkg{RWsearch} \citep{R-RWsearch} we sought all were able to automate the process. 
 All packages that have "neural network" as a keyword in the package title or in the package description 
 were included.
 
 <!-- list may need to be updated. Already in bibliography RJreferences -->
+<!-- JN?? I reran RWsearch. See RWSearch20200731.txt file on repo. Slight differences. -->
 
-(to use when needed in text, testing how long references will be)
-1 \CRANpkg{AMORE} \citep{R-AMORE},
-2 \CRANpkg{ANN2} \citep{R-ANN2},
-3 \CRANpkg{appnn} \citep{R-appnn},
-4 \CRANpkg{autoencoder} \citep{R-autoencoder},
-5 \CRANpkg{automl} \citep{R-automl},
-6 \CRANpkg{BNN} \citep{R-BNN},
-7 \CRANpkg{brnn} \citep{R-brnn},
-8 \CRANpkg{Buddle} \citep{R-Buddle},
-9 \CRANpkg{CaDENCE} \citep{R-CaDENCE},
-10\CRANpkg{cld2} \citep{R-cld2},
-11\CRANpkg{cld3} \citep{R-cld3},
-12\CRANpkg{condmixt} \citep{R-condmixt},
-13\CRANpkg{DamiaNN} \citep{R-DamiaNN},
-14\CRANpkg{deep} \citep{R-deep},
-15\CRANpkg{deepdive} \citep{R-deepdive},
-16\CRANpkg{deepnet} \citep{R-deepnet},
-17\CRANpkg{deepNN} \citep{R-deepNN},
-18\CRANpkg{DNMF} \citep{R-DNMF},
-19\CRANpkg{elmNNRcpp} \citep{R-elmNNRcpp},
-20\CRANpkg{ELMR} \citep{R-ELMR},
-21\CRANpkg{EnsembleBase} \citep{R-EnsembleBase},
-22\CRANpkg{evclass} \citep{R-evclass},
-23\CRANpkg{gamlss.add} \citep{R-gamlss.add},
-24\CRANpkg{gcForest} \citep{R-gcForest},
-25\CRANpkg{GMDH} \citep{R-GMDH},
-26\CRANpkg{GMDH2} \citep{R-GMDH2},
-27\CRANpkg{GMDHreg} \citep{R-GMDHreg},
-28\CRANpkg{gnn} \citep{R-gnn},
-29\CRANpkg{grnn} \citep{R-grnn},
-30\CRANpkg{h2o} \citep{R-h2o},
-31\CRANpkg{hybridEnsemble} \citep{R-hybridEnsemble},
-32\CRANpkg{isingLenzMC} \citep{R-isingLenzMC},
-33\CRANpkg{keras} \citep{R-keras},
-34\CRANpkg{kerasR} \citep{R-kerasR},
-35\CRANpkg{leabRa} \citep{R-leabRa},
-36\CRANpkg{learNN} \citep{R-learNN},
-37\CRANpkg{LilRhino} \citep{R-LilRhino},
-38\CRANpkg{minpack.lm} \citep{R-minpack.lm}, 
-39\CRANpkg{MachineShop} \citep{R-MachineShop},
-40\CRANpkg{monmlp} \citep{R-monmlp},
-41\CRANpkg{neural} \citep{R-neural},
-42\CRANpkg{neuralnet} \citep{R-neuralnet},
-43\CRANpkg{NeuralNetTools} \citep{R-NeuralNetTools},
-44\CRANpkg{NeuralSens} \citep{R-NeuralSens},
-45\CRANpkg{NlinTS} \citep{R-NlinTS},
-46\CRANpkg{nlsr} \citep{R-nlsr},
-47\CRANpkg{nnet} \citep{R-nnet},
-48\CRANpkg{nnetpredint} \citep{R-nnetpredint},
-49\CRANpkg{nnfor} \citep{R-nnfor},
-50\CRANpkg{nntrf} \citep{R-nntrf},
-51\CRANpkg{nnli2bRcpp} \citep{R-nnlib2Rcpp},
-52\CRANpkg{onnx} \citep{R-onnx},
-53\CRANpkg{OptimClassifier} \citep{R-OptimClassifier},
-52\CRANpkg{OSTSC} \citep{R-OSTSC},
-53\CRANpkg{pnn} \citep{R-pnn},
-54\CRANpkg{polyreg} \citep{R-polyreg},
-55\CRANpkg{predictoR} \citep{R-predictoR},
-56\CRANpkg{qrnn} \citep{R-qrnn},
-57\CRANpkg{QuantumOps} \citep{R-QuantumOps},
-58\CRANpkg{quarrint} \citep{R-quarrint},
-59\CRANpkg{radiant.model} \citep{R-radiant.model},
-60\CRANpkg{rasclass} \citep{R-rasclass},
-61\CRANpkg{rcane} \citep{R-rcane},
-62\CRANpkg{regressoR} \citep{R-regressoR},
-63\CRANpkg{rminer} \citep{R-rminer},
-64\CRANpkg{rnn} \citep{R-rnn},
-65\CRANpkg{RSNNS} \citep{R-RSNNS},
-66\CRANpkg{ruta} \citep{R-ruta},
-67\CRANpkg{simpleNeural} \citep{R-simpleNeural},
-68\CRANpkg{snnR} \citep{R-snnR},
-69\CRANpkg{softmaxreg} \citep{R-softmaxreg},
-70\CRANpkg{Sojourn.Data} \citep{R-Sojourn.Data},
-71\CRANpkg{spnn} \citep{R-spnn},
-72\CRANpkg{TeachNet} \citep{R-TeachNet},
-73\CRANpkg{tensorflow} \citep{R-tensorflow},
-74\CRANpkg{tfestimators} \citep{R-tfestimators},
-75\CRANpkg{trackdem} \citep{R-trackdem},
-76\CRANpkg{TrafficBDE} \citep{R-TrafficBDE},
-77\CRANpkg{tsensembler} \citep{R-tsensembler},
-78\CRANpkg{validann} \citep{R-validann},
-80\CRANpkg{zFactor} \citep{R-zFactor}. 
+1. \CRANpkg{AMORE} \citep{R-AMORE},
+2. \CRANpkg{ANN2} \citep{R-ANN2},
+3. \CRANpkg{appnn} \citep{R-appnn},
+4. \CRANpkg{autoencoder} \citep{R-autoencoder},
+5. \CRANpkg{automl} \citep{R-automl},
+6. \CRANpkg{BNN} \citep{R-BNN},
+7. \CRANpkg{brnn} \citep{R-brnn},
+8. \CRANpkg{Buddle} \citep{R-Buddle},
+9. \CRANpkg{CaDENCE} \citep{R-CaDENCE},
+10. \CRANpkg{cld2} \citep{R-cld2},
+11. \CRANpkg{cld3} \citep{R-cld3},
+12. \CRANpkg{condmixt} \citep{R-condmixt},
+13. \CRANpkg{DamiaNN} \citep{R-DamiaNN},
+14. \CRANpkg{deep} \citep{R-deep},
+15. \CRANpkg{deepdive} \citep{R-deepdive},
+16. \CRANpkg{deepnet} \citep{R-deepnet},
+17. \CRANpkg{deepNN} \citep{R-deepNN},
+18. \CRANpkg{DNMF} \citep{R-DNMF},
+19. \CRANpkg{elmNNRcpp} \citep{R-elmNNRcpp},
+20. \CRANpkg{ELMR} \citep{R-ELMR},
+21. \CRANpkg{EnsembleBase} \citep{R-EnsembleBase},
+22. \CRANpkg{evclass} \citep{R-evclass},
+23. \CRANpkg{gamlss.add} \citep{R-gamlss.add},
+24. \CRANpkg{gcForest} \citep{R-gcForest},
+25. \CRANpkg{GMDH} \citep{R-GMDH},
+26. \CRANpkg{GMDH2} \citep{R-GMDH2},
+27. \CRANpkg{GMDHreg} \citep{R-GMDHreg},
+28. \CRANpkg{gnn} \citep{R-gnn},
+29. \CRANpkg{grnn} \citep{R-grnn},
+30. \CRANpkg{h2o} \citep{R-h2o},
+31. \CRANpkg{hybridEnsemble} \citep{R-hybridEnsemble},
+32. \CRANpkg{isingLenzMC} \citep{R-isingLenzMC},
+33. \CRANpkg{keras} \citep{R-keras},
+34. \CRANpkg{kerasR} \citep{R-kerasR},
+35. \CRANpkg{leabRa} \citep{R-leabRa},
+36. \CRANpkg{learNN} \citep{R-learNN},
+37. \CRANpkg{LilRhino} \citep{R-LilRhino},
+38. \CRANpkg{minpack.lm} \citep{R-minpack.lm}, 
+39. \CRANpkg{MachineShop} \citep{R-MachineShop},
+40. \CRANpkg{monmlp} \citep{R-monmlp},
+41. \CRANpkg{neural} \citep{R-neural},
+42. \CRANpkg{neuralnet} \citep{R-neuralnet},
+43. \CRANpkg{NeuralNetTools} \citep{R-NeuralNetTools},
+44. \CRANpkg{NeuralSens} \citep{R-NeuralSens},
+45. \CRANpkg{NlinTS} \citep{R-NlinTS},
+46. \CRANpkg{nlsr} \citep{R-nlsr},
+47. \CRANpkg{nnet} \citep{R-nnet},
+48. \CRANpkg{nnetpredint} \citep{R-nnetpredint},
+49. \CRANpkg{nnfor} \citep{R-nnfor},
+50. \CRANpkg{nntrf} \citep{R-nntrf},
+51. \CRANpkg{nnli2bRcpp} \citep{R-nnlib2Rcpp},
+52. \CRANpkg{onnx} \citep{R-onnx},
+53. \CRANpkg{OptimClassifier} \citep{R-OptimClassifier},
+52. \CRANpkg{OSTSC} \citep{R-OSTSC},
+53. \CRANpkg{pnn} \citep{R-pnn},
+54. \CRANpkg{polyreg} \citep{R-polyreg},
+55. \CRANpkg{predictoR} \citep{R-predictoR},
+56. \CRANpkg{qrnn} \citep{R-qrnn},
+57. \CRANpkg{QuantumOps} \citep{R-QuantumOps},
+58. \CRANpkg{quarrint} \citep{R-quarrint},
+59. \CRANpkg{radiant.model} \citep{R-radiant.model},
+60. \CRANpkg{rasclass} \citep{R-rasclass},
+61. \CRANpkg{rcane} \citep{R-rcane},
+62. \CRANpkg{regressoR} \citep{R-regressoR},
+63. \CRANpkg{rminer} \citep{R-rminer},
+64. \CRANpkg{rnn} \citep{R-rnn},
+65. \CRANpkg{RSNNS} \citep{R-RSNNS},
+66. \CRANpkg{ruta} \citep{R-ruta},
+67. \CRANpkg{simpleNeural} \citep{R-simpleNeural},
+68. \CRANpkg{snnR} \citep{R-snnR},
+69. \CRANpkg{softmaxreg} \citep{R-softmaxreg},
+70. \CRANpkg{Sojourn.Data} \citep{R-Sojourn.Data},
+71. \CRANpkg{spnn} \citep{R-spnn},
+72. \CRANpkg{TeachNet} \citep{R-TeachNet},
+73. \CRANpkg{tensorflow} \citep{R-tensorflow},
+74. \CRANpkg{tfestimators} \citep{R-tfestimators},
+75. \CRANpkg{trackdem} \citep{R-trackdem},
+76. \CRANpkg{TrafficBDE} \citep{R-TrafficBDE},
+77. \CRANpkg{tsensembler} \citep{R-tsensembler},
+78. \CRANpkg{validann} \citep{R-validann},
+80. \CRANpkg{zFactor} \citep{R-zFactor}. 
 
 
-## Phase 2 - Exploration of each package and development of template
-**Exploration**  
-However, not all packages that had the keyword were fit for the scope of our research. Some didn't have
-any functions to make neural networks. They were simply meta-packages. Others were not regression neural
-networks of the perceptron type or were only made for specific purposes. We learned this through reading
-documentation and trying out example code.
+## Phase 2 - Review of packages and development of a benchmarking template
+
+From documentation and example code, we learned that not all packages selected by the automated 
+search fit the scope of our research. Some have no function to generate neural networks. They 
+are simply meta-packages. Others were not regression neural
+networks of the perceptron type or were only intended for very specific purposes. 
+
 **Template => TO REVISE AFTER 2020 CODE**  
-As we inspected the packages, we developed a template for benchmarking. This template's structure is as
-follows:  
-(1) Set up of environment - loading packages, setting directory, options;   
+
+As we inspected the packages, we developed a template for benchmarking. The structure of this
+template (for each package) is as follows:  
+(1) Set up the test environment - loading of packages, setting working directory and options;   
 (2) Summary of datasets;  
-(3) A loop over datasets which contained (a) setting parameters for a specific dataset (b) selecting
-benchmark options (c) the training of a neural network with a package's tuned functions (d) calculation of
-RMSE and MAE (e) plot each training over one initial graph, then plot the best result (f) adding results 
-to the appropriate *.csv file and (g) clearing up environment for next loop; and  
+(3) Loop over datasets:
+    (a) setting parameters for a specific dataset 
+    (b) selecting benchmark options 
+    (c) training a neural network with a tuned functions for each package 
+    (d) calculation of RMSE and MAE (??definition, reference)
+    (e) plot each training over one initial graph, then plot the best result 
+    (f) add results to the appropriate existing record (*.csv file) and 
+    (g) clear the environment for next loop; and  
 (4) Clearing up the environment for the next package.
-(5) It is optional to print warnings.  
-This process was made easier with tools from the NNbenchmark package. 
-(FROM LAST YEAR, HOPEFULLY WE CAN SAY OTHERWISE THIS YEAR:)
-It is not on CRAN yet and can instead be found at https://github.com/pkR-pkR/NNbenchmark. Our templates 
-for each package can be found in the companion repository, https://github.com/pkR-pkR/NNbenchmarkTemplates.
+(5) It is optional to print warnings.
+
+To simplify this process, we developed tools in the NNbenchmark package, of which the first version 
+was created as part of the 2019 GSoC activity and later refined in the 2020 initiative. The package 
+repository is https://github.com/pkR-pkR/NNbenchmark, with package templates 
+in https://github.com/pkR-pkR/NNbenchmarkTemplates).
 
 ## Phase 3 - Collection of and analysis of results
-**Collection**
-After the templates were finished, the packages were looped on all datasets. Results were collected in the
-directory of the templates repository. 
-**Analysis**
+
+### Results collection
+
+Looping over the datasets using each package template, we collected results in the relevant package 
+directories in the tempplates repository. 
+
+
+### Analysis
+
 To rank the how well a package converged and its speed, we developed the following method:
 1.	The results datasets are loaded into the R environment as one large list. The dataset names, package:algorithm names and all 10 run numbers, durations, and RMSE are extracted from that list
 2.	For the duration score (DUR), the duration is averaged by dataset. 3 criteria for the RMSE score by dataset are calculated:
@@ -385,7 +407,7 @@ As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE))
 A. Recommended: 2nd order algorithms
 Out of all the algorithms, these second algorithms generally performed better in terms of convergence 
 despite being set to a much lower number of iterations, 200, than the first-order algorithms. Moreover, 
-they performed better in terms of speed. The best  in this class were \CRANpkg{minpack.lm} and \CRANpkg{nlsr}, 
+they performed better in terms of speed. The best  in this class were. \CRANpkg{minpack.lm} and. \CRANpkg{nlsr}, 
 tied at rank number 1. The Levenberg-Marquardt (LM) algorithm used is fast and converges well. stats::nls() 
 is used. However, these packages require a handwritten formula that may not be ideal for certain 
 situations. A more popular package for neural networks is nnet. This might be because it is part of base R. 
@@ -395,8 +417,8 @@ Ranked directly after are some packages that depend on nnet or use the same func
 how well they decide initial parameters. rminer (rank 4), MachineShop (rank 5), and radiant.model (rank 7) 
 use nnet. Note, radiant.model has its iterations set to 10000, which originally made it slower yet converge
 better. We used a modified version of the package. At rank 6 is validann's BFGS algorithm using stats::optim(). 
-Its use of optim's L-BFGS-B ranked at number 9 with CaDENCE's use of optim's BFGS. \CRANpkg{monmlp}, from 
-the same author as CaDENCE (Alex Cannon), uses the package \CRANpkg{optimx}'s BFGS \citep{R-optimx}.  
+Its use of optim's L-BFGS-B ranked at number 9 with CaDENCE's use of optim's BFGS.. \CRANpkg{monmlp}, from 
+the same author as CaDENCE (Alex Cannon), uses the package. \CRANpkg{optimx}'s BFGS \citep{R-optimx}.  
 
 Alex Cannon also implemented a quantile regression neural network in qrnn with stats::nlm(). It requires 
 more iterations and is not as fast compared to the other second-order algorithms. However, it is a 
@@ -466,7 +488,11 @@ neuralnet backprop - note, might not actually reflect standings, somehow from te
 
 D. Untested => TO DO - LIST
 
-# Conclusion => TO DO AFTER 2020 CODE
+## Conclusion => TO DO AFTER 2020 CODE
+
+??JN: Can we start to put in some major findings? i.e., important positive findings,
+big negatives?
+
 
 
 ## Future work
