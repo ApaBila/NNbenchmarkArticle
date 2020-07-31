@@ -9,10 +9,6 @@ author:
     affiliation: Manipal Institute of Technology
     address: Navi Mumbai, Maharashtra, 400614, India
     email:  akshajverma7@gmail.com
-  - name: John C. Nash
-    affiliation: Telfer School of Management, University of Ottawa
-    address: 55 Laurier Avenue East, Ottawa, Ontario  K1N 6N5 Canada
-    email:  nashjc@uottawa.ca
   - name: Christophe Dutang
     affiliation: Univ. Paris-Dauphine, Univ. PSL, CNRS, CEREMADE
     address: Place du Ml de Lattre de Tassigny, 75016 Paris, France
@@ -21,12 +17,20 @@ author:
     affiliation: InModelia
     address: 5 rue Malebranche, 75005 Paris, France
     email:  patrice.kiener@inmodelia.com
-abstract: >
-  Possible format: 1) the overall purpose of the study and the research problem(s) you investigated; 2) the basic design of the study; 3) major findings or trends found as a result of your analysis; and, 4) a brief summary of your interpretations and  conclusions.
+  - name: John C. Nash
+    affiliation: Telfer School of Management, University of Ottawa
+    address: 55 Laurier Avenue East, Ottawa, Ontario  K1N 6N5 Canada
+    email:  nashjc@uottawa.ca
 preamble: |
   % Any extra LaTeX you need in the preamble
 output: rticles::rjournal_article
 ---
+## Abstract
+
+There are many R packages whose purpose is neural network modeling. With support of the Google Summer of Code initiative for 
+R, two of the authors were supported, mentored by the other authors, to attempt to benchmark and report on as many of
+these packages as possible. This article presents the overall purpose of the study and the research problems investigated,
+the basic design of the study, the major findings or trends found as a result of our analysism  a brief summary of our interpretations and  conclusions.
 
 ## Introduction
 
@@ -59,58 +63,39 @@ that provide neural networks of the perceptron type, that is,
 one input layer, one normalized layer, one hidden layer with a nonlinear activation function that is usually tanh(), 
 and one output output layer. 
 
-=========== previous intro ============
-
-R Statistical Software, as any opensource platform, has relied on its contributors to keep it up to date 
-with the latest developments. One of the many is neural networks. Neural networks are a class of 
-models, based on the brain's own connections system, in the growing field of machine learning. Before, 
-they were a theory with not much practical implementation, partly because of how computationally 
-demanding their algorithms are. A neural network algorithm involves complicated calculations for 
-each gradual "step" into the direction of the optimal solution, namely, determining the gradient of the 
-cost function recursively. Parameters are adjusted accordingly for each iteration from this information.  
-Manually computing partial gradients from complex nonlinear models is taxing. With the help of 
-modern technology and its high-level code, implementing a neural network is relatively simple.
-
-However, the utilization of computers should not only be done effectively but also efficiently. 
-Instead of calculating first-order derivatives, and moving incrementally forward by a predetermined 
-learning rate, it is better to adjust the size of each step according to its curvature. The second-order
-derivative provides this information. Numerical methods can take this further. The Hessian, a matrix 
-of the second derivatives, is approximated instead of perfectly derived. Such algorithms are known as 
-Quasi-Newton algorithms. Broyden-Fletcher-Goldfarb-Shanno (BFGS) is a well-known example of an 
-algorithm from this class. We believed that these second-order algorithms would perform better than 
-first-order algorithms in terms of finding the optimal solution. 
-
-Regardless of our belief, it is crucial to conduct a thorough examination to assess the quality of 
-these training algorithms in R. There is much code, but barely any comparison. In particular, packages 
-that provide neural network of the perceptron type (one input layer, one normalized layer, one hidden 
-layer with a nonlinear activation function that is usually tanh(), one normalized layer, one output 
-output layer) for regression purpose (i.e. NN(X1, ., Xn) = E[Y] were the focus of this research. At 
-the very least, this research will serve as a framework for future research on neural network benchmarking.
-
-
 
 # Methodology
 
-Our research process was largely divided into teh following 3 phases.
+Our research process was divided into 3 phases.
 
 ## Phase 1 - Preparation
 
 ### Datasets => NEED TO BE FINISHED
 
-All the datasets used are nonlinear. Linear data sets are more simple and can even be solved with OLS 
-(Ordinary Least Squares) regression. This is why we believe to truly set apart the ability of neural 
-networks we needed to go beyond linear regression. Varying difficulties between data sets helped to 
-classify further package's algorithms accuracy. One site was used for 3 of the multivariate data sets. 
-Sonja Surjanovic and Derek Bingham of Simon Fraser University created this resourceful website to 
-evaluate the design and analysis of computer models. Links to each dataset and their level of difficulty:  
+All the datasets used are nonlinear. ??JN. what do we mean by nonlinear -- it has several different uses??
+Linear data sets are more simple and can even be solved with OLS 
+(Ordinary Least Squares) regression. 
+
+?? Do we mean?
+
+All the datasets we use are nonlinear in that they cannot be modelled using a non-iterative calculation
+such as Ordinary Least Squares. In this study, we wish to test the ability of neural networks to model
+systems that are beyond the scope of linear regression. Varying levels of difficulty in modelling the
+different data sets are intended to allow us to further classify different algorithms and the packages
+that implement them. Sonja Surjanovic and Derek Bingham of Simon Fraser University created a useful website 
+from which three of the multivariate datasets were drawn. We note the link, name and difficulty level of 
+the three datasets:  
 - http://www.sfu.ca/~ssurjano/fried.html        (Friedman - average)  
 - http://www.sfu.ca/~ssurjano/detpep10curv.html (Dette - medium)  
 - http://www.sfu.ca/~ssurjano/ishigami.html     (Ishigami - high)  
 The other multivariate dataset, Ref153, was taken from ...
-3 of the univariate datasets were taken from NIST at:
-https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml. Gauss1 and Gauss2 have a low level of
-difficulty to solve. Gauss3 is average.
-Dmod1, Dmod2 are from ...
+
+Three of the univariate datasets we used were taken from a webside of the US National Institute
+for Standards and Technology (NIST):
+https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml. (Gauss1 - low; Gauss2 - low; Gauss3 - average)
+
+Univariate datasets Dmod1, Dmod2 are from ...
+
 Dreyfus1 is a pure neural network which has no error. This can make it difficult for algorithms 
 that assume an error exists. Dreyfus2 is Dreyfus1 with errors.
 NeuroOne  from ...  

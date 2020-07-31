@@ -1,11 +1,12 @@
 \BOOKMARK [0][-]{section*.1}{A review of R neural network packages with NNbenchmark: ease of use and accuracy \205 working title}{}% 1
-\BOOKMARK [1][-]{subsection.2.0.1}{Introduction}{section*.1}% 2
-\BOOKMARK [1][-]{section.2.1}{Methodology}{section*.1}% 3
-\BOOKMARK [2][-]{subsection.2.1.1}{Phase 1 - Preparation}{section.2.1}% 4
-\BOOKMARK [2][-]{subsection.2.1.2}{Phase 2 - Exploration of each package and development of template}{section.2.1}% 5
-\BOOKMARK [2][-]{subsection.2.1.3}{Phase 3 - Collection of and analysis of results}{section.2.1}% 6
-\BOOKMARK [1][-]{section.2.2}{Results}{section*.1}% 7
-\BOOKMARK [2][-]{subsection.2.2.1}{Discussion and Recommandations}{section.2.2}% 8
-\BOOKMARK [1][-]{section.2.3}{Conclusion => TO DO AFTER 2020 CODE}{section*.1}% 9
-\BOOKMARK [2][-]{subsection.2.3.1}{Future work}{section.2.3}% 10
-\BOOKMARK [2][-]{subsection.2.3.2}{Acknowledgements}{section.2.3}% 11
+\BOOKMARK [1][-]{subsection.2.0.1}{Abstract}{section*.1}% 2
+\BOOKMARK [2][-]{subsection.2.0.2}{Introduction}{subsection.2.0.1}% 3
+\BOOKMARK [1][-]{section.2.1}{Methodology}{section*.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.1}{Phase 1 - Preparation}{section.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.1.2}{Phase 2 - Exploration of each package and development of template}{section.2.1}% 6
+\BOOKMARK [2][-]{subsection.2.1.3}{Phase 3 - Collection of and analysis of results}{section.2.1}% 7
+\BOOKMARK [1][-]{section.2.2}{Results}{section*.1}% 8
+\BOOKMARK [2][-]{subsection.2.2.1}{Discussion and Recommandations}{section.2.2}% 9
+\BOOKMARK [1][-]{section.2.3}{Conclusion => TO DO AFTER 2020 CODE}{section*.1}% 10
+\BOOKMARK [2][-]{subsection.2.3.1}{Future work}{section.2.3}% 11
+\BOOKMARK [2][-]{subsection.2.3.2}{Acknowledgements}{section.2.3}% 12
