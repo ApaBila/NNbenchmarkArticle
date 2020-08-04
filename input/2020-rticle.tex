@@ -346,25 +346,77 @@ repository.
 \subsubsection{Analysis}\label{analysis}}
 
 To rank the how well a package converged and its speed, we developed the
-following method: 1. The results datasets are loaded into the R
-environment as one large list. The dataset names, package:algorithm
-names and all 10 run numbers, durations, and RMSE are extracted from
-that list 2. For the duration score (DUR), the duration is averaged by
-dataset. 3 criteria for the RMSE score by dataset are calculated: a. The
-minimum value of RMSE for each package:algorithm as a measure of their
-best performance b. The median value of RMSE for each package:algorithm
-as a measure of their average performance, without the influence of
-outliers c.~The spread of the RMSE values for each package which is
-measured by the difference between the median and the minimum RMSE (d51)
-3. Then, the ranks are calculated for every dataset and the results are
-merged into one wide dataframe. a. The duration rank only depends on the
-duration. b. For minimum RMSE values, ties are decided by duration mean,
-then the RMSE median c.~For median RMSE values, ties are decided by the
-RMSE minimum, then the duration mean d.~The d51 rank only depends on
-itself 4. A global score for all datasets is found by a sum of the ranks
-(of duration, minimum RMSE, median RMSE, d51 RMSE) of each
-package:algorithm for each dataset 5. The final table is the result of
-ranking by the global minimum RMSE scores for each package:algorithm
+following method:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The results datasets are loaded into the R environment as one large
+  list. The dataset names, package:algorithm names and all 10 run
+  numbers, durations, and RMSE are extracted from that list
+\item
+  For the duration score (DUR), the duration is averaged by dataset. 3
+  criteria for the RMSE score by dataset are calculated:
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  The minimum value of RMSE for each package:algorithm as a measure of
+  their best performance
+\item
+  The median value of RMSE for each package:algorithm as a measure of
+  their average performance, without the influence of outliers
+\item
+  The spread of the RMSE values for each package which is measured by
+  the difference between the median and the minimum RMSE (d51)
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Then, the ranks are calculated for every dataset and the results are
+  merged into one wide dataframe.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  The duration rank only depends on the duration.
+\item
+  For minimum RMSE values, ties are decided by duration mean, then the
+  RMSE median
+\item
+  For median RMSE values, ties are decided by the RMSE minimum, then the
+  duration mean
+\item
+  The d51 rank only depends on itself
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  A global score for all datasets is found by a sum of the ranks (of
+  duration, minimum RMSE, median RMSE, d51 RMSE) of each
+  package:algorithm for each dataset
+\item
+  The final table is the result of ranking by the global minimum RMSE
+  scores for each package:algorithm
+\item
+  In addition to the previous metrics, two other convergence metrics
+  have been considered: the Mean Absolute Error (MAE) and the Worst
+  Absolute Error (WAE), see Appendix. The ranking on those two metrics
+  may help distinguish packages with close RMSE values. However, we do
+  not choose the MAE for overall ranking as there is no consensus in the
+  literature, see e.g.~\citep{willmott2005advantages,chai2014root}.
+\end{enumerate}
 
 To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
 - Functionality (util): scaling, input, output, trace - Documentation
@@ -375,7 +427,7 @@ To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
 
 \textbf{Tables} (NOTE: FINAL MEASURE FOR CONVERGENCE - RMSE RANKS? OR A
 COMBINATION OF OTHER MEASURES? As in Christophe's recent email: L1
-MAE(), L2 RMSE(), Linfinity (WAE))
+MAE(), L2 RMSE(), Linfinity (WAE)) --\textgreater{} see Appendix
 
 (ALSO: THE FOLLOWING IS SIMPLY ALPHABETIC LIST FOR ALL TESTED, I WILL
 DIVIDE THE TABLE INTO 4: 2nd ORDER always recommended, 1st ORDER
@@ -618,6 +670,18 @@ For the acknowledgements, maybe : « » + later some aknowledgements to
 the referees.
 
 How do we proceed?
+
+\hypertarget{appendix}{%
+\subsection{Appendix}\label{appendix}}
+
+Considered a set of observations \(y_i\) and its corresponding
+predictions \(\hat y_i\) for \(i=1,\dots,n\). The three considered
+metrics are \[
+MAE = \frac1n\sum_{i=1}^n|y_i - \hat y_i|,~
+RMSE = \frac1n\sqrt{\sum_{i=1}^n(y_i - \hat y_i)^2},~
+WAE = \frac1n\max_{i=1,\dots,n}|y_i - \hat y_i|.
+\] That is, there are the absolute, the squared and the maximum norm of
+residual vectors.
 
 
 \address{%
