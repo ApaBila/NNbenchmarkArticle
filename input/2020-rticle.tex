@@ -1,6 +1,6 @@
 % !TeX root = RJwrapper.tex
-\title{A review of R neural network packages with NNbenchmark\(:\) ease
-of use and accuracy -- working title}
+\title{A review of R neural network packages (with NNbenchmark)\(:\)
+accuracy and ease of use}
 \author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
 Kiener, John C. Nash}
 
@@ -10,15 +10,56 @@ Kiener, John C. Nash}
 \hypertarget{abstract}{%
 \subsection{Abstract}\label{abstract}}
 
-There are many R packages whose purpose is neural network modeling. With
-support of the Google Summer of Code (GSoC) initiative for R, two of the
-authors were supported, mentored by the other authors, to attempt to
-benchmark and report on as many of these packages as possible. This
+(SB) There are many R packages whose purpose is neural network modeling.
+With support of the Google Summer of Code (GSoC) initiative for R, two
+of the authors were supported, mentored by the other authors, to attempt
+to benchmark and report on as many ofthese packages as possible. This
 article presents the overall purpose of the study and the research
 problems investigated, the basic design of the study, the major findings
 or trends found as a result of our analysism a brief summary of our
 interpretations and conclusions. These have been encapsulated in the
 NNbenchmark package.
+
+(PK) For the last 30 years, neural networks have evolved from an
+academic topic (exploratory field of research in the academic community)
+to a common word in scientific computing. Following this trend, CRAN has
+been accepting and hosts many packages that claim to provide neural
+network modeling. Our latest count in May 2020 is 70 (?) packages. This
+is fine but how accurate and reliable are these packages? Can we trust
+all them? Are there packages that perfom better and are easier to use
+than other packages? Are there packages better suited to beginners and
+other packages better suited to experts? Do these packages provide the
+(full set of) features that can be found in some older respected
+(trusted) proprietary software?
+
+This paper is, to our knowledge, the first attempt to test this vast
+amount of packages on (with/against) a few datasets of (with) different
+levels of complexity, from simple to difficult (hard) to train,
+benchmark them with a certain metrics, and finally rank them. The
+evaluation was conducted by the first two authors during summers 2019
+and 2020, as students enrolled in the Google Summer of Code program,
+with templates prepared by the last two authors. Due to time
+constraints, we restricted our evaluation to regression algorithms and
+ignore algorithms for classification and exotic purpose. This left us
+with 49 (in 2019, 60 in 2020?) pairs packages::algorithms. The criteria
+used in our benchmark are: (i) the accuracy, i.e.~the ability to find
+the global minima on 13 datasets, measured by the Root Mean Square Error
+(RMSE), (ii) the speed of the training algorithm, (iii) the ease of use,
+(iv) the quality of the documentation.
+
+All packages::algorithms were given a score for each criterion and
+ranked in a global table. Overall, 12/15 packages::algorithms are
+considered accurate and reliable and can be recommended for a daily use.
+45 packages should be avoided as they are not accurate, takes too much
+time, are difficult to handle or have poor or even no documentation.
+
+Our package called NNbenchmark, the templates and the code used to test
+each package::algorithm are available on Github at the address
+github.com/ and can be used by the package authors to verify their
+metrics and eventually improve their package. Finally, we provide some
+hints and features of a dreamed neural network package that could serve
+as a guidance for developing the next generation of R neural network
+packages.
 
 \hypertarget{introduction}{%
 \subsection{Introduction}\label{introduction}}
@@ -694,14 +735,14 @@ JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia\\
 \address{%
 Akshaj Verma\\
 Manipal Institute of Technology\\
-Navi Mumbai, Maharashtra, 400614, India\\
+Manipal, Karnataka, 576104, India\\
 }
 \href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}
 
 \address{%
 Christophe Dutang\\
-Univ. Paris-Dauphine, Univ. PSL, CNRS, CEREMADE\\
-Place du Ml de Lattre de Tassigny, 75016 Paris, France\\
+University Paris-Dauphine, University PSL, CNRS, CEREMADE\\
+Place du Maréchal de Lattre de Tassigny, 75016 Paris, France\\
 }
 \href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
 
