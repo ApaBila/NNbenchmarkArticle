@@ -10,40 +10,40 @@ Kiener, John C. Nash}
 \hypertarget{abstract}{%
 \subsection{Abstract}\label{abstract}}
 
-For the last 30 years, neural networks have evolved from an exploratory
-field of research to a common tool in scientific computing. Following
-this trend, CRAN hosts many packages that claim to provide neural
-network modeling. Our count in May 2020 is roughly 70 packages. How
-accurate and reliable are these packages and their documentation? Are
-there packages that perfom better and are easier to use than other
-packages? Are some better suited to beginners while others require
-expert knowledge? Do these packages provide the features found in some
-respected proprietary software?
+For the last 30 years, neural networks have evolved from an academic
+topic to a common tool in scientific computing. Following this trend,
+CRAN hosts many packages that claim to provide neural network modeling.
+Our count in May 2020 is roughly 70 packages. How accurate and reliable
+are these packages and their documentation? Are there packages that
+perfom better and are easier to use than other packages? Are some better
+suited to beginners while others require expert knowledge? Do these
+packages provide the features found in some dedicated proprietary
+software?
 
 This paper is, to our knowledge, the first attempt to test this quite
 large number of packages against a few datasets having different levels
-of complexity, and to benchmark and rank them with certain metrics. The
-evaluation was conducted during summers 2019 and 2020 by the first two
-authors, as students enrolled in the Google Summer of Code, mentored by
-the other authors, with templates prepared by Dutang and Kiener. We have
-restricted our evaluation to regression algorithms and ignore packages
-for classification and specialized purposes. This still left 49 (in
-2019, 60 in 2020??) package::algorithm pairs.
+of complexity from easy to difficult to train, and to benchmark and rank
+them with certain metrics. We restricted our evaluation to regression
+algorithms applied on the one-hidden layer perceptron and ignore
+classification or specialized purpose. This left us with 49 (in 2019, 60
+in 2020??) package::algorithm pairs. The criteria used in our benchmark
+are: (i) the accuracy, i.e.~the ability to find the global minima on 13
+datasets, measured by the Root Mean Square Error (RMSE) in a limited
+number of iterations; (ii) the speed of the training algorithm; (iii)
+the ease of use; (iv) the quality of the documentation.
 
-The criteria used in our benchmark are: (i) the accuracy, i.e.~the
-ability to find the global minima on 13 datasets, measured by the Root
-Mean Square Error (RMSE), (ii) the speed of the training algorithm,
-(iii) the ease of use, (iv) the quality of the documentation. All
-packages::algorithms were given a score for each criterion and ranked in
-a global table. Overall, 12 packages incorporating 15 algorithms are
-considered accurate and reliable and can be recommended. The remaining
-packages -- approximately 3/4 -- should, we believe, be avoided.
+All pairs packages::algorithms were given a score for each criterion and
+ranked in a global table. Overall, 12/15 packages::algorithms are
+considered accurate and reliable and can be recommended for a daily
+usage. 45 packages should be avoided as they are not accurate, take too
+much time, are difficult to handle, or have poor or no documentation.
 
-To facilitate our work, the package NNbenchmark was developed, along
-with templates and code to test each package::algorithm pair. The
-materials are available at \url{https://github.com/pkR-pkR/} (JN??: Is
-this the one to include?). Finally, we provide some hints and features
-to guide the development of an idealized neural network package for R.
+Our codes, templates and and NNbenchmark package used to test each
+package::algorithm pair are publicly available at the address
+\url{https:://github.com/pkR-pkR/NNbenchmark}. This can be used by the
+package authors and others to verify the metrics and eventually improve
+the package. Finally, we provide some hints and features to guide the
+development of an idealized neural network package for R.
 
 \hypertarget{introduction}{%
 \subsection{Introduction}\label{introduction}}
