@@ -27,19 +27,30 @@ output: rticles::rjournal_article
 ---
 ## Abstract
 
-(SB)
-There are many R packages whose purpose is neural network modeling. With support of the Google Summer of Code (GSoC) initiative for R, two of the authors were supported, mentored by the other authors, to attempt to benchmark and report on as many ofthese packages as possible. This article presents the overall purpose of the study and the research problems investigated, the basic design of the study, the major findings or trends found as a result of our analysism a brief summary of our interpretations and  conclusions. These have been encapsulated in the NNbenchmark package.
+<!-- (SB) -->
+<!-- There are many R packages whose purpose is neural network modeling. With support of the Google Summer of Code (GSoC) initiative for R, two of the authors were supported, mentored by the other authors, to attempt to benchmark and report on as many ofthese packages as possible. This article presents the overall purpose of the study and the research problems investigated, the basic design of the study, the major findings or trends found as a result of our analysism a brief summary of our interpretations and  conclusions. These have been encapsulated in the NNbenchmark package. -->
 
-(PK) 
-For the last 30 years, neural networks have evolved from an academic topic (exploratory field of research in the academic community) to a common word in scientific computing. Following this trend, CRAN has been accepting and hosts many packages that claim to provide neural network modeling. Our latest count in May 2020 is 70 (?) packages. This is fine but how accurate and reliable are these packages? Can we trust all them? Are there packages that perfom better and are easier to use than other packages? Are there packages better suited to beginners and other packages better suited to experts? Do these packages provide the (full set of) features that can be found in some older respected (trusted) proprietary software?
+<!-- (PK)  -->
+<!-- For the last 30 years, neural networks have evolved from an academic topic (exploratory field of research in the academic community) to a common word in scientific computing. Following this trend, CRAN has been accepting and hosts many packages that claim to provide neural network modeling. Our latest count in May 2020 is 70 (??) packages. This is fine but how accurate and reliable are these packages? Can we trust all them? Are there packages that perfom better and are easier to use than other packages? Are there packages better suited to beginners and other packages better suited to experts? Do these packages provide the (full set of) features that can be found in some older respected (trusted) proprietary software? -->
 
-This paper is, to our knowledge, the first attempt to test this vast amount of packages on (with/against) a few datasets of (with) different levels of complexity, from simple to difficult (hard) to train, benchmark them with a certain metrics, and finally rank them. The evaluation was conducted by the first two authors during summers 2019 and 2020, as students enrolled in the Google Summer of Code program, with templates prepared by the last two authors. Due to time constraints, we restricted our evaluation to regression algorithms and ignore algorithms for classification and exotic purpose. This left us with 49 (in 2019, 60 in 2020?) pairs packages::algorithms. The criteria used in our benchmark are: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE), (ii) the speed of the training algorithm, (iii) the ease of use, (iv) the quality of the documentation. 
+<!-- This paper is, to our knowledge, the first attempt to test this vast amount of packages on (with/against) a few datasets of (with) different levels of complexity, from simple to difficult (hard) to train, benchmark them with a certain metrics, and finally rank them. The evaluation was conducted by the first two authors during summers 2019 and 2020, as students enrolled in the Google Summer of Code program, with templates prepared by the last two authors. Due to time constraints, we restricted our evaluation to regression algorithms and ignore algorithms for classification and exotic purpose. This left us with 49 (in 2019, 60 in 2020?) pairs packages::algorithms. The criteria used in our benchmark are: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE), (ii) the speed of the training algorithm, (iii) the ease of use, (iv) the quality of the documentation.  -->
 
-All packages::algorithms were given a score for each criterion and ranked in a global table. Overall, 12/15 packages::algorithms are considered accurate and reliable and can be recommended for a daily use. 45 packages should be avoided as they are not accurate, takes too much time, are difficult to handle or have poor or even no documentation.
+<!-- All packages::algorithms were given a score for each criterion and ranked in a global table. Overall, 12/15 packages::algorithms are considered accurate and reliable and can be recommended for a daily use. 45 packages should be avoided as they are not accurate, takes too much time, are difficult to handle or have poor or even no documentation. -->
 
-Our package called NNbenchmark, the templates and the code used to test each package::algorithm are available on Github at the address github.com/  and can be used by the package authors to verify their metrics and eventually improve their package. Finally, we provide some hints and features of a dreamed neural network package that could serve as a guidance for developing the next generation of R neural network packages.
+<!-- Our package called NNbenchmark, the templates and the code used to test each package::algorithm are available on Github at the address github.com/??  and can be used by the package authors to verify their metrics and eventually improve their package. Finally, we provide some hints and features of a dreamed (??JN: an idealized) neural network package that could serve as a guidance for developing the next generation of R neural network packages. -->
 
+For the last 30 years, neural networks have evolved from an exploratory field of research to a common tool in scientific computing. Following this trend, CRAN hosts many packages that claim to provide neural network modeling. Our count in May 2020 is roughly 70 packages. How accurate and reliable are these packages and their documentation? Are there packages that perfom better and are easier to use than other packages? Are some better suited to beginners while others require expert 
+knowledge? Do these packages provide the features found in some respected proprietary software?
 
+This paper is, to our knowledge, the first attempt to test this quite large number of packages against a few datasets 
+having different levels of complexity, and to benchmark and rank them with certain metrics. The evaluation was conducted during summers 2019 and 2020 by the first two authors, as students enrolled in the Google Summer of Code, mentored by the
+other authors, with templates prepared by Dutang and Kiener. We have restricted our evaluation to regression algorithms and ignore packages for classification and specialized purposes. This still left 49 (in 2019, 60 in 2020??) package::algorithm pairs. 
+
+The criteria used in our benchmark are: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE), (ii) the speed of the training algorithm, (iii) the ease of use, (iv) the quality of the documentation. All packages::algorithms were given a score for each criterion and ranked in a global table. Overall, 12 packages incorporating 15 algorithms are considered accurate and reliable and can be recommended. The remaining packages --
+approximately 3/4 -- should, we believe, be avoided.
+
+To facilitate our work, the package NNbenchmark was developed, along with templates and code to test each package::algorithm
+pair. The materials are available at \url{https://github.com/pkR-pkR/} (JN??: Is this the one to include?). Finally, we provide some hints and features to guide the development of an idealized neural network package for R.
 
 ## Introduction
 
@@ -89,17 +100,10 @@ Our research process was divided into 3 phases.
 
 ## Phase 1 - Preparation
 
-### Datasets => NEED TO BE FINISHED
+### Datasets => NEED TO BE FINISHED??
 
-All the datasets used are nonlinear. ??JN. what do we mean by nonlinear -- it has several different uses??
-Linear data sets are more simple and can even be solved with OLS 
-(Ordinary Least Squares) regression. 
-
-?? Do we mean?
-
-All the datasets we use are nonlinear in that they cannot be modelled using a non-iterative calculation
-such as Ordinary Least Squares. In this study, we wish to test the ability of neural networks to model
-systems that are beyond the scope of linear regression. Varying levels of difficulty in modelling the
+All the datasets we use cannot generally be modelled using a non-iterative calculation
+such as Ordinary Least Squares. Varying levels of difficulty in modelling the
 different data sets are intended to allow us to further classify different algorithms and the packages
 that implement them. Sonja Surjanovic and Derek Bingham of Simon Fraser University created a useful website 
 from which three of the multivariate datasets were drawn. We note the link, name and difficulty level of 
