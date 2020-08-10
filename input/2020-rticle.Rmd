@@ -302,69 +302,68 @@ As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE)) --> see A
 
 \begin{center}
 \textbf{Table X: Ratings}
-\begin{tabular}{l l l l l l l}
-  \toprule
-  No & Name (package::algorithm)        & RMSE & DUR & UTIL & DOCS & OVERALL \\
-  \midrule
-  1  &\pkg{AMORE}::train.ADAPTgd        &      &     &      &      &         \\
-     &\pkg{AMORE}::train.ADAPTgdwm      &      &     &      &      &         \\
-     &\pkg{AMORE}::train.BATCHgd        &      &     &      &      &         \\ 
-     &\pkg{AMORE}::train.BATCHgdwm      &      &     &      &      &         \\
-  2  &\pkg{automl}                      &      &     &      &      &         \\
-  3  &\pkg{ANN2}::neuralnetwork.sgd     &      &     &      &      &         \\
-     &\pkg{ANN2}::neuralnetwork.adam    &      &     &      &      &         \\
-     &\pkg{ANN2}::neuralnetwork.rmsprop &      &     &      &      &         \\
-  4  &\pkg{brnn}                        &      &     &      &      &         \\
-  5  &\pkg{CaDENCE}                     &      &     &      &      &         \\
-  6  &\pkg{deepnet}::gradientdescent    &      &     &      &      &         \\
-  7  &\pkg{elmNNRcpp}                   &      &     &      &      &         \\
-  8  &\pkg{ELMR}                        &      &     &      &      &         \\
-  9  &\pkg{h2o}::deeplearning           &      &     &      &      &         \\
-  10 &\pkg{keras}                       &      &     &      &      &         \\
-  11 &\pkg{kerasformula}                &      &     &      &      &         \\
-  12 &\pkg{kerasR}                      &      &     &      &      &         \\
-  13 &\pkg{minpack.lm}::nlsLM           &      &     &      &      &         \\
-  14 &\pkg{MachineShop}::fit.NNetModel()&      &     &      &      &         \\
-  15 &\pkg{monmlp}::fit.BFGS            &      &     &      &      &         \\
-     &\pkg{monmlp}::fit.Nelder-Mead     &      &     &      &      &         \\
-  16 &\pkg{neural}::mlptrain            &      &     &      &      &         \\
-  17 &\pkg{neuralnet}::backprop         &      &     &      &      &         \\
-     &\pkg{neuralnet}::rprop+           &      &     &      &      &         \\
-     &\pkg{neuralnet}::rprop-           &      &     &      &      &         \\
-     &\pkg{neuralnet}::sag              &      &     &      &      &         \\
-     &\pkg{neuralnet}::slr              &      &     &      &      &         \\
-  18 &\pkg{nlsr}::nlxb                  &      &     &      &      &         \\
-  19 &\pkg{nnet}::nnet.BFGS             &      &     &      &      &         \\
-  20 &\pkg{qrnn}::qrnn.fit              &      &     &      &      &         \\
-  21 &\pkg{radiant.model}::radiant.model&      &     &      &      &         \\
-  22 &\pkg{rcane}::rlm                  &      &     &      &      &         \\
-  23 &\pkg{rminer}::fit                 &      &     &      &      &         \\
-  24 &\pkg{RSNNS}::BackpropBatch        &      &     &      &      &         \\
-     &\pkg{RSNNS}::BackpropChunk        &      &     &      &      &         \\
-     &\pkg{RSNNS}::BackpropMomentum     &      &     &      &      &         \\
-     &\pkg{RSNNS}::BackpropWeightDecay  &      &     &      &      &         \\
-     &\pkg{RSNNS}::Quickprop            &      &     &      &      &         \\
-     &\pkg{RSNNS}::Rprop                &      &     &      &      &         \\
-     &\pkg{RSNNS}::SCG                  &      &     &      &      &         \\
-     &\pkg{RSNNS}::Std-Backpropagation  &      &     &      &      &         \\
-  25 &\pkg{ruta}                        &      &     &      &      &         \\
-  26 &\pkg{simpleNeural}::sN.MLPtrain   &      &     &      &      &         \\ 
-  27 &\pkg{snnR}                        &      &     &      &      &         \\
-  28 &\pkg{softmaxreg}                  &      &     &      &      &         \\
-  29 &\pkg{tensorflow}::AdadeltaOptmizer&      &     &      &      &         \\
-     &\pkg{tensorflow}::AdagradOptmizer &      &     &      &      &         \\
-     &\pkg{tensorflow}::AdamOptmizer    &      &     &      &      &         \\
-     &\pkg{tensorflow}::FtrlOptmizer    &      &     &      &      &         \\
-     &\pkg{tensorflow}::GradientDescent &      &     &      &      &         \\
-     &\pkg{tensorflow}::MomentumOptmizer&      &     &      &      &         \\
-  30 &\pkg{tfestimators}                &      &     &      &      &         \\
-  31 &\pkg{tsensembler}                 &      &     &      &      &         \\
-  32 &\pkg{validann}::Nelder-Mead       &      &     &      &      &         \\
-     &\pkg{validann}::BFGS              &      &     &      &      &         \\
-     &\pkg{validann}::CG                &      &     &      &      &         \\
-     &\pkg{validann}::L-BFGS-B          &      &     &      &      &         \\
-     &\pkg{validann}::SANN              &      &     &      &      &         \\  
-     &\pkg{validann}::Brent             &      &     &      &      &         \\
+\begin{tabular}{ l l l l l l l}
+  No & Package::Function                & Algorithm             & RMSE & DUR & UTIL & DOCS \\
+  1  &\pkg{AMORE}                       & 1. ADAPTgd            &      &     &      &      \\
+     &::train                           & 2. ADAPTgdwm          &      &     &      &      \\
+     &                                  & 3. BATCHgd            &      &     &      &      \\ 
+     &                                  & 4. BATCHgdwm          &      &     &      &      \\
+  2  &\pkg{ANN2}                        & 5. adam               &      &     &      &      \\
+     &::neuralnetwork                   & 6. rmsprop            &      &     &      &      \\
+     &                                  & 7. sgd                &      &     &      &      \\
+  3  &\pkg{automl}                      & 8. trainwgrad.adam    &      &     &      &      \\
+     &::automl\_train\_manual           & 9. trainwgrad.RMSprop &      &     &      &      \\
+     &                                  &10. trainwpso          &      &     &      &      \\
+  4  &\pkg{brnn}::brnn                  &11. Gauss-Newton       &      &     &      &      \\
+  5  &\pkg{CaDENCE}                     &12. optim(BFGS)        &      &     &      &      \\
+     &::cadence.fit                     &13. pso::psoptim       &      &     &      &      \\
+     &                                  &14. Rprop              &      &     &      &      \\
+  6  &\pkg{caret}::avNNet               &15. nnet::optim(BFGS)  &      &     &      &      \\
+  7  &\pkg{deepdive}                    &16. adam               &      &     &      &      \\
+     &::deepnet                         &17. gradientDescent    &      &     &      &      \\
+     &                                  &18. momentum           &      &     &      &      \\ 
+     &                                  &19. rmsProp            &      &     &      &      \\
+  8  &\pkg{deepnet}::nn.train           &20. BP                 &      &     &      &      \\
+  9  &\pkg{elmNNRcpp}::elm\_train      &21. ELM                &      &     &      &      \\
+  10 &\pkg{ELMR}::OSelm\_train.formula &22. ELM                &      &     &      &      \\
+  11 &\pkg{EnsembleBase}::Regression.Batch.Fit &23. nnet::optim(BFGS) &      &     &      &      \\
+  12 &\pkg{h2o}::deeplearning           &24.                    &      &     &      &      \\
+  13 &\pkg{keras}                       &25. adadelta           &      &     &      &      \\
+     &::fit                             &26. adagrad            &      &     &      &      \\
+     &                                  &27. adam               &      &     &      &      \\
+     &                                  &28. adamax             &      &     &      &      \\ 
+     &                                  &29. nadam              &      &     &      &      \\
+     &                                  &30. rmsprop            &      &     &      &      \\ 
+     &                                  &31. sgd                &      &     &      &      \\
+  14 &\pkg{MachineShop}::fit            &32. nnet::optim(BFGS)  &      &     &      &      \\
+  15 &\pkg{minpack.lm}::nlsLM           &33. LM                 &      &     &      &      \\
+  16 &\pkg{monmlp}::fit                 &34. BFGS               &      &     &      &      \\
+     &\pkg{monmlp}::fit                 &35. Nelder-Mead        &      &     &      &      \\
+  17 &\pkg{neuralnet}::                 &36. backprop           &      &     &      &      \\
+     &::neuralnet                       &37. rprop-             &      &     &      &      \\
+     &                                  &38. rprop+             &      &     &      &      \\
+     &                                  &39. sag                &      &     &      &      \\
+     &                                  &40. slr                &      &     &      &      \\
+  18 &\pkg{nlsr}::nlxb                  &41. NashLM             &      &     &      &      \\
+  19 &\pkg{nnet}::nnet                  &42. optim(BFGS)        &      &     &      &      \\
+  20 &\pkg{qrnn}::qrnn.fit              &43. nlm()              &      &     &      &      \\
+  21 &\pkg{radiant.model}::radiant.model&45. nnet::optim(BFGS)  &      &     &      &      \\
+  22 &\pkg{rminer}::fit                 &46. nnet::optim(BFGS)  &      &     &      &      \\
+  23 &\pkg{RSNNS}::                     &47. BackpropBatch      &      &     &      &      \\
+     &\pkg{RSNNS}::                     &48. BackpropChunk      &      &     &      &      \\
+     &\pkg{RSNNS}::                     &49. BackpropMomentum   &      &     &      &      \\
+     &\pkg{RSNNS}::                     &50. BackpropWeightDecay&      &     &      &      \\
+     &\pkg{RSNNS}::                     &51. Quickprop          &      &     &      &      \\
+     &\pkg{RSNNS}::                     &52. Rprop              &      &     &      &      \\
+     &\pkg{RSNNS}::                     &53. SCG                &      &     &      &      \\
+     &\pkg{RSNNS}::                     &54. Std-Backpropagation&      &     &      &      \\
+  24 &\pkg{snnR}                        &55.                    &      &     &      &      \\
+  25 &\pkg{traineR}                     &55.                    &      &     &      &      \\
+  26 &\pkg{validann}::                  &56. BFGS               &      &     &      &      \\
+     &\pkg{validann}::                  &57. CG                 &      &     &      &      \\
+     &\pkg{validann}::                  &58. L-BFGS-B           &      &     &      &      \\
+     &\pkg{validann}::                  &59. Nelder-Mead        &      &     &      &      \\
+     &\pkg{validann}::                  &60. SANN               &      &     &      &      \\  
   \end{tabular}
 \end{center}
 
@@ -459,7 +458,7 @@ on parameters instead of just the sum of squared errors. This may prevent parame
 especially with an almost degenerated Jacobian matrix.
 
 B. Recommended: 1st order algorithms
-validann optim CG
+validann optim CG -slow
 RSNNS SCG
 h2o back-propagation
 RSNNS Rprop
