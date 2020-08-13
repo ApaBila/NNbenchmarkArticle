@@ -1,0 +1,814 @@
+% !TeX root = RJwrapper.tex
+\title{A review of R neural network packages (with NNbenchmark)\(:\) accuracy
+and ease of use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
+
+\maketitle
+
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
+
+For the last 30 years, neural networks have evolved from an academic
+topic to a common tool in scientific computing. Following this trend,
+CRAN has chosen to host many packages that claim to provide neural
+network modeling. Our count in May 2020 is roughly 70 packages. How
+accurate and reliable are these packages and their documentation? Are
+there packages that perform better in terms of accuracy? Are some better
+suited to beginners while others require expert knowledge? Do these
+packages provide the features found in some dedicated proprietary
+software?
+
+This paper is, to our knowledge, the first attempt to test this rather
+large number of packages against a few datasets with different levels of
+complexity, and to benchmark and rank them with certain metrics. We have
+restricted our evaluation to regression algorithms applied on the
+one-hidden layer perceptron and ignored those for classification or
+other specialized purposes. This left us with 49 package::algorithm
+pairs in 2019 and 60 package::algorithm pairs in 2020. The criteria used
+in our benchmark were: (i) the accuracy, i.e.~the ability to find the
+global minima on 13 datasets, measured by the Root Mean Square Error
+(RMSE) in a limited number of iterations; (ii) the speed of the training
+algorithm; (iii) the availability of helpful utilities; (iv) and the
+quality of the documentation.
+
+All package::algorithm pairs were given a score for each criterion and
+ranked in a global table. Overall, 15 package::algorithm pairs are
+considered accurate and reliable and can be recommended for daily usage.
+45 algorithms should be avoided as they are either less accurate, slow,
+difficult to handle, or have poor or no documentation.
+
+Our codes, templates, and the NNbenchmark package used to test each
+package::algorithm pair are publicly available at the address
+\url{https:://github.com/pkR-pkR/NNbenchmark}. These can be used by the
+package authors and others to verify the metrics and eventually improve
+their own package or code. Finally, we provide some hints and features
+to guide the development of an idealized neural network package for R.
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+(PK) For the last 30 years, neural networks have evolved from an
+academic topic to a common tool in scientific computing. As a
+convenience in the general conversation, the same term is used in a
+generic manner (for a shortcut to) for different model structures and
+applications: multilayer perceptron for regression, multilayer
+perceptron for classification, multilayer perceptron for specialized
+applications (mixture of models, conditional distribution, etc),
+recurrent neural network for autoregressive time series (NARMAX models),
+convolutional neural networks for dimension reduction and pattern
+recognition, deep neural networks for image or voice recognition.
+
+Most of the above types of neural networks can be found in R packages
+hosted on CRAN but without any warranty about the quality or the
+accuracy of the calculation, since CRAN has no tools to check them.
+Package users have to believe package authors who are assumed to have
+selected the best algorithms and tuned them with the appropriate
+hyperparameters. This is rather problematic with neural networks as many
+poor algorithms have been mentioned in the literature, and are probably
+implemented in a few packages.
+
+The goal of this paper is to verify the accuracy and the ease of use
+(including the quality of the documentation) of the packages hosted on
+CRAN that supply the most common neural network structure + algorithm,
+i.e.~the multilayer perceptron for regression purpose.
+
+(SB) The R Project for Statistical Computing (\url{www.r-project.org}),
+as any opensource platform, relies on its contributors to keep it up to
+date. Neural networks, based on the brain's own connections system, are
+a class of models in the growing field of machine learning forwhich R
+has a number of tools. Previously, neural networks could be considered
+more theory than practice, partly because the algorithms used are
+computationally demanding.
+
+A neural network algorithm requires complicated calculations to improve
+the model control parameters. As with other optimization problems, the
+gradient of the chosen cost function that indicates the lack of
+suitability of the model is sought. This lets us improve the model by
+changing the parameters in the negative gradient direction. Parameters
+for the model are generally obtained using part of the available data (a
+training set) and tested on the remaining data. Modern software allows
+much of this work, including approximation of the gradient, to be
+carried out without a large effort by the the user.
+
+This process can generally be made more efficient if we can also
+approximate second derivatives of the cost function, allowing us to use
+its curvature via the Hessian matrix. There are a large number of
+approaches, of which quasi-Newton algorithms are perhaps the most common
+and useful. Within this group, methods based on the
+Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the
+Hessian approximation (or its inverse) provide several well-known
+examples. In conducting this study, we believed that these second-order
+algorithms would perform better than first-order methods.
+
+Regardless of our belief, we wished to be able to conduct a thorough
+examination of these training algorithms in R. There are many packages,
+but barely any information to allow comparison. Our work, reported here,
+aims to provide a framework for benchmarking neural network packages. We
+restrict our examination to packages for R, and in this report focus on
+those that provide neural networks of the perceptron type, that is, one
+input layer, one normalized layer, one hidden layer with a nonlinear
+activation function that is usually tanh(), and one output output layer.
+
+\hypertarget{methodology}{%
+\section{Methodology}\label{methodology}}
+
+??JN: ******************************
+
+In working on material below, I think we need to provide some
+explanation of goals - What does ``convergence'' mean in our context? -
+What do we mean by RMSE, other measures? Should define here for later
+use. - What do we mean by ``performance''? Other goals?
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Our research process was divided into 3 phases.
+
+\hypertarget{phase-1---preparation}{%
+\subsection{Phase 1 - Preparation}\label{phase-1---preparation}}
+
+\hypertarget{datasets-need-to-be-finished}{%
+\subsubsection{Datasets =\textgreater{} NEED TO BE
+FINISHED??}\label{datasets-need-to-be-finished}}
+
+All the datasets we use cannot generally be modeled using a
+non-iterative calculation such as Ordinary Least Squares. Varying levels
+of difficulty in modeling the different data sets are intended to allow
+us to further classify different algorithms and the packages that
+implement them. Sonja Surjanovic and Derek Bingham of Simon Fraser
+University created a useful website from which three of the multivariate
+datasets were drawn. We note the link, name and difficulty level of the
+three datasets:\\
+- \url{http://www.sfu.ca/~ssurjano/fried.html} (Friedman - average)\\
+- \url{http://www.sfu.ca/~ssurjano/detpep10curv.html} (Dette - medium)\\
+- \url{http://www.sfu.ca/~ssurjano/ishigami.html} (Ishigami - high)\\
+The other multivariate dataset, Ref153, was taken from \ldots{}
+
+Three of the univariate datasets we used were taken from a website of
+the US National Institute for Standards and Technology (NIST):
+\url{https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml}. (Gauss1 -
+low; Gauss2 - low; Gauss3 - average)
+
+Univariate datasets Dmod1, Dmod2 are from \ldots{}
+
+Dreyfus1 is a pure neural network which has no error. This can make it
+difficult for algorithms that assume an error exists. Dreyfus2 is
+Dreyfus1 with errors. NeuroOne from \ldots{}\\
+Wood \ldots{}
+
+\hypertarget{packages}{%
+\subsubsection{Packages}\label{packages}}
+
+Using \CRANpkg{RWsearch} \citep{R-RWsearch} we sought all were able to
+automate the process. All packages that have ``neural network'' as a
+keyword in the package title or in the package description were
+included. Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added
+because \ldots{}
+
+\hypertarget{phase-2---review-of-packages-and-development-of-a-benchmarking-template}{%
+\subsection{Phase 2 - Review of packages and development of a
+benchmarking
+template}\label{phase-2---review-of-packages-and-development-of-a-benchmarking-template}}
+
+From documentation and example code, we learned that not all packages
+selected by the automated search fit the scope of our research. Some
+have no function to generate neural networks. They are simply
+meta-packages. Others were not regression neural networks of the
+perceptron type or were only intended for very specific purposes.
+
+\textbf{Template =\textgreater{} TO REVISE AFTER 2020 CODE}
+
+As we inspected the packages, we developed a template for benchmarking.
+The structure of this template (for each package) is as follows:\\
+(1) Set up the test environment - loading of packages, setting working
+directory and options;\\
+(2) Summary of datasets;\\
+(3) Loop over datasets: (a) setting parameters for a specific dataset
+(b) selecting benchmark options (c) training a neural network with a
+tuned functions for each package (d) calculation of RMSE and MAE
+(??definition, reference) (e) plot each training over one initial graph,
+then plot the best result (f) add results to the appropriate existing
+record (*.csv file) and (g) clear the environment for next loop; and\\
+(4) Clearing up the environment for the next package. (5) It is optional
+to print warnings.
+
+To simplify this process, we developed tools in the NNbenchmark package,
+of which the first version was created as part of the 2019 GSoC activity
+and later refined in the 2020 initiative. The package repository is
+\url{https://github.com/pkR-pkR/NNbenchmark}, with package templates in
+\url{https://github.com/pkR-pkR/NNbenchmarkTemplates}).
+
+\hypertarget{phase-3---collection-of-and-analysis-of-results}{%
+\subsection{Phase 3 - Collection of and analysis of
+results}\label{phase-3---collection-of-and-analysis-of-results}}
+
+\hypertarget{results-collection}{%
+\subsubsection{Results collection}\label{results-collection}}
+
+Looping over the datasets using each package template, we collected
+results in the relevant package directories in the templates repository.
+
+\hypertarget{analysis}{%
+\subsubsection{Analysis}\label{analysis}}
+
+To rank the how well a package converged and its speed, we developed the
+following method:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The results datasets are loaded into the R environment as one large
+  list. The dataset names, package:algorithm names and all 10 run
+  numbers, durations, and RMSE are extracted from that list
+\item
+  For the duration score (DUR), the duration is averaged by dataset. 3
+  criteria for the RMSE score by dataset are calculated:
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  The minimum value of RMSE for each package:algorithm as a measure of
+  their best performance
+\item
+  The median value of RMSE for each package:algorithm as a measure of
+  their average performance, without the influence of outliers
+\item
+  The spread of the RMSE values for each package which is measured by
+  the difference between the median and the minimum RMSE (d51)
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Then, the ranks are calculated for every dataset and the results are
+  merged into one wide dataframe.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  The duration rank only depends on the duration.
+\item
+  For minimum RMSE values, ties are decided by duration mean, then the
+  RMSE median
+\item
+  For median RMSE values, ties are decided by the RMSE minimum, then the
+  duration mean
+\item
+  The d51 rank only depends on itself
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  A global score for all datasets is found by a sum of the ranks (of
+  duration, minimum RMSE, median RMSE, d51 RMSE) of each
+  package:algorithm for each dataset
+\item
+  The final table is the result of ranking by the global minimum RMSE
+  scores for each package:algorithm
+\item
+  In addition to the previous metrics, two other convergence metrics
+  have been considered: the Mean Absolute Error (MAE) and the Worst
+  Absolute Error (WAE), see Appendix. The ranking on those two metrics
+  may help distinguish packages with close RMSE values. However, we do
+  not choose the MAE for overall ranking as there is no consensus in the
+  literature, see e.g.~\citep{willmott2005advantages,chai2014root}.
+\end{enumerate}
+
+To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
+- Functionality (util): scaling, input, output, trace - Documentation
+(docs): examples, structure/functions, vignettes
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\textbf{Tables} (NOTE: FINAL MEASURE FOR CONVERGENCE - RMSE RANKS? OR A
+COMBINATION OF OTHER MEASURES? As in Christophe's recent email: L1
+MAE(), L2 RMSE(), Linfinity (WAE)) --\textgreater{} see Appendix
+
+(ALSO: THE FOLLOWING IS SIMPLY ALPHABETIC LIST FOR ALL TESTED, I WILL
+DIVIDE THE TABLE INTO 4: 2nd ORDER always recommended, 1st ORDER
+recommended, 1st ORDER not recommended, untested packages)
+
+\begin{center}
+\textbf{Table 1: Review of Tested Packages}
+\begin{tabular}{ l l l l l l l}
+  No & Package::Function                & Algorithm             & RMSE & DUR & UTIL & DOCS \\
+  1  &\pkg{AMORE}                       & 1. ADAPTgd            &      &     &      &      \\
+     &::train                           & 2. ADAPTgdwm          &      &     &      &      \\
+     &                                  & 3. BATCHgd            &      &     &      &      \\ 
+     &                                  & 4. BATCHgdwm          &      &     &      &      \\
+  2  &\pkg{ANN2}                        & 5. adam               &      &     &      &      \\
+     &::neuralnetwork                   & 6. rmsprop            &      &     &      &      \\
+     &                                  & 7. sgd                &      &     &      &      \\
+  3  &\pkg{automl}                      & 8. trainwgrad.adam    &      &     &      &      \\
+     &::automl\_train\_manual           & 9. trainwgrad.RMSprop &      &     &      &      \\
+     &                                  &10. trainwpso          &      &     &      &      \\
+  4  &\pkg{brnn}::brnn                  &11. Gauss-Newton       &      &     &      &      \\
+  5  &\pkg{CaDENCE}                     &12. optim(BFGS)        &      &     &      &      \\
+     &::cadence.fit                     &13. pso::psoptim       &      &     &      &      \\
+     &                                  &14. Rprop              &      &     &      &      \\
+  6  &\pkg{caret}::avNNet               &15. nnet::optim(BFGS)  &      &     &      &      \\
+  7  &\pkg{deepdive}                    &16. adam               &      &     &      &      \\
+     &::deepnet                         &17. gradientDescent    &      &     &      &      \\
+     &                                  &18. momentum           &      &     &      &      \\ 
+     &                                  &19. rmsProp            &      &     &      &      \\
+  8  &\pkg{deepnet}::nn.train           &20. BP                 &      &     &      &      \\
+  9  &\pkg{elmNNRcpp}::elm\_train       &21. ELM                &      &     &      &      \\
+  10 &\pkg{ELMR}::OSelm\_train.formula  &22. ELM                &      &     &      &      \\
+  11 &\pkg{EnsembleBase}::Regression.Batch.Fit &23. nnet::optim(BFGS) &      &     &      &      \\
+  12 &\pkg{h2o}::deeplearning           &24.                    &      &     &      &      \\
+  13 &\pkg{keras}                       &25. adadelta           &      &     &      &      \\
+     &::fit                             &26. adagrad            &      &     &      &      \\
+     &                                  &27. adam               &      &     &      &      \\
+     &                                  &28. adamax             &      &     &      &      \\ 
+     &                                  &29. nadam              &      &     &      &      \\
+     &                                  &30. rmsprop            &      &     &      &      \\ 
+     &                                  &31. sgd                &      &     &      &      \\
+  14 &\pkg{MachineShop}::fit            &32. nnet::optim(BFGS)  &      &     &      &      \\
+  15 &\pkg{minpack.lm}::nlsLM           &33. LM                 &      &     &      &      \\
+  16 &\pkg{monmlp}::fit                 &34. BFGS               &      &     &      &      \\
+     &\pkg{monmlp}::fit                 &35. Nelder-Mead        &      &     &      &      \\
+  17 &\pkg{neuralnet}::                 &36. backprop           &      &     &      &      \\
+     &::neuralnet                       &37. rprop-             &      &     &      &      \\
+     &                                  &38. rprop+             &      &     &      &      \\
+     &                                  &39. sag                &      &     &      &      \\
+     &                                  &40. slr                &      &     &      &      \\
+  18 &\pkg{nlsr}::nlxb                  &41. NashLM             &      &     &      &      \\
+  19 &\pkg{nnet}::nnet                  &42. optim(BFGS)        &      &     &      &      \\
+  20 &\pkg{qrnn}::qrnn.fit              &43. nlm()              &      &     &      &      \\
+  21 &\pkg{radiant.model}::radiant.model&45. nnet::optim(BFGS)  &      &     &      &      \\
+  22 &\pkg{rminer}::fit                 &46. nnet::optim(BFGS)  &      &     &      &      \\
+  23 &\pkg{RSNNS}::                     &47. BackpropBatch      &      &     &      &      \\
+     &\pkg{RSNNS}::                     &48. BackpropChunk      &      &     &      &      \\
+     &\pkg{RSNNS}::                     &49. BackpropMomentum   &      &     &      &      \\
+     &\pkg{RSNNS}::                     &50. BackpropWeightDecay&      &     &      &      \\
+     &\pkg{RSNNS}::                     &51. Quickprop          &      &     &      &      \\
+     &\pkg{RSNNS}::                     &52. Rprop              &      &     &      &      \\
+     &\pkg{RSNNS}::                     &53. SCG                &      &     &      &      \\
+     &\pkg{RSNNS}::                     &54. Std-Backpropagation&      &     &      &      \\
+  24 &\pkg{snnR}                        &55.                    &      &     &      &      \\
+  25 &\pkg{traineR}                     &55.                    &      &     &      &      \\
+  26 &\pkg{validann}::                  &56. BFGS               &      &     &      &      \\
+     &\pkg{validann}::                  &57. CG                 &      &     &      &      \\
+     &\pkg{validann}::                  &58. L-BFGS-B           &      &     &      &      \\
+     &\pkg{validann}::                  &59. Nelder-Mead        &      &     &      &      \\
+     &\pkg{validann}::                  &60. SANN               &      &     &      &      \\  
+  \end{tabular}
+\end{center}
+
+(THE FOLLOWING IS JUST AN ALPHABETICALLY ORDERED LIST OF CURRENTLY
+UNTESTED PACKAGES)
+
+\begin{center}
+\textbf{Table 2: Review of Ommitted Packages}
+
+\begin{tabular}{l l l l}
+  \toprule
+  No & Name (package)         & Category & Comment \\
+  \midrule
+  1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
+     &                        &           & the amyloidfogenicity propensity of polypeptide sequences     \\
+  2  &\pkg{autoencoder}       & AP        & \\     
+  3  &\pkg{BNN}               & RE*       & \\
+  4  &\pkg{Buddle}            & RE**      & (errors) even performance on examples is bad \\
+  5  &\pkg{cld2}              & 00        & \\
+  6  &\pkg{cld3}              & AP        & \\
+  7  &\pkg{condmixt}          & AP        & \\
+  8  &\pkg{deep}              & CL        & \\
+  9  &\pkg{DALEX2}            & 00        & removed keyword, included in 2019 \\
+  10 &\pkg{DamiaNN}           & RE**      & (errors) exported functions, still doesn't work \\
+  11 &\pkg{DChaos}            & ??        & removed keyword for some reason, need to check out! \\
+  12 &\pkg{deepNN}            & RE**      & (errors) I/O weird, ragged vector array \\
+  13 &\pkg{DNMF}              & AP        & \\
+  14 &\pkg{evclass}           & CL        & \\
+  15 &\pkg{gamlss.add}        & RE        & there is some code but dist not appropriate \\
+  16 &\pkg{gcForest}          & 00        & \\
+  17 &\pkg{GMDH}              & TS        & \\
+  18 &\pkg{GMDH2}             & CL        & \\
+  19 &\pkg{GMDHreg}           & RE*       & \\
+  20 &\pkg{grnn}              & RE**      & \\
+  21 &\pkg{hybridEnsemble}    & ??        & \\ 
+  22 &\pkg{isingLenzMC}       & AP        & \\
+  23 &\pkg{leabRa}            & ??        & \\      
+  24 &\pkg{learNN}            & ??        & \\     
+  25 &\pkg{LilRhino}          & AP        & \\
+  26 &\pkg{neural}            & CL        & \\
+  27 &\pkg{NeuralNetTools}    & UT        & tools for neural networks           \\
+  28 &\pkg{NeuralSens}        & UT        & tools for neural networks           \\
+  29 &\pkg{NlinTS}            & TS        & Time Series                         \\
+  30 &\pkg{nnetpredint}       & UT        & confidence intervals for NN          \\
+  31 &\pkg{nnfor}             & TS        & Times Series, uses neuralnet         \\
+  32 &\pkg{nntrf}             & UT        & \\
+  33 &\pkg{onnx}              &           & provides an open source format       \\
+  34 &\pkg{OptimClassifier}   &           & choose classifier parameters, nnet   \\
+  35 &\pkg{OSTSC}             &           & solving oversampling classification  \\
+  36 &\pkg{passt}             &           & \\
+  36 &\pkg{pnn}               &           & Probabilistic                        \\
+  37 &\pkg{polyreg}           &           & polyregression as alternative to NN  \\
+  38 &\pkg{predictoR}         &           & shiny interface, neuralnet           \\
+  39 &\pkg{ProcData}          &           & \\
+  40 &\pkg{QuantumOps}        &           & classifies MNIST, Schuld (2018), removed keyword, in 2019 \\
+  41 &\pkg{quarrint}          &           & specified classifier for quarry data \\
+  42 &\pkg{rasclass}          &           & classifier for raster images, nnet?  \\
+  43 &\pkg{rcane}             &           & \\
+  44 &\pkg{regressoR}         &           & a manual rich version of predictoR   \\
+  45 &\pkg{rnn}               &           & Recurrent                            \\
+  46 &\pkg{RTextTools}        &           & \\
+  47 &\pkg{ruta}              &           & \\
+  48 &\pkg{simpleNeural}      &           & \\
+  49 &\pkg{softmaxreg}        &           & \\
+  50 &\pkg{Sojourn.Data}      &           & sojourn Accelerometer methods, nnet? \\
+  51 &\pkg{spnn}              &           & classifier, probabilistic            \\
+  52 &\pkg{studyStrap}        &           & \\
+  53 &\pkg{TeachNet}          &           & classifier, selfbuilt, slow          \\
+  54 &\pkg{tensorflow}        &           & \\
+  55 &\pkg{tfestimators}      &           & \\
+  56 &\pkg{trackdem}          &           & classifier for particle tracking     \\
+  57 &\pkg{TrafficBDE}        & RE*       & \\
+  58 &\pkg{tsfgrnn}           &           & \\
+  59 &\pkg{yap}               &           & \\
+  60 &\pkg{yager}             & RE*       & \\
+  61 &\pkg{zFactor}           & AP        & 'compressibility' of hydrocarbon gas \\
+\end{tabular}
+
+\end{center}
+
+\hypertarget{discussion-and-recommendations}{%
+\subsection{Discussion and
+Recommendations}\label{discussion-and-recommendations}}
+
+The following is a list of packages we included in this study, with
+brief descriptions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \CRANpkg{AMORE} \citep{R-AMORE},
+\item
+  \CRANpkg{ANN2} \citep{R-ANN2},
+\item
+  \CRANpkg{appnn} \citep{R-appnn},
+\item
+  \CRANpkg{autoencoder} \citep{R-autoencoder},
+\item
+  \CRANpkg{automl} \citep{R-automl},
+\item
+  \CRANpkg{BNN} \citep{R-BNN},
+\item
+  \CRANpkg{brnn} \citep{R-brnn},
+\item
+  \CRANpkg{Buddle} \citep{R-Buddle},
+\item
+  \CRANpkg{CaDENCE} \citep{R-CaDENCE},
+\item
+  \CRANpkg{cld2} \citep{R-cld2},
+\item
+  \CRANpkg{cld3} \citep{R-cld3},
+\item
+  \CRANpkg{condmixt} \citep{R-condmixt},
+\item
+  \CRANpkg{DamiaNN} \citep{R-DamiaNN},
+\item
+  \CRANpkg{deep} \citep{R-deep},
+\item
+  \CRANpkg{deepdive} \citep{R-deepdive},
+\item
+  \CRANpkg{deepnet} \citep{R-deepnet},
+\item
+  \CRANpkg{deepNN} \citep{R-deepNN},
+\item
+  \CRANpkg{DNMF} \citep{R-DNMF},
+\item
+  \CRANpkg{elmNNRcpp} \citep{R-elmNNRcpp},
+\item
+  \CRANpkg{ELMR} \citep{R-ELMR},
+\item
+  \CRANpkg{EnsembleBase} \citep{R-EnsembleBase},
+\item
+  \CRANpkg{evclass} \citep{R-evclass},
+\item
+  \CRANpkg{gamlss.add} \citep{R-gamlss.add},
+\item
+  \CRANpkg{gcForest} \citep{R-gcForest},
+\item
+  \CRANpkg{GMDH} \citep{R-GMDH},
+\item
+  \CRANpkg{GMDH2} \citep{R-GMDH2},
+\item
+  \CRANpkg{GMDHreg} \citep{R-GMDHreg},
+\item
+  \CRANpkg{gnn} \citep{R-gnn},
+\item
+  \CRANpkg{grnn} \citep{R-grnn},
+\item
+  \CRANpkg{h2o} \citep{R-h2o},
+\item
+  \CRANpkg{hybridEnsemble} \citep{R-hybridEnsemble},
+\item
+  \CRANpkg{isingLenzMC} \citep{R-isingLenzMC},
+\item
+  \CRANpkg{keras} \citep{R-keras},
+\item
+  \CRANpkg{kerasR} \citep{R-kerasR},
+\item
+  \CRANpkg{leabRa} \citep{R-leabRa},
+\item
+  \CRANpkg{learNN} \citep{R-learNN},
+\item
+  \CRANpkg{LilRhino} \citep{R-LilRhino},
+\item
+  \CRANpkg{minpack.lm} \citep{R-minpack.lm},
+\item
+  \CRANpkg{MachineShop} \citep{R-MachineShop},
+\item
+  \CRANpkg{monmlp} \citep{R-monmlp},
+\item
+  \CRANpkg{neural} \citep{R-neural},
+\item
+  \CRANpkg{neuralnet} \citep{R-neuralnet},
+\item
+  \CRANpkg{NeuralNetTools} \citep{R-NeuralNetTools},
+\item
+  \CRANpkg{NeuralSens} \citep{R-NeuralSens},
+\item
+  \CRANpkg{NlinTS} \citep{R-NlinTS},
+\item
+  \CRANpkg{nlsr} \citep{R-nlsr},
+\item
+  \CRANpkg{nnet} \citep{R-nnet},
+\item
+  \CRANpkg{nnetpredint} \citep{R-nnetpredint},
+\item
+  \CRANpkg{nnfor} \citep{R-nnfor},
+\item
+  \CRANpkg{nntrf} \citep{R-nntrf},
+\item
+  \CRANpkg{nnli2bRcpp} \citep{R-nnlib2Rcpp},
+\item
+  \CRANpkg{onnx} \citep{R-onnx},
+\item
+  \CRANpkg{OptimClassifier} \citep{R-OptimClassifier},
+\item
+  \CRANpkg{OSTSC} \citep{R-OSTSC},
+\item
+  \CRANpkg{pnn} \citep{R-pnn},
+\item
+  \CRANpkg{polyreg} \citep{R-polyreg},
+\item
+  \CRANpkg{predictoR} \citep{R-predictoR},
+\item
+  \CRANpkg{qrnn} \citep{R-qrnn},
+\item
+  \CRANpkg{QuantumOps} \citep{R-QuantumOps},
+\item
+  \CRANpkg{quarrint} \citep{R-quarrint},
+\item
+  \CRANpkg{radiant.model} \citep{R-radiant.model},
+\item
+  \CRANpkg{rasclass} \citep{R-rasclass},
+\item
+  \CRANpkg{rcane} \citep{R-rcane},
+\item
+  \CRANpkg{regressoR} \citep{R-regressoR},
+\item
+  \CRANpkg{rminer} \citep{R-rminer},
+\item
+  \CRANpkg{rnn} \citep{R-rnn},
+\item
+  \CRANpkg{RSNNS} \citep{R-RSNNS},
+\item
+  \CRANpkg{ruta} \citep{R-ruta},
+\item
+  \CRANpkg{simpleNeural} \citep{R-simpleNeural},
+\item
+  \CRANpkg{snnR} \citep{R-snnR},
+\item
+  \CRANpkg{softmaxreg} \citep{R-softmaxreg},
+\item
+  \CRANpkg{Sojourn.Data} \citep{R-Sojourn.Data},
+\item
+  \CRANpkg{spnn} \citep{R-spnn},
+\item
+  \CRANpkg{TeachNet} \citep{R-TeachNet},
+\item
+  \CRANpkg{tensorflow} \citep{R-tensorflow},
+\item
+  \CRANpkg{tfestimators} \citep{R-tfestimators},
+\item
+  \CRANpkg{trackdem} \citep{R-trackdem},
+\item
+  \CRANpkg{TrafficBDE} \citep{R-TrafficBDE},
+\item
+  \CRANpkg{tsensembler} \citep{R-tsensembler},
+\item
+  \CRANpkg{validann} \citep{R-validann},
+\item
+  \CRANpkg{zFactor} \citep{R-zFactor}.
+\item
+\item
+\item
+\item
+\item
+\item
+\item
+\end{enumerate}
+
+A. Recommended: 2nd order algorithms Out of all the algorithms, these
+second algorithms generally performed better in terms of convergence
+despite being set to a much lower number of iterations, 200, than the
+first-order algorithms. Moreover, they performed better in terms of
+speed. The best in this class were. \CRANpkg{minpack.lm} and.
+\CRANpkg{nlsr}, tied at rank number 1. The Levenberg-Marquardt (LM)
+algorithm used is fast and converges well. stats::nls() is used.
+However, these packages require a handwritten formula that may not be
+ideal for certain situations. A more popular package for neural networks
+is nnet. This might be because it is part of base R. It implements the
+BFGS algorithm with stats::optim().
+
+Ranked directly after are some packages that depend on nnet or use the
+same functions. They differ in how well they decide initial parameters.
+rminer (rank 4), MachineShop (rank 5), and radiant.model (rank 7) use
+nnet. Note, radiant.model has its iterations set to 10000, which
+originally made it slower yet converge better. We used a modified
+version of the package. At rank 6 is validann's BFGS algorithm using
+stats::optim(). Its use of optim's L-BFGS-B ranked at number 9 with
+CaDENCE's use of optim's BFGS.. \CRANpkg{monmlp}, from the same author
+as CaDENCE (Alex Cannon), uses the package. \CRANpkg{optimx}'s BFGS
+\citep{R-optimx}.
+
+Alex Cannon also implemented a quantile regression neural network in
+qrnn with stats::nlm(). It requires more iterations and is not as fast
+compared to the other second-order algorithms. However, it is a valuable
+implementation of quantile regression. Last but not least is
+\CRANpkg{brnn}'s Gauss Newton algorithm which ranks at number 8. brnn is
+easy to use but does not converge as well due to a hidden constraint: a
+missing first parameter. Furthermore, brnn's algorithm minimizes the sum
+of squared errors and a penalty on parameters instead of just the sum of
+squared errors. This may prevent parameters to get highly correlated,
+especially with an almost degenerated Jacobian matrix.
+
+B. Recommended: 1st order algorithms validann optim CG -slow RSNNS SCG
+h2o back-propagation RSNNS Rprop ANN2 adam CaDENCE Rprop -SLOW deepnet
+BP AMORE ADAPTgdwm AMORE ADAPTgd ANN2 sgd automl trainwgrad ANN2 rmsprop
+RSNNS BackpropChunk RSNNS BackWeightDecay RSNNS Std\_Backpropagation
+RSNNS BackpropMomentum automl trainwpso validann optim NelderMead snnR
+Semi Smooth Newton RSNNS BackpropBatch validann optim SANN monmlp optimx
+Nelder Mead
+
+C. Not recommended: 1st order algorithms \textless- DISCUSS CUTOFF By
+package ELMR, elmNNRcpp - fast ELM algorithms. Unfortunately, can't
+finetune, does not converge well. neuralnet: a large ammount of
+iterations, slow, erratic failures tensorflow: NOT EASY TO USE,
+subsequently keras, tfestimators, ruta \ldots{} user needs to understand
+the language However, advanced users might be able to highly specify a
+neural network to their needs (customization?)
+
+By algorithm: neuralnet rprop+ neuralnet rprop- neuralnet slr - once
+ranked well with 100000 iterations AMORE BATCHgd CaDENCE pso psoptim -
+need to reconfigure? elmNNRcpp - fast, no iterations RSNNS Quickprop (?)
+AMORE BATCHgdwm tensorflow MomentumOptimizer tensorflow AdamOptimizer
+ELMR - fast, no iterations tensorflow GradientDescentOptimizer keras
+rmsprop keras adagrad keras sgd keras adadelta tensorflow
+AdagradOptimizer keras adam tensorflow FtrlOptimizer neuralnetwork sag
+tensorflow AdadeltaOptimizer neuralnet backprop - note, might not
+actually reflect standings, somehow from template to template the
+learning rate disappeared. Will fix this in future runs
+
+D. Untested =\textgreater{} TO DO - LIST
+
+\hypertarget{conclusion-to-do-after-2020-code}{%
+\subsection{Conclusion =\textgreater{} TO DO AFTER 2020
+CODE}\label{conclusion-to-do-after-2020-code}}
+
+??JN: Can we start to put in some major findings? i.e., important
+positive findings, big negatives?
+
+\hypertarget{positives-no-particular-order}{%
+\subsubsection{Positives (no particular
+order)}\label{positives-no-particular-order}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  the existence of algorithms that converge well
+\item
+  nnet, which uses optim's BFGS, is already often chosen to represent
+  neural networks for packages that are either a collection of
+  independent machine learning algorithms, ensembles, or even
+  applications in a field such as \ldots{}
+\item
+  the wide variety of neural networks available to users of R, from
+  libraries of other programming languages to many different types of
+  algorithms, hyperparameters, and uses
+\end{enumerate}
+
+\hypertarget{negatives-no-particular-order}{%
+\subsubsection{Negatives (no particular
+order)}\label{negatives-no-particular-order}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  bad documentation
+\item
+  the lack of packages that expand the number of unique second order
+  algorithms. (Perhaps even the existence of what can be considered as
+  repetitive packages?)
+\item
+  the lack of clear default values, or bad default values
+\end{enumerate}
+
+\hypertarget{future-work}{%
+\subsection{Future work}\label{future-work}}
+
+As the field of neural networks continue to grow, there will always be
+more algorithms to validate. For current algorithms in R, our research
+should be extended to encompass more types of neural networks and their
+data formats (classifier neural networks, recurrent neural networks, and
+so on). Different rating schemes and different parameters for package
+functions can also be tried out.
+
+\hypertarget{acknowledgements}{%
+\subsection{Acknowledgements}\label{acknowledgements}}
+
+This work was possible due to the support of the Google Summer of Code
+initiative for R during years 2019 and 2020. Students Salsabila Mahdi
+(2019 and 2020) and Akshaj Verma (2019) are grateful to Google for the
+financial support.
+
+\bibliography{RJreferences}
+
+\begin{itemize}
+\tightlist
+\item
+  The dreamed NN package: Recommendation to package authors
+\item
+  Conclusion
+\item
+  Acknowledgments
+\end{itemize}
+
+For the acknowledgments, maybe : « » + later some acknowledgments to the
+referees.
+
+How do we proceed?
+
+\hypertarget{appendix-a}{%
+\subsection{Appendix A}\label{appendix-a}}
+
+Consider a set of observations \(y_i\) and its corresponding predictions
+\(\hat y_i\) for \(i=1,\dots,n\). The three metrics used were: \[
+MAE = \frac1n\sum_{i=1}^n|y_i - \hat y_i|,~
+RMSE = \frac1n\sqrt{\sum_{i=1}^n(y_i - \hat y_i)^2},~
+WAE = \frac1n\max_{i=1,\dots,n}|y_i - \hat y_i|.
+\] These values represent the absolute, the squared and the maximum norm
+of residual vectors.
+
+
+\address{%
+Salsabila Mahdi\\
+Universitas Syiah Kuala\\
+JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia\\
+}
+\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}
+
+\address{%
+Akshaj Verma\\
+Manipal Institute of Technology\\
+Manipal, Karnataka, 576104, India\\
+}
+\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}
+
+\address{%
+Christophe Dutang\\
+University Paris-Dauphine, University PSL, CNRS, CEREMADE\\
+Place du Maréchal de Lattre de Tassigny, 75016 Paris, France\\
+}
+\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
+
+\address{%
+Patrice Kiener\\
+InModelia\\
+5 rue Malebranche, 75005 Paris, France\\
+}
+\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}
+
+\address{%
+John C. Nash\\
+Telfer School of Management, University of Ottawa\\
+55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
+}
+\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
+
