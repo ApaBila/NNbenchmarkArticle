@@ -176,7 +176,8 @@ have no function to generate neural networks. They are simply
 meta-packages. Others were not regression neural networks of the
 perceptron type or were only intended for very specific purposes.
 
-\textbf{Template =\textgreater{} TO REVISE AFTER 2020 CODE}
+\textbf{Templates for Testing Accuracy and Speed =\textgreater{} TO
+REVISE AFTER 2020 CODE}
 
 As we inspected the packages, we developed a template for benchmarking.
 The structure of this template (for each package) is as follows:\\
@@ -197,6 +198,63 @@ of which the first version was created as part of the 2019 GSoC activity
 and later refined in the 2020 initiative. The package repository is
 \url{https://github.com/pkR-pkR/NNbenchmark}, with package templates in
 \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}).
+
+\textbf{Metrics for Ease of Use}
+
+We decided ease of use based on what we considered a user would need
+when using a neural network package for nonlinear regression, namely,
+utility functions and sufficient documentation.
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  Utilities (1 star)
+
+  \begin{enumerate}
+  \def\labelenumii{(\alph{enumii})}
+  \tightlist
+  \item
+    a predict function exists\\
+  \item
+    scaling capabilities exist
+  \end{enumerate}
+\item
+  Sufficient documentation (2 stars)
+
+  \begin{enumerate}
+  \def\labelenumii{(\alph{enumii})}
+  \tightlist
+  \item
+    the existence of useful example/vignette (1 star)
+
+    \begin{itemize}
+    \tightlist
+    \item
+      clear, with regression = 2 points
+    \item
+      unclear, examples use iris or are for classification only = 1
+      point
+    \item
+      no examples = 0 points
+    \end{itemize}
+  \item
+    input/output is clearly documented, e.g., what values are expected
+    and returned by a function (1 star)
+
+    \begin{itemize}
+    \tightlist
+    \item
+      clear input and output = 2 points
+    \item
+      only one is clear = 1 point
+    \item
+      both are not documented = 0 points
+    \end{itemize}
+  \end{enumerate}
+\end{enumerate}
+
+For a total of 0 to 3 stars.
 
 \hypertarget{phase-3---collection-of-and-analysis-of-results}{%
 \subsection{Phase 3 - Collection of and analysis of

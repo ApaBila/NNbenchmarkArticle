@@ -132,7 +132,7 @@ search fit the scope of our research. Some have no function to generate neural n
 are simply meta-packages. Others were not regression neural networks of the perceptron type or 
 were only intended for very specific purposes. 
 
-**Template => TO REVISE AFTER 2020 CODE**  
+**Templates for Testing Accuracy and Speed => TO REVISE AFTER 2020 CODE**  
 
 As we inspected the packages, we developed a template for benchmarking. The structure of this
 template (for each package) is as follows:  
@@ -153,6 +153,27 @@ To simplify this process, we developed tools in the NNbenchmark package, of whic
 was created as part of the 2019 GSoC activity and later refined in the 2020 initiative. The package 
 repository is https://github.com/pkR-pkR/NNbenchmark, with package templates 
 in https://github.com/pkR-pkR/NNbenchmarkTemplates).
+
+**Metrics for Ease of Use**
+
+We decided ease of use based on what we considered a user would need when using a neural network 
+package for nonlinear regression, namely, utility functions and sufficient documentation. 
+
+(1) Utilities (1 star)
+    (a) a predict function exists  
+    (b) scaling capabilities exist
+(2) Sufficient documentation (2 stars)
+    (a) the existence of useful example/vignette (1 star)
+        - clear, with regression = 2 points
+        - unclear, examples use iris or are for classification only = 1 point
+        - no examples = 0 points
+    (b) input/output is clearly documented, e.g., what values are expected and returned 
+    by a function (1 star)
+        - clear input and output = 2 points
+        - only one is clear = 1 point
+        - both are not documented = 0 points
+
+For a total of 0 to 3 stars.
 
 ## Phase 3 - Collection of and analysis of results
 
