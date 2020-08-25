@@ -42,8 +42,9 @@ output: rticles::rjournal_article
 For the last 30 years, neural networks have evolved from an academic topic to a common tool in scientific computing. Following this trend, CRAN has chosen to host many packages that claim to provide neural network modeling. Our count in May 2020 is roughly 70 packages. How accurate and reliable are these packages and their documentation? Are there packages that perform better in terms of accuracy? Are some better suited to beginners while others require expert knowledge? Do these packages provide the features found in some dedicated proprietary software?
 <!-- ??B: ... roughly 70 packages - are we counting those based on the RWsearch or? -->
 
-This paper is, to our knowledge, the first attempt to test this rather large number of packages against a few datasets with different levels of complexity, and to benchmark and rank them with certain metrics.  We have restricted our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignored those for classification or other specialized purposes. This left us with 49 package::algorithm pairs in 2019 and 60 package::algorithm pairs in 2020. The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a limited number of iterations; (ii) the speed of the training algorithm; (iii) the availability of helpful utilities; (iv) and the quality of the documentation.
-<!-- ??B: is it a good idea to talk about 2019 results in the abstract? Wouldn't that be confusing? -->
+This paper is, to our knowledge, the first attempt to test this rather large number of packages against a same set of <!--CD -->
+datasets with different levels of complexity, and to benchmark and rank them with certain metrics.  We have restricted our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignored those for classification or other specialized purposes. This left us with 49 package::algorithm pairs in 2019 and 60 package::algorithm pairs in 2020. The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a limited number of iterations; (ii) the speed of the training algorithm; (iii) the availability of helpful utilities; (iv) and the quality of the documentation.
+<!-- ??B: is it a good idea to talk about 2019 results in the abstract? Wouldn't that be confusing? => Yes only 2020 GSoC matters in abstract CD -->
 
 All package::algorithm pairs were given a score for each criterion and ranked in a global table. Overall, 15 package::algorithm pairs are considered accurate and reliable and can be recommended for daily usage. 45 algorithms should be avoided as they are either less accurate, slow, difficult to handle, or have poor or no documentation.
 
@@ -65,6 +66,9 @@ To carry out this work, we developed various codes and templates, as well as the
 This material is available at the address https:://github.com/pkR-pkR/NNbenchmark, and can be used to verify our work
 and, we hope, improve both packages and their evaluation. Finally, we provide some hints and features to guide the 
 development of an idealized neural network package for R.
+
+
+<!-- CD : I prefer the alternative abstract-->
 
 ## Introduction
 
@@ -89,6 +93,7 @@ This process can generally be made more efficient if we can also approximate sec
 Regardless of our belief, we wished to be able to conduct a thorough examination of 
 these training algorithms in R. There are many packages, but barely any information to allow comparison. Our work, reported here, aims to provide a framework for benchmarking neural network packages. We restrict our examination to packages for R, and in this report focus on those that provide neural networks of the perceptron type, that is, one input layer, one normalized layer, one hidden layer with a nonlinear activation function that is usually tanh(), and one output output layer. 
 
+<!-- CD : I can try a mix of the two introductions if you want? -->
 
 # Methodology
 
@@ -104,7 +109,7 @@ In working on material below, I think we need to provide some explanation of goa
 
 Our research process was divided into 3 phases.
 
-## Phase 1 - Preparation
+## Phase 1 - Preparation of benchmark datasets
 
 ### Datasets => NEED TO BE FINISHED??
 
@@ -128,7 +133,17 @@ Univariate datasets Dmod1, Dmod2 are from ...
 Dreyfus1 is a pure neural network which has no error. This can make it difficult for algorithms 
 that assume an error exists. Dreyfus2 is Dreyfus1 with errors.
 NeuroOne  from ...  
-Wood ...
+
+Finally, we also consider a Simon Wood test dataset, used in 
+\citep{wood2011fast} for benchmarking generalized additive models. 
+Precisely, we consider a generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ with the mean $\mu_i$ defined as
+$$
+\mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
++f_4(x_{i,4})+f_0(x_{i,5})
+$$
+and standard deviation $\sigma=1/4$ where $f_j$ are Simon Wood's smooth 
+functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
+
 
 ### Packages
 
@@ -281,6 +296,14 @@ As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE)) --> see A
   20 &\pkg{qrnn}::qrnn.fit              &43. nlm()              &      &     &      &      \\
   21 &\pkg{radiant.model}::radiant.model&45. nnet::optim(BFGS)  &      &     &      &      \\
   22 &\pkg{rminer}::fit                 &46. nnet::optim(BFGS)  &      &     &      &      \\
+  \end{tabular}
+\end{center}
+  
+\begin{center}
+\textbf{Table 1: Review of Tested Packages}
+\begin{tabular}{ l l l l l l l}
+  No & Package::Function                & Algorithm             & RMSE & DUR & UTIL & DOCS \\
+  
   23 &\pkg{RSNNS}::                     &47. BackpropBatch      &      &     &      &      \\
      &\pkg{RSNNS}::                     &48. BackpropChunk      &      &     &      &      \\
      &\pkg{RSNNS}::                     &49. BackpropMomentum   &      &     &      &      \\
@@ -606,3 +629,17 @@ RMSE = \frac1n\sqrt{\sum_{i=1}^n(y_i - \hat y_i)^2},~
 WAE = \frac1n\max_{i=1,\dots,n}|y_i - \hat y_i|.
 $$
 These values represent the absolute, the squared and the maximum norm of residual vectors.
+
+## Appendix B
+
+We define three smooth functions for Simon Wood's test dataset
+$$
+f_0=5*\sin(2\pi x),~
+f_1=exp(3*x)-7
+f_2=0.5 x^{11}*(10(1 - x))^6 - 10 (10*x)^3*(1 - x)^{10},~
+$$
+$$
+f_3=15 \exp(-5 |x-1/2|)-6,~
+f_4=2-1_{(x <= 1/3)}(6*x)^3 - 1_{(x >= 2/3)} (6-6*x)^3 - 
+1_{(2/3 > x > 1/3)}(8+2\sin(9*(x-1/3)\pi)).
+$$
