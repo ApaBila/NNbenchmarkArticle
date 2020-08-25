@@ -54,6 +54,17 @@ Our codes, templates, and the NNbenchmark package used to test each package::alg
 
 <!-- ??B: I think the abstract provided by Patrice has some pros over Josh's at the top. I think it's worth dicussing what should be said in the abstract, and what should be said in the intro/elsewhere -->
 
+## Alternative abstract
+
+In the last three decades, neural networks have evolved from academic topic to common scientific computing tool. CRAN hosts approximately 70 packages involving neural network modeling, some offering more than one algorithm. In this we attempt to test this rather large number of packages against a few datasets with different levels of complexity, and to benchmark and rank them with certain metrics.  Restricting
+our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignoring those for classification or other specialized purposes, we still have approximately 60 package::algorithm pairs. The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a limited number of iterations; (ii) the speed of the training algorithm; (iii) the availability of helpful utilities; (iv) and the quality of the documentation.
+
+We have attempted to give a score for each evaluation criterion and to rank each package::algorithm pair in a global table. Overall, 15 pairs are considered accurate and reliable and can be recommended for daily usage. Most others should be avoided as they are either less accurate, slow, difficult to handle, or have poor or no documentation.
+
+To carry out this work, we developed various codes and templates, as well as the NNbenchmark package used for testing.
+This material is available at the address https:://github.com/pkR-pkR/NNbenchmark, and can be used to verify our work
+and, we hope, improve both packages and their evaluation. Finally, we provide some hints and features to guide the 
+development of an idealized neural network package for R.
 
 ## Introduction
 
