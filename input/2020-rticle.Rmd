@@ -48,30 +48,40 @@ development of an idealized neural network package for R.
 ## Introduction
 
 
-<!-- (PK)  -->
-(PK) For the last 30 years, neural networks have evolved from an academic topic to a common tool in scientific computing. As a convenience in the general conversation, the same term is used in a generic manner (for a shortcut to) for different model structures and applications: multilayer perceptron for regression, multilayer perceptron for classification, multilayer perceptron for specialized applications (mixture of models, conditional distribution, etc), recurrent neural network for autoregressive time series (NARMAX models), convolutional neural networks for dimension reduction and pattern recognition, deep neural networks for image or voice recognition.
+The R Project for Statistical Computing (\url{www.r-project.org}), as any opensource platform, relies on its contributors to keep it up to date. 
+Neural networks (NN), inspired on the brain's own connections system, are a class of models in the growing field of machine learning forwhich R has a number of tools.
+During the last 30 years, neural networks have evolved from an academic topic to a common tool in scientific computing.
+Previously, neural networks were considered more theory than practice, partly because the algorithms used were computationally demanding. 
 
-Most of the above types of neural networks can be found in R packages hosted on CRAN but without any warranty about the quality or the accuracy of the calculation, since CRAN has no tools to check them. Package users have to believe package authors who are assumed to have selected the best algorithms and tuned them with the appropriate hyperparameters. This is rather problematic with neural networks as many poor algorithms have been mentioned in the literature, and are probably implemented in a few packages.
+As a convenience in the general conversation, the same term is used in a generic manner for different model structures and applications: multilayer perceptron for regression, multilayer perceptron for classification, multilayer perceptron for specialized applications, recurrent neural network for autoregressive time series, convolutional neural networks for dimension reduction and pattern recognition, deep neural networks for image or voice recognition.
+Most of the above types of neural networks can be found in R packages hosted on CRAN but without any warranty about the accuracy or the speed of computation.
+This is an issue as many poor algorithms are available in the literature and hence poor packages implemented on CRAN.
 
-The goal of this paper is to verify the accuracy and the ease of use (including the quality of the documentation) of the packages hosted on CRAN that supply the most common neural network structure + algorithm, i.e. the multilayer perceptron for regression purpose. 
+A neural network algorithm requires complicated calculations to improve the model control parameters. As with other optimization problems, the gradient of the chosen cost function that indicates the lack of suitability of the model is sought. 
+This lets us improve the model by changing the parameters in the negative gradient direction. Parameters for the model are generally obtained using part of the available data (a training set) and tested on the remaining data. 
+Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the the user. 
 
-
-
-
-<!-- (SB)  -->
-(SB) The R Project for Statistical Computing (\url{www.r-project.org}), as any opensource platform, relies on its contributors to keep it up to date. Neural networks, based on the brain's own connections system, are a class of models in the growing field of machine learning forwhich R has a number of tools. Previously, neural networks could be considered more theory than practice, partly because the algorithms used are computationally demanding. 
-
-A neural network algorithm requires complicated calculations to improve the model control parameters. As with other optimization problems, the gradient of the chosen cost function that indicates the lack of suitability of the model is sought. This lets us improve the model by changing the parameters in the negative gradient direction. Parameters for the model are generally obtained using part of the available data (a training set) and tested on the remaining data. Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the the user. 
-
-This process can generally be made more efficient if we can also approximate second derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. Within this group, methods based on the Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the Hessian approximation (or its inverse) provide several well-known examples. In conducting this study, we believed that these second-order algorithms would perform better than first-order methods. 
+The training process can generally be made more efficient if we can also approximate second derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
+There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. 
+Within this group, methods based on the Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the (inverse) Hessian approximation provide several well-known examples. 
+In conducting this study, we believed that these second-order algorithms would perform better than first-order methods for fit-in-memory datasets. 
 
 Regardless of our belief, we wished to be able to conduct a thorough examination of 
-these training algorithms in R. There are many packages, but barely any information to allow comparison. Our work, reported here, aims to provide a framework for benchmarking neural network packages. We restrict our examination to packages for R, and in this report focus on those that provide neural networks of the perceptron type, that is, one input layer, one normalized layer, one hidden layer with a nonlinear activation function that is usually tanh(), and one output output layer. 
+these training algorithms in R. 
+There are many packages, but barely any information to allow comparison. 
+Our work, reported here, aims to provide a framework for benchmarking neural network packages. 
+We restrict our examination to packages for R, and in this report focus on those that provide neural networks of the perceptron type, that is, one input layer, one normalized layer, one hidden layer with a nonlinear activation function that is usually the hyperbolic tangent tanh(), and one output output layer. 
+The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets in a limited number of iterations; (ii) the speed of the training algorithm; (iii) the availability of helpful utilities; (iv) and the quality of the documentation.
+We restricted our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignored those for classification or other specialized purposes. 
+
 
 <!-- CD : I can try a mix of the two introductions if you want? -->
 <!-- SB : Yes, please -->
 
 # Methodology
+
+
+
 
 ??JN: ******************************
 
@@ -79,6 +89,8 @@ In working on material below, I think we need to provide some explanation of goa
 - What does "convergence" mean in our context?
 - What do we mean by RMSE, other measures? Should define here for later use.
 - What do we mean by "performance"? Other goals?
+
+As a reminder, RMSE and other convergence metrics are defined in Appendix A.
 
 *************************************
 
@@ -124,10 +136,12 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 ### Packages
 
 Using \CRANpkg{RWsearch} \citep{R-RWsearch} we sought to automate the process of searching for neural network packages. 
-All packages that have "neural network" as a keyword in the package title or in the package description 
-were included. Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added because the former 2 are 
-important implementations of second-order algorithms while the latter is the first cited meta package in 
-the CRAN's task view for machine learning as well as the dependency for some of the other packages tested. 
+All packages that have "neural network" as a keyword in the package title or in the package description were included. 
+In May 2020, around 80 packages falls into this category.
+Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added because the former 2 are important implementations of second-order algorithms while the latter is the first cited meta package in 
+the CRAN's task view for machine learning, 	https://CRAN.R-project.org/view=MachineLearning, as well as the dependency for some of the other packages tested. 
+Restricting to regression analysis left us with 49 package::algorithm pairs in 2019 and 60 package::algorithm pairs in 2020.
+
 
 ## Phase 2 - Review of packages and development of a benchmarking template
 
@@ -227,7 +241,7 @@ d.	The d51 rank only depends on itself
 4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE,  d51 RMSE) of each package:algorithm for each dataset
 5.	The final table is the result of ranking by the global minimum RMSE scores for each package:algorithm
 6. In addition to the previous metrics, two other convergence metrics have been considered:
-the Mean Absolute Error (MAE) and the Worst Absolute Error (WAE), see Appendix. The ranking on
+the Mean Absolute Error (MAE) and the Worst Absolute Error (WAE), see Appendix A. The ranking on
 those two metrics may help distinguish packages with close RMSE values. 
 However, we do not choose the MAE for overall ranking as there is no consensus in the literature, 
 see e.g. \citep{willmott2005advantages,chai2014root}.
@@ -584,19 +598,22 @@ tensorflow AdadeltaOptimizer
 neuralnet backprop - note, might not actually reflect standings, somehow from template to template the learning rate disappeared. Will fix this in future runs
 
 
+<!-- For the comments per package, I suggest one small text per package, at least for the best 12/15 packages, and some text for the significant bad or painful packages like tensorflow, keras, h2o. etc. -->
+
+
 D. Untested => TO DO - LIST
 
-## Conclusion => TO DO AFTER 2020 CODE
+# Conclusion and perspective
 
 ??JN: Can we start to put in some major findings? i.e., important positive findings,
 big negatives?
 
-### Positives (no particular order)
+## Positives (no particular order)
 1. the existence of algorithms that converge well
 2. nnet, which uses optim's BFGS, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ...
 3. the wide variety of neural networks available to users of R, from libraries of other programming languages to many different types of algorithms, hyperparameters, and uses
 
-### Negatives (no particular order)
+## Negatives (no particular order)
 1. bad documentation
 2. the lack of packages that expand the number of unique second order algorithms. (Perhaps even the existence of what can be considered as repetitive packages?)
 3. the lack of clear default values, or bad default values
@@ -607,23 +624,22 @@ For current algorithms in R, our research should be extended to encompass more t
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
 
+- The dreamed NN package: Recommendation to package authors
+- Conclusion
+
+
 ## Acknowledgements
 This work was possible due to the support of the Google Summer of Code initiative for R
 during years 2019 and 2020.
 Students Salsabila Mahdi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
 Google for the financial support.
+<!-- For the acknowledgments, maybe : «  » + later some acknowledgments to the referees. -->
+
 
 \bibliography{RJreferences}
 
-- The dreamed NN package: Recommendation to package authors
-- Conclusion
-- Acknowledgments
 
-<!-- For the comments per package, I suggest one small text per package, at least for the best 12/15 packages, and some text for the significant bad or painful packages like tensorflow, keras, h2o. etc. -->
-
-For the acknowledgments, maybe : «  » + later some acknowledgments to the referees.
-
-How do we proceed?
+# Appendix
 
 ## Appendix A
 
