@@ -26,9 +26,10 @@ preamble: |
 output: rticles::rjournal_article
 ---
 ## Abstract
+
 In the last three decades, neural networks (NN) have evolved from an academic topic to a common scientific computing tool. 
 CRAN currently hosts approximately 80 packages in May 2020 involving neural network modeling, some offering more than one algorithm. 
-However, to our knowledge, there is no comprehensive study which check the accuracy, the reliability
+However, to our knowledge, there is no comprehensive study which checks the accuracy, the reliability
 and the ease-of-use of those NN packages.
 
 In this paper, we attempted to test this rather large number of packages against the common set of datasets with different levels of complexity, and to benchmark and rank them with certain metrics.
@@ -80,15 +81,34 @@ We restricted our evaluation to regression algorithms applied on the one-hidden 
 
 # Methodology
 
-
-
-
 ??JN: ******************************
 
 In working on material below, I think we need to provide some explanation of goals
 - What does "convergence" mean in our context?
+
+??JN: Something like
+
+In training neural network models we attempt to adjust a set of parameters so that an objective function 
+is minimized. When our method for such adjustment can no longer reduce the objective, we say that we
+have converged. However, practical methods require that we terminate the optimization process in 
+exceptional situations (e.g., a divide by zero) or a pre-set limit on the number of steps or elapsed
+time is reached.
+
 - What do we mean by RMSE, other measures? Should define here for later use.
+??JN perhaps?
+
+We measure the quality of our model by how small the RMSE is of the trained (??is this right?)
+model and the training data. This is defined in Appendix A.
+
 - What do we mean by "performance"? Other goals?
+??JN: perhaps?
+
+We measure performance primarily by relative computing time between methods on a particular computing 
+platform. We could also count measures of iterations, function evaluations or similar quantities that
+indicate the computing effort. We note that differences in machine architecture and in the attached
+libraries (e.g., BLAS choices for R) will modify our measures. We are putting our tools on a Github
+repository so that further evaluation can be made by ourselves and others as hardware and software
+evolves.
 
 As a reminder, RMSE and other convergence metrics are defined in Appendix A.
 

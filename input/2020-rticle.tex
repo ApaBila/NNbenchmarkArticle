@@ -1,7 +1,8 @@
 % !TeX root = RJwrapper.tex
-\title{A review of R neural network packages (with NNbenchmark)\(:\) accuracy
-and ease of use}
-\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
+\title{A review of R neural network packages (with NNbenchmark)\(:\)
+accuracy and ease of use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
+Kiener, John C. Nash}
 
 \maketitle
 
@@ -9,51 +10,17 @@ and ease of use}
 \hypertarget{abstract}{%
 \subsection{Abstract}\label{abstract}}
 
-For the last 30 years, neural networks have evolved from an academic
-topic to a common tool in scientific computing. Following this trend,
-CRAN has chosen to host many packages that claim to provide neural
-network modeling. Our count in May 2020 is roughly 70 packages. How
-accurate and reliable are these packages and their documentation? Are
-there packages that perform better in terms of accuracy? Are some better
-suited to beginners while others require expert knowledge? Do these
-packages provide the features found in some dedicated proprietary
-software?
+In the last three decades, neural networks (NN) have evolved from an
+academic topic to a common scientific computing tool. CRAN currently
+hosts approximately 80 packages in May 2020 involving neural network
+modeling, some offering more than one algorithm. However, to our
+knowledge, there is no comprehensive study which checks the accuracy,
+the reliability and the ease-of-use of those NN packages.
 
-This paper is, to our knowledge, the first attempt to test this rather
-large number of packages against a same set of datasets with different
-levels of complexity, and to benchmark and rank them with certain
-metrics. We have restricted our evaluation to regression algorithms
-applied on the one-hidden layer perceptron and ignored those for
-classification or other specialized purposes. This left us with 49
-package::algorithm pairs in 2019 and 60 package::algorithm pairs in
-2020. The criteria used in our benchmark were: (i) the accuracy,
-i.e.~the ability to find the global minima on 13 datasets, measured by
-the Root Mean Square Error (RMSE) in a limited number of iterations;
-(ii) the speed of the training algorithm; (iii) the availability of
-helpful utilities; (iv) and the quality of the documentation.
+In this paper, we attempted to test this rather large number of packages
+against the common set of datasets with different levels of complexity,
+and to benchmark and rank them with certain metrics.
 
-All package::algorithm pairs were given a score for each criterion and
-ranked in a global table. Overall, 15 package::algorithm pairs are
-considered accurate and reliable and can be recommended for daily usage.
-45 algorithms should be avoided as they are either less accurate, slow,
-difficult to handle, or have poor or no documentation.
-
-Our codes, templates, and the NNbenchmark package used to test each
-package::algorithm pair are publicly available at the address
-\url{https:://github.com/pkR-pkR/NNbenchmark}. These can be used by the
-package authors and others to verify the metrics and eventually improve
-their own package or code. Finally, we provide some hints and features
-to guide the development of an idealized neural network package for R.
-
-\hypertarget{alternative-abstract}{%
-\subsection{Alternative abstract}\label{alternative-abstract}}
-
-In the last three decades, neural networks have evolved from an academic
-topic to a common scientific computing tool. CRAN currently hosts
-approximately 80 packages involving neural network modeling, some
-offering more than one algorithm. We attempted to test this rather large
-number of packages against a few datasets with different levels of
-complexity, and to benchmark and rank them with certain metrics.
 Restricting our evaluation to regression algorithms applied on the
 one-hidden layer perceptron and ignoring those for classification or
 other specialized purposes, there were approximately 60
@@ -68,50 +35,40 @@ We have attempted to give a score for each evaluation criterion and to
 rank each package::algorithm pair in a global table. Overall, 15 pairs
 are considered accurate and reliable and can be recommended for daily
 usage. Most others should be avoided as they are either less accurate,
-slow, difficult to handle, or have poor or no documentation.
+too slow, too difficult to handle, or have poor or no documentation.
 
 To carry out this work, we developed various codes and templates, as
 well as the NNbenchmark package used for testing. This material is
-available at the address \url{https:://github.com/pkR-pkR/NNbenchmark},
-and can be used to verify our work and, we hope, improve both packages
-and their evaluation. Finally, we provide some hints and features to
-guide the development of an idealized neural network package for R.
+available at \url{https://akshajverma.com/NNbenchmarkWeb/index.html} and
+\url{https://github.com/pkR-pkR/NNbenchmark}, and can be used to verify
+our work and, we hope, improve both packages and their evaluation.
+Finally, we provide some hints and features to guide the development of
+an idealized neural network package for R.
 
 \hypertarget{introduction}{%
 \subsection{Introduction}\label{introduction}}
 
-(PK) For the last 30 years, neural networks have evolved from an
-academic topic to a common tool in scientific computing. As a
-convenience in the general conversation, the same term is used in a
-generic manner (for a shortcut to) for different model structures and
-applications: multilayer perceptron for regression, multilayer
-perceptron for classification, multilayer perceptron for specialized
-applications (mixture of models, conditional distribution, etc),
-recurrent neural network for autoregressive time series (NARMAX models),
-convolutional neural networks for dimension reduction and pattern
-recognition, deep neural networks for image or voice recognition.
-
-Most of the above types of neural networks can be found in R packages
-hosted on CRAN but without any warranty about the quality or the
-accuracy of the calculation, since CRAN has no tools to check them.
-Package users have to believe package authors who are assumed to have
-selected the best algorithms and tuned them with the appropriate
-hyperparameters. This is rather problematic with neural networks as many
-poor algorithms have been mentioned in the literature, and are probably
-implemented in a few packages.
-
-The goal of this paper is to verify the accuracy and the ease of use
-(including the quality of the documentation) of the packages hosted on
-CRAN that supply the most common neural network structure + algorithm,
-i.e.~the multilayer perceptron for regression purpose.
-
-(SB) The R Project for Statistical Computing (\url{www.r-project.org}),
-as any opensource platform, relies on its contributors to keep it up to
-date. Neural networks, based on the brain's own connections system, are
-a class of models in the growing field of machine learning forwhich R
-has a number of tools. Previously, neural networks could be considered
-more theory than practice, partly because the algorithms used are
+The R Project for Statistical Computing (\url{www.r-project.org}), as
+any opensource platform, relies on its contributors to keep it up to
+date. Neural networks (NN), inspired on the brain's own connections
+system, are a class of models in the growing field of machine learning
+forwhich R has a number of tools. During the last 30 years, neural
+networks have evolved from an academic topic to a common tool in
+scientific computing. Previously, neural networks were considered more
+theory than practice, partly because the algorithms used were
 computationally demanding.
+
+As a convenience in the general conversation, the same term is used in a
+generic manner for different model structures and applications:
+multilayer perceptron for regression, multilayer perceptron for
+classification, multilayer perceptron for specialized applications,
+recurrent neural network for autoregressive time series, convolutional
+neural networks for dimension reduction and pattern recognition, deep
+neural networks for image or voice recognition. Most of the above types
+of neural networks can be found in R packages hosted on CRAN but without
+any warranty about the accuracy or the speed of computation. This is an
+issue as many poor algorithms are available in the literature and hence
+poor packages implemented on CRAN.
 
 A neural network algorithm requires complicated calculations to improve
 the model control parameters. As with other optimization problems, the
@@ -123,15 +80,16 @@ training set) and tested on the remaining data. Modern software allows
 much of this work, including approximation of the gradient, to be
 carried out without a large effort by the the user.
 
-This process can generally be made more efficient if we can also
+The training process can generally be made more efficient if we can also
 approximate second derivatives of the cost function, allowing us to use
 its curvature via the Hessian matrix. There are a large number of
 approaches, of which quasi-Newton algorithms are perhaps the most common
 and useful. Within this group, methods based on the
 Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the
-Hessian approximation (or its inverse) provide several well-known
-examples. In conducting this study, we believed that these second-order
-algorithms would perform better than first-order methods.
+(inverse) Hessian approximation provide several well-known examples. In
+conducting this study, we believed that these second-order algorithms
+would perform better than first-order methods for fit-in-memory
+datasets.
 
 Regardless of our belief, we wished to be able to conduct a thorough
 examination of these training algorithms in R. There are many packages,
@@ -140,7 +98,14 @@ aims to provide a framework for benchmarking neural network packages. We
 restrict our examination to packages for R, and in this report focus on
 those that provide neural networks of the perceptron type, that is, one
 input layer, one normalized layer, one hidden layer with a nonlinear
-activation function that is usually tanh(), and one output output layer.
+activation function that is usually the hyperbolic tangent tanh(), and
+one output output layer. The criteria used in our benchmark were: (i)
+the accuracy, i.e.~the ability to find the global minima on 13 datasets
+in a limited number of iterations; (ii) the speed of the training
+algorithm; (iii) the availability of helpful utilities; (iv) and the
+quality of the documentation. We restricted our evaluation to regression
+algorithms applied on the one-hidden layer perceptron and ignored those
+for classification or other specialized purposes.
 
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
@@ -148,9 +113,45 @@ activation function that is usually tanh(), and one output output layer.
 ??JN: ******************************
 
 In working on material below, I think we need to provide some
-explanation of goals - What does ``convergence'' mean in our context? -
-What do we mean by RMSE, other measures? Should define here for later
-use. - What do we mean by ``performance''? Other goals?
+explanation of goals - What does ``convergence'' mean in our context?
+
+??JN: Something like
+
+In training neural network models we attempt to adjust a set of
+parameters so that an objective function is minimized. When our method
+for such adjustment can no longer reduce the objective, we say that we
+have converged. However, practical methods require that we terminate the
+optimization process in exceptional situations (e.g., a divide by zero)
+or a pre-set limit on the number of steps or elapsed time is reached.
+
+\begin{itemize}
+\tightlist
+\item
+  What do we mean by RMSE, other measures? Should define here for later
+  use. ??JN perhaps?
+\end{itemize}
+
+We measure the quality of our model by how small the RMSE is of the
+trained (??is this right?) model and the training data. This is defined
+in Appendix A.
+
+\begin{itemize}
+\tightlist
+\item
+  What do we mean by ``performance''? Other goals? ??JN: perhaps?
+\end{itemize}
+
+We measure performance primarily by relative computing time between
+methods on a particular computing platform. We could also count measures
+of iterations, function evaluations or similar quantities that indicate
+the computing effort. We note that differences in machine architecture
+and in the attached libraries (e.g., BLAS choices for R) will modify our
+measures. We are putting our tools on a Github repository so that
+further evaluation can be made by ourselves and others as hardware and
+software evolves.
+
+As a reminder, RMSE and other convergence metrics are defined in
+Appendix A.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -204,11 +205,15 @@ and \(n=20,000\).
 Using \CRANpkg{RWsearch} \citep{R-RWsearch} we sought to automate the
 process of searching for neural network packages. All packages that have
 ``neural network'' as a keyword in the package title or in the package
-description were included. Packages \pkg{nlsr}, \pkg{minpack.lm},
-\pkg{caret} were added because the former 2 are important
-implementations of second-order algorithms while the latter is the first
-cited meta package in the CRAN's task view for machine learning as well
-as the dependency for some of the other packages tested.
+description were included. In May 2020, around 80 packages falls into
+this category. Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were
+added because the former 2 are important implementations of second-order
+algorithms while the latter is the first cited meta package in the
+CRAN's task view for machine learning,
+\url{https://CRAN.R-project.org/view=MachineLearning}, as well as the
+dependency for some of the other packages tested. Restricting to
+regression analysis left us with 49 package::algorithm pairs in 2019 and
+60 package::algorithm pairs in 2020.
 
 \hypertarget{phase-2---review-of-packages-and-development-of-a-benchmarking-template}{%
 \subsection{Phase 2 - Review of packages and development of a
@@ -399,7 +404,7 @@ following method:
 \item
   In addition to the previous metrics, two other convergence metrics
   have been considered: the Mean Absolute Error (MAE) and the Worst
-  Absolute Error (WAE), see Appendix. The ranking on those two metrics
+  Absolute Error (WAE), see Appendix A. The ranking on those two metrics
   may help distinguish packages with close RMSE values. However, we do
   not choose the MAE for overall ranking as there is no consensus in the
   literature, see e.g.~\citep{willmott2005advantages,chai2014root}.
@@ -589,6 +594,7 @@ brief descriptions.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \CRANpkg{AMORE} \citep{R-AMORE},
 \item
@@ -823,15 +829,14 @@ learning rate disappeared. Will fix this in future runs
 
 D. Untested =\textgreater{} TO DO - LIST
 
-\hypertarget{conclusion-to-do-after-2020-code}{%
-\subsection{Conclusion =\textgreater{} TO DO AFTER 2020
-CODE}\label{conclusion-to-do-after-2020-code}}
+\hypertarget{conclusion-and-perspective}{%
+\section{Conclusion and perspective}\label{conclusion-and-perspective}}
 
 ??JN: Can we start to put in some major findings? i.e., important
 positive findings, big negatives?
 
 \hypertarget{positives-no-particular-order}{%
-\subsubsection{Positives (no particular
+\subsection{Positives (no particular
 order)}\label{positives-no-particular-order}}
 
 \begin{enumerate}
@@ -851,7 +856,7 @@ order)}\label{positives-no-particular-order}}
 \end{enumerate}
 
 \hypertarget{negatives-no-particular-order}{%
-\subsubsection{Negatives (no particular
+\subsection{Negatives (no particular
 order)}\label{negatives-no-particular-order}}
 
 \begin{enumerate}
@@ -877,6 +882,14 @@ data formats (classifier neural networks, recurrent neural networks, and
 so on). Different rating schemes and different parameters for package
 functions can also be tried out.
 
+\begin{itemize}
+\tightlist
+\item
+  The dreamed NN package: Recommendation to package authors
+\item
+  Conclusion
+\end{itemize}
+
 \hypertarget{acknowledgements}{%
 \subsection{Acknowledgements}\label{acknowledgements}}
 
@@ -887,20 +900,8 @@ financial support.
 
 \bibliography{RJreferences}
 
-\begin{itemize}
-\tightlist
-\item
-  The dreamed NN package: Recommendation to package authors
-\item
-  Conclusion
-\item
-  Acknowledgments
-\end{itemize}
-
-For the acknowledgments, maybe : « » + later some acknowledgments to the
-referees.
-
-How do we proceed?
+\hypertarget{appendix}{%
+\section{Appendix}\label{appendix}}
 
 \hypertarget{appendix-a}{%
 \subsection{Appendix A}\label{appendix-a}}
@@ -961,4 +962,3 @@ Telfer School of Management, University of Ottawa\\
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 }
 \href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
-
