@@ -3,7 +3,7 @@ title: A review of R neural network packages (with NNbenchmark)$:$ accuracy and 
 author:
   - name: Salsabila Mahdi
     affiliation: Universitas Syiah Kuala
-    address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia
+    address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia 
     email:  bila.mahdi@mhs.unsyiah.ac.id
   - name: Akshaj Verma
     affiliation: Manipal Institute of Technology
@@ -57,8 +57,8 @@ Our codes, templates, and the NNbenchmark package used to test each package::alg
 
 ## Alternative abstract
 
-In the last three decades, neural networks have evolved from academic topic to common scientific computing tool. CRAN hosts approximately 70 packages involving neural network modeling, some offering more than one algorithm. In this we attempt to test this rather large number of packages against a few datasets with different levels of complexity, and to benchmark and rank them with certain metrics.  Restricting
-our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignoring those for classification or other specialized purposes, we still have approximately 60 package::algorithm pairs. The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a limited number of iterations; (ii) the speed of the training algorithm; (iii) the availability of helpful utilities; (iv) and the quality of the documentation.
+In the last three decades, neural networks have evolved from an academic topic to a common scientific computing tool. CRAN currently hosts approximately 80 packages involving neural network modeling, some offering more than one algorithm. We attempted to test this rather large number of packages against a few datasets with different levels of complexity, and to benchmark and rank them with certain metrics.  Restricting
+our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignoring those for classification or other specialized purposes, there were approximately 60 package::algorithm pairs left to test. The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a limited number of iterations; (ii) the speed of the training algorithm; (iii) the availability of helpful utilities; (iv) and the quality of the documentation.
 
 We have attempted to give a score for each evaluation criterion and to rank each package::algorithm pair in a global table. Overall, 15 pairs are considered accurate and reliable and can be recommended for daily usage. Most others should be avoided as they are either less accurate, slow, difficult to handle, or have poor or no documentation.
 
@@ -69,6 +69,7 @@ development of an idealized neural network package for R.
 
 
 <!-- CD : I prefer the alternative abstract-->
+<!-- SB : Me too. Should we take down the other or ...? -->
 
 ## Introduction
 
@@ -94,6 +95,7 @@ Regardless of our belief, we wished to be able to conduct a thorough examination
 these training algorithms in R. There are many packages, but barely any information to allow comparison. Our work, reported here, aims to provide a framework for benchmarking neural network packages. We restrict our examination to packages for R, and in this report focus on those that provide neural networks of the perceptron type, that is, one input layer, one normalized layer, one hidden layer with a nonlinear activation function that is usually tanh(), and one output output layer. 
 
 <!-- CD : I can try a mix of the two introductions if you want? -->
+<!-- SB : Yes, please -->
 
 # Methodology
 
@@ -147,18 +149,20 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 
 ### Packages
 
-Using \CRANpkg{RWsearch} \citep{R-RWsearch} we sought all were able to automate the process. 
+Using \CRANpkg{RWsearch} \citep{R-RWsearch} we sought to automate the process of searching for neural network packages. 
 All packages that have "neural network" as a keyword in the package title or in the package description 
-were included. Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added because ...
+were included. Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added because the former 2 are 
+important implementations of second-order algorithms while the latter is the first cited meta package in 
+the CRAN's task view for machine learning as well as the dependency for some of the other packages tested. 
 
 ## Phase 2 - Review of packages and development of a benchmarking template
 
 From documentation and example code, we learned that not all packages selected by the automated 
-search fit the scope of our research. Some have no function to generate neural networks. They 
-are simply meta-packages. Others were not regression neural networks of the perceptron type or 
+search fit the scope of our research. Some have no function to generate neural networks. 
+Others were not regression neural networks of the perceptron type or 
 were only intended for very specific purposes. 
 
-**Templates for Testing Accuracy and Speed => TO REVISE AFTER 2020 CODE**  
+**Templates for Testing Accuracy and Speed** 
 
 As we inspected the packages, we developed a template for benchmarking. The structure of this
 template (for each package) is as follows:  
@@ -168,7 +172,9 @@ template (for each package) is as follows:
     (a) setting parameters for a specific dataset 
     (b) selecting benchmark options 
     (c) training a neural network with a tuned functions for each package 
-    (d) calculation of RMSE and MAE (??definition, reference)
+    (d) calculation of RMSE and MAE (??definition, reference) 
+    <!-- B??: should the reference be moved here or this part generalized to accuracy metrics 
+    @Christophe @John -->
     (e) plot each training over one initial graph, then plot the best result 
     (f) add results to the appropriate existing record (*.csv file) and 
     (g) clear the environment for next loop; and  
@@ -176,11 +182,18 @@ template (for each package) is as follows:
 (5) It is optional to print warnings.
 
 To simplify this process, we developed tools in the NNbenchmark package, of which the first version 
-was created as part of the 2019 GSoC activity and later refined in the 2020 initiative. The package 
-repository is https://github.com/pkR-pkR/NNbenchmark, with package templates 
-in https://github.com/pkR-pkR/NNbenchmarkTemplates).
+was created as part of GSoC 2019. In GSoC 2020, 3 functions encapsulating the template that had been 
+made generic with \code{do.call} were added:
 
-**Metrics for Ease of Use**
+1.    In trainPredict_1mth1data a neural network is trained on one dataset and then used for predictions, with several utilities. Then, the performance of the neural network is summarized.
+2.    trainPredict_1data serves as a wrapper function for trainPredict_1mth1data for multiple methods.
+3.    trainPredict_1pkg serves as a wrapper function for trainPredict_1mth1data for multiple datasets.
+
+A function for the summary of accuracy and speed, NNsummary, was also added. The package repository is https://github.com/pkR-pkR/NNbenchmark, with package templates in https://github.com/pkR-pkR/NNbenchmarkTemplates). 
+
+<!-- B??: should we add some examples with the code? As some package authors who publish in the R Journal do to introduce their package. Or we could link to specific pages of the website here? -->
+
+**Ease of Use Scoring**
 
 We decided ease of use based on what we considered a user would need when using a neural network 
 package for nonlinear regression, namely, utility functions and sufficient documentation. 
@@ -189,17 +202,28 @@ package for nonlinear regression, namely, utility functions and sufficient docum
     (a) a predict function exists  
     (b) scaling capabilities exist
 (2) Sufficient documentation (2 stars)
-    (a) the existence of useful example/vignette (1 star)
+    (a) the existence of useful example/vignette = (1 star)
         - clear, with regression = 2 points
         - unclear, examples use iris or are for classification only = 1 point
         - no examples = 0 points
     (b) input/output is clearly documented, e.g., what values are expected and returned 
-    by a function (1 star)
+    by a function = (1 star)
         - clear input and output = 2 points
         - only one is clear = 1 point
         - both are not documented = 0 points
 
 For a total of 0 to 3 stars.
+
+<!-- B??: basically, each package was inspected 3 times:
+1. the discard/not discard phase: depending on the package, this could be decided as easily as looking at
+the DESCRIPTION file or having to go through the process of making the code and seeing the results.
+2. benchmarking with template that was developed in 2019 and encapsulated in the functions of 2020, keeping
+notes of whether or not the package was easy to use
+3. summarizing or re-reviewing the tested packages utility functions & documentation
+
+then, the next step was to rank the results (Phase 3)
+Please tell me how to convey this better if it is not clear here?
+-->
 
 ## Phase 3 - Collection of and analysis of results
 
@@ -211,7 +235,7 @@ directories in the templates repository.
 
 ### Analysis
 
-To rank the how well a package converged and its speed, we developed the following method:
+To rank how well a package converged and its speed, we developed the following method:
 
 1.	The results datasets are loaded into the R environment as one large list. The dataset names, package:algorithm names and all 10 run numbers, durations, and RMSE are extracted from that list
 2.	For the duration score (DUR), the duration is averaged by dataset. 3 criteria for the RMSE score by dataset are calculated:
@@ -331,10 +355,18 @@ As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE)) --> see A
   No & Name (package)         & Category & Comment \\
   \midrule
   1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
-     &                        &           & the amyloidfogenicity propensity of polypeptide sequences     \\
-  2  &\pkg{autoencoder}       & AP        & \\     
-  3  &\pkg{BNN}               & RE*       & \\
-  4  &\pkg{Buddle}            & RE**      & (errors) even performance on examples is bad \\
+     &                        &           & the amyloidogenicity propensity of polypeptide sequences      \\
+  2  &\pkg{autoencoder}       & AP        & This package provides a sparse autoencoder, an unsupervised   \\
+     &                        &           & algorithm that learns useful features from the data its given \\
+  3  &\pkg{BNN}               & RE*       & This package uses a feed forward neural network to perform    \\
+     &                        &           & regression as provided in the examples, however, it is unclear\\      &                        &           & whether it fits the form of perceptron that is the scope of   \\
+     &                        &           & our research. Moreover, it states that it is intended for     \\      &                        &           & variable selection. Although how exactly the package would be \\
+     &                        &           & used to do so isn't accessible in the package, especially     \\
+     &                        &           & considering the source code is based on .c code that users of \\
+     &                        &           & R might not understand. It's performance is slow, which may   \\
+     &                        &           & have to do with the 100.000 iterations it needs, although     \\
+     &                        &           & quite accurate for simple datasets.                           \\
+  4  &\pkg{Buddle}            & RE**      & (errors)\\
   5  &\pkg{cld2}              & 00        & \\
   6  &\pkg{cld3}              & AP        & \\
   7  &\pkg{condmixt}          & AP        & \\
