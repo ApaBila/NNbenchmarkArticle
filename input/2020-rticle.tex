@@ -1,8 +1,7 @@
 % !TeX root = RJwrapper.tex
-\title{A review of R neural network packages (with NNbenchmark)\(:\)
-accuracy and ease of use}
-\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
-Kiener, John C. Nash}
+\title{A review of R neural network packages (with NNbenchmark)\(:\) accuracy
+and ease of use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
 
 \maketitle
 
@@ -113,16 +112,7 @@ for classification or other specialized purposes.
 ??JN: ******************************
 
 In working on material below, I think we need to provide some
-explanation of goals - What does ``convergence'' mean in our context?
-
-??JN: Something like
-
-In training neural network models we attempt to adjust a set of
-parameters so that an objective function is minimized. When our method
-for such adjustment can no longer reduce the objective, we say that we
-have converged. However, practical methods require that we terminate the
-optimization process in exceptional situations (e.g., a divide by zero)
-or a pre-set limit on the number of steps or elapsed time is reached.
+explanation of goals
 
 \begin{itemize}
 \tightlist
@@ -134,6 +124,19 @@ or a pre-set limit on the number of steps or elapsed time is reached.
 We measure the quality of our model by how small the RMSE is of the
 trained (??is this right?) model and the training data. This is defined
 in Appendix A.
+
+\begin{itemize}
+\tightlist
+\item
+  What does ``convergence'' mean in our context? ??JN: Something like
+\end{itemize}
+
+In training neural network models we attempt to adjust a set of
+parameters so that an objective function is minimized. When our method
+for such adjustment can no longer reduce the objective, we say that we
+have converged. However, practical methods require that we terminate the
+optimization process in exceptional situations (e.g., a divide by zero)
+or a pre-set limit on the number of steps or elapsed time is reached.
 
 \begin{itemize}
 \tightlist
@@ -153,7 +156,14 @@ software evolves.
 As a reminder, RMSE and other convergence metrics are defined in
 Appendix A.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+The number of iterations we limited the algorithms to is in Appendix C.
+Second order algorithms are all set to a maximum of 200 iterations. On
+the other hand, first order algorithms were set to several values,
+depending on how well they converged. maxit1storderA 1000 iterations,
+maxit1storderB 10000 iterations, and maxit1storderC 100000 iterations.
+
+We tried to harmonize the parameters.
+*************************************
 
 Our research process was divided into 3 phases.
 
@@ -425,86 +435,1221 @@ MAE(), L2 RMSE(), Linfinity (WAE)) --\textgreater{} see Appendix
 DIVIDE THE TABLE INTO 4: 2nd ORDER always recommended, 1st ORDER
 recommended, 1st ORDER not recommended, untested packages)
 
-\begin{center}
-\textbf{Table 1: Review of Tested Packages}
-\begin{tabular}{ l l l l l l l}
-  No & Package::Function                & Algorithm             & RMSE & DUR & UTIL & DOCS \\
-  1  &\pkg{AMORE}                       & 1. ADAPTgd            &      &     &      &      \\
-     &::train                           & 2. ADAPTgdwm          &      &     &      &      \\
-     &                                  & 3. BATCHgd            &      &     &      &      \\ 
-     &                                  & 4. BATCHgdwm          &      &     &      &      \\
-  2  &\pkg{ANN2}                        & 5. adam               &      &     &      &      \\
-     &::neuralnetwork                   & 6. rmsprop            &      &     &      &      \\
-     &                                  & 7. sgd                &      &     &      &      \\
-  3  &\pkg{automl}                      & 8. trainwgrad.adam    &      &     &      &      \\
-     &::automl\_train\_manual           & 9. trainwgrad.RMSprop &      &     &      &      \\
-     &                                  &10. trainwpso          &      &     &      &      \\
-  4  &\pkg{brnn}::brnn                  &11. Gauss-Newton       &      &     &      &      \\
-  5  &\pkg{CaDENCE}                     &12. optim(BFGS)        &      &     &      &      \\
-     &::cadence.fit                     &13. pso::psoptim       &      &     &      &      \\
-     &                                  &14. Rprop              &      &     &      &      \\
-  6  &\pkg{caret}::avNNet               &15. nnet::optim(BFGS)  &      &     &      &      \\
-  7  &\pkg{deepdive}                    &16. adam               &      &     &      &      \\
-     &::deepnet                         &17. gradientDescent    &      &     &      &      \\
-     &                                  &18. momentum           &      &     &      &      \\ 
-     &                                  &19. rmsProp            &      &     &      &      \\
-  8  &\pkg{deepnet}::nn.train           &20. BP                 &      &     &      &      \\
-  9  &\pkg{elmNNRcpp}::elm\_train       &21. ELM                &      &     &      &      \\
-  10 &\pkg{ELMR}::OSelm\_train.formula  &22. ELM                &      &     &      &      \\
-  11 &\pkg{EnsembleBase}::Regression.Batch.Fit &23. nnet::optim(BFGS) &      &     &      &      \\
-  12 &\pkg{h2o}::deeplearning           &24.                    &      &     &      &      \\
-  13 &\pkg{keras}                       &25. adadelta           &      &     &      &      \\
-     &::fit                             &26. adagrad            &      &     &      &      \\
-     &                                  &27. adam               &      &     &      &      \\
-     &                                  &28. adamax             &      &     &      &      \\ 
-     &                                  &29. nadam              &      &     &      &      \\
-     &                                  &30. rmsprop            &      &     &      &      \\ 
-     &                                  &31. sgd                &      &     &      &      \\
-  14 &\pkg{MachineShop}::fit            &32. nnet::optim(BFGS)  &      &     &      &      \\
-  15 &\pkg{minpack.lm}::nlsLM           &33. LM                 &      &     &      &      \\
-  16 &\pkg{monmlp}::fit                 &34. BFGS               &      &     &      &      \\
-     &\pkg{monmlp}::fit                 &35. Nelder-Mead        &      &     &      &      \\
-  17 &\pkg{neuralnet}::                 &36. backprop           &      &     &      &      \\
-     &::neuralnet                       &37. rprop-             &      &     &      &      \\
-     &                                  &38. rprop+             &      &     &      &      \\
-     &                                  &39. sag                &      &     &      &      \\
-     &                                  &40. slr                &      &     &      &      \\
-  18 &\pkg{nlsr}::nlxb                  &41. NashLM             &      &     &      &      \\
-  19 &\pkg{nnet}::nnet                  &42. optim(BFGS)        &      &     &      &      \\
-  20 &\pkg{qrnn}::qrnn.fit              &43. nlm()              &      &     &      &      \\
-  21 &\pkg{radiant.model}::radiant.model&45. nnet::optim(BFGS)  &      &     &      &      \\
-  22 &\pkg{rminer}::fit                 &46. nnet::optim(BFGS)  &      &     &      &      \\
-  \end{tabular}
-\end{center}
+\begin{Schunk}
+\begin{table}
 
-\begin{center}
-\textbf{Table 1: Review of Tested Packages}
-\begin{tabular}{ l l l l l l l}
-  No & Package::Function                & Algorithm             & RMSE & DUR & UTIL & DOCS \\
-  
-  23 &\pkg{RSNNS}::                     &47. BackpropBatch      &      &     &      &      \\
-     &\pkg{RSNNS}::                     &48. BackpropChunk      &      &     &      &      \\
-     &\pkg{RSNNS}::                     &49. BackpropMomentum   &      &     &      &      \\
-     &\pkg{RSNNS}::                     &50. BackpropWeightDecay&      &     &      &      \\
-     &\pkg{RSNNS}::                     &51. Quickprop          &      &     &      &      \\
-     &\pkg{RSNNS}::                     &52. Rprop              &      &     &      &      \\
-     &\pkg{RSNNS}::                     &53. SCG                &      &     &      &      \\
-     &\pkg{RSNNS}::                     &54. Std-Backpropagation&      &     &      &      \\
-  24 &\pkg{snnR}                        &55.                    &      &     &      &      \\
-  25 &\pkg{traineR}                     &55.                    &      &     &      &      \\
-  26 &\pkg{validann}::                  &56. BFGS               &      &     &      &      \\
-     &\pkg{validann}::                  &57. CG                 &      &     &      &      \\
-     &\pkg{validann}::                  &58. L-BFGS-B           &      &     &      &      \\
-     &\pkg{validann}::                  &59. Nelder-Mead        &      &     &      &      \\
-     &\pkg{validann}::                  &60. SANN               &      &     &      &      \\  
-  \end{tabular}
-\end{center}
+\caption{\label{tab:unnamed-chunk-1}Results from Tested Packages}
+\centering
+\begin{tabular}[t]{llrrrr}
+\toprule
+package & algorithm & time.score & RMSE.score & UT & Docs\\
+\midrule
+AMORE & ADAPTgd & 10 & 34 & 1 & 3.0\\
+ & ADAPTgdwm & 17 & 25 &  & \\
+ & BATCHgd & 39 & 40 &  & \\
+ & BATCHgdwm & 40 & 39 &  & \\
+ANN2 & adam & 16 & 33 & 2 & 3.0\\
+\addlinespace
+ & rmsprop & 14 & 28 &  & \\
+ & sgd & 12 & 41 &  & \\
+automl & trainwgrad\_adam & 50 & 18 & 1 & 3.0\\
+ & trainwgrad\_RMSprop & 47 & 26 &  & \\
+ & trainwpso & 57 & 42 &  & \\
+\addlinespace
+brnn & Gauss-Newton & 8 & 13 & 2 & 4.0\\
+CaDENCE & optim(BFGS) & 46 & 10 & 2 & 3.0\\
+ & pso\_psoptim & 54 & 54 &  & \\
+ & Rprop & 56 & 51 &  & \\
+caret & avNNet\_nnet\_optim(BFGS) & 9 & 22 & 2 & 3.0\\
+\addlinespace
+deepdive & adam & 32 & 45 & 2 & 3.0\\
+ & gradientDescent & 52 & 58 &  & \\
+ & momentum & 53 & 56 &  & \\
+ & rmsProp & 34 & 53 &  & \\
+deepnet & BP & 23 & 18 & 1 & 3.0\\
+\addlinespace
+elmNNRcpp & ELM & 1 & 59 & 2 & 3.0\\
+ELMR & ELM & 2 & 60 & 2 & 3.0\\
+EnsembleBase & nnet\_optim(BFGS) & 5 & 12 & 1 & 1.0\\
+h2o & first-order & 51 & 11 & 2 & 2.0\\
+keras & adadelta & 60 & 47 & 2 & 0.0\\
+\addlinespace
+ & adagrad & 58 & 36 &  & \\
+ & adam & 42 & 35 &  & \\
+ & adamax & 48 & 23 &  & \\
+ & nadam & 44 & 36 &  & \\
+ & rmsprop & 37 & 52 &  & \\
+\addlinespace
+ & sgd & 48 & 43 &  & \\
+MachineShop & nnet\_optim(BFGS) & 6 & 4 & 1 & 3.0\\
+minpack.lm & Levenberg-Marquardt & 13 & 24 & 1 & 3.5\\
+monmlp & optimx(BFGS) & 26 & 9 & 2 & 3.5\\
+ & optimx(Nelder-Mead) & 32 & 46 &  & \\
+\addlinespace
+neuralnet & backprop & 37 & 48 & 1 & 3.0\\
+ & rprop- & 21 & 21 &  & \\
+ & rprop+ & 18 & 20 &  & \\
+ & sag & 41 & 38 &  & \\
+ & slr & 31 & 30 &  & \\
+\addlinespace
+nlsr & NashLM & 18 & 1 & 1 & 4.0\\
+nnet & optim (BFGS) & 3 & 3 & 1 & 3.0\\
+qrnn & nlm() & 28 & 15 & 2 & 3.0\\
+radiant.model & nnet\_optim(BFGS) & 11 & 7 & 2 & 2.0\\
+rminer & nnet\_optim(BFGS) & 14 & 2 & 2 & 3.5\\
+\addlinespace
+RSNNS & BackpropBatch & 43 & 49 & 2 & 3.0\\
+ & BackpropChunk & 26 & 29 &  & \\
+ & BackpropMomentum & 25 & 30 &  & \\
+ & BackpropWeightDecay & 29 & 32 &  & \\
+ & Quickprop & 45 & 57 &  & \\
+\addlinespace
+ & Rprop & 24 & 16 &  & \\
+ & SCG & 30 & 17 &  & \\
+ & Std\_Backpropagation & 22 & 27 &  & \\
+snnR & SemiSmoothNewton & 7 & 49 & 2 & 2.0\\
+traineR & nnet\_optim(BFGS) & 4 & 6 & 1 & 2.5\\
+\addlinespace
+validann & optim(BFGS) & 35 & 4 & 1 & 4.0\\
+ & optim(CG) & 59 & 8 &  & \\
+ & optim(L-BFGS-B) & 36 & 14 &  & \\
+ & optim(Nelder-Mead) & 55 & 44 &  & \\
+ & optim(SANN) & 20 & 55 &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+ &  &  &  &  & \\
+\addlinespace
+ &  &  &  &  & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{Schunk}
 
 (THE FOLLOWING IS JUST AN ALPHABETICALLY ORDERED LIST OF CURRENTLY
 UNTESTED PACKAGES)
 
 \begin{center}
-\textbf{Table 2: Review of Ommitted Packages}
+<!-- \textbf{Table 2: Review of Ommitted Packages} -->
 
 \begin{tabular}{l l l l}
   \toprule
@@ -594,7 +1739,6 @@ brief descriptions.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   \CRANpkg{AMORE} \citep{R-AMORE},
 \item
@@ -927,6 +2071,91 @@ f_4=2-1_{(x <= 1/3)}(6*x)^3 - 1_{(x >= 2/3)} (6-6*x)^3 -
 1_{(2/3 > x > 1/3)}(8+2\sin(9*(x-1/3)\pi)).
 \]
 
+\hypertarget{appendix-c}{%
+\subsection{Appendix C}\label{appendix-c}}
+
+\begin{Schunk}
+
+\begin{tabular}{rlllrrrr}
+\toprule
+No & input & maxit & lr & RMSEmed.score & RMSEd51.score & MAE.score & WAE.score\\
+\midrule
+1 & x \& y & 1000 & 0.01 & 24 & 8 & 26 & 19\\
+2 & x \& y & 1000 & 0.01 & 22 & 28 & 17 & 26\\
+3 & x \& y & 10000 & 0.1 & 37 & 24 & 42 & 31\\
+4 & x \& y & 10000 & 0.1 & 33 & 14 & 36 & 27\\
+5 & x \& y & 1000 & 0.01 & 27 & 26 & 28 & 23\\
+\addlinespace
+6 & x \& y & 1000 & 0.01 & 26 & 33 & 27 & 22\\
+7 & x \& y & 1000 & 0.01 & 36 & 20 & 35 & 28\\
+8 & x \& y & 1000 & 0.01 & 20 & 35 & 16 & 19\\
+9 & x \& y & 1000 & 0.01 & 31 & 50 & 29 & 38\\
+10 & x \& y & 1000 & - & 40 & 49 & 40 & 37\\
+\addlinespace
+11 & x \& y & 200 & - & 11 & 9 & 12 & 11\\
+12 & x \& y & 200 & - & 28 & 48 & 23 & 39\\
+13 & x \& y & 1000 & - & 56 & 56 & 54 & 56\\
+14 & x \& y & 1000 & 0.01 & 54 & 60 & 52 & 58\\
+15 & x \& y & 200 & - & 13 & 30 & 14 & 12\\
+\addlinespace
+16 & x \& y & 10000 & 0.4 & 41 & 1 & 37 & 44\\
+17 & x \& y & 10000 & 0.8 & 57 & 2 & 57 & 53\\
+18 & x \& y & 1000 & 0.8 & 52 & 3 & 53 & 51\\
+19 & x \& y & 1000 & 0.8 & 45 & 4 & 47 & 50\\
+20 & x \& y & 1000 & 0.8 & 18 & 38 & 24 & 17\\
+\addlinespace
+21 & x \& y & - & - & 59 & 55 & 59 & 59\\
+22 & fmla \& data & - & - & 60 & 54 & 60 & 60\\
+23 & x \& y & 200 & - & 15 & 33 & 15 & 15\\
+24 & "y" \& data & 10000 & 0.01 & 7 & 7 & 8 & 8\\
+25 & x \& y & 10000 & 0.1 & 48 & 27 & 51 & 41\\
+\addlinespace
+26 & x \& y & 10000 & 0.1 & 42 & 51 & 41 & 33\\
+27 & x \& y & 10000 & 0.1 & 28 & 44 & 30 & 25\\
+28 & x \& y & 10000 & 0.1 & 16 & 19 & 20 & 16\\
+29 & x \& y & 10000 & 0.1 & 38 & 58 & 39 & 40\\
+30 & x \& y & 10000 & 0.1 & 54 & 57 & 55 & 54\\
+\addlinespace
+31 & x \& y & 10000 & 0.1 & 44 & 47 & 43 & 43\\
+32 & fmla \& data & 200 & - & 9 & 20 & 10 & 7\\
+33 & full fmla \& data & 200 & - & 18 & 5 & 19 & 14\\
+34 & x \& y & 200 & - & 10 & 17 & 9 & 10\\
+35 & x \& y & 10000 & - & 46 & 46 & 43 & 47\\
+\addlinespace
+36 & fmla \& data & 100000 & 0.001 & 50 & 11 & 48 & 45\\
+37 & fmla \& data & 100000 & - & 21 & 41 & 22 & 18\\
+38 & fmla \& data & 100000 & - & 23 & 40 & 21 & 24\\
+39 & fmla \& data & 100000 & - & 50 & 59 & 46 & 52\\
+40 & fmla \& data & 100000 & - & 38 & 37 & 38 & 46\\
+\addlinespace
+41 & full fmla \& data & 200 & - & 3 & 16 & 3 & 6\\
+42 & x \& y & 200 & - & 2 & 17 & 2 & 3\\
+43 & x \& y & 200 & - & 14 & 22 & 7 & 35\\
+44 & "y" \& data & 200 & - & 8 & 32 & 11 & 9\\
+45 & fmla \& data & 200 & - & 1 & 6 & 1 & 1\\
+\addlinespace
+46 & x \& y & 10000 & 0.1 & 47 & 25 & 50 & 49\\
+47 & x \& y & 1000 & - & 34 & 41 & 32 & 34\\
+48 & x \& y & 1000 & - & 35 & 38 & 34 & 30\\
+49 & x \& y & 1000 & - & 30 & 43 & 33 & 32\\
+50 & x \& y & 10000 & - & 58 & 36 & 58 & 57\\
+\addlinespace
+51 & x \& y & 1000 & - & 24 & 51 & 25 & 29\\
+52 & x \& y & 1000 & - & 16 & 22 & 18 & 19\\
+53 & x \& y & 1000 & 0.1 & 32 & 30 & 31 & 36\\
+54 & x \& y & 200 & - & 48 & 13 & 49 & 47\\
+55 & fmla \& data & 200 & - & 5 & 15 & 6 & 2\\
+\addlinespace
+56 & x \& y & 200 & - & 4 & 11 & 4 & 5\\
+57 & x \& y & 1000 & - & 6 & 10 & 5 & 4\\
+58 & x \& y & 200 & - & 12 & 29 & 13 & 12\\
+59 & x \& y & 10000 & - & 43 & 45 & 45 & 41\\
+60 & x \& y & 1000 & - & 53 & 53 & 56 & 55\\
+\bottomrule
+\end{tabular}
+
+\end{Schunk}
+
 
 \address{%
 Salsabila Mahdi\\
@@ -962,3 +2191,4 @@ Telfer School of Management, University of Ottawa\\
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 }
 \href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
+
