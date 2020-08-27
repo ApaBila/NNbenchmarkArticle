@@ -21,10 +21,18 @@ author:
     affiliation: Telfer School of Management, University of Ottawa
     address: 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada
     email:  nashjc@uottawa.ca
-preamble: |
-  % Any extra LaTeX you need in the preamble
+preamble: 
+  includes: 
+    \usepackage{float}
+    \usepackage{multirow}
 output: rticles::rjournal_article
 ---
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+```
+
 
 <!-- SB: To all, Christophe has merged the abstract & intro + tidied up the document -->
 
@@ -291,94 +299,37 @@ As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE)) --> see A
 library(kableExtra)
 options(knitr.kable.NA = '')
 
-supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
-kable(supC, format = "latex", booktabs = TRUE, centering = TRUE, 
-      caption = "Results from Tested Packages")
+if(file.exists("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv"))
+{  
+  supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
+  supC <- supC[supC[,2] != "", ]
+}else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv"))
+{  
+  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
+  supC <- supC[supC[,2] != "", ]
+}else 
+  supC <- rep("missing",2)
+
+colnames(supC) <- c("Package", "Algorithm", "Time", "RMSE",
+                    "Util", "Doc")
+
+pkg.name <- supC$Package[supC$Package != ""]
+idx.pkg.name <- (1+0:NROW(supC))[supC$Package != ""]
+#repeate value
+supC$Package <- rep(pkg.name, times=diff(idx.pkg.name))
+supC$Util <- rep(supC$Util[!is.na(supC$Util)], times=diff(idx.pkg.name))
+supC$Doc <- rep(supC$Doc[!is.na(supC$Doc)], times=diff(idx.pkg.name))
+#reorder columns => is that OK?
+supC <- supC[, c(1, 5:6, 2:4)]
+
+kableExtra::kable(supC, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="lcclcc",
+                  caption="Result from Tested Packages") %>%
+  add_header_above(c(" "=1, "Individual score"=2, " "=1,  "Global score"=2)) %>%
+  column_spec(1, bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7)
 ```
-
-
-(THE FOLLOWING IS JUST AN ALPHABETICALLY ORDERED LIST OF CURRENTLY UNTESTED PACKAGES)
-\begin{center}
-<!-- \textbf{Table 2: Review of Ommitted Packages} -->
-
-\begin{tabular}{l l l l}
-  \toprule
-  No & Name (package)         & Category & Comment \\
-  \midrule
-  1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
-     &                        &           & the amyloidogenicity propensity of polypeptide sequences      \\
-  2  &\pkg{autoencoder}       & AP        & This package provides a sparse autoencoder, an unsupervised   \\
-     &                        &           & algorithm that learns useful features from the data its given \\
-  3  &\pkg{BNN}               & RE*       & This package uses a feed forward neural network to perform    \\
-     &                        &           & regression as provided in the examples, however, it is unclear\\      &                        &           & whether it fits the form of perceptron that is the scope of   \\
-     &                        &           & our research. Moreover, it states that it is intended for     \\      &                        &           & variable selection. Although how exactly the package would be \\
-     &                        &           & used to do so isn't accessible in the package, especially     \\
-     &                        &           & considering the source code is based on .c code that users of \\
-     &                        &           & R might not understand. It's performance is slow, which may   \\
-     &                        &           & have to do with the 100.000 iterations it needs, although     \\
-     &                        &           & quite accurate for simple datasets.                           \\
-  4  &\pkg{Buddle}            & RE**      & (errors)\\
-  5  &\pkg{cld2}              & 00        & \\
-  6  &\pkg{cld3}              & AP        & \\
-  7  &\pkg{condmixt}          & AP        & \\
-  8  &\pkg{deep}              & CL        & \\
-  9  &\pkg{DALEX2}            & 00        & removed keyword, included in 2019 \\
-  10 &\pkg{DamiaNN}           & RE**      & (errors) exported functions, still doesn't work \\
-  11 &\pkg{DChaos}            & ??        & removed keyword for some reason, need to check out! \\
-  12 &\pkg{deepNN}            & RE**      & (errors) I/O weird, ragged vector array \\
-  13 &\pkg{DNMF}              & AP        & \\
-  14 &\pkg{evclass}           & CL        & \\
-  15 &\pkg{gamlss.add}        & RE        & there is some code but dist not appropriate \\
-  16 &\pkg{gcForest}          & 00        & \\
-  17 &\pkg{GMDH}              & TS        & \\
-  18 &\pkg{GMDH2}             & CL        & \\
-  19 &\pkg{GMDHreg}           & RE*       & \\
-  20 &\pkg{grnn}              & RE**      & \\
-  21 &\pkg{hybridEnsemble}    & ??        & \\ 
-  22 &\pkg{isingLenzMC}       & AP        & \\
-  23 &\pkg{leabRa}            & ??        & \\      
-  24 &\pkg{learNN}            & ??        & \\     
-  25 &\pkg{LilRhino}          & AP        & \\
-  26 &\pkg{neural}            & CL        & \\
-  27 &\pkg{NeuralNetTools}    & UT        & tools for neural networks           \\
-  28 &\pkg{NeuralSens}        & UT        & tools for neural networks           \\
-  29 &\pkg{NlinTS}            & TS        & Time Series                         \\
-  30 &\pkg{nnetpredint}       & UT        & confidence intervals for NN          \\
-  31 &\pkg{nnfor}             & TS        & Times Series, uses neuralnet         \\
-  32 &\pkg{nntrf}             & UT        & \\
-  33 &\pkg{onnx}              &           & provides an open source format       \\
-  34 &\pkg{OptimClassifier}   &           & choose classifier parameters, nnet   \\
-  35 &\pkg{OSTSC}             &           & solving oversampling classification  \\
-  36 &\pkg{passt}             &           & \\
-  36 &\pkg{pnn}               &           & Probabilistic                        \\
-  37 &\pkg{polyreg}           &           & polyregression as alternative to NN  \\
-  38 &\pkg{predictoR}         &           & shiny interface, neuralnet           \\
-  39 &\pkg{ProcData}          &           & \\
-  40 &\pkg{QuantumOps}        &           & classifies MNIST, Schuld (2018), removed keyword, in 2019 \\
-  41 &\pkg{quarrint}          &           & specified classifier for quarry data \\
-  42 &\pkg{rasclass}          &           & classifier for raster images, nnet?  \\
-  43 &\pkg{rcane}             &           & \\
-  44 &\pkg{regressoR}         &           & a manual rich version of predictoR   \\
-  45 &\pkg{rnn}               &           & Recurrent                            \\
-  46 &\pkg{RTextTools}        &           & \\
-  47 &\pkg{ruta}              &           & \\
-  48 &\pkg{simpleNeural}      &           & \\
-  49 &\pkg{softmaxreg}        &           & \\
-  50 &\pkg{Sojourn.Data}      &           & sojourn Accelerometer methods, nnet? \\
-  51 &\pkg{spnn}              &           & classifier, probabilistic            \\
-  52 &\pkg{studyStrap}        &           & \\
-  53 &\pkg{TeachNet}          &           & classifier, selfbuilt, slow          \\
-  54 &\pkg{tensorflow}        &           & \\
-  55 &\pkg{tfestimators}      &           & \\
-  56 &\pkg{trackdem}          &           & classifier for particle tracking     \\
-  57 &\pkg{TrafficBDE}        & RE*       & \\
-  58 &\pkg{tsfgrnn}           &           & \\
-  59 &\pkg{yap}               &           & \\
-  60 &\pkg{yager}             & RE*       & \\
-  61 &\pkg{zFactor}           & AP        & 'compressibility' of hydrocarbon gas \\
-\end{tabular}
-
-\end{center}
 
 
 ## Discussion and Recommendations
@@ -633,7 +584,103 @@ $$
 
 ```{r echo=FALSE, message=FALSE}
 library(kableExtra)
-supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
-kable(supC, format = "latex", booktabs = TRUE, centering = TRUE)
+if(file.exists("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
+{  supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
+}else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
+{  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
+}else 
+  supC <- rep("missing",2)
+colnames(supC) <- c("Num", "Input format", "Maxit", "Learn. rate", "RMSE median",
+                    "RMSE d51", "MAE", "WAE")
+kableExtra::kable(supC, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, 
+                  caption="All convergence scores per package:algorithm") %>%
+  add_header_above(c(" ", "Input parameter"=3, "Score"=4)) %>%
+  kable_styling(font_size=8)
 ```
 
+## Appendix D
+
+\begin{table}[htb!]
+\begin{center}
+\caption{\textbf{Review of Ommitted Packages}}
+\scriptsize
+
+\begin{tabular}{l l l l}
+  \toprule
+  No & Name (package)         & Category & Comment \\
+  \midrule
+  1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
+     &                        &           & the amyloidogenicity propensity of polypeptide sequences      \\
+  2  &\pkg{autoencoder}       & AP        & This package provides a sparse autoencoder, an unsupervised   \\
+     &                        &           & algorithm that learns useful features from the data its given \\
+  3  &\pkg{BNN}               & RE*       & This package uses a feed forward neural network to perform    \\
+     &                        &           & regression as provided in the examples, however, it is unclear\\      &                        &           & whether it fits the form of perceptron that is the scope of   \\
+     &                        &           & our research. Moreover, it states that it is intended for     \\      &                        &           & variable selection. Although how exactly the package would be \\
+     &                        &           & used to do so isn't accessible in the package, especially     \\
+     &                        &           & considering the source code is based on .c code that users of \\
+     &                        &           & R might not understand. It's performance is slow, which may   \\
+     &                        &           & have to do with the 100.000 iterations it needs, although     \\
+     &                        &           & quite accurate for simple datasets.                           \\
+  4  &\pkg{Buddle}            & RE**      & (errors)\\
+  5  &\pkg{cld2}              & 00        & \\
+  6  &\pkg{cld3}              & AP        & \\
+  7  &\pkg{condmixt}          & AP        & \\
+  8  &\pkg{deep}              & CL        & \\
+  9  &\pkg{DALEX2}            & 00        & removed keyword, included in 2019 \\
+  10 &\pkg{DamiaNN}           & RE**      & (errors) exported functions, still doesn't work \\
+  11 &\pkg{DChaos}            & ??        & removed keyword for some reason, need to check out! \\
+  12 &\pkg{deepNN}            & RE**      & (errors) I/O weird, ragged vector array \\
+  13 &\pkg{DNMF}              & AP        & \\
+  14 &\pkg{evclass}           & CL        & \\
+  15 &\pkg{gamlss.add}        & RE        & there is some code but dist not appropriate \\
+  16 &\pkg{gcForest}          & 00        & \\
+  17 &\pkg{GMDH}              & TS        & \\
+  18 &\pkg{GMDH2}             & CL        & \\
+  19 &\pkg{GMDHreg}           & RE*       & \\
+  20 &\pkg{grnn}              & RE**      & \\
+  21 &\pkg{hybridEnsemble}    & ??        & \\ 
+  22 &\pkg{isingLenzMC}       & AP        & \\
+  23 &\pkg{leabRa}            & ??        & \\      
+  24 &\pkg{learNN}            & ??        & \\     
+  25 &\pkg{LilRhino}          & AP        & \\
+  26 &\pkg{neural}            & CL        & \\
+  27 &\pkg{NeuralNetTools}    & UT        & tools for neural networks           \\
+  28 &\pkg{NeuralSens}        & UT        & tools for neural networks           \\
+  29 &\pkg{NlinTS}            & TS        & Time Series                         \\
+  30 &\pkg{nnetpredint}       & UT        & confidence intervals for NN          \\
+  31 &\pkg{nnfor}             & TS        & Times Series, uses neuralnet         \\
+  32 &\pkg{nntrf}             & UT        & \\
+  33 &\pkg{onnx}              &           & provides an open source format       \\
+  34 &\pkg{OptimClassifier}   &           & choose classifier parameters, nnet   \\
+  35 &\pkg{OSTSC}             &           & solving oversampling classification  \\
+  36 &\pkg{passt}             &           & \\
+  36 &\pkg{pnn}               &           & Probabilistic                        \\
+  37 &\pkg{polyreg}           &           & polyregression as alternative to NN  \\
+  38 &\pkg{predictoR}         &           & shiny interface, neuralnet           \\
+  39 &\pkg{ProcData}          &           & \\
+  40 &\pkg{QuantumOps}        &           & classifies MNIST, Schuld (2018), removed keyword, in 2019 \\
+  41 &\pkg{quarrint}          &           & specified classifier for quarry data \\
+  42 &\pkg{rasclass}          &           & classifier for raster images, nnet?  \\
+  43 &\pkg{rcane}             &           & \\
+  44 &\pkg{regressoR}         &           & a manual rich version of predictoR   \\
+  45 &\pkg{rnn}               &           & Recurrent                            \\
+  46 &\pkg{RTextTools}        &           & \\
+  47 &\pkg{ruta}              &           & \\
+  48 &\pkg{simpleNeural}      &           & \\
+  49 &\pkg{softmaxreg}        &           & \\
+  50 &\pkg{Sojourn.Data}      &           & sojourn Accelerometer methods, nnet? \\
+  51 &\pkg{spnn}              &           & classifier, probabilistic            \\
+  52 &\pkg{studyStrap}        &           & \\
+  53 &\pkg{TeachNet}          &           & classifier, selfbuilt, slow          \\
+  54 &\pkg{tensorflow}        &           & \\
+  55 &\pkg{tfestimators}      &           & \\
+  56 &\pkg{trackdem}          &           & classifier for particle tracking     \\
+  57 &\pkg{TrafficBDE}        & RE*       & \\
+  58 &\pkg{tsfgrnn}           &           & \\
+  59 &\pkg{yap}               &           & \\
+  60 &\pkg{yager}             & RE*       & \\
+  61 &\pkg{zFactor}           & AP        & 'compressibility' of hydrocarbon gas \\
+\end{tabular}
+\end{center}
+\end{table}
