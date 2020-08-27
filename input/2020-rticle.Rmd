@@ -87,6 +87,34 @@ The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to f
 We restricted our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignored those for classification or other specialized purposes. 
 
 
+# Neural Netwoks: the perceptron
+
+
+Here, we give a short description of the one hidden layer perceptron. As the "layer" term suggests it, some terms come from the representation of graphs whereas some other terms come from the  traditional literature on nonlinear models. 
+
+Using the graph description, a one-hidden layer neural network is made of 3 parts: (i) the layer of the input(s), (ii) the hidden layer which consists of independant neurons, each of them performing two operations: a linear combination of the inputs plus an offset, then a nonlinear function applied on this linear combination. (iii) the layer of the output(s) which is a linear combination of the output of the nonlinar functions in the hidden layer. 
+
+The nonlinear function used in the hidden layer must have the following four properties: continuous, derivable, monotonic, bounded. The logistic function, the hyperbolic tangent function and the arctangent functions are the usual candidates. 
+
+The above description has a simple mathematical equivalence. Let's give two examples. The model
+
+$$y = a1 + a2*tanh(a3 + a4*x) + a5*tanh(a6 + a7*x) + a8*tanh(a9 + a10*x)$$
+
+describes a neural network with one input, three hidden neurons, one output model where x is the input, tanh() is the activation function, y is the output and a1:a10 are the parameters. The model
+
+$$y = a1 + a2*atan(a3 + a4*x1 + a5*x2 + a6*x3 + a7*x4 + a8*x5) 
+         + a9*atan(a10 + a11*x1 + a12*x2 + a13*x3 + a14*x4 + a15*x5) 
+		 + a16*atan(a17 + a18*x1 + a19*x2 + a20*x3 + a21*x4 + a22*x5)$$
+
+describes a neural network with five inputs, three hidden neurons, one output model where x is the input, atan() is the activation function, y is the output and a1:a22 are the parameters. 
+
+In order to get large gradients at the first steps of the training algorithm, it is recommended to use normalized inputs, normalized outputs, odd functions like the hyperbolic tangent function or the arctangent function and small random values to initialize the parameters, for instance extracted from the N(0, 0.1) distribution. Such good practices help find the good local minima and possibly the global minimum. 
+
+It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some colinearities between its columns and become quasi-degenerated. The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. We agree that « much larger » is subject to discussion but 3 to 5 times are accepted values (some iterative strategies based on designs of experiments start with number of lines equal to 1.8 times the number of parameters and then increase the number of experiments).
+
+
+
+
 # Methodology
 
 
@@ -320,6 +348,10 @@ options(knitr.kable.NA = '')
 if(file.exists("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv"))
 {  
   supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
+  supC <- supC[supC[,2] != "", ]
+}else if(file.exists("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/Table1.csv"))
+{  
+  supC <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
   supC <- supC[supC[,2] != "", ]
 }else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv"))
 {  
@@ -602,6 +634,8 @@ $$
 library(kableExtra)
 if(file.exists("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
 {  supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
+}else if(file.exists("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
+{  supC <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
 }else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
 {  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
 }else 
