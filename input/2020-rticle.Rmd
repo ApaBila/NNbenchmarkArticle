@@ -87,8 +87,8 @@ The criteria used in our benchmark were: (i) the accuracy, i.e. the ability to f
 We restricted our evaluation to regression algorithms applied on the one-hidden layer perceptron and ignored those for classification or other specialized purposes. 
 
 
-# Neural Netwoks: the perceptron
 
+# Neural Networks: the perceptron
 
 Here, we give a short description of the one hidden layer perceptron. As the "layer" term suggests it, some terms come from the representation of graphs whereas some other terms come from the  traditional literature on nonlinear models. 
 
@@ -96,21 +96,19 @@ Using the graph description, a one-hidden layer neural network is made of 3 part
 
 The nonlinear function used in the hidden layer must have the following four properties: continuous, derivable, monotonic, bounded. The logistic function, the hyperbolic tangent function and the arctangent functions are the usual candidates. 
 
-The above description has a simple mathematical equivalence. Let's give two examples. The model
+The above description has a simple mathematical equivalence. Let's give two examples. 
 
-$$y = a1 + a2*tanh(a3 + a4*x) + a5*tanh(a6 + a7*x) + a8*tanh(a9 + a10*x)$$
+The model $y = a1 + a2*tanh(a3 + a4*x) + a5*tanh(a6 + a7*x) + a8*tanh(a9 + a10*x)$ describes a neural network with one input, three hidden neurons, one output model where x is the input, tanh() is the activation function, y is the output and $a1,..,a10$ are the parameters. 
 
-describes a neural network with one input, three hidden neurons, one output model where x is the input, tanh() is the activation function, y is the output and a1:a10 are the parameters. The model
-
-$$y = a1 + a2*atan(a3 + a4*x1 + a5*x2 + a6*x3 + a7*x4 + a8*x5) 
-         + a9*atan(a10 + a11*x1 + a12*x2 + a13*x3 + a14*x4 + a15*x5) 
-		 + a16*atan(a17 + a18*x1 + a19*x2 + a20*x3 + a21*x4 + a22*x5)$$
-
-describes a neural network with five inputs, three hidden neurons, one output model where x is the input, atan() is the activation function, y is the output and a1:a22 are the parameters. 
+The model $y = a1 + a2*atan(a3 + a4*x1 + a5*x2 + a6*x3 + a7*x4 + a8*x5) + a9*atan(a10 + a11*x1 + a12*x2 + a13*x3 + a14*x4 + a15*x5) + a16*atan(a17 + a18*x1 + a19*x2 + a20*x3 + a21*x4 + a22*x5)$ describes a neural network with five inputs, three hidden neurons, one output model where x is the input, atan() is the activation function, y is the output and $a1,..,a22$ are the parameters. 
 
 In order to get large gradients at the first steps of the training algorithm, it is recommended to use normalized inputs, normalized outputs, odd functions like the hyperbolic tangent function or the arctangent function and small random values to initialize the parameters, for instance extracted from the N(0, 0.1) distribution. Such good practices help find the good local minima and possibly the global minimum. 
 
-It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some colinearities between its columns and become quasi-degenerated. The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. We agree that « much larger » is subject to discussion but 3 to 5 times are accepted values (some iterative strategies based on designs of experiments start with number of lines equal to 1.8 times the number of parameters and then increase the number of experiments).
+The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. We agree that « much larger » is subject to discussion but 3 to 5 times are accepted values (In experimental design, some iterative strategies start with a dataset having a number of experiments/lines equal to 1.8 times the number of parameters and then increase the number of experiments to finetune the model).
+
+It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some colinearities between its columns and become quasi-degenerated. As a result, the appropriate algorithms for such pairs dataset::model are rather limited and well-known. They are the second-order algorithms like BFGS and Levenberg-Marquardt (and Horsehoe?).
+
+Unfortunately, due to some simple literature on the gradient and the hype around "deep neural networks" that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets, many papers and many R packages emphasize the use of first-order gradient algorithms. In the case of the perceptron, this is an error and the goal of this paper is to demonstrate it. 
 
 
 
