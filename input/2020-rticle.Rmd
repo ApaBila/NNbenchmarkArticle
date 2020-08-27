@@ -89,28 +89,45 @@ We restricted our evaluation to regression algorithms applied on the one-hidden 
 
 # Methodology
 
-??JN: ******************************
 
-In working on material below, I think we need to provide some explanation of goals
 
-- What do we mean by RMSE, other measures? Should define here for later use.
-??JN perhaps?
 
-We measure the quality of our model by how small the RMSE is of the trained (??is this right?) 
-<!-- B: correct, to be precise - dfrRMSE <- dfr[order(dfr$RMSE.min, dfr$time.mean, dfr$RMSE.med),], so the RMSE score is the results of ranking by RMSE.min, if there is a tie then by time, if there is a tie then by median RMSE. -->
-model and the training data. This is defined in Appendix A.
+<!-- to be removed -->
+**??JN: **
+**- In working on material below, I think we need to provide some explanation of goals**
+**- What do we mean by RMSE, other measures? Should define here for later use.**
 
-- What does "convergence" mean in our context?
-??JN: Something like
 
-In training neural network models we attempt to adjust a set of parameters so that an objective function 
-is minimized. When our method for such adjustment can no longer reduce the objective, we say that we
-have converged. However, practical methods require that we terminate the optimization process in 
-exceptional situations (e.g., a divide by zero) or a pre-set limit on the number of steps or elapsed
+Considering regression problems, we measure the quality of our model by the
+root mean squared error (RMSE): the smaller RMSE the better the fitted model. 
+In addition to the RMSE, two other convergence metrics have been considered: 
+the Mean Absolute Error (MAE) and the Worst Absolute Error (WAE).
+We recall the definition of the RMSE, the MAE and the WAE in Appendix A.
+The ranking on MAE and WAE may help distinguish packages with close RMSE values. 
+
+
+
+<!-- to be removed -->
+**- What does "convergence" mean in our context?**
+**??JN: Something like**
+
+When training neural networks, we attempt to tune a set of hyperparameters so that the RMSE is minimized. 
+When our method for such adjustment can no longer reduce the RMSE, we say that the given algorithm terminated.
+It converged when the terminated RMSE value is relatively small.
+So, we do not choose the MAE neither for overall ranking nor for convergence value as there is no consensus in the literature,  see e.g. \citep{willmott2005advantages,chai2014root}.
+
+Furthermore, in practice, some algorithms require that we stop the optimization process in 
+exceptional situations (e.g., a divide by zero), or a pre-set limit on the number of steps or elapsed
 time is reached.
 
-- What do we mean by "performance"? Other goals?
-??JN: perhaps?
+More precisely, second-order algorithms are all set to a maximum of 200 iterations. 
+On the other hand, first-order algorithms were set to several values, depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
+The full list of the maximum iteration number per package:algorithm is given in Appendix C. 
+
+
+<!-- to be removed -->
+**- What do we mean by "performance"? Other goals?**
+**??JN: perhaps?**
 
 We measure performance primarily by relative computing time between methods on a particular computing 
 platform. We could also count measures of iterations, function evaluations or similar quantities that
@@ -119,13 +136,11 @@ libraries (e.g., BLAS choices for R) will modify our measures. We are putting ou
 repository so that further evaluation can be made by ourselves and others as hardware and software
 evolves.
 <!-- B: if we talk about platforms, do we have to mention the ones we used? For example, using a particular 
-GPU card with keras. Well I suppose this is better mentioned in the results -->
+GPU card with keras. Well I suppose this is better mentioned in the results
+==> CD : yes Bila you need to put your laptop configuration. -->
 
-As a reminder, RMSE and other convergence metrics are defined in Appendix A.
 
-<!-- B: For the two points above, should this be mentioned: -->
-The number of iterations we limited the algorithms to is in Appendix C. Second order algorithms are all set to a 
-maximum of 200 iterations. On the other hand, first order algorithms were set to several values, depending on how well they converged. maxit1storderA 1000 iterations, maxit1storderB 10000 iterations, and maxit1storderC 100000 iterations.
+
 
 We tried to harmonize the parameters.
 *************************************
@@ -179,6 +194,20 @@ the CRAN's task view for machine learning, 	https://CRAN.R-project.org/view=Mach
 Restricting to regression analysis left us with 49 package::algorithm pairs in 2019 and 60 package::algorithm pairs in 2020.
 
 
+<!-- B??: basically, each package was inspected 3 times:
+1. the discard/not discard phase: depending on the package, this could be decided as easily as looking at
+the DESCRIPTION file or having to go through the process of making the code and seeing the results.
+2. benchmarking with template that was developed in 2019 and encapsulated in the functions of 2020, keeping
+notes of whether or not the package was easy to use
+3. summarizing or re-reviewing the tested packages utility functions & documentation
+
+then, the next step was to rank the results (Phase 3)
+Please tell me how to convey this better if it is not clear here?
+
+==> CD: this should be put here in the paper
+-->
+
+
 ## Phase 2 - Review of packages and development of a benchmarking template
 
 From documentation and example code, we learned that not all packages selected by the automated 
@@ -190,64 +219,53 @@ were only intended for very specific purposes.
 
 As we inspected the packages, we developed a template for benchmarking. The structure of this
 template (for each package) is as follows:  
-(1) Set up the test environment - loading of packages, setting working directory and options;   
-(2) Summary of datasets;  
-(3) Loop over datasets:
-    (a) setting parameters for a specific dataset 
-    (b) selecting benchmark options 
-    (c) training a neural network with a tuned functions for each package 
-    (d) calculation of RMSE and MAE (??definition, reference) 
-    <!-- B??: should the reference be moved here or this part generalized to accuracy metrics 
-    @Christophe @John -->
-    (e) plot each training over one initial graph, then plot the best result 
-    (f) add results to the appropriate existing record (*.csv file) and 
-    (g) clear the environment for next loop; and  
-(4) Clearing up the environment for the next package.
-(5) It is optional to print warnings.
+
+1. Set up the test environment - loading of packages, setting working directory and options; 
+2. Summary of tested datasets; 
+3. Loop over datasets: 
+      a. setting parameters for a specific dataset, 
+      b. selecting benchmark options, 
+      c. training a neural network with a tuned functions for each package, 
+      d. calculation of convergence metrics (RMSE, MAE, WAE),
+      e. plot each training over one initial graph, then plot the best result, 
+      f. add results to the appropriate existing record (*.csv file) and 
+      g. clear the environment for next loop.
+4. Clearing up the environment for the next package.
+It is optional to print warnings.
 
 To simplify this process, we developed tools in the NNbenchmark package, of which the first version 
-was created as part of GSoC 2019. In GSoC 2020, 3 functions encapsulating the template that had been 
-made generic with \code{do.call} were added:
+was created as part of GSoC 2019. In GSoC 2020, 3 functions encapsulating the template, that had been 
+made generic with an extensive use of the incredible \code{do.call} function, were added:
 
-1.    In trainPredict_1mth1data a neural network is trained on one dataset and then used for predictions, with several utilities. Then, the performance of the neural network is summarized.
-2.    trainPredict_1data serves as a wrapper function for trainPredict_1mth1data for multiple methods.
-3.    trainPredict_1pkg serves as a wrapper function for trainPredict_1mth1data for multiple datasets.
+1.    In \code{trainPredict\_1mth1data} a neural network is trained on one dataset and then used for predictions, with several utilities. Then, the performance of the neural network is exported, plotted and/or summarized.
+2.    \code{trainPredict\_1data} serves as a wrapper function for trainPredict_1mth1data for multiple methods.
+3.    \code{trainPredict\_1pkg} serves as a wrapper function for trainPredict_1mth1data for multiple datasets.
 
-A function for the summary of accuracy and speed, NNsummary, was also added. The package repository is https://github.com/pkR-pkR/NNbenchmark, with package templates in https://github.com/pkR-pkR/NNbenchmarkTemplates). 
+A function for the summary of accuracy and speed, \code{NNsummary}, was also added. The package repository is https://github.com/pkR-pkR/NNbenchmark, with package templates in https://github.com/pkR-pkR/NNbenchmarkTemplates. 
 
-<!-- B??: should we add some examples with the code? As some package authors who publish in the R Journal do to introduce their package. Or we could link to specific pages of the website here? -->
+<!-- B??: should we add some examples with the code? As some package authors who publish in the R Journal do to introduce their package. Or we could link to specific pages of the website here?
+==> CD: maybe we can put one example in Appendix but not in the body -->
 
 **Ease of Use Scoring**
 
-We decided ease of use based on what we considered a user would need when using a neural network 
+We define an ease-of-use measure based on what we considered a user would need when using a neural network 
 package for nonlinear regression, namely, utility functions and sufficient documentation. 
 
-(1) Utilities (1 star)
-    (a) a predict function exists  
-    (b) scaling capabilities exist
-(2) Sufficient documentation (2 stars)
-    (a) the existence of useful example/vignette = (1 star)
+1. Utilities (1 star)
+    a. a predict function exists 
+    b. scaling capabilities exist
+2. Sufficient documentation (2 stars)
+    a. the existence of useful example/vignette = (1 star)
         - clear, with regression = 2 points
         - unclear, examples use iris or are for classification only = 1 point
         - no examples = 0 points
-    (b) input/output is clearly documented, e.g., what values are expected and returned 
+    b. input/output is clearly documented, e.g., what values are expected and returned 
     by a function = (1 star)
         - clear input and output = 2 points
         - only one is clear = 1 point
         - both are not documented = 0 points
 
-For a total of 0 to 3 stars.
-
-<!-- B??: basically, each package was inspected 3 times:
-1. the discard/not discard phase: depending on the package, this could be decided as easily as looking at
-the DESCRIPTION file or having to go through the process of making the code and seeing the results.
-2. benchmarking with template that was developed in 2019 and encapsulated in the functions of 2020, keeping
-notes of whether or not the package was easy to use
-3. summarizing or re-reviewing the tested packages utility functions & documentation
-
-then, the next step was to rank the results (Phase 3)
-Please tell me how to convey this better if it is not clear here?
--->
+The ease-of-use measure ranges from 0 to 3 stars.
 
 ## Phase 3 - Collection of and analysis of results
 
@@ -262,25 +280,24 @@ directories in the templates repository.
 To rank how well a package converged and its speed, we developed the following method:
 
 1.	The results datasets are loaded into the R environment as one large list. The dataset names, package:algorithm names and all 10 run numbers, durations, and RMSE are extracted from that list
-2.	For the duration score (DUR), the duration is averaged by dataset. 3 criteria for the RMSE score by dataset are calculated:
-
-a.	The minimum value of RMSE for each package:algorithm as a measure of their best performance
-b.	The median value of RMSE for each package:algorithm as a measure of their average performance, without the influence of outliers
-c.	The spread of the RMSE values for each package which is measured by the difference between the median and the minimum RMSE (d51)
+2.	For the duration score (DUR), the duration is averaged by dataset. 3 criteria for the RMSE score by dataset are calculated: 
+    a.	The minimum value of RMSE for each package:algorithm as a measure of their best performance
+    b.	The median value of RMSE for each package:algorithm as a measure of their average performance, without the influence of outliers
+    c.	The spread of the RMSE values for each package which is measured by the difference between the median and the minimum RMSE (d51)
 
 3.	Then, the ranks are calculated for every dataset and the results are merged into one wide dataframe.
-a.	The duration rank only depends on the duration.
-b.	For minimum RMSE values, ties are decided by duration mean, then the RMSE median
-c.	For median RMSE values, ties are decided by the RMSE minimum, then the duration mean
-d.	The d51 rank only depends on itself
+    a.	The duration rank only depends on the duration.
+    b.	For minimum RMSE values, ties are decided by duration mean, then the RMSE median
+    c.	For median RMSE values, ties are decided by the RMSE minimum, then the duration mean
+    d.	The d51 rank only depends on itself
+  
+<!-- B: to be precise - dfrRMSE <- dfr[order(dfr$RMSE.min, dfr$time.mean, dfr$RMSE.med),], so the RMSE score is the results of ranking by RMSE.min, if there is a tie then by time, if there is a tie then by median RMSE. -->
+
 
 4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE,  d51 RMSE) of each package:algorithm for each dataset
 5.	The final table is the result of ranking by the global minimum RMSE scores for each package:algorithm
-6. In addition to the previous metrics, two other convergence metrics have been considered:
-the Mean Absolute Error (MAE) and the Worst Absolute Error (WAE), see Appendix A. The ranking on
-those two metrics may help distinguish packages with close RMSE values. 
-However, we do not choose the MAE for overall ranking as there is no consensus in the literature, 
-see e.g. \citep{willmott2005advantages,chai2014root}.
+
+
 
 To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
 - Functionality (util): scaling, input, output, trace
@@ -288,9 +305,10 @@ To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
 
 # Results
 
+Table 1 gives the RMSE and time score per package and per algorithm. The full list of score
+is given in Table 2 in Appendix C.
+
 **Tables**
-(NOTE: FINAL MEASURE FOR CONVERGENCE - RMSE RANKS? OR A COMBINATION OF OTHER MEASURES?
-As in Christophe's recent email: L1 MAE(), L2 RMSE(), Linfinity (WAE)) --> see Appendix
 
 (ALSO: THE FOLLOWING IS SIMPLY ALPHABETIC LIST FOR ALL TESTED, I WILL DIVIDE THE TABLE INTO 4: 
 2nd ORDER always recommended, 1st ORDER recommended, 1st ORDER not recommended, untested packages)
@@ -335,7 +353,10 @@ kableExtra::kable(supC, format = "latex", booktabs = TRUE,
 ## Discussion and Recommendations
 
 <!-- list may need to be updated. Already in bibliography RJreferences -->
-<!-- JN?? I reran RWsearch. See RWSearch20200731.txt file on repo. Slight differences. -->
+<!-- JN?? I reran RWsearch. See RWSearch20200731.txt file on repo. Slight differences. 
+==> to all, what do you want to tell with this alphabetically ordered list?
+-->
+
 
 The following is a list of packages we included in this study, with brief descriptions.
 
@@ -420,17 +441,12 @@ The following is a list of packages we included in this study, with brief descri
 77. \CRANpkg{tsensembler} \citep{R-tsensembler},
 78. \CRANpkg{validann} \citep{R-validann},
 80. \CRANpkg{zFactor} \citep{R-zFactor}.
-81.
-82.
-83.
-84.
-85.
-86.
-87.
+
+
 
 <!-- (NOTE TO MENTORS: based on latest 2019 Run 04 or Run 03) -->
 
-A. Recommended: 2nd order algorithms
+### Recommended: 2nd order algorithms
 Out of all the algorithms, these second algorithms generally performed better in terms of convergence 
 despite being set to a much lower number of iterations, 200, than the first-order algorithms. Moreover, 
 they performed better in terms of speed. The best  in this class were. \CRANpkg{minpack.lm} and. \CRANpkg{nlsr}, 
@@ -454,7 +470,7 @@ missing first parameter. Furthermore, brnn's algorithm minimizes the sum of squa
 on parameters instead of just the sum of squared errors. This may prevent parameters to get highly correlated, 
 especially with an almost degenerated Jacobian matrix.
 
-B. Recommended: 1st order algorithms
+### Recommended: 1st order algorithms
 validann optim CG -slow
 RSNNS SCG
 h2o back-propagation
@@ -478,7 +494,7 @@ RSNNS BackpropBatch
 validann optim SANN
 monmlp optimx Nelder Mead
 
-C. Not recommended: 1st order algorithms <- DISCUSS CUTOFF
+### Not recommended: 1st order algorithms <- DISCUSS CUTOFF
 By package
 ELMR, elmNNRcpp - fast ELM algorithms. Unfortunately, can't finetune, does not converge well.
 neuralnet: a large ammount of iterations, slow, erratic failures
@@ -515,7 +531,7 @@ neuralnet backprop - note, might not actually reflect standings, somehow from te
 <!-- For the comments per package, I suggest one small text per package, at least for the best 12/15 packages, and some text for the significant bad or painful packages like tensorflow, keras, h2o. etc. -->
 
 
-D. Untested => TO DO - LIST
+### Untested => TO DO - LIST
 
 # Conclusion and perspective
 

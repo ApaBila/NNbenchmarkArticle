@@ -1,7 +1,8 @@
 % !TeX root = RJwrapper.tex
-\title{A review of R neural network packages (with NNbenchmark)\(:\) accuracy
-and ease of use}
-\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
+\title{A review of R neural network packages (with NNbenchmark)\(:\)
+accuracy and ease of use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
+Kiener, John C. Nash}
 
 \maketitle
 
@@ -109,40 +110,43 @@ for classification or other specialized purposes.
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
 
-??JN: ******************************
+\textbf{??JN: } \textbf{- In working on material below, I think we need
+to provide some explanation of goals} \textbf{- What do we mean by RMSE,
+other measures? Should define here for later use.}
 
-In working on material below, I think we need to provide some
-explanation of goals
+Considering regression problems, we measure the quality of our model by
+the root mean squared error (RMSE): the smaller RMSE the better the
+fitted model. In addition to the RMSE, two other convergence metrics
+have been considered: the Mean Absolute Error (MAE) and the Worst
+Absolute Error (WAE). We recall the definition of the RMSE, the MAE and
+the WAE in Appendix A. The ranking on MAE and WAE may help distinguish
+packages with close RMSE values.
 
-\begin{itemize}
-\tightlist
-\item
-  What do we mean by RMSE, other measures? Should define here for later
-  use. ??JN perhaps?
-\end{itemize}
+\textbf{- What does ``convergence'' mean in our context?} \textbf{??JN:
+Something like}
 
-We measure the quality of our model by how small the RMSE is of the
-trained (??is this right?) model and the training data. This is defined
-in Appendix A.
+When training neural networks, we attempt to tune a set of
+hyperparameters so that the RMSE is minimized. When our method for such
+adjustment can no longer reduce the RMSE, we say that the given
+algorithm terminated. It converged when the terminated RMSE value is
+relatively small. So, we do not choose the MAE neither for overall
+ranking nor for convergence value as there is no consensus in the
+literature, see e.g.~\citep{willmott2005advantages,chai2014root}.
 
-\begin{itemize}
-\tightlist
-\item
-  What does ``convergence'' mean in our context? ??JN: Something like
-\end{itemize}
-
-In training neural network models we attempt to adjust a set of
-parameters so that an objective function is minimized. When our method
-for such adjustment can no longer reduce the objective, we say that we
-have converged. However, practical methods require that we terminate the
-optimization process in exceptional situations (e.g., a divide by zero)
+Furthermore, in practice, some algorithms require that we stop the
+optimization process in exceptional situations (e.g., a divide by zero),
 or a pre-set limit on the number of steps or elapsed time is reached.
 
-\begin{itemize}
-\tightlist
-\item
-  What do we mean by ``performance''? Other goals? ??JN: perhaps?
-\end{itemize}
+More precisely, second-order algorithms are all set to a maximum of 200
+iterations. On the other hand, first-order algorithms were set to
+several values, depending on how well and how fast they converged:
+\texttt{maxit1storderA=1000} iterations, \texttt{maxit1storderB=10000}
+iterations, and \texttt{maxit1storderC=100000} iterations. The full list
+of the maximum iteration number per package:algorithm is given in
+Appendix C.
+
+\textbf{- What do we mean by ``performance''? Other goals?}
+\textbf{??JN: perhaps?}
 
 We measure performance primarily by relative computing time between
 methods on a particular computing platform. We could also count measures
@@ -152,15 +156,6 @@ and in the attached libraries (e.g., BLAS choices for R) will modify our
 measures. We are putting our tools on a Github repository so that
 further evaluation can be made by ourselves and others as hardware and
 software evolves.
-
-As a reminder, RMSE and other convergence metrics are defined in
-Appendix A.
-
-The number of iterations we limited the algorithms to is in Appendix C.
-Second order algorithms are all set to a maximum of 200 iterations. On
-the other hand, first order algorithms were set to several values,
-depending on how well they converged. maxit1storderA 1000 iterations,
-maxit1storderB 10000 iterations, and maxit1storderC 100000 iterations.
 
 We tried to harmonize the parameters.
 *************************************
@@ -239,61 +234,87 @@ specific purposes.
 \textbf{Templates for Testing Accuracy and Speed}
 
 As we inspected the packages, we developed a template for benchmarking.
-The structure of this template (for each package) is as follows:\\
-(1) Set up the test environment - loading of packages, setting working
-directory and options;\\
-(2) Summary of datasets;\\
-(3) Loop over datasets: (a) setting parameters for a specific dataset
-(b) selecting benchmark options (c) training a neural network with a
-tuned functions for each package (d) calculation of RMSE and MAE
-(??definition, reference) (e) plot each training over one initial graph,
-then plot the best result (f) add results to the appropriate existing
-record (*.csv file) and (g) clear the environment for next loop; and\\
-(4) Clearing up the environment for the next package. (5) It is optional
-to print warnings.
-
-To simplify this process, we developed tools in the NNbenchmark package,
-of which the first version was created as part of GSoC 2019. In GSoC
-2020, 3 functions encapsulating the template that had been made generic
-with \code{do.call} were added:
+The structure of this template (for each package) is as follows:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  In trainPredict\_1mth1data a neural network is trained on one dataset
-  and then used for predictions, with several utilities. Then, the
-  performance of the neural network is summarized.
+  Set up the test environment - loading of packages, setting working
+  directory and options;
 \item
-  trainPredict\_1data serves as a wrapper function for
+  Summary of tested datasets;
+\item
+  Loop over datasets:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    setting parameters for a specific dataset,
+  \item
+    selecting benchmark options,
+  \item
+    training a neural network with a tuned functions for each package,
+  \item
+    calculation of convergence metrics (RMSE, MAE, WAE),
+  \item
+    plot each training over one initial graph, then plot the best
+    result,
+  \item
+    add results to the appropriate existing record (*.csv file) and
+  \item
+    clear the environment for next loop.
+  \end{enumerate}
+\item
+  Clearing up the environment for the next package. It is optional to
+  print warnings.
+\end{enumerate}
+
+To simplify this process, we developed tools in the NNbenchmark package,
+of which the first version was created as part of GSoC 2019. In GSoC
+2020, 3 functions encapsulating the template, that had been made generic
+with an extensive use of the incredible \code{do.call} function, were
+added:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In \code{trainPredict\_1mth1data} a neural network is trained on one
+  dataset and then used for predictions, with several utilities. Then,
+  the performance of the neural network is exported, plotted and/or
+  summarized.
+\item
+  \code{trainPredict\_1data} serves as a wrapper function for
   trainPredict\_1mth1data for multiple methods.
 \item
-  trainPredict\_1pkg serves as a wrapper function for
+  \code{trainPredict\_1pkg} serves as a wrapper function for
   trainPredict\_1mth1data for multiple datasets.
 \end{enumerate}
 
-A function for the summary of accuracy and speed, NNsummary, was also
-added. The package repository is
+A function for the summary of accuracy and speed, \code{NNsummary}, was
+also added. The package repository is
 \url{https://github.com/pkR-pkR/NNbenchmark}, with package templates in
-\url{https://github.com/pkR-pkR/NNbenchmarkTemplates}).
+\url{https://github.com/pkR-pkR/NNbenchmarkTemplates}.
 
 \textbf{Ease of Use Scoring}
 
-We decided ease of use based on what we considered a user would need
-when using a neural network package for nonlinear regression, namely,
-utility functions and sufficient documentation.
+We define an ease-of-use measure based on what we considered a user
+would need when using a neural network package for nonlinear regression,
+namely, utility functions and sufficient documentation.
 
 \begin{enumerate}
-\def\labelenumi{(\arabic{enumi})}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   Utilities (1 star)
 
   \begin{enumerate}
-  \def\labelenumii{(\alph{enumii})}
+  \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    a predict function exists\\
+    a predict function exists
   \item
     scaling capabilities exist
   \end{enumerate}
@@ -301,7 +322,7 @@ utility functions and sufficient documentation.
   Sufficient documentation (2 stars)
 
   \begin{enumerate}
-  \def\labelenumii{(\alph{enumii})}
+  \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
     the existence of useful example/vignette = (1 star)
@@ -332,7 +353,7 @@ utility functions and sufficient documentation.
   \end{enumerate}
 \end{enumerate}
 
-For a total of 0 to 3 stars.
+The ease-of-use measure ranges from 0 to 3 stars.
 
 \hypertarget{phase-3---collection-of-and-analysis-of-results}{%
 \subsection{Phase 3 - Collection of and analysis of
@@ -360,44 +381,38 @@ following method:
 \item
   For the duration score (DUR), the duration is averaged by dataset. 3
   criteria for the RMSE score by dataset are calculated:
-\end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
-\item
-  The minimum value of RMSE for each package:algorithm as a measure of
-  their best performance
-\item
-  The median value of RMSE for each package:algorithm as a measure of
-  their average performance, without the influence of outliers
-\item
-  The spread of the RMSE values for each package which is measured by
-  the difference between the median and the minimum RMSE (d51)
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    The minimum value of RMSE for each package:algorithm as a measure of
+    their best performance
+  \item
+    The median value of RMSE for each package:algorithm as a measure of
+    their average performance, without the influence of outliers
+  \item
+    The spread of the RMSE values for each package which is measured by
+    the difference between the median and the minimum RMSE (d51)
+  \end{enumerate}
 \item
   Then, the ranks are calculated for every dataset and the results are
   merged into one wide dataframe.
-\end{enumerate}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\tightlist
-\item
-  The duration rank only depends on the duration.
-\item
-  For minimum RMSE values, ties are decided by duration mean, then the
-  RMSE median
-\item
-  For median RMSE values, ties are decided by the RMSE minimum, then the
-  duration mean
-\item
-  The d51 rank only depends on itself
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    The duration rank only depends on the duration.
+  \item
+    For minimum RMSE values, ties are decided by duration mean, then the
+    RMSE median
+  \item
+    For median RMSE values, ties are decided by the RMSE minimum, then
+    the duration mean
+  \item
+    The d51 rank only depends on itself
+  \end{enumerate}
 \end{enumerate}
 
 \begin{enumerate}
@@ -411,13 +426,6 @@ following method:
 \item
   The final table is the result of ranking by the global minimum RMSE
   scores for each package:algorithm
-\item
-  In addition to the previous metrics, two other convergence metrics
-  have been considered: the Mean Absolute Error (MAE) and the Worst
-  Absolute Error (WAE), see Appendix A. The ranking on those two metrics
-  may help distinguish packages with close RMSE values. However, we do
-  not choose the MAE for overall ranking as there is no consensus in the
-  literature, see e.g.~\citep{willmott2005advantages,chai2014root}.
 \end{enumerate}
 
 To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
@@ -427,9 +435,10 @@ To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-\textbf{Tables} (NOTE: FINAL MEASURE FOR CONVERGENCE - RMSE RANKS? OR A
-COMBINATION OF OTHER MEASURES? As in Christophe's recent email: L1
-MAE(), L2 RMSE(), Linfinity (WAE)) --\textgreater{} see Appendix
+Table 1 gives the RMSE and time score per package and per algorithm. The
+full list of score is given in Table 2 in Appendix C.
+
+\textbf{Tables}
 
 (ALSO: THE FOLLOWING IS SIMPLY ALPHABETIC LIST FOR ALL TESTED, I WILL
 DIVIDE THE TABLE INTO 4: 2nd ORDER always recommended, 1st ORDER
@@ -438,1297 +447,139 @@ recommended, 1st ORDER not recommended, untested packages)
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-1}Results from Tested Packages}
+\caption{\label{tab:unnamed-chunk-2}Result from Tested Packages}
 \centering
-\begin{tabular}[t]{llrrrr}
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{>{\bfseries}lcclcc}
 \toprule
-package & algorithm & time.score & RMSE.score & UT & Docs\\
+\multicolumn{1}{c}{ } & \multicolumn{2}{c}{Individual score} & \multicolumn{1}{c}{ } & \multicolumn{2}{c}{Global score} \\
+\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){5-6}
+Package & Util & Doc & Algorithm & Time & RMSE\\
 \midrule
-AMORE & ADAPTgd & 10 & 34 & 1 & 3.0\\
- & ADAPTgdwm & 17 & 25 &  & \\
- & BATCHgd & 39 & 40 &  & \\
- & BATCHgdwm & 40 & 39 &  & \\
-ANN2 & adam & 16 & 33 & 2 & 3.0\\
-\addlinespace
- & rmsprop & 14 & 28 &  & \\
- & sgd & 12 & 41 &  & \\
-automl & trainwgrad\_adam & 50 & 18 & 1 & 3.0\\
- & trainwgrad\_RMSprop & 47 & 26 &  & \\
- & trainwpso & 57 & 42 &  & \\
-\addlinespace
-brnn & Gauss-Newton & 8 & 13 & 2 & 4.0\\
-CaDENCE & optim(BFGS) & 46 & 10 & 2 & 3.0\\
- & pso\_psoptim & 54 & 54 &  & \\
- & Rprop & 56 & 51 &  & \\
-caret & avNNet\_nnet\_optim(BFGS) & 9 & 22 & 2 & 3.0\\
-\addlinespace
-deepdive & adam & 32 & 45 & 2 & 3.0\\
- & gradientDescent & 52 & 58 &  & \\
- & momentum & 53 & 56 &  & \\
- & rmsProp & 34 & 53 &  & \\
-deepnet & BP & 23 & 18 & 1 & 3.0\\
-\addlinespace
-elmNNRcpp & ELM & 1 & 59 & 2 & 3.0\\
-ELMR & ELM & 2 & 60 & 2 & 3.0\\
-EnsembleBase & nnet\_optim(BFGS) & 5 & 12 & 1 & 1.0\\
-h2o & first-order & 51 & 11 & 2 & 2.0\\
-keras & adadelta & 60 & 47 & 2 & 0.0\\
-\addlinespace
- & adagrad & 58 & 36 &  & \\
- & adam & 42 & 35 &  & \\
- & adamax & 48 & 23 &  & \\
- & nadam & 44 & 36 &  & \\
- & rmsprop & 37 & 52 &  & \\
-\addlinespace
- & sgd & 48 & 43 &  & \\
-MachineShop & nnet\_optim(BFGS) & 6 & 4 & 1 & 3.0\\
-minpack.lm & Levenberg-Marquardt & 13 & 24 & 1 & 3.5\\
-monmlp & optimx(BFGS) & 26 & 9 & 2 & 3.5\\
- & optimx(Nelder-Mead) & 32 & 46 &  & \\
-\addlinespace
-neuralnet & backprop & 37 & 48 & 1 & 3.0\\
- & rprop- & 21 & 21 &  & \\
- & rprop+ & 18 & 20 &  & \\
- & sag & 41 & 38 &  & \\
- & slr & 31 & 30 &  & \\
-\addlinespace
-nlsr & NashLM & 18 & 1 & 1 & 4.0\\
-nnet & optim (BFGS) & 3 & 3 & 1 & 3.0\\
-qrnn & nlm() & 28 & 15 & 2 & 3.0\\
-radiant.model & nnet\_optim(BFGS) & 11 & 7 & 2 & 2.0\\
-rminer & nnet\_optim(BFGS) & 14 & 2 & 2 & 3.5\\
-\addlinespace
-RSNNS & BackpropBatch & 43 & 49 & 2 & 3.0\\
- & BackpropChunk & 26 & 29 &  & \\
- & BackpropMomentum & 25 & 30 &  & \\
- & BackpropWeightDecay & 29 & 32 &  & \\
- & Quickprop & 45 & 57 &  & \\
-\addlinespace
- & Rprop & 24 & 16 &  & \\
- & SCG & 30 & 17 &  & \\
- & Std\_Backpropagation & 22 & 27 &  & \\
-snnR & SemiSmoothNewton & 7 & 49 & 2 & 2.0\\
-traineR & nnet\_optim(BFGS) & 4 & 6 & 1 & 2.5\\
-\addlinespace
-validann & optim(BFGS) & 35 & 4 & 1 & 4.0\\
- & optim(CG) & 59 & 8 &  & \\
- & optim(L-BFGS-B) & 36 & 14 &  & \\
- & optim(Nelder-Mead) & 55 & 44 &  & \\
- & optim(SANN) & 20 & 55 &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
- &  &  &  &  & \\
-\addlinespace
- &  &  &  &  & \\
+ & 1 & 3.0 & ADAPTgd & 10 & 34\\
+
+ & 1 & 3.0 & ADAPTgdwm & 17 & 25\\
+
+ & 1 & 3.0 & BATCHgd & 39 & 40\\
+
+\multirow{-4}{*}{\raggedright\arraybackslash AMORE} & 1 & 3.0 & BATCHgdwm & 40 & 39\\
+\cmidrule{1-6}
+ & 2 & 3.0 & adam & 16 & 33\\
+
+ & 2 & 3.0 & rmsprop & 14 & 28\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash ANN2} & 2 & 3.0 & sgd & 12 & 41\\
+\cmidrule{1-6}
+ & 1 & 3.0 & trainwgrad\_adam & 50 & 18\\
+
+ & 1 & 3.0 & trainwgrad\_RMSprop & 47 & 26\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash automl} & 1 & 3.0 & trainwpso & 57 & 42\\
+\cmidrule{1-6}
+brnn & 2 & 4.0 & Gauss-Newton & 8 & 13\\
+\cmidrule{1-6}
+ & 2 & 3.0 & optim(BFGS) & 46 & 10\\
+
+ & 2 & 3.0 & pso\_psoptim & 54 & 54\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash CaDENCE} & 2 & 3.0 & Rprop & 56 & 51\\
+\cmidrule{1-6}
+caret & 2 & 3.0 & avNNet\_nnet\_optim(BFGS) & 9 & 22\\
+\cmidrule{1-6}
+ & 2 & 3.0 & adam & 32 & 45\\
+
+ & 2 & 3.0 & gradientDescent & 52 & 58\\
+
+ & 2 & 3.0 & momentum & 53 & 56\\
+
+\multirow{-4}{*}{\raggedright\arraybackslash deepdive} & 2 & 3.0 & rmsProp & 34 & 53\\
+\cmidrule{1-6}
+deepnet & 1 & 3.0 & BP & 23 & 18\\
+\cmidrule{1-6}
+elmNNRcpp & 2 & 3.0 & ELM & 1 & 59\\
+\cmidrule{1-6}
+ELMR & 2 & 3.0 & ELM & 2 & 60\\
+\cmidrule{1-6}
+EnsembleBase & 1 & 1.0 & nnet\_optim(BFGS) & 5 & 12\\
+\cmidrule{1-6}
+h2o & 2 & 2.0 & first-order & 51 & 11\\
+\cmidrule{1-6}
+ & 2 & 0.0 & adadelta & 60 & 47\\
+
+ & 2 & 0.0 & adagrad & 58 & 36\\
+
+ & 2 & 0.0 & adam & 42 & 35\\
+
+ & 2 & 0.0 & adamax & 48 & 23\\
+
+ & 2 & 0.0 & nadam & 44 & 36\\
+
+ & 2 & 0.0 & rmsprop & 37 & 52\\
+
+\multirow{-7}{*}{\raggedright\arraybackslash keras} & 2 & 0.0 & sgd & 48 & 43\\
+\cmidrule{1-6}
+MachineShop & 1 & 3.0 & nnet\_optim(BFGS) & 6 & 4\\
+\cmidrule{1-6}
+minpack.lm & 1 & 3.5 & Levenberg-Marquardt & 13 & 24\\
+\cmidrule{1-6}
+ & 2 & 3.5 & optimx(BFGS) & 26 & 9\\
+
+\multirow{-2}{*}{\raggedright\arraybackslash monmlp} & 2 & 3.5 & optimx(Nelder-Mead) & 32 & 46\\
+\cmidrule{1-6}
+ & 1 & 3.0 & backprop & 37 & 48\\
+
+ & 1 & 3.0 & rprop- & 21 & 21\\
+
+ & 1 & 3.0 & rprop+ & 18 & 20\\
+
+ & 1 & 3.0 & sag & 41 & 38\\
+
+\multirow{-5}{*}{\raggedright\arraybackslash neuralnet} & 1 & 3.0 & slr & 31 & 30\\
+\cmidrule{1-6}
+nlsr & 1 & 4.0 & NashLM & 18 & 1\\
+\cmidrule{1-6}
+nnet & 1 & 3.0 & optim (BFGS) & 3 & 3\\
+\cmidrule{1-6}
+qrnn & 2 & 3.0 & nlm() & 28 & 15\\
+\cmidrule{1-6}
+radiant.model & 2 & 2.0 & nnet\_optim(BFGS) & 11 & 7\\
+\cmidrule{1-6}
+rminer & 2 & 3.5 & nnet\_optim(BFGS) & 14 & 2\\
+\cmidrule{1-6}
+ & 2 & 3.0 & BackpropBatch & 43 & 49\\
+
+ & 2 & 3.0 & BackpropChunk & 26 & 29\\
+
+ & 2 & 3.0 & BackpropMomentum & 25 & 30\\
+
+ & 2 & 3.0 & BackpropWeightDecay & 29 & 32\\
+
+ & 2 & 3.0 & Quickprop & 45 & 57\\
+
+ & 2 & 3.0 & Rprop & 24 & 16\\
+
+ & 2 & 3.0 & SCG & 30 & 17\\
+
+\multirow{-8}{*}{\raggedright\arraybackslash RSNNS} & 2 & 3.0 & Std\_Backpropagation & 22 & 27\\
+\cmidrule{1-6}
+snnR & 2 & 2.0 & SemiSmoothNewton & 7 & 49\\
+\cmidrule{1-6}
+traineR & 1 & 2.5 & nnet\_optim(BFGS) & 4 & 6\\
+\cmidrule{1-6}
+ & 1 & 4.0 & optim(BFGS) & 35 & 4\\
+
+ & 1 & 4.0 & optim(CG) & 59 & 8\\
+
+ & 1 & 4.0 & optim(L-BFGS-B) & 36 & 14\\
+
+ & 1 & 4.0 & optim(Nelder-Mead) & 55 & 44\\
+
+\multirow{-5}{*}{\raggedright\arraybackslash validann} & 1 & 4.0 & optim(SANN) & 20 & 55\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \end{Schunk}
-
-(THE FOLLOWING IS JUST AN ALPHABETICALLY ORDERED LIST OF CURRENTLY
-UNTESTED PACKAGES)
-
-\begin{center}
-<!-- \textbf{Table 2: Review of Ommitted Packages} -->
-
-\begin{tabular}{l l l l}
-  \toprule
-  No & Name (package)         & Category & Comment \\
-  \midrule
-  1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
-     &                        &           & the amyloidogenicity propensity of polypeptide sequences      \\
-  2  &\pkg{autoencoder}       & AP        & This package provides a sparse autoencoder, an unsupervised   \\
-     &                        &           & algorithm that learns useful features from the data its given \\
-  3  &\pkg{BNN}               & RE*       & This package uses a feed forward neural network to perform    \\
-     &                        &           & regression as provided in the examples, however, it is unclear\\      &                        &           & whether it fits the form of perceptron that is the scope of   \\
-     &                        &           & our research. Moreover, it states that it is intended for     \\      &                        &           & variable selection. Although how exactly the package would be \\
-     &                        &           & used to do so isn't accessible in the package, especially     \\
-     &                        &           & considering the source code is based on .c code that users of \\
-     &                        &           & R might not understand. It's performance is slow, which may   \\
-     &                        &           & have to do with the 100.000 iterations it needs, although     \\
-     &                        &           & quite accurate for simple datasets.                           \\
-  4  &\pkg{Buddle}            & RE**      & (errors)\\
-  5  &\pkg{cld2}              & 00        & \\
-  6  &\pkg{cld3}              & AP        & \\
-  7  &\pkg{condmixt}          & AP        & \\
-  8  &\pkg{deep}              & CL        & \\
-  9  &\pkg{DALEX2}            & 00        & removed keyword, included in 2019 \\
-  10 &\pkg{DamiaNN}           & RE**      & (errors) exported functions, still doesn't work \\
-  11 &\pkg{DChaos}            & ??        & removed keyword for some reason, need to check out! \\
-  12 &\pkg{deepNN}            & RE**      & (errors) I/O weird, ragged vector array \\
-  13 &\pkg{DNMF}              & AP        & \\
-  14 &\pkg{evclass}           & CL        & \\
-  15 &\pkg{gamlss.add}        & RE        & there is some code but dist not appropriate \\
-  16 &\pkg{gcForest}          & 00        & \\
-  17 &\pkg{GMDH}              & TS        & \\
-  18 &\pkg{GMDH2}             & CL        & \\
-  19 &\pkg{GMDHreg}           & RE*       & \\
-  20 &\pkg{grnn}              & RE**      & \\
-  21 &\pkg{hybridEnsemble}    & ??        & \\ 
-  22 &\pkg{isingLenzMC}       & AP        & \\
-  23 &\pkg{leabRa}            & ??        & \\      
-  24 &\pkg{learNN}            & ??        & \\     
-  25 &\pkg{LilRhino}          & AP        & \\
-  26 &\pkg{neural}            & CL        & \\
-  27 &\pkg{NeuralNetTools}    & UT        & tools for neural networks           \\
-  28 &\pkg{NeuralSens}        & UT        & tools for neural networks           \\
-  29 &\pkg{NlinTS}            & TS        & Time Series                         \\
-  30 &\pkg{nnetpredint}       & UT        & confidence intervals for NN          \\
-  31 &\pkg{nnfor}             & TS        & Times Series, uses neuralnet         \\
-  32 &\pkg{nntrf}             & UT        & \\
-  33 &\pkg{onnx}              &           & provides an open source format       \\
-  34 &\pkg{OptimClassifier}   &           & choose classifier parameters, nnet   \\
-  35 &\pkg{OSTSC}             &           & solving oversampling classification  \\
-  36 &\pkg{passt}             &           & \\
-  36 &\pkg{pnn}               &           & Probabilistic                        \\
-  37 &\pkg{polyreg}           &           & polyregression as alternative to NN  \\
-  38 &\pkg{predictoR}         &           & shiny interface, neuralnet           \\
-  39 &\pkg{ProcData}          &           & \\
-  40 &\pkg{QuantumOps}        &           & classifies MNIST, Schuld (2018), removed keyword, in 2019 \\
-  41 &\pkg{quarrint}          &           & specified classifier for quarry data \\
-  42 &\pkg{rasclass}          &           & classifier for raster images, nnet?  \\
-  43 &\pkg{rcane}             &           & \\
-  44 &\pkg{regressoR}         &           & a manual rich version of predictoR   \\
-  45 &\pkg{rnn}               &           & Recurrent                            \\
-  46 &\pkg{RTextTools}        &           & \\
-  47 &\pkg{ruta}              &           & \\
-  48 &\pkg{simpleNeural}      &           & \\
-  49 &\pkg{softmaxreg}        &           & \\
-  50 &\pkg{Sojourn.Data}      &           & sojourn Accelerometer methods, nnet? \\
-  51 &\pkg{spnn}              &           & classifier, probabilistic            \\
-  52 &\pkg{studyStrap}        &           & \\
-  53 &\pkg{TeachNet}          &           & classifier, selfbuilt, slow          \\
-  54 &\pkg{tensorflow}        &           & \\
-  55 &\pkg{tfestimators}      &           & \\
-  56 &\pkg{trackdem}          &           & classifier for particle tracking     \\
-  57 &\pkg{TrafficBDE}        & RE*       & \\
-  58 &\pkg{tsfgrnn}           &           & \\
-  59 &\pkg{yap}               &           & \\
-  60 &\pkg{yager}             & RE*       & \\
-  61 &\pkg{zFactor}           & AP        & 'compressibility' of hydrocarbon gas \\
-\end{tabular}
-
-\end{center}
 
 \hypertarget{discussion-and-recommendations}{%
 \subsection{Discussion and
@@ -1739,6 +590,7 @@ brief descriptions.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \CRANpkg{AMORE} \citep{R-AMORE},
 \item
@@ -1901,26 +753,22 @@ brief descriptions.
   \CRANpkg{validann} \citep{R-validann},
 \item
   \CRANpkg{zFactor} \citep{R-zFactor}.
-\item
-\item
-\item
-\item
-\item
-\item
-\item
 \end{enumerate}
 
-A. Recommended: 2nd order algorithms Out of all the algorithms, these
-second algorithms generally performed better in terms of convergence
-despite being set to a much lower number of iterations, 200, than the
-first-order algorithms. Moreover, they performed better in terms of
-speed. The best in this class were. \CRANpkg{minpack.lm} and.
-\CRANpkg{nlsr}, tied at rank number 1. The Levenberg-Marquardt (LM)
-algorithm used is fast and converges well. stats::nls() is used.
-However, these packages require a handwritten formula that may not be
-ideal for certain situations. A more popular package for neural networks
-is nnet. This might be because it is part of base R. It implements the
-BFGS algorithm with stats::optim().
+\hypertarget{recommended-2nd-order-algorithms}{%
+\subsubsection{Recommended: 2nd order
+algorithms}\label{recommended-2nd-order-algorithms}}
+
+Out of all the algorithms, these second algorithms generally performed
+better in terms of convergence despite being set to a much lower number
+of iterations, 200, than the first-order algorithms. Moreover, they
+performed better in terms of speed. The best in this class were.
+\CRANpkg{minpack.lm} and. \CRANpkg{nlsr}, tied at rank number 1. The
+Levenberg-Marquardt (LM) algorithm used is fast and converges well.
+stats::nls() is used. However, these packages require a handwritten
+formula that may not be ideal for certain situations. A more popular
+package for neural networks is nnet. This might be because it is part of
+base R. It implements the BFGS algorithm with stats::optim().
 
 Ranked directly after are some packages that depend on nnet or use the
 same functions. They differ in how well they decide initial parameters.
@@ -1944,16 +792,22 @@ of squared errors and a penalty on parameters instead of just the sum of
 squared errors. This may prevent parameters to get highly correlated,
 especially with an almost degenerated Jacobian matrix.
 
-B. Recommended: 1st order algorithms validann optim CG -slow RSNNS SCG
-h2o back-propagation RSNNS Rprop ANN2 adam CaDENCE Rprop -SLOW deepnet
-BP AMORE ADAPTgdwm AMORE ADAPTgd ANN2 sgd automl trainwgrad ANN2 rmsprop
-RSNNS BackpropChunk RSNNS BackWeightDecay RSNNS Std\_Backpropagation
-RSNNS BackpropMomentum automl trainwpso validann optim NelderMead snnR
-Semi Smooth Newton RSNNS BackpropBatch validann optim SANN monmlp optimx
-Nelder Mead
+\hypertarget{recommended-1st-order-algorithms}{%
+\subsubsection{Recommended: 1st order
+algorithms}\label{recommended-1st-order-algorithms}}
 
-C. Not recommended: 1st order algorithms \textless- DISCUSS CUTOFF By
-package ELMR, elmNNRcpp - fast ELM algorithms. Unfortunately, can't
+validann optim CG -slow RSNNS SCG h2o back-propagation RSNNS Rprop ANN2
+adam CaDENCE Rprop -SLOW deepnet BP AMORE ADAPTgdwm AMORE ADAPTgd ANN2
+sgd automl trainwgrad ANN2 rmsprop RSNNS BackpropChunk RSNNS
+BackWeightDecay RSNNS Std\_Backpropagation RSNNS BackpropMomentum automl
+trainwpso validann optim NelderMead snnR Semi Smooth Newton RSNNS
+BackpropBatch validann optim SANN monmlp optimx Nelder Mead
+
+\hypertarget{not-recommended-1st-order-algorithms---discuss-cutoff}{%
+\subsubsection{Not recommended: 1st order algorithms \textless- DISCUSS
+CUTOFF}\label{not-recommended-1st-order-algorithms---discuss-cutoff}}
+
+By package ELMR, elmNNRcpp - fast ELM algorithms. Unfortunately, can't
 finetune, does not converge well. neuralnet: a large ammount of
 iterations, slow, erratic failures tensorflow: NOT EASY TO USE,
 subsequently keras, tfestimators, ruta \ldots{} user needs to understand
@@ -1971,7 +825,9 @@ tensorflow AdadeltaOptimizer neuralnet backprop - note, might not
 actually reflect standings, somehow from template to template the
 learning rate disappeared. Will fix this in future runs
 
-D. Untested =\textgreater{} TO DO - LIST
+\hypertarget{untested-to-do---list}{%
+\subsubsection{Untested =\textgreater{} TO DO -
+LIST}\label{untested-to-do---list}}
 
 \hypertarget{conclusion-and-perspective}{%
 \section{Conclusion and perspective}\label{conclusion-and-perspective}}
@@ -2075,10 +931,16 @@ f_4=2-1_{(x <= 1/3)}(6*x)^3 - 1_{(x >= 2/3)} (6-6*x)^3 -
 \subsection{Appendix C}\label{appendix-c}}
 
 \begin{Schunk}
+\begin{table}
 
-\begin{tabular}{rlllrrrr}
+\caption{\label{tab:unnamed-chunk-3}All convergence scores per package:algorithm}
+\centering
+\fontsize{8}{10}\selectfont
+\begin{tabular}[t]{rlllrrrr}
 \toprule
-No & input & maxit & lr & RMSEmed.score & RMSEd51.score & MAE.score & WAE.score\\
+\multicolumn{1}{c}{ } & \multicolumn{3}{c}{Input parameter} & \multicolumn{4}{c}{Score} \\
+\cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){5-8}
+Num & Input format & Maxit & Learn. rate & RMSE median & RMSE d51 & MAE & WAE\\
 \midrule
 1 & x \& y & 1000 & 0.01 & 24 & 8 & 26 & 19\\
 2 & x \& y & 1000 & 0.01 & 22 & 28 & 17 & 26\\
@@ -2153,8 +1015,96 @@ No & input & maxit & lr & RMSEmed.score & RMSEd51.score & MAE.score & WAE.score\
 60 & x \& y & 1000 & - & 53 & 53 & 56 & 55\\
 \bottomrule
 \end{tabular}
+\end{table}
 
 \end{Schunk}
+
+\hypertarget{appendix-d}{%
+\subsection{Appendix D}\label{appendix-d}}
+
+\begin{table}[htb!]
+\begin{center}
+\caption{\textbf{Review of Ommitted Packages}}
+\scriptsize
+
+\begin{tabular}{l l l l}
+  \toprule
+  No & Name (package)         & Category & Comment \\
+  \midrule
+  1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
+     &                        &           & the amyloidogenicity propensity of polypeptide sequences      \\
+  2  &\pkg{autoencoder}       & AP        & This package provides a sparse autoencoder, an unsupervised   \\
+     &                        &           & algorithm that learns useful features from the data its given \\
+  3  &\pkg{BNN}               & RE*       & This package uses a feed forward neural network to perform    \\
+     &                        &           & regression as provided in the examples, however, it is unclear\\      &                        &           & whether it fits the form of perceptron that is the scope of   \\
+     &                        &           & our research. Moreover, it states that it is intended for     \\      &                        &           & variable selection. Although how exactly the package would be \\
+     &                        &           & used to do so isn't accessible in the package, especially     \\
+     &                        &           & considering the source code is based on .c code that users of \\
+     &                        &           & R might not understand. It's performance is slow, which may   \\
+     &                        &           & have to do with the 100.000 iterations it needs, although     \\
+     &                        &           & quite accurate for simple datasets.                           \\
+  4  &\pkg{Buddle}            & RE**      & (errors)\\
+  5  &\pkg{cld2}              & 00        & \\
+  6  &\pkg{cld3}              & AP        & \\
+  7  &\pkg{condmixt}          & AP        & \\
+  8  &\pkg{deep}              & CL        & \\
+  9  &\pkg{DALEX2}            & 00        & removed keyword, included in 2019 \\
+  10 &\pkg{DamiaNN}           & RE**      & (errors) exported functions, still doesn't work \\
+  11 &\pkg{DChaos}            & ??        & removed keyword for some reason, need to check out! \\
+  12 &\pkg{deepNN}            & RE**      & (errors) I/O weird, ragged vector array \\
+  13 &\pkg{DNMF}              & AP        & \\
+  14 &\pkg{evclass}           & CL        & \\
+  15 &\pkg{gamlss.add}        & RE        & there is some code but dist not appropriate \\
+  16 &\pkg{gcForest}          & 00        & \\
+  17 &\pkg{GMDH}              & TS        & \\
+  18 &\pkg{GMDH2}             & CL        & \\
+  19 &\pkg{GMDHreg}           & RE*       & \\
+  20 &\pkg{grnn}              & RE**      & \\
+  21 &\pkg{hybridEnsemble}    & ??        & \\ 
+  22 &\pkg{isingLenzMC}       & AP        & \\
+  23 &\pkg{leabRa}            & ??        & \\      
+  24 &\pkg{learNN}            & ??        & \\     
+  25 &\pkg{LilRhino}          & AP        & \\
+  26 &\pkg{neural}            & CL        & \\
+  27 &\pkg{NeuralNetTools}    & UT        & tools for neural networks           \\
+  28 &\pkg{NeuralSens}        & UT        & tools for neural networks           \\
+  29 &\pkg{NlinTS}            & TS        & Time Series                         \\
+  30 &\pkg{nnetpredint}       & UT        & confidence intervals for NN          \\
+  31 &\pkg{nnfor}             & TS        & Times Series, uses neuralnet         \\
+  32 &\pkg{nntrf}             & UT        & \\
+  33 &\pkg{onnx}              &           & provides an open source format       \\
+  34 &\pkg{OptimClassifier}   &           & choose classifier parameters, nnet   \\
+  35 &\pkg{OSTSC}             &           & solving oversampling classification  \\
+  36 &\pkg{passt}             &           & \\
+  36 &\pkg{pnn}               &           & Probabilistic                        \\
+  37 &\pkg{polyreg}           &           & polyregression as alternative to NN  \\
+  38 &\pkg{predictoR}         &           & shiny interface, neuralnet           \\
+  39 &\pkg{ProcData}          &           & \\
+  40 &\pkg{QuantumOps}        &           & classifies MNIST, Schuld (2018), removed keyword, in 2019 \\
+  41 &\pkg{quarrint}          &           & specified classifier for quarry data \\
+  42 &\pkg{rasclass}          &           & classifier for raster images, nnet?  \\
+  43 &\pkg{rcane}             &           & \\
+  44 &\pkg{regressoR}         &           & a manual rich version of predictoR   \\
+  45 &\pkg{rnn}               &           & Recurrent                            \\
+  46 &\pkg{RTextTools}        &           & \\
+  47 &\pkg{ruta}              &           & \\
+  48 &\pkg{simpleNeural}      &           & \\
+  49 &\pkg{softmaxreg}        &           & \\
+  50 &\pkg{Sojourn.Data}      &           & sojourn Accelerometer methods, nnet? \\
+  51 &\pkg{spnn}              &           & classifier, probabilistic            \\
+  52 &\pkg{studyStrap}        &           & \\
+  53 &\pkg{TeachNet}          &           & classifier, selfbuilt, slow          \\
+  54 &\pkg{tensorflow}        &           & \\
+  55 &\pkg{tfestimators}      &           & \\
+  56 &\pkg{trackdem}          &           & classifier for particle tracking     \\
+  57 &\pkg{TrafficBDE}        & RE*       & \\
+  58 &\pkg{tsfgrnn}           &           & \\
+  59 &\pkg{yap}               &           & \\
+  60 &\pkg{yager}             & RE*       & \\
+  61 &\pkg{zFactor}           & AP        & 'compressibility' of hydrocarbon gas \\
+\end{tabular}
+\end{center}
+\end{table}
 
 
 \address{%
@@ -2191,4 +1141,3 @@ Telfer School of Management, University of Ottawa\\
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 }
 \href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
-
