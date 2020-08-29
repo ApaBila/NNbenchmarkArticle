@@ -349,20 +349,24 @@ is given in Table 2 in Appendix C.
 library(kableExtra)
 options(knitr.kable.NA = '')
 
-if(file.exists("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv"))
-{  
-  Table1 <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
+if(file.exists("./tables/Table1.csv")) {  
+  Table1 <- read.csv("./tables/Table1.csv", sep = ";")
   Table1 <- Table1[Table1[,2] != "", ]
-}else if(file.exists("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/Table1.csv"))
-{  
-  Table1 <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
-  Table1 <- Table1[Table1[,2] != "", ]
-}else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv"))
-{  
-  Table1 <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
-  Table1 <- Table1[Table1[,2] != "", ]
-}else 
-  Table1 <- rep("missing",2)
+}
+
+
+# else if(file.exists("./tables/Table1.csv"))
+# {  
+#   Table1 <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
+#   Table1 <- Table1[Table1[,2] != "", ]
+# }else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv"))
+# {  
+#   Table1 <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/Table1.csv", sep = ";")
+#   Table1 <- Table1[Table1[,2] != "", ]
+# }
+
+# else 
+#   Table1 <- rep("missing",2)
 
 colnames(Table1) <- c("Package", "Algorithm", "Time", "RMSE",
                     "Util", "Doc")
@@ -657,14 +661,16 @@ $$
 
 ```{r echo=FALSE, message=FALSE}
 library(kableExtra)
-if(file.exists("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
-{  supC <- read.csv("D:/GSoC2020/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
-}else if(file.exists("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
-{  supC <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
-}else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
-{  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
-}else 
-  supC <- rep("missing",2)
+if(file.exists("./tables/TableAppendixC.csv")) {  
+  supC <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
+}
+# 
+# }else if(file.exists("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
+# {  supC <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
+# }else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
+# {  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
+# }else 
+#   supC <- rep("missing",2)
 colnames(supC) <- c("Num", "Input format", "Maxit", "Learn. rate", "RMSE median",
                     "RMSE d51", "MAE", "WAE")
 kableExtra::kable(supC, format = "latex", booktabs = TRUE, 
