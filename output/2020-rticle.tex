@@ -1257,6 +1257,40 @@ Num & Input format & Maxit & Learn. rate & RMSE median & RMSE d51 & MAE & WAE\\
 \end{center}
 \end{table}
 
+\hypertarget{appendix-1}{%
+\subsection{Appendix ??}\label{appendix-1}}
+
+\begin{Schunk}
+\begin{Sinput}
+library(NNbenchmark)
+nrep <- 5       
+odir <- tempdir()
+
+library(nnet)
+nnet.method <- "BFGS"
+hyperParams.nnet <- function(...) {
+    return (list(iter=200, trace=FALSE))
+}
+NNtrain.nnet <- function(x, y, dataxy, formula, neur, method, hyperParams, ...) {
+    
+    hyper_params <- do.call(hyperParams, list(...))
+    
+    NNreg <- nnet::nnet(x, y, size = neur, linout = TRUE, maxit = hyper_params$iter, trace=hyper_params$trace)
+    return(NNreg)
+}
+NNpredict.nnet  <- function(object, x, ...) { predict(object, newdata=x) }
+NNclose.nnet    <- function() {  if("package:nnet" %in% search())
+                                detach("package:nnet", unload=TRUE) }
+nnet.prepareZZ  <- list(xdmv = "d", ydmv = "v", zdm = "d", scale = TRUE)
+
+res <- trainPredict_1pkg(4:5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
+  prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
+  csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
+\end{Sinput}
+
+\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-4-1} 
+\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-4-2} \end{Schunk}
+
 
 \address{%
 Salsabila Mahdi\\
