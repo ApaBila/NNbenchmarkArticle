@@ -581,30 +581,42 @@ neuralnet backprop - note, might not actually reflect standings, somehow from te
 
 # Conclusion and perspective
 
-??JN: Can we start to put in some major findings? i.e., important positive findings,
-big negatives?
+## Positives
 
-## Positives (no particular order)
-1. the existence of algorithms that converge well
-2. nnet, which uses optim's BFGS, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ...
-3. the wide variety of neural networks available to users of R, from libraries of other programming languages to many different types of algorithms, hyperparameters, and uses
+- We are happy to note the existence of neural network packages in R with  algorithms that converge well.
+- \pkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ... ?? need to complete sentence??. 
+JN??: Why is this positive?
+- R users have access to a wide variety of neural network methods, including from libraries of other programming languages
+and using many different types of algorithms. ?? have we defined hyperparameters?? hyperparameters, and uses
+<!-- JN??: this bullet point still clumsy, but when we decide content, I'll edit -->
 
-## Negatives (no particular order)
-1. bad documentation
-2. the lack of packages that expand the number of unique second order algorithms. (Perhaps even the existence of what can be considered as repetitive packages?)
-3. the lack of clear default values, or bad default values
+## Negatives
+- We are disappointed that many of the packages we reviewed had poor documentation.
+- It would be helpful if there were more packages with (different) second order algorithms. A number of the
+<!-- packages reviewed appear to offer essentially the same methods. JN??: Is that what we want to say? -->
+- We often found it difficult to discover what default starting values were used for model parameters, or 
+<!-- else bad choices. JN??: Again, is that our message? -->
 
 ## Future work
-As the field of neural networks continue to grow, there will always be more algorithms to validate. 
-For current algorithms in R, our research should be extended to encompass more types of neural networks 
-and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
-rating schemes and different parameters for package functions can also be tried out.
 
-- The dreamed NN package: Recommendation to package authors
-- Conclusion
+As the field of neural networks continue to grow, there will always be more algorithms to validate. 
+For current packages available for R, we believe our research should be extended to encompass more types of neural networks 
+and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
+rating schemes and different settings for package functions should also be tried out, though such 
+work suffers from the curse of too many dimensions of effort.
+
+We also aspire to the possibility of an idealized neural network package, in particular for R. From the
+work in this paper, we believe that such a package should offer
+
+- ease of use in setting up computations and attaching data
+- the incorporation of second-order optimization methods in training the model, with
+appropriate computation of derivative information and appropriate internal
+steps, e.g., Levenberg-Marquardt stabilization
+- good documentation and controls, especially of initial values for model parameters
 
 
 ## Acknowledgements
+
 This work was possible due to the support of the Google Summer of Code initiative for R
 during years 2019 and 2020.
 Students Salsabila Mahdi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
