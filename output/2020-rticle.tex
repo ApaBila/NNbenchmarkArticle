@@ -937,6 +937,24 @@ variables. Scaling is one of the things that \CRANpkg{optimx}
 version of optim that only allows for changing the sign of the function
 which might not even be considered as scaling \citep{Nash-nlpor14}.
 
+optimx itself still has several algorithms yet to be used by neural
+network packages, although it does have 45 packages dependent on it at
+the moment. \CRANpkg{monmlp} \citep{R-monmlp} of all the packages, only
+monmlp uses optimx for its 2 algorithms: BFGS and Nelder-Mead. It's
+implementation of BFGS does not particularly stand out in comparison to
+the ones from optim. Note however, that the author, Alex J. Cannon who
+is also the author of CaDENCE, has once again created a package meant to
+fill a certain niche. This package is intended for multi-layer
+perceptrons with optional partial monotonicity constraints. GAM-style
+effect plots are also an interesting utility. Another package by Cannon
+is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm:
+nlm(), a ``Newton-type'' algorithm from stats. Although it's performance
+is at the bottom of second order algorithms, sometimes even being beaten
+by first order algorithms, this could also be because of what the
+package is intended for. qrnn is designed for quantile regression neural
+networks, with several options. Cannon has included automatic scaling
+for all 3 of his packages.
+
 \hypertarget{recommended-1st-order-algorithms}{%
 \subsubsection{Recommended: 1st order
 algorithms}\label{recommended-1st-order-algorithms}}
