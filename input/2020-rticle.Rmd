@@ -577,6 +577,7 @@ neuralnet backprop - note, might not actually reflect standings, somehow from te
 - We are happy to note the existence of neural network packages in R with  algorithms that converge well.
 - \pkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ... ?? need to complete sentence??. 
 JN??: Why is this positive?
+==> B: its meant to be part of the above, because nnet's algorithm converged well in our tests, thus the fact that it is being used by other packages is a plus? See the part about nnet & packages that depend on it in the results
 - R users have access to a wide variety of neural network methods, including from libraries of other programming languages
 and using many different types of algorithms. ?? have we defined hyperparameters?? hyperparameters, and uses
 <!-- JN??: this bullet point still clumsy, but when we decide content, I'll edit -->
@@ -587,6 +588,7 @@ and using many different types of algorithms. ?? have we defined hyperparameters
 <!-- packages reviewed appear to offer essentially the same methods. JN??: Is that what we want to say? -->
 - We often found it difficult to discover what default starting values were used for model parameters, or 
 <!-- else bad choices. JN??: Again, is that our message? -->
+<!-- B: yes -->
 
 ## Future work
 
