@@ -17,7 +17,7 @@ knowledge, there is no comprehensive study which checks the accuracy,
 the reliability and the ease-of-use of those NN packages.
 
 In this paper, we attempted to test this rather large number of packages
-against the common set of datasets with different levels of complexity,
+against a common set of datasets with different levels of complexity,
 and to benchmark and rank them with certain metrics.
 
 Restricting our evaluation to regression algorithms applied on the
@@ -51,7 +51,7 @@ The R Project for Statistical Computing (\url{www.r-project.org}), as
 any opensource platform, relies on its contributors to keep it up to
 date. Neural networks (NN), inspired on the brain's own connections
 system, are a class of models in the growing field of machine learning
-forwhich R has a number of tools. During the last 30 years, neural
+for which R has a number of tools. During the last 30 years, neural
 networks have evolved from an academic topic to a common tool in
 scientific computing. Previously, neural networks were considered more
 theory than practice, partly because the algorithms used were
@@ -124,11 +124,11 @@ output(s) which is a linear combination of the output of the nonlinar
 functions in the hidden layer.
 
 The nonlinear function used in the hidden layer must have the following
-four properties: continuous, derivable, monotonic, bounded. The logistic
-function, the hyperbolic tangent function and the arctangent functions
-are the usual candidates.
+four properties: continuous, differentiable, monotonic, bounded. The
+logistic function, the hyperbolic tangent function and the arctangent
+functions are the usual candidates.
 
-The above description has a simple mathematical equivalence. Let's give
+The above description has a simple mathematical equivalence. Let us give
 two examples.
 
 The model
@@ -148,27 +148,32 @@ algorithm, it is recommended to use normalized inputs, normalized
 outputs, odd functions like the hyperbolic tangent function or the
 arctangent function and small random values to initialize the
 parameters, for instance extracted from the N(0, 0.1) distribution. Such
-good practices help find the good local minima and possibly the global
+good practices help find good local minima and possibly the global
 minimum.
 
 The dataset used for the training is assumed to have a number of rows
-much larger than the number of parameters. We agree that « much larger »
-is subject to discussion but 3 to 5 times are accepted values (In
+much larger than the number of parameters. While «much larger» is
+subject to discussion, values of 3 to 5 are generally accepted. (In
 experimental design, some iterative strategies start with a dataset
 having a number of experiments/lines equal to 1.8 times the number of
 parameters and then increase the number of experiments to finetune the
-model).
+model.)
 
 It is rather clear from the mathematical formula above that neural
 networks of perceptron type are nonlinear models and require for their
 parameter estimation some training algorithms that can handle (highly)
 nonlinear models. Indeed, the intrinsic and parametric curvatures of
 such models are usually very high and, with so many parameters, the
-Jacobian matrix might exhibit some colinearities between its columns and
-become quasi-degenerated. As a result, the appropriate algorithms for
-such pairs dataset::model are rather limited and well-known. They are
-the second-order algorithms like BFGS and Levenberg-Marquardt (and
+Jacobian matrix might exhibit some collinearities between its columns
+and become nearly singular. As a result, appropriate algorithms for such
+dataset::model pairs are rather limited and well-known. They are the
+second-order algorithms like BFGS and Levenberg-Marquardt (and
 Horsehoe?).
+
+JN??: What is the Horseshoe? Probably I know it by a different name.
+Also Levenberg-Marquardt is a stabilization of the Jacobian that could
+be applied to several algorithms. Should we say `Levenberg-Marquardt
+stabilized Gauss-Newton', which is what nlsr uses.
 
 Unfortunately, due to some simple literature on the gradient and the
 hype around ``deep neural networks'' that manipulate ultra-large models
@@ -177,46 +182,43 @@ examples in the datasets, many papers and many R packages emphasize the
 use of first-order gradient algorithms. In the case of the perceptron,
 this is an error and the goal of this paper is to demonstrate it.
 
+JN??: replace previous paragraph with ??
+
+Unfortunately, there are widely-discussed articles concerning the
+gradient and ``deep neural networks'' that manipulate ultra-large models
+with hundreds or thousands parameters and sometimes more parameters than
+examples in the datasets. These, along with some R packages, emphasize
+the use of first-order gradient algorithms. In the case of the
+perceptron, we contend this is an error, and provide evidence to that
+effect in this paper.
+
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
-
-\textbf{??JN: } \textbf{- In working on material below, I think we need
-to provide some explanation of goals} \textbf{- What do we mean by RMSE,
-other measures? Should define here for later use.}
-
-Considering regression problems, we measure the quality of our model by
-the root mean squared error (RMSE): the smaller RMSE the better the
-fitted model. In addition to the RMSE, two other convergence metrics
-have been considered: the Mean Absolute Error (MAE) and the Worst
-Absolute Error (WAE). We recall the definition of the RMSE, the MAE and
-the WAE in Appendix A. The ranking on MAE and WAE may help distinguish
-packages with close RMSE values.
-
-\textbf{- What does ``convergence'' mean in our context?} \textbf{??JN:
-Something like}
 
 When training neural networks, we attempt to tune a set of
 hyperparameters so that the RMSE is minimized. When our method for such
 adjustment can no longer reduce the RMSE, we say that the given
-algorithm terminated. It converged when the terminated RMSE value is
-relatively small. So, we do not choose the MAE neither for overall
-ranking nor for convergence value as there is no consensus in the
-literature, see e.g.~\citep{willmott2005advantages,chai2014root}.
+algorithm has converged. In practice, some implementations of algorithms
+require that we stop the optimization process in exceptional situations
+(e.g., a divide by zero), or a pre-set limit on the number of steps or
+elapsed time is reached. Thus the implementation may terminate even when
+the algorithm has not converged. At termination, we desire that the RMSE
+be ``small''. Note that other measures could be used to judge when to
+accept that the optimization is converged, for instance the Mean
+Absolute Error (MAE). However, the MAE is not used either in a
+convergence test nor in our overall ranking as there does not appear to
+be consensus on its use. See, e.g.,
+\citep{willmott2005advantages,chai2014root}.
 
-Furthermore, in practice, some algorithms require that we stop the
-optimization process in exceptional situations (e.g., a divide by zero),
-or a pre-set limit on the number of steps or elapsed time is reached.
-
-More precisely, second-order algorithms are all set to a maximum of 200
+In our tests, a termination limit for second-order algorithms is 200
 iterations. On the other hand, first-order algorithms were set to
 several values, depending on how well and how fast they converged:
 \texttt{maxit1storderA=1000} iterations, \texttt{maxit1storderB=10000}
 iterations, and \texttt{maxit1storderC=100000} iterations. The full list
 of the maximum iteration number per package:algorithm is given in
-Appendix C.
-
-\textbf{- What do we mean by ``performance''? Other goals?}
-\textbf{??JN: perhaps?}
+Appendix C. We were unable to completely harmonize the hyperparameters
+as an appropriate learning rate differed between package, despite the
+algorithm being similarly named.
 
 We measure performance primarily by relative computing time between
 methods on a particular computing platform. We could also count measures
@@ -227,12 +229,15 @@ measures. We are putting our tools on a Github repository so that
 further evaluation can be made by ourselves and others as hardware and
 software evolves.
 
-The resulting files in the repository were mostly generated by a Windows
-system build 10.0.18362.752 with a i7-8750H CPU, a Intel(R) UHD Graphics
-630 and NVIDIA GeForce GTX 1060 chip, and 16 GB of RAM.
+The resulting files recording performance that are in our repository
+were mostly generated by one of us (SM) on a Windows system build
+10.0.18362.752 with an i7-8750H CPU, a Intel(R) UHD Graphics 630 and
+NVIDIA GeForce GTX 1060 chip, and 16 GB of RAM. The authors have
+multiple computers with different operating software and configurations,
+and our experiences on those systems appear to be consistent with the
+results from the test system described above.
 
-We tried to harmonize the parameters.
-*************************************
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 Our research process was divided into 3 phases.
 
@@ -523,21 +528,14 @@ following method:
   scores for each package:algorithm
 \end{enumerate}
 
-To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
-- Functionality (util): scaling, input, output, trace - Documentation
-(docs): examples, structure/functions, vignettes
-
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-Table 1 gives the RMSE and time score per package and per algorithm. The
-full list of score is given in Table 2 in Appendix C.
+Table 1 gives the RMSE ranks, time ranks, and scores for ease of use for
+each package::algorithm pair. A more complete list of metric scores and
+hyperparameters is given in Table 2 in Appendix C.
 
 \textbf{Tables}
-
-(ALSO: THE FOLLOWING IS SIMPLY ALPHABETIC LIST FOR ALL TESTED, I WILL
-DIVIDE THE TABLE INTO 4: 2nd ORDER always recommended, 1st ORDER
-recommended, 1st ORDER not recommended, untested packages)
 
 \begin{Schunk}
 \begin{table}
@@ -850,9 +848,8 @@ brief descriptions.
   \CRANpkg{zFactor} \citep{R-zFactor}.
 \end{enumerate}
 
-\hypertarget{recommended-2nd-order-algorithms}{%
-\subsubsection{Recommended: 2nd order
-algorithms}\label{recommended-2nd-order-algorithms}}
+\hypertarget{nd-order-algorithms}{%
+\subsubsection{2nd order algorithms}\label{nd-order-algorithms}}
 
 Out of all the algorithms, the following second algorithms generally
 performed better in terms of convergence despite being set to a much
@@ -923,8 +920,9 @@ MAE, minimum WAE) and is only behind deepdive and minpack.lm in terms of
 results that are consistent and do not vary (RMSEd51). The difference is
 probably from the change of maximum allowable weights in rminer to 10000
 from 1000 in nnet, which is also probably the reason it its fits are
-slower. \CRANpkg{traineR} \citep{traineR} claims to unify the different
-methods of creating models between several learning algorithms.
+slower. \CRANpkg{traineR} \citep{R-traineR} claims to unify the
+different methods of creating models between several learning
+algorithms.
 
 Something worth noting is that nnet and validann do not have external
 normalization, and it is especially recommended for validann . However,
@@ -935,13 +933,9 @@ that scaling might lead to complicating the constraints which is not
 always worth it. Regardless, users might want to have the utility and
 most likely want a clear explanation of the method chosen to center the
 variables. Scaling is one of the things that \CRANpkg{optimx}
-\citep{optimx} incorporates in an attempt to make a more useful version
-of optim that only allows for changing the sign of the function which
-might not even be considered as scaling \citep{Nash-nlpor14}.
-
-\hypertarget{not-recommended-2nd-order-algorithms}{%
-\subsubsection{Not Recommended: 2nd order
-algorithms}\label{not-recommended-2nd-order-algorithms}}
+\citep{R-optimx} incorporates in an attempt to make a more useful
+version of optim that only allows for changing the sign of the function
+which might not even be considered as scaling \citep{Nash-nlpor14}.
 
 \hypertarget{recommended-1st-order-algorithms}{%
 \subsubsection{Recommended: 1st order
@@ -983,62 +977,70 @@ LIST}\label{untested-to-do---list}}
 \hypertarget{conclusion-and-perspective}{%
 \section{Conclusion and perspective}\label{conclusion-and-perspective}}
 
-??JN: Can we start to put in some major findings? i.e., important
-positive findings, big negatives?
+\hypertarget{positives}{%
+\subsection{Positives}\label{positives}}
 
-\hypertarget{positives-no-particular-order}{%
-\subsection{Positives (no particular
-order)}\label{positives-no-particular-order}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+\begin{itemize}
 \tightlist
 \item
-  the existence of algorithms that converge well
+  We are happy to note the existence of neural network packages in R
+  with algorithms that converge well.
 \item
-  nnet, which uses optim's BFGS, is already often chosen to represent
-  neural networks for packages that are either a collection of
-  independent machine learning algorithms, ensembles, or even
-  applications in a field such as \ldots{}
+  \pkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is
+  already often chosen to represent neural networks for packages that
+  are either a collection of independent machine learning algorithms,
+  ensembles, or even applications in a field such as \ldots{} ?? need to
+  complete sentence??. JN??: Why is this positive?
 \item
-  the wide variety of neural networks available to users of R, from
-  libraries of other programming languages to many different types of
-  algorithms, hyperparameters, and uses
-\end{enumerate}
+  R users have access to a wide variety of neural network methods,
+  including from libraries of other programming languages and using many
+  different types of algorithms. ?? have we defined hyperparameters??
+  hyperparameters, and uses 
+\end{itemize}
 
-\hypertarget{negatives-no-particular-order}{%
-\subsection{Negatives (no particular
-order)}\label{negatives-no-particular-order}}
+\hypertarget{negatives}{%
+\subsection{Negatives}\label{negatives}}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+\begin{itemize}
 \tightlist
 \item
-  bad documentation
+  We are disappointed that many of the packages we reviewed had poor
+  documentation.
 \item
-  the lack of packages that expand the number of unique second order
-  algorithms. (Perhaps even the existence of what can be considered as
-  repetitive packages?)
+  It would be helpful if there were more packages with (different)
+  second order algorithms. A number of the 
 \item
-  the lack of clear default values, or bad default values
-\end{enumerate}
+  We often found it difficult to discover what default starting values
+  were used for model parameters, or 
+\end{itemize}
 
 \hypertarget{future-work}{%
 \subsection{Future work}\label{future-work}}
 
 As the field of neural networks continue to grow, there will always be
-more algorithms to validate. For current algorithms in R, our research
-should be extended to encompass more types of neural networks and their
-data formats (classifier neural networks, recurrent neural networks, and
-so on). Different rating schemes and different parameters for package
-functions can also be tried out.
+more algorithms to validate. For current packages available for R, we
+believe our research should be extended to encompass more types of
+neural networks and their data formats (classifier neural networks,
+recurrent neural networks, and so on). Different rating schemes and
+different settings for package functions should also be tried out,
+though such work suffers from the curse of too many dimensions of
+effort.
+
+We also aspire to the possibility of an idealized neural network
+package, in particular for R. From the work in this paper, we believe
+that such a package should offer
 
 \begin{itemize}
 \tightlist
 \item
-  The dreamed NN package: Recommendation to package authors
+  ease of use in setting up computations and attaching data
 \item
-  Conclusion
+  the incorporation of second-order optimization methods in training the
+  model, with appropriate computation of derivative information and
+  appropriate internal steps, e.g., Levenberg-Marquardt stabilization
+\item
+  good documentation and controls, especially of initial values for
+  model parameters
 \end{itemize}
 
 \hypertarget{acknowledgements}{%
