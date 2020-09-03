@@ -134,30 +134,46 @@ two examples.
 
 The model
 \(y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + a_7\times x) + a_8\times \tanh(a_9 + a_{10}\times x)\)
-describes a neural network (Fig. 1 left) with one input, three hidden
+describes a neural network (Fig. 1a) with one input, three hidden
 neurons, one output model where \(x\) is the input, \(\tanh()\) is the
 activation function, \(y\) is the output and \(a_1,\dots,a_{10}\) are
 the parameters.
 
 The model
 \(y = a_1 + a_2\times \text{atan}(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \text{atan}(a_{10} + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\text{atan}(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)\)
-describes a neural network (Fig. 1 middle) with five inputs, three
-hidden neurons, one output model where \(x\) is the input,
-\(\text{atan}()\) is the activation function, \(y\) is the output and
-\(a_1,\dots,a_{22}\) are the parameters.
+describes a neural network (Fig. 1b) with five inputs, three hidden
+neurons, one output model where \(x\) is the input, \(\text{atan}()\) is
+the activation function, \(y\) is the output and \(a_1,\dots,a_{22}\)
+are the parameters.
 
 In order to get large gradients at the first steps of the training
 algorithm, it is recommended to use normalized inputs and normalized
-outputs (Fig. 1 right), odd functions like the hyperbolic tangent
-function or the arctangent function and small random values to
-initialize the parameters, for instance extracted from a centered
-Gaussian \(\mathcal N(0, 0.1)\) distribution. Such good practices help
-find good local minima and possibly the global minimum.
+outputs (Fig. 1c), odd functions like the hyperbolic tangent function or
+the arctangent function and small random values to initialize the
+parameters, for instance extracted from a centered Gaussian
+\(\mathcal N(0, 0.1)\) distribution. Such good practices help find good
+local minima and possibly the global minimum.
 
 \begin{figure}
-\centering
-\includegraphics{RN3.png}
-\caption{3 neural networks with structures 1-3-1, 5-3-1, 5-5N-3-1N-1}
+    \centering
+    \begin{subfigure}[b]{0.242\textwidth}
+        \includegraphics[width=\textwidth]{RN3a2.png}
+        \caption{NN 1-3-1}
+        \label{fig:N131}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.250\textwidth}
+        \includegraphics[width=\textwidth]{RN3b2.png}
+        \caption{NN 5-3-1}
+        \label{fig:N531}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.396\textwidth}
+        \includegraphics[width=\textwidth]{RN3c2.png}
+        \caption{NN 5-5N-3-1N-1}
+        \label{fig:N55311}
+    \end{subfigure}
+    \caption{Three neural networks}
 \end{figure}
 
 The dataset used for the training is assumed to have a number of rows
@@ -708,13 +724,13 @@ intermediate package. However, it is not clearly stated in
 \CRANpkg{CaDENCE}'s documentation that optim's BFGS algorithm is used
 and not one of the other algorithms. Furthermore, the mention of
 Nelder-Mead in the documentation might lead users to believe that
-\texttt{optim}'s Nelder-Mead is used instead. Speed and variation
-between results are also not as good as other package's that use
-\texttt{optim}. This could be because \CRANpkg{CaDENCE} is intended for
-probabilistic nonlinear models with a full title of ``Conditional
-Density Estimation Network Construction and Evaluation''. On the other
-hand, \CRANpkg{validann} is clearly a package that allows a user to use
-all optim's algorithms. \CRANpkg{validann}::L-BFGS-B ranks lower than
+\code{optim}'s Nelder-Mead is used instead. Speed and variation between
+results are also not as good as other package's that use \code{optim}.
+This could be because \CRANpkg{CaDENCE} is intended for probabilistic
+nonlinear models with a full title of ``Conditional Density Estimation
+Network Construction and Evaluation''. On the other hand,
+\CRANpkg{validann} is clearly a package that allows a user to use all
+optim's algorithms. \CRANpkg{validann}::L-BFGS-B ranks lower than
 \CRANpkg{validann}::BFGS in just about everything for most runs, despite
 the former being more sophisticated. This is probably due to our efforts
 to harmonize parameters under-utilizing the possibilities of the
@@ -722,7 +738,7 @@ L-BFGS-B algorithm. Both \CRANpkg{CaDENCE} and validann's BFGS are
 outperformed by \CRANpkg{nnet}, especially in terms of speed.
 
 \CRANpkg{nnet} \citep{R-nnet} differs from the two packages because it
-uses the C code from \texttt{optim} (converted earlier from Fortran)
+uses the C code from \code{optim} (converted earlier from Fortran)
 instead of calling optim from R. It also only implements the BFGS
 algorithm. This could be what allows it to be faster. \CRANpkg{nnet} is
 only beaten by the Extreme Learning Machine (ELM) algorithms in terms of
@@ -738,11 +754,11 @@ learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
 
 Our research found that 6 of the 11 packages that use optim do so
 through \CRANpkg{nnet}. Moreover, 8 packages for neural networks, though
-not tested, use nnet. The total number of nnet dependencies found
-through a search through the offline database of CRAN with
-\CRANpkg{RWsearch} came up with 136 packages, although some might be
-using nnet for the multinomial log-linear models, not neural networks.
-As for the ones we tested, there were several similarities and
+not tested, use \CRANpkg{nnet}. The total number of \CRANpkg{nnet}
+dependencies found through a search through the offline database of CRAN
+with \CRANpkg{RWsearch} came up with 136 packages, although some might
+be using nnet for the multinomial log-linear models, not neural
+networks. As for the ones we tested, there were several similarities and
 differences. The packages that use \CRANpkg{nnet} for neuralnetworks are
 often meta packages with a host of other machine learning algorithms.
 \CRANpkg{caret} \citep{R-caret}, also mentioned in the taskview, boasts
@@ -764,44 +780,46 @@ changed this to harmonize the parameters. \CRANpkg{rminer}
 \citep{R-rminer} is the only package dependant on nnet that ranks above
 nnet at number 2 for minimum RMSE, and even number 1 in some runs. It
 also ranks number 1 on the other accuracy measures (median RMSE, minimum
-MAE, minimum WAE) and is only behind deepdive and minpack.lm in terms of
-results that are consistent and do not vary (RMSEd51). The difference is
-probably from the change of maximum allowable weights in rminer to 10000
-from 1000 in nnet, which is also probably the reason it its fits are
-slower. \CRANpkg{traineR} \citep{R-traineR} claims to unify the
-different methods of creating models between several learning
-algorithms.
+MAE, minimum WAE) and is only behind \CRANpkg{deepdive} and
+\CRANpkg{minpack.lm} in terms of results that are consistent and do not
+vary (RMSEd51). The difference is probably from the change of maximum
+allowable weights in rminer to 10000 from 1000 in \CRANpkg{nnet}, which
+is also probably the reason it its fits are slower. \CRANpkg{traineR}
+\citep{R-traineR} claims to unify the different methods of creating
+models between several learning algorithms.
 
-Something worth noting is that nnet and validann do not have external
-normalization, and it is especially recommended for validann . However,
-some of the packages dependent on nnet do have this utility and it is
-included in the scoring for ease of use. With NNbenchmark, this is done
-through setting scale = TRUE in the function \code{prepare.ZZ}. Note
-that scaling might lead to complicating the constraints which is not
-always worth it. Regardless, users might want to have the utility and
-most likely want a clear explanation of the method chosen to center the
-variables. Scaling is one of the things that \CRANpkg{optimx}
-\citep{R-optimx} incorporates in an attempt to make a more useful
-version of optim that only allows for changing the sign of the function
-which might not even be considered as scaling \citep{Nash-nlpor14}.
+Something worth noting is that \CRANpkg{nnet} and \CRANpkg{validann} do
+not have external normalization, and it is especially recommended for
+validann . However, some of the packages dependent on nnet do have this
+utility and it is included in the scoring for ease of use. With
+NNbenchmark, this is done through setting \code{scale = TRUE} in the
+function \code{prepare.ZZ}. Note that scaling might lead to complicating
+the constraints which is not always worth it. Regardless, users might
+want to have the utility and most likely want a clear explanation of the
+method chosen to center the variables. Scaling is one of the things that
+\CRANpkg{optimx} \citep{R-optimx} incorporates in an attempt to make a
+more useful version of optim that only allows for changing the sign of
+the function which might not even be considered as scaling
+\citep{Nash-nlpor14}.
 
 optimx itself still has several algorithms yet to be used by neural
 network packages, although it does have 45 packages dependent on it at
 the moment. \CRANpkg{monmlp} \citep{R-monmlp} of all the packages, only
-monmlp uses optimx for its 2 algorithms: BFGS and Nelder-Mead. It's
-implementation of BFGS does not particularly stand out in comparison to
-the ones from optim. Note however, that the author, Alex J. Cannon who
-is also the author of CaDENCE, has once again created a package meant to
-fill a certain niche. This package is intended for multi-layer
-perceptrons with optional partial monotonicity constraints. GAM-style
-effect plots are also an interesting utility. Another package by Cannon
-is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm:
-nlm(), a ``Newton-type'' algorithm from stats. Although it's performance
-is at the bottom of second order algorithms, sometimes even being beaten
-by first order algorithms, this could also be because of what the
-package is intended for. qrnn is designed for quantile regression neural
-networks, with several options. Cannon has included automatic scaling
-for all 3 of his packages.
+\CRANpkg{monmlp} uses \CRANpkg{optimx} for its 2 algorithms: BFGS and
+Nelder-Mead. It's implementation of BFGS does not particularly stand out
+in comparison to the ones from optim. Note however, that the author,
+Alex J. Cannon who is also the author of \CRANpkg{CaDENCE}, has once
+again created a package meant to fill a certain niche. This package is
+intended for multi-layer perceptrons with optional partial monotonicity
+constraints. GAM-style effect plots are also an interesting utility.
+Another package by Cannon is \CRANpkg{qrnn} \citep{R-qrnn} which uses
+yet another algorithm: \code{nlm()}, a ``Newton-type'' algorithm from
+\CRANpkg{stats}. Although it's performance is at the bottom of second
+order algorithms, sometimes even being beaten by first order algorithms,
+this could also be because of what the package is intended for.
+\CRANpkg{qrnn} is designed for quantile regression neural networks, with
+several options. Cannon has included automatic scaling for all 3 of his
+packages.
 
 stats also includes \code{nls()}, for nonlinear least squares, which
 defaults to an implementation of the second-order algorithm referred to
