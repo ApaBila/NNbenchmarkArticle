@@ -26,7 +26,7 @@ preamble:
     \usepackage{float}
     \usepackage{multirow}
     \newcommand{\atan}{\text{atan}}
-    \newcommand{\logit}{\text{logit}}
+    \newcommand{\invlogit}{\text{invlogit}}
 output: rticles::rjournal_article
 ---
 
@@ -95,14 +95,14 @@ We restricted our evaluation to regression algorithms applied on the one-hidden 
 
 # Neural Networks: the perceptron
 
-Here, we give a short description of the one hidden layer perceptron. As the ``layer'' term suggests it, some terms come from the representation of graphs whereas some other terms come from the  traditional literature on nonlinear models. 
+Here, we give a short description of the one hidden layer perceptron. As the "layer" term suggests it, some terms come from the representation of graphs whereas some other terms come from the  traditional literature on nonlinear models. 
 
 Using the graph description, a one-hidden layer neural network is made of 3 parts: (i) the layer of the input(s), (ii) the hidden layer which consists of independant neurons, each of them performing two operations: a linear combination of the inputs plus an offset, then a nonlinear function applied on this linear combination. (iii) the layer of the output(s) which is a linear combination of the output of the nonlinar functions in the hidden layer. 
 
 <!-- JN??: differentiable rather than derivable
 ==> CD: agree -->
 
-The nonlinear function used in the hidden layer must have the following four properties: continuous, differentiable, monotonic, bounded. The logistic ($\logit$), the hyperbolic tangent ($\tanh$) and the arctangent ($\atan$) functions are the usual candidates. 
+The nonlinear function used in the hidden layer must have the following four properties: continuous, differentiable, monotonic, bounded. The logistic ($\invlogit$), the hyperbolic tangent ($\tanh$) and the arctangent ($\atan$) functions are the usual candidates. 
 
 The above description has a simple mathematical equivalence. Let us give two examples. 
 
@@ -110,18 +110,14 @@ The model $y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + 
 
 The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural network with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
 
-In order to get large gradients at the first steps of the training algorithm, it is recommended to use normalized inputs, normalized outputs, odd functions like the hyperbolic tangent function or the arctangent function and small random values to initialize the parameters, for instance extracted from a centered Gaussian distribution $\mathcal N(0, 0.1)$ distribution. Such good practices help find good local minima and possibly the global minimum. 
+In order to get large gradients at the first steps of the training algorithm, it is recommended to use normalized inputs, normalized outputs, odd functions like the hyperbolic tangent function or the arctangent function and small random values to initialize the parameters, for instance extracted from a centered Gaussian $\mathcal N(0, 0.1)$ distribution. Such good practices help find good local minima and possibly the global minimum. 
 
 ![3 neural networks with structures 1-3-1, 5-3-1, 5-5N-3-1N-1](RN3.png)
 
-The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. While ``much larger'' is subject to discussion, values of 3 to 5 are generally accepted. (In experimental design, some iterative strategies start with a dataset having a number of experiments/lines equal to 1.8 times the number of parameters and then increase the number of experiments to finetune the model.)
+The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. While "much larger" is subject to discussion, values of 3 to 5 are generally accepted (In experimental design, some iterative strategies start with a dataset having a number of experiments/lines equal to 1.8 times the number of parameters and then increase the number of experiments to finetune the model).
 
-It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some collinearities between its columns and become nearly singular. As a result, appropriate algorithms for such dataset::model pairs are rather limited and well-known. There is the second-order algorithms BFGS which is Quasi-Newton in how it approximates the Jacobian and Levenberg-Marquardt which stabilizes the Gauss-Newton.
+It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some collinearities between its columns and become nearly singular. As a result, appropriate algorithms for such dataset::model pairs are rather limited and well-known. There are the second-order algorithms BFGS which is Quasi-Newton in how it approximates the Jacobian and Levenberg-Marquardt which stabilizes the Gauss-Newton (Hessian matrix ?).
 
-<!-- JN??: What is the Horseshoe? Probably I know it by a different name. 
-CD : I don't know Horsehoe
-SB : REMOVED as should be from Patrice's email
--->
 
 <!--Also Levenberg-Marquardt is a stabilization of the Jacobian that could be applied to several algorithms. Should we say 'Levenberg-Marquardt stabilized Gauss-Newton', which is what \CRANpkg{nlsr} uses.
 SB??: JN, I did not add this here as there is some discussion of the package side of things in the results, I did however add the point about LM stabilizing Gauss-Newton-->
@@ -129,11 +125,15 @@ SB??: JN, I did not add this here as there is some discussion of the package sid
 <!-- Unfortunately, due to some simple literature on the gradient and the hype around ``deep neural networks'' that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets, many papers and many R packages emphasize the use of first-order gradient algorithms. In the case of the perceptron, this is an error and the goal of this paper is to demonstrate it.  -->
 
 <!-- JN??: replace previous paragraph with ?? -->
-
+      
+<!-- 
 Unfortunately, there are widely-discussed articles concerning the gradient and ``deep neural networks'' that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets.
 These, along with some R packages, emphasize the use of first-order gradient algorithms. In the case of the perceptron, 
 we contend this is an error, and provide evidence to that effect in this paper.
+  -->
 
+<!-- PK??: I suggest this new version ?? -->
+Unfortunately, due to educative tools on the backpropagation targeting students and some literature on the gradient in the early researchs and more recently on the "deep neural networks" that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets, many papers emphasize the use of first-order gradient algorithms and many R packages have implemented such algorithms. In the case of the perceptron, we contend this is an error, and provide evidence to that effect in this paper.
 
 
 # Methodology
