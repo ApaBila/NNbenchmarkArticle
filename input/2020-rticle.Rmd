@@ -106,7 +106,7 @@ The above description has a simple mathematical equivalence. Let us give two exa
 
 The model $y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + a_7\times x) + a_8\times \tanh(a_9 + a_{10}\times x)$ describes a neural network (Fig. 1 left) with one input, three hidden neurons, one output model where $x$ is the input, $\tanh()$ is the activation function, $y$ is the output and $a_1,\dots,a_{10}$ are the parameters. 
 
-The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural (Fig. 1 middle) network with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
+The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural network (Fig. 1 middle) with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
 
 In order to get large gradients at the first steps of the training algorithm, it is recommended to use normalized inputs and normalized outputs (Fig. 1 right), odd functions like the hyperbolic tangent function or the arctangent function and small random values to initialize the parameters, for instance extracted from a centered Gaussian $\mathcal N(0, 0.1)$ distribution. 
 Such good practices help find good local minima and possibly the global minimum. 
@@ -115,7 +115,7 @@ Such good practices help find good local minima and possibly the global minimum.
 
 The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. While "much larger" is subject to discussion, values of 3 to 5 are generally accepted (in experimental design, some iterative strategies start with a dataset having a number of distinct experiments equal to 1.8 times the number of parameters and then increase the number of experiments to finetune the model).
 
-It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some collinearities between its columns and become nearly singular. As a result, appropriate algorithms for such dataset::model pairs are rather limited and well-known. There are the second-order algorithms BFGS which is Quasi-Newton in how it approximates the Jacobian and Levenberg-Marquardt which stabilizes the Gauss-Newton (Hessian matrix ?).
+It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some collinearities between its columns and become nearly singular. As a result, appropriate algorithms for such dataset::model pairs are rather limited and well-known. They pertain to the class of the second-order algorithms and are the BFGS algorithm which is Quasi-Newton in how it approximates the Jacobian matrix and the Levenberg-Marquardt algorithm which stabilizes the Gauss-Newton (Hessian matrix ?) at every iteration.
 
 
 <!--Also Levenberg-Marquardt is a stabilization of the Jacobian that could be applied to several algorithms. Should we say 'Levenberg-Marquardt stabilized Gauss-Newton', which is what \CRANpkg{nlsr} uses.
@@ -144,6 +144,8 @@ Unfortunately, due to some educative tools on the backpropagation and an initial
 <!-- **??JN: Something like** -->
 
 ## Convergence and termination
+
+Most of the package:algorithm pairs try to minimize the root mean squared error (RMSE) during the training step. Two exceptions are the brnn package which minimizes the RMSE plus the sum of the parameters, hence the name Bayesian Regularized Neural Network, and the qrnn package which performs quantile regression. For all packages, the datasets were learnt as a whole and without any weighting scheme to favour one part of the datasets. There was no validation subset or test subset as the purpose of our study is just to verify the ability to reach good minima. 
 
 When training neural networks, we attempt to tune a set of hyperparameters so that the root 
 mean squared error (RMSE) is minimized. 
