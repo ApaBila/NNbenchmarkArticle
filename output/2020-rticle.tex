@@ -97,14 +97,14 @@ aims to provide a framework for benchmarking neural network packages. We
 restrict our examination to packages for R, and in this report focus on
 those that provide neural networks of the perceptron type, that is, one
 input layer, one normalized layer, one hidden layer with a nonlinear
-activation function that is usually the hyperbolic tangent tanh(), and
-one output output layer. The criteria used in our benchmark were: (i)
-the accuracy, i.e.~the ability to find the global minima on 13 datasets
-in a limited number of iterations; (ii) the speed of the training
-algorithm; (iii) the availability of helpful utilities; (iv) and the
-quality of the documentation. We restricted our evaluation to regression
-algorithms applied on the one-hidden layer perceptron and ignored those
-for classification or other specialized purposes.
+activation function that is usually the hyperbolic tangent \(\tanh()\),
+and one output output layer. The criteria used in our benchmark were:
+(i) the accuracy, i.e.~the ability to find the global minima on 13
+datasets in a limited number of iterations; (ii) the speed of the
+training algorithm; (iii) the availability of helpful utilities; (iv)
+and the quality of the documentation. We restricted our evaluation to
+regression algorithms applied on the one-hidden layer perceptron and
+ignored those for classification or other specialized purposes.
 
 \hypertarget{neural-networks-the-perceptron}{%
 \section{Neural Networks: the
@@ -125,34 +125,42 @@ functions in the hidden layer.
 
 The nonlinear function used in the hidden layer must have the following
 four properties: continuous, differentiable, monotonic, bounded. The
-logistic function, the hyperbolic tangent function and the arctangent
-functions are the usual candidates.
+logistic (\(\text{logit}\)), the hyperbolic tangent (\(\tanh\)) and the
+arctangent (\(\text{atan}\)) functions are the usual candidates.
 
 The above description has a simple mathematical equivalence. Let us give
 two examples.
 
 The model
-\(y = a1 + a2*tanh(a3 + a4*x) + a5*tanh(a6 + a7*x) + a8*tanh(a9 + a10*x)\)
+\(y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + a_7\times x) + a_8\times \tanh(a_9 + a_{10}\times x)\)
 describes a neural network with one input, three hidden neurons, one
-output model where x is the input, tanh() is the activation function, y
-is the output and \(a1,..,a10\) are the parameters.
+output model where \(x\) is the input, \(\tanh()\) is the activation
+function, \(y\) is the output and \(a_1,\dots,a_{10}\) are the
+parameters.
 
 The model
-\(y = a1 + a2*atan(a3 + a4*x1 + a5*x2 + a6*x3 + a7*x4 + a8*x5) + a9*atan(a10 + a11*x1 + a12*x2 + a13*x3 + a14*x4 + a15*x5) + a16*atan(a17 + a18*x1 + a19*x2 + a20*x3 + a21*x4 + a22*x5)\)
+\(y = a_1 + a_2\times \text{atan}(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \text{atan}(a_{10} + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\text{atan}(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)\)
 describes a neural network with five inputs, three hidden neurons, one
-output model where x is the input, atan() is the activation function, y
-is the output and \(a1,..,a22\) are the parameters.
+output model where \(x\) is the input, \(\text{atan}()\) is the
+activation function, \(y\) is the output and \(a_1,\dots,a_{22}\) are
+the parameters.
 
 In order to get large gradients at the first steps of the training
 algorithm, it is recommended to use normalized inputs, normalized
 outputs, odd functions like the hyperbolic tangent function or the
 arctangent function and small random values to initialize the
-parameters, for instance extracted from the N(0, 0.1) distribution. Such
-good practices help find good local minima and possibly the global
-minimum.
+parameters, for instance extracted from a centered Gaussian distribution
+\(\mathcal N(0, 0.1)\) distribution. Such good practices help find good
+local minima and possibly the global minimum.
+
+\begin{figure}
+\centering
+\includegraphics{RN3.png}
+\caption{3 neural networks with structures 1-3-1, 5-3-1, 5-5N-3-1N-1}
+\end{figure}
 
 The dataset used for the training is assumed to have a number of rows
-much larger than the number of parameters. While «much larger» is
+much larger than the number of parameters. While ``much larger'' is
 subject to discussion, values of 3 to 5 are generally accepted. (In
 experimental design, some iterative strategies start with a dataset
 having a number of experiments/lines equal to 1.8 times the number of
@@ -166,14 +174,10 @@ nonlinear models. Indeed, the intrinsic and parametric curvatures of
 such models are usually very high and, with so many parameters, the
 Jacobian matrix might exhibit some collinearities between its columns
 and become nearly singular. As a result, appropriate algorithms for such
-dataset::model pairs are rather limited and well-known. They are the
-second-order algorithms like BFGS and Levenberg-Marquardt (and
-Horsehoe?).
-
-JN??: What is the Horseshoe? Probably I know it by a different name.
-Also Levenberg-Marquardt is a stabilization of the Jacobian that could
-be applied to several algorithms. Should we say `Levenberg-Marquardt
-stabilized Gauss-Newton', which is what nlsr uses.
+dataset::model pairs are rather limited and well-known. There is the
+second-order algorithms BFGS which is Quasi-Newton in how it
+approximates the Jacobian and Levenberg-Marquardt which stabilizes the
+Gauss-Newton.
 
 Unfortunately, due to some simple literature on the gradient and the
 hype around ``deep neural networks'' that manipulate ultra-large models
@@ -195,30 +199,33 @@ effect in this paper.
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
 
-When training neural networks, we attempt to tune a set of
-hyperparameters so that the RMSE is minimized. When our method for such
-adjustment can no longer reduce the RMSE, we say that the given
-algorithm has converged. In practice, some implementations of algorithms
-require that we stop the optimization process in exceptional situations
-(e.g., a divide by zero), or a pre-set limit on the number of steps or
-elapsed time is reached. Thus the implementation may terminate even when
-the algorithm has not converged. At termination, we desire that the RMSE
-be ``small''. Note that other measures could be used to judge when to
-accept that the optimization is converged, for instance the Mean
-Absolute Error (MAE). However, the MAE is not used either in a
-convergence test nor in our overall ranking as there does not appear to
-be consensus on its use. See, e.g.,
-\citep{willmott2005advantages,chai2014root}.
+\textbf{- What does ``convergence'' mean in our context?} \textbf{??JN:
+Something like}
 
-In our tests, a termination limit for second-order algorithms is 200
+When training neural networks, we attempt to tune a set of
+hyperparameters so that the root mean squared error (RMSE) is minimized.
+When our method for such adjustment can no longer reduce the RMSE, we
+say that the given algorithm terminated. It converged when the
+terminated RMSE value is relatively small\footnote{So, we do not choose
+  the mean absolute error (MAE) neither for overall ranking nor for
+  convergence value as there is no consensus in the literature, see
+  e.g.~\citep{willmott2005advantages,chai2014root}.}. In practice, some
+algorithms require that we stop the optimization process in exceptional
+situations (e.g., a divide by zero), or a pre-set limit on the number of
+steps or elapsed time is reached.
+
+More precisely, second-order algorithms are all set to a maximum of 200
 iterations. On the other hand, first-order algorithms were set to
 several values, depending on how well and how fast they converged:
 \texttt{maxit1storderA=1000} iterations, \texttt{maxit1storderB=10000}
 iterations, and \texttt{maxit1storderC=100000} iterations. The full list
 of the maximum iteration number per package:algorithm is given in
-Appendix C. We were unable to completely harmonize the hyperparameters
-as an appropriate learning rate differed between package, despite the
-algorithm being similarly named.
+Appendix C. It can be seen that we were unable to completely harmonize
+the hyperparameters as an appropriate learning rate differed between
+package, despite the algorithm being similarly named.
+
+\textbf{- What do we mean by ``performance''? Other goals?}
+\textbf{??JN: perhaps?}
 
 We measure performance primarily by relative computing time between
 methods on a particular computing platform. We could also count measures
@@ -229,13 +236,10 @@ measures. We are putting our tools on a Github repository so that
 further evaluation can be made by ourselves and others as hardware and
 software evolves.
 
-The resulting files recording performance that are in our repository
-were mostly generated by one of us (SM) on a Windows system build
-10.0.18362.752 with an i7-8750H CPU, a Intel(R) UHD Graphics 630 and
-NVIDIA GeForce GTX 1060 chip, and 16 GB of RAM. The authors have
-multiple computers with different operating software and configurations,
-and our experiences on those systems appear to be consistent with the
-results from the test system described above.
+The resulting files in the repository were mostly generated by one of us
+(SM) on a Windows system build 10.0.18362.752 with a i7-8750H CPU, a
+Intel(R) UHD Graphics 630 and NVIDIA GeForce GTX 1060 chip, and 16 GB of
+RAM.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -348,7 +352,11 @@ The structure of this template (for each package) is as follows:
   \item
     training a neural network with a tuned functions for each package,
   \item
-    calculation of convergence metrics (RMSE, MAE, WAE),
+    calculation of convergence metrics (RMSE, MAE, WAE)\footnote{We
+      measure the quality of our model by RMSE, but the mean absolute
+      error (MAE) and the worst absolute error (WAE) may help
+      distinguish packages with close RMSE values. See Appendix A for
+      definition of convergence metrics.},
   \item
     plot each training over one initial graph, then plot the best
     result,
@@ -362,11 +370,11 @@ The structure of this template (for each package) is as follows:
   print warnings.
 \end{enumerate}
 
-To simplify this process, we developed tools in the NNbenchmark package,
-of which the first version was created as part of GSoC 2019. In GSoC
-2020, 3 functions encapsulating the template, that had been made generic
-with an extensive use of the incredible \code{do.call} function, were
-added:
+To simplify this process, we developed tools in the \pkg{NNbenchmark}
+package, of which the first version was created as part of GSoC 2019. In
+GSoC 2020, 3 functions encapsulating the template, that had been made
+generic with an extensive use of the incredible \code{do.call} function,
+were added:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -477,7 +485,7 @@ following method:
 \item
   The results datasets are loaded into the R environment as one large
   list. The dataset names, package:algorithm names and all 10 run
-  numbers, durations, and RMSE are extracted from that list
+  numbers, durations, and RMSE are extracted from that list.
 \item
   For the duration score (DUR), the duration is averaged by dataset. 3
   criteria for the RMSE score by dataset are calculated:
@@ -487,13 +495,13 @@ following method:
   \tightlist
   \item
     The minimum value of RMSE for each package:algorithm as a measure of
-    their best performance
+    their best performance;
   \item
     The median value of RMSE for each package:algorithm as a measure of
-    their average performance, without the influence of outliers
+    their average performance, without the influence of outliers;
   \item
     The spread of the RMSE values for each package which is measured by
-    the difference between the median and the minimum RMSE (d51)
+    the difference between the median and the minimum RMSE (d51).
   \end{enumerate}
 \item
   Then, the ranks are calculated for every dataset and the results are
@@ -503,15 +511,15 @@ following method:
   \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    The duration rank only depends on the duration.
+    The duration rank only depends on the duration;
   \item
     For minimum RMSE values, ties are decided by duration mean, then the
-    RMSE median
+    RMSE median;
   \item
     For median RMSE values, ties are decided by the RMSE minimum, then
-    the duration mean
+    the duration mean;
   \item
-    The d51 rank only depends on itself
+    The d51 rank only depends on itself.
   \end{enumerate}
 \end{enumerate}
 
@@ -522,18 +530,21 @@ following method:
 \item
   A global score for all datasets is found by a sum of the ranks (of
   duration, minimum RMSE, median RMSE, d51 RMSE) of each
-  package:algorithm for each dataset
+  package:algorithm for each dataset.
 \item
   The final table is the result of ranking by the global minimum RMSE
-  scores for each package:algorithm
+  scores for each package:algorithm.
 \end{enumerate}
+
+To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
+- Functionality (util): scaling, input, output, trace - Documentation
+(docs): examples, structure/functions, vignettes
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-Table 1 gives the RMSE ranks, time ranks, and scores for ease of use for
-each package::algorithm pair. A more complete list of metric scores and
-hyperparameters is given in Table 2 in Appendix C.
+Table 1 gives the RMSE and time score per package and per algorithm. The
+full list of score is given in Table 2 in Appendix C.
 
 \textbf{Tables}
 
@@ -858,50 +869,54 @@ first-order algorithms.
 
 An important finding is that 11 out of 15 of these package::algorithms
 use the algorithms included in \code{optim} from \CRANpkg{stats}. 2 of
-them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and
+them, \CRANpkg{CaDENCE}`s BFGS \citep{R-CaDENCE} and
 \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, do so with no
-intermediate package. However, it is not clearly stated in CaDENCE's
-documentation that optim's BFGS algorithm is used and not one of the
-other algorithms. Furthermore, the mention of Nelder-Mead in the
-documentation might lead users to believe that optim's Nelder-Mead is
-used instead. Speed and variation between results are also not as good
-as other package's that use optim. This could be because CaDENCE is
-intended for probabilistic nonlinear models with a full title of
-``Conditional Density Estimation Network Construction and Evaluation''.
-On the other hand, validann is clearly a package that allows a user to
-use all optim's algorithms. validann::L-BFGS-B ranks lower than
-validann::BFGS in just about everything for most runs, despite the
-former being more sophisticated. This is probably due to our efforts to
-harmonize parameters under-utilizing the possibilities of the L-BFGS-B
-algorithm. Both CaDENCE and validann's BFGS are outperformed by nnet,
-especially in terms of speed.
+intermediate package. However, it is not clearly stated in
+\CRANpkg{CaDENCE}'s documentation that optim's BFGS algorithm is used
+and not one of the other algorithms. Furthermore, the mention of
+Nelder-Mead in the documentation might lead users to believe that
+\texttt{optim}'s Nelder-Mead is used instead. Speed and variation
+between results are also not as good as other package's that use
+\texttt{optim}. This could be because \CRANpkg{CaDENCE} is intended for
+probabilistic nonlinear models with a full title of ``Conditional
+Density Estimation Network Construction and Evaluation''. On the other
+hand, \CRANpkg{validann} is clearly a package that allows a user to use
+all optim's algorithms. \CRANpkg{validann}::L-BFGS-B ranks lower than
+\CRANpkg{validann}::BFGS in just about everything for most runs, despite
+the former being more sophisticated. This is probably due to our efforts
+to harmonize parameters under-utilizing the possibilities of the
+L-BFGS-B algorithm. Both \CRANpkg{CaDENCE} and validann's BFGS are
+outperformed by \CRANpkg{nnet}, especially in terms of speed.
 
 \CRANpkg{nnet} \citep{R-nnet} differs from the two packages because it
-uses the C code from optim (converted earlier from Fortran) instead of
-calling optim from R. It also only implements the BFGS algorithm. This
-could be what allows it to be faster. nnet is only beaten by the Extreme
-Learning Machine (ELM) algorithms in terms of speed. However, there is a
-larger variation between results (see the RMSEd51.score in Appendix C)
-in comparison to validann::BFGS. Most likely, the different default
-values are the cause of this. For instance, nnet uses a range of initial
-random weights of 0.7 while validann uses a value of 0.5. In spite of
-these results, the real reason most authors or users are likely to
-choose nnet is because it ships with base R and is even mentioned as the
-very first package in CRAN's task view for machine learning.
+uses the C code from \texttt{optim} (converted earlier from Fortran)
+instead of calling optim from R. It also only implements the BFGS
+algorithm. This could be what allows it to be faster. \CRANpkg{nnet} is
+only beaten by the Extreme Learning Machine (ELM) algorithms in terms of
+speed. However, there is a larger variation between results (see the
+\texttt{RMSEd51} in Appendix C) in comparison to
+\CRANpkg{validann}::BFGS. Most likely, the different default values are
+the cause of this. For instance, \CRANpkg{nnet} uses a range of initial
+random weights of 0.7 while \CRANpkg{validann} uses a value of 0.5. In
+spite of these results, the real reason most authors or users are likely
+to choose \CRANpkg{nnet} is because it ships with base R and is even
+mentioned as the very first package in CRAN's task view for machine
+learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
 
 Our research found that 6 of the 11 packages that use optim do so
-through nnet. Moreover, 8 packages for neural networks, though not
-tested, use nnet. The total number of nnet dependencies found through a
-search through the offline database of CRAN with RWsearch came up with
-136 packages, although some might be using nnet for the multinomial
-log-linear models, not neural networks. As for the ones we tested, there
-were several similarities and differences. The packages that use nnet
-for neuralnetworks are often meta packages with a host of other machine
-learning algorithms. \CRANpkg{caret} \citep{R-caret}, also mentioned in
-the taskview, boasts 238 methods with around 13 different neural network
-packages with somewhat deceivingly simple name of ``Classification and
-Regression Training''. It has many pre-processing utilities available,
-as well as other tools.
+through \CRANpkg{nnet}. Moreover, 8 packages for neural networks, though
+not tested, use nnet. The total number of nnet dependencies found
+through a search through the offline database of CRAN with
+\CRANpkg{RWsearch} came up with 136 packages, although some might be
+using nnet for the multinomial log-linear models, not neural networks.
+As for the ones we tested, there were several similarities and
+differences. The packages that use \CRANpkg{nnet} for neuralnetworks are
+often meta packages with a host of other machine learning algorithms.
+\CRANpkg{caret} \citep{R-caret}, also mentioned in the taskview, boasts
+238 methods with around 13 different neural network packages with
+somewhat deceivingly simple name of ``Classification and Regression
+Training''. It has many pre-processing utilities available, as well as
+other tools.
 
 \CRANpkg{EnsembleBase} \citep{R-EnsembleBase} maybe useful for those who
 wish to make ensembles and test a grid of parameters although the
@@ -995,14 +1010,23 @@ LIST}\label{untested-to-do---list}}
 \hypertarget{conclusion-and-perspective}{%
 \section{Conclusion and perspective}\label{conclusion-and-perspective}}
 
-\hypertarget{positives}{%
-\subsection{Positives}\label{positives}}
+??JN: Can we start to put in some major findings? i.e., important
+positive findings, big negatives?
 
-\begin{itemize}
+\hypertarget{positives-no-particular-order}{%
+\subsection{Positives (no particular
+order)}\label{positives-no-particular-order}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   We are happy to note the existence of neural network packages in R
   with algorithms that converge well.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
 \item
   \pkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is
   already often chosen to represent neural networks for packages that
@@ -1040,29 +1064,18 @@ LIST}\label{untested-to-do---list}}
 \subsection{Future work}\label{future-work}}
 
 As the field of neural networks continue to grow, there will always be
-more algorithms to validate. For current packages available for R, we
-believe our research should be extended to encompass more types of
-neural networks and their data formats (classifier neural networks,
-recurrent neural networks, and so on). Different rating schemes and
-different settings for package functions should also be tried out,
-though such work suffers from the curse of too many dimensions of
-effort.
-
-We also aspire to the possibility of an idealized neural network
-package, in particular for R. From the work in this paper, we believe
-that such a package should offer
+more algorithms to validate. For current algorithms in R, our research
+should be extended to encompass more types of neural networks and their
+data formats (classifier neural networks, recurrent neural networks, and
+so on). Different rating schemes and different parameters for package
+functions can also be tried out.
 
 \begin{itemize}
 \tightlist
 \item
-  ease of use in setting up computations and attaching data
+  The dreamed NN package: Recommendation to package authors
 \item
-  the incorporation of second-order optimization methods in training the
-  model, with appropriate computation of derivative information and
-  appropriate internal steps, e.g., Levenberg-Marquardt stabilization
-\item
-  good documentation and controls, especially of initial values for
-  model parameters
+  Conclusion
 \end{itemize}
 
 \hypertarget{acknowledgements}{%
