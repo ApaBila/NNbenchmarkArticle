@@ -126,9 +126,9 @@ SB : REMOVED as should be from Patrice's email
 <!--Also Levenberg-Marquardt is a stabilization of the Jacobian that could be applied to several algorithms. Should we say 'Levenberg-Marquardt stabilized Gauss-Newton', which is what \CRANpkg{nlsr} uses.
 SB??: JN, I did not add this here as there is some discussion of the package side of things in the results, I did however add the point about LM stabilizing Gauss-Newton-->
       
-Unfortunately, due to some simple literature on the gradient and the hype around ``deep neural networks'' that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets, many papers and many R packages emphasize the use of first-order gradient algorithms. In the case of the perceptron, this is an error and the goal of this paper is to demonstrate it. 
+<!-- Unfortunately, due to some simple literature on the gradient and the hype around ``deep neural networks'' that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets, many papers and many R packages emphasize the use of first-order gradient algorithms. In the case of the perceptron, this is an error and the goal of this paper is to demonstrate it.  -->
 
-JN??: replace previous paragraph with ??
+<!-- JN??: replace previous paragraph with ?? -->
 
 Unfortunately, there are widely-discussed articles concerning the gradient and ``deep neural networks'' that manipulate ultra-large models with hundreds or thousands parameters and sometimes more parameters than examples in the datasets.
 These, along with some R packages, emphasize the use of first-order gradient algorithms. In the case of the perceptron, 
@@ -141,14 +141,18 @@ we contend this is an error, and provide evidence to that effect in this paper.
 
 
 <!-- to be removed -->
-**- What does ``convergence'' mean in our context?**
-**??JN: Something like**
+<!-- **- What does ``convergence'' mean in our context?** -->
+<!-- **??JN: Something like** -->
 
-When training neural networks, we attempt to tune a set of hyperparameters so that the root mean squared error (RMSE) is minimized. 
+When training neural networks, we attempt to tune a set of hyperparameters so that the root 
+mean squared error (RMSE) is minimized. 
 When our method for such adjustment can no longer reduce the RMSE, we say that the given algorithm terminated.
-It converged when the terminated RMSE value is relatively small^[So, we do not choose the mean absolute error (MAE) neither for overall ranking nor for convergence value as there is no consensus in the literature,  see e.g. \citep{willmott2005advantages,chai2014root}.].
+We consider the method to have **converged** when termination is not due to some exceptional situation 
+and the final RMSE value is 
+relatively small^[We do not choose the mean absolute error (MAE) for overall ranking nor for convergence testing as there is
+a lack of consensus in the literature,  see e.g. \citep{willmott2005advantages,chai2014root}.].
 In practice, some algorithms require that we stop the optimization process in 
-exceptional situations (e.g., a divide by zero), or a pre-set limit on the number of steps or elapsed
+exceptional situations (e.g., a divide by zero), or a pre-set limit on the number of steps or a maximum elapsed
 time is reached.
 
 More precisely, second-order algorithms are all set to a maximum of 200 iterations. 
