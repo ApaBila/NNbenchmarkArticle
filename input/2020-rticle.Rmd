@@ -555,16 +555,18 @@ These values represent the absolute, the squared and the maximum norm of residua
 
 ## Appendix B
 
-We define three smooth functions for Simon Wood's test dataset
+We define five smooth functions for Simon Wood's test dataset
 $$
-f_0=5*\sin(2\pi x),~
-f_1=exp(3*x)-7
-f_2=0.5 x^{11}*(10(1 - x))^6 - 10 (10*x)^3*(1 - x)^{10},~
+f_0=5\sin(2\pi x),~
+f_1=exp(3x)-7
+f_2=0.5 x^{11}(10(1 - x))^6 - 10 (10x)^3(1 - x)^{10},~
 $$
 $$
-f_3=15 \exp(-5 |x-1/2|)-6,~
-f_4=2-1_{(x <= 1/3)}(6*x)^3 - 1_{(x >= 2/3)} (6-6*x)^3 - 
-1_{(2/3 > x > 1/3)}(8+2\sin(9*(x-1/3)\pi)).
+f_3=15 \exp(-5 |x-1/2|)-6,
+$$
+$$
+f_4=2-1_{(x <= 1/3)}(6x)^3 - 1_{(x >= 2/3)} (6-6x)^3 - 
+1_{(2/3 > x > 1/3)}(8+2\sin(9(x-1/3)\pi)).
 $$
 
 ## Appendix C
@@ -581,12 +583,19 @@ if(file.exists("./tables/TableAppendixC.csv")) {
 # {  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
 # }else 
 #   supC <- rep("missing",2)
-colnames(supC) <- c("Num", "Input format", "Maxit", "Learn. rate", "RMSE median",
-                    "RMSE d51", "MAE", "WAE")
+colnames(supC) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
+                    "d51", "MAE", "WAE")
+supC[, "Package:Algorithm"] <- paste0(Table1[supC$Num, "Package"], ":",
+                        substr(Table1[supC$Num, "Algorithm"], 5, nchar(Table1[supC$Num, "Algorithm"])))
+
+supC <- supC[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
+                    "d51", "MAE", "WAE")]
+
 kableExtra::kable(supC, format = "latex", booktabs = TRUE, 
                   centering = TRUE, 
                   caption="All convergence scores per package:algorithm") %>%
-  add_header_above(c(" ", "Input parameter"=3, "Score"=4)) %>%
+  add_header_above(c(" "=2, "Input parameter"=3, "RMSE Score"=2, "Other score"=2)) %>%
+  column_spec(2, bold = TRUE) %>%
   kable_styling(font_size=8)
 ```
 
@@ -678,7 +687,7 @@ kableExtra::kable(supC, format = "latex", booktabs = TRUE,
 
 
 
-## Appendix ??
+## Appendix E
 
 ```{r}
 library(NNbenchmark)
