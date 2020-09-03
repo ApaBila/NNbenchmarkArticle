@@ -863,6 +863,116 @@ ranked in the top 10 of the worst algorithms for minimum RMSE out of all
 \hypertarget{st-order-algorithms}{%
 \subsubsection{1st order algorithms}\label{st-order-algorithms}}
 
+Possible structure: A. ``deep'' packages 1. AMORE 2. ANN2 3. automl
+(Deep Learning with Metaheuristic) 4. deepdive 5. deepnet 6. neuralnet
+(?) 7. RSNNS (?)
+
+B. External libraries that include deep learning 8. h2o 9. keras
+
+C. Only 1 or limited number of layers, some algorithms of the packages
+were included previously in second-order algorithms - monmlp - validann
+
+D. ELMs 10. elmNNRcpp 11. ELMR
+
+These packages (11) + the ones before (15) have a total of the 26
+packages tested with 60 algorithms
+
+A. ``deep'' packages
+
+AMORE - It's a shame that the focus of the paper behind this package,
+it's unique point, is not explained or documented well enough. An
+addition of some examples using the TAO option as the error criterium
+would be helpful for using the TAO-robust learning algorithm. However,
+this type of error is most useful for data with outliers. The function
+for creating a dot file to use with \url{http://www.graphviz.org} is
+also interesting. ADAPT algorithms appear to perform better than the
+BATCH algorithms with the parameters used in this research.
+
+ANN2 - This package's implementation of adam or rmsprop is recommended
+for those who wish to use a first-order algorithm. It's not only quite
+accurate, but also quite fast. C++ code was used to enhance the speed.
+Functions for autoencoding are included with anomaly detection in mind.
+
+automl - It would be easier to use the algorithms if they did not rely
+on the beta parameters, and instead, had an argument of their own.
+However, it is nice that there are notes on what parametes have a higher
+tuning priority. Rather slow (adam - rank 50/60) with good enough
+convergence (adam - 19/60).
+
+deepdive - All algorithms are very good in terms of little variance
+between results (see its RMSEd51.score). However, the results aren't
+that good with the worst being gradientDescent which ranks 3rd from the
+bottom. Not a lot of exported functions. The novelty of this package is
+apparently from the ``deeptree'' and ``deepforest'' functions it
+provides. Although, before 2020 (the year this package appeared)
+gcForest already provided an implementation of the deep forest algorithm
+as an alternative to deep neural networks.
+
+deepnet - One of the better performing implementations of first-order
+algorithms. ``Implement some deep learning architectures and neural
+network algorithms, including BP,RBM,DBN,Deep autoencoder and so on
+(DESC)''
+
+neuralnet: Considering that this is the only package that uses 100000
+iterations as its maxit parameter (excluding BNN which is not included
+in the official ranks), it can be considered not recommended.
+Nonetheless, the default algorithm, rprop+ and its similar friend
+rprop-, managed to rank 20 and 21 respectively, out of 60 algorithms for
+minimum RMSE. These two also do not do bad in terms of speed. After, in
+order, are slr, sag, and traditional backprop as the worst at rank
+48/60. Notes on documentation show that is rather hard to configure this
+package, and should probably not be a dependency for other packages that
+wish to be more certain of the results. For simple datasets, it is less
+of an issue.
+
+RSNNS: Algortihms Rprop and SCG rank at 16 and 17 respectively which is
+pretty good for a first-order algorithm, speed is average. Next,
+Std\_Backpropagation (27), BackpropChunk (29), BackpropMomentum (30),
+BackpropWeightDecay (32), BackpropBatch (49), and Quickprop ranks the
+worst at 57/60 algorithms.
+
+B. External libraries that include deep learning
+
+h2o - Although this package's algorithm performs very well, in the last
+run ranking at 11, beating some of the second-order algorithms\ldots{}
+it is not clear what algorithm it actually uses . The large number of
+options to choose from seem capable of changing the basic algorithm
+itself into what is considered a different algorithm by other packages.
+(``adaptive\_rate: Specify whether to enable the adaptive learning rate
+(ADADELTA). This option is enabled by default.'' in link, set to false
+in latest run). Some users might not want to setup java, which is
+needed, although it is not as painful to setup as some external
+libraries.
+
+keras - adadelta was really slow \textless{} B: changed learning
+rate\ldots{} still slow \textgreater. In the last run it was the at the
+very bottom, with adagrad ranking only 2 places higher at 58/60. Perhaps
+it is the very nature of having to call to Python, then to tensorflow,
+to operate on the GPU that makes the algorithms slow. The fastest, at
+rank 37, rmsprop is also the one with the worst convergence. On the
+other hand, keras's adamax ranked number 23 for minimum RMSE, and even
+ranked 16 for median RMSE and minimum WAE score. Algorithms adam,
+adagrad, and nadam had similar performance in terms of minimum RMSE.
+However, this package is probably not recommended for less experienced
+users. For users who want to manually build models utilizing GPUs, it is
+definitely more recommended.
+
+C. Only 1 or limited number of layers, some algorithms of the packages
+were included previously in second-order algorithms - monmlp
+(Nelder-Mead) - validann (Nelder-Mead, CG, SANN)
+
+D. ELMs elmNNRcpp - Fast, but the convergence is not good. Performs
+better on some datasets than others.
+
+ELMR - Fast, but the convergence is not good. Performs terribly on the
+Gauss datasets for some reason even with twice as many neurons (which
+did improve performance for the rest of datasets). There is no tanh
+option for activation so sig was used. Also, is it appropriate for our
+research? See to the right: EnsembleBase could be a valuable tool for
+those who wish to build ensembles that include neural networks. The
+package to build neural networks, nnet, is a good one. However, the
+documentation needs to be improved to attract less experienced users.
+
 \hypertarget{untested-to-do---list}{%
 \subsubsection{Untested =\textgreater{} TO DO -
 LIST}\label{untested-to-do---list}}

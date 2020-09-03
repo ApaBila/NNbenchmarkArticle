@@ -436,7 +436,7 @@ As for the ones we tested, there were several similarities and differences.
 The packages that use \CRANpkg{nnet} for neuralnetworks are often meta packages with a host of other machine learning algorithms. \CRANpkg{caret} \citep{R-caret}, also mentioned in the taskview, boasts 238 methods with around 13 different neural network packages with somewhat deceivingly simple name of ``Classification and Regression Training''. 
 It has many pre-processing utilities available, as well as other tools. 
 
-<!-- purely alphabetically -->
+<!-- B: purely alphabetically -->
 \CRANpkg{EnsembleBase} \citep{R-EnsembleBase} maybe useful for those who wish to make ensembles and test a grid of parameters although the documentation. 
 \CRANpkg{MachineShop} \citep{R-MachineShop} has 51 algorithms, with some additional information about the response variable types in the second vignette, functions for preprocessing and tuning, performance assesment, and presentation of results. 
 \CRANpkg{radiant.model} \citep{R-radiant.model} has an unchangeable maxit of 10000 in the original package. Perhaps the author thought this was reasonable as source of the algorithm, nnet, is quite fast. 
@@ -446,22 +446,22 @@ It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE,
 The difference is probably from the change of maximum allowable weights in rminer to 10000 from 1000 in nnet, which is also probably the reason it its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
-Something worth noting is that nnet and validann do not have external normalization, and it is especially recommended for validann <!-- B: Patrice?? -->. However, some of the packages dependent on nnet do have this utility and it is included in the scoring for ease of use. With NNbenchmark, this is done through setting scale = TRUE in the function \code{prepare.ZZ}. Note that scaling might lead to complicating the constraints which is not always worth it. Regardless, users might want to have the utility and most likely want a clear explanation of the method chosen to center the variables. Scaling is one of the things that \CRANpkg{optimx} \citep{R-optimx} incorporates in an attempt to make a more useful version of optim that only allows for changing the sign of the function which might not even be considered as scaling \citep{Nash-nlpor14}.
+Something worth noting is that nnet and validann do not have external normalization, and it is especially recommended for validann <!-- B??: Patrice?? -->. However, some of the packages dependent on nnet do have this utility and it is included in the scoring for ease of use. With NNbenchmark, this is done through setting scale = TRUE in the function \code{prepare.ZZ}. Note that scaling might lead to complicating the constraints which is not always worth it. Regardless, users might want to have the utility and most likely want a clear explanation of the method chosen to center the variables. Scaling is one of the things that \CRANpkg{optimx} \citep{R-optimx} incorporates in an attempt to make a more useful version of optim that only allows for changing the sign of the function which might not even be considered as scaling \citep{Nash-nlpor14}.
 
 optimx itself still has several algorithms yet to be used by neural network packages, although it does have 45 packages dependent on it at the moment.  \CRANpkg{monmlp} \citep{R-monmlp} of all the packages, only monmlp uses optimx for its 2 algorithms: BFGS and Nelder-Mead. It's implementation of BFGS does not particularly stand out in comparison to the ones from optim. Note however, that the author, Alex J. Cannon who is also the author of CaDENCE, has once again created a package meant to fill a certain niche. This package is intended for multi-layer perceptrons with optional partial monotonicity constraints. GAM-style effect plots are also an interesting utility. Another package by Cannon is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm: nlm(),  a "Newton-type" algorithm from stats. Although it's performance is at the bottom of second order algorithms, sometimes even being beaten by first order algorithms, this could also be because of what the package is intended for. qrnn is designed for quantile regression neural networks, with several options. Cannon has included automatic scaling for all 3 of his packages.
 
-stats also includes \code{nls()}, for nonlinear least squares, which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton. However, it notes clearly in it's documentation that nls does not work on "zero-residual" or even small residual problems. One package that is clearly proposed to serve as an alternative is \CRANpkg{nslr} \citep{R-nlsr}. nlsr uses John Nash's <!-- B: John, would you prefer your paper to be cited here or ...? --> variant of the Levenberg-Marquardt algorithm. Instead of using the usual Jacobian matrix, it augments it with extra rows and the y vector with null values. Another option for the Levenberg-Marquardt algorithm is \CRANpkg{minpack.lm} \citep{minpack.lm} which uses the lmder and lmdif from C's MINPACK library with the functions C_nls_iter and nls_port_fit removed so "Gauss-Newton", "port", or "plinear" types of optimization can be avoided. However, despite the 2 packages ultimately performing well on all runs (capable of being in the top 3 for RMSE and not slow), there are some reasons why users might hesitate to choose them. 
+stats also includes \code{nls()}, for nonlinear least squares, which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton. However, it notes clearly in it's documentation that nls does not work on "zero-residual" or even small residual problems. One package that is clearly proposed to serve as an alternative is \CRANpkg{nslr} \citep{R-nlsr}. nlsr uses John Nash's <!-- B??: John, would you prefer your paper to be cited here or ...? --> variant of the Levenberg-Marquardt algorithm. Instead of using the usual Jacobian matrix, it augments it with extra rows and the y vector with null values. Another option for the Levenberg-Marquardt algorithm is \CRANpkg{minpack.lm} \citep{minpack.lm} which uses the lmder and lmdif from C's MINPACK library with the functions C_nls_iter and nls_port_fit removed so "Gauss-Newton", "port", or "plinear" types of optimization can be avoided. However, despite the 2 packages ultimately performing well on all runs (capable of being in the top 3 for RMSE and not slow), there are some reasons why users might hesitate to choose them. 
 
 First, both require the full formula of the neural network including variables and parameters. Secondly, they require good start values to achieve the best convergence. Notice that in Table 1, minpack.lm does not have a high rank. This is because we removed the random Gaussian start values we had originally used which means the default start values of minpack.lm were not appropriate for our datasets. I suspect nlsr's performance on convergence would have similarly dropped if it was possible to use nlsr with no user-set start values and the author's chosen default values were inadequate. nls deals with this by suggesting a fellow function in stats, selfStart. Last but not least, the third point is that both packages were able to find better minima when the dataset was scaled. With no start values and scaling, ::nlsLM fails on uNeuroOne but performance is better on Friedman & Ishigami. On the other hand, with no start values and no scaling, it fails on everything but mFriedman, mIshigami, uDmod2, and the Dreyfus datasets. On the other hand, there is also a notable drop in performance for nlsr without scaling on the Gauss datasets and mRef153. To conclude, both packages provide algorithms that are very capable of doing well on our datasets, but may not be suitable for less experienced users. At the very least, nlsr provides vignettes with further information that might make it easier to use, if not at least more transparent.
 
 \CRANpkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in R that does not rely on nls or nlm from stats. Unfortunately, although it has one of (if not) the best documentations of the packages tested and good speed, brnn's implementation of the Gauss-Newton algorithm still ranks below some of the previous implementations of BFGS and Levenberg-Marquardt in terms of its global minimum RMSE. We found 2 reasons that we believe to be the cause of this. First, its model has one parameter less than the other algorithms. Only datasets uDreyfus1 and uDreyfus2 which are purely 3 hidden neurons don't have the first term. Second, brnn does not minimize the sum of squares of the errors but the sum of squares of the errors plus a penalty on the parameters. In certain circumstances - especially with an almost degenerated Jacobian matrix as with mDette, mIshigami, mRef153, uGauss3, and uNeuroOne - it will prevent some parameters to get highly correlated.
 
 The only second-order algorithm which we are unable to recommended from the results of our research is \CRANpkg{snnR} \citep{R-snnR}. It's ranked in the top 10 of the worst algorithms for minimum RMSE out of all 60 algorithms. 
-<!-- B: Mentors, it appears to some extent that this packae is serious, on the other hand its performance claims otherwise. I found examples that error. It's purpose is to solve the problem of over-parameterization in neural networks for genomic selection, thus the title is Sparse Neural Networks for Genomic Selection in Animal Breeding
+<!-- B??: Mentors, it appears to some extent that this packae is serious, on the other hand its performance claims otherwise. I found examples that error. It's purpose is to solve the problem of over-parameterization in neural networks for genomic selection, thus the title is Sparse Neural Networks for Genomic Selection in Animal Breeding
  (DESC). Perhaps this is the reason why it does not perform well in the scope of our research? (References this article: https://bmcgenet.biomedcentral.com/articles/10.1186/1471-2156-12-87 ) -->
 
 
-<!-- OLD MATERIAL -> I will take a look again later and tweak the above if necessary
+<!-- OLD MATERIAL B -> I will take a look again later and tweak the above if necessary
 
 Ranked directly after are some packages that depend on nnet or use the same functions. They differ in 
 how well they decide initial parameters. rminer (rank 4), MachineShop (rank 5), and radiant.model (rank 7) 
@@ -482,7 +482,63 @@ Last but not least is \CRANpkg{brnn}'s Gauss Newton algorithm which ranks at num
 
 ### 1st order algorithms
 
-<!-- purely alpahbetically -->
+Possible structure:
+A. "deep" packages
+  1. AMORE
+  2. ANN2
+  3. automl (Deep Learning with Metaheuristic)
+  4. deepdive
+  5. deepnet
+  6. neuralnet (?)
+  7. RSNNS (?)
+
+B. External libraries that include deep learning
+  8. h2o 
+  9. keras
+
+C. Only 1 or limited number of layers, some algorithms of the packages were included previously in second-order algorithms
+  - monmlp
+  - validann
+
+D. ELMs
+  10. elmNNRcpp
+  11. ELMR
+
+These packages (11) + the ones before (15) have a total of the 26 packages tested with 60 algorithms
+
+<!-- B: otherwise purely alphabetically, per package not yet detailed to each algorithm -->
+
+A. "deep" packages
+
+AMORE - It's a shame that the focus of the paper behind this package, it's unique point, is not explained or documented well enough. An addition of some examples using the TAO option as the error criterium would be helpful for using the TAO-robust learning algorithm. However, this type of error is most useful for data with outliers. The function for creating a dot file to use with \url{http://www.graphviz.org} is also interesting. ADAPT algorithms appear to perform better than the BATCH algorithms with the parameters used in this research.
+
+ANN2 - This package's implementation of adam or rmsprop is recommended for those who wish to use a first-order algorithm. It's not only quite accurate, but also quite fast. C++ code was used to enhance the speed. Functions for autoencoding are included with anomaly detection in mind.
+
+automl - It would be easier to use the algorithms if they did not rely on the beta parameters, and instead, had an argument of their own. However, it is nice that there are notes on what parametes have a higher tuning priority. Rather slow (adam - rank 50/60) with good enough convergence (adam - 19/60).
+
+deepdive - All algorithms are very good in terms of little variance between results (see its RMSEd51.score). However, the results aren't that good with the worst being gradientDescent which ranks 3rd from the bottom. Not a lot of exported functions. The novelty of this package is apparently from the "deeptree" and "deepforest" functions it provides. Although, before 2020 (the year this package appeared) gcForest already provided an implementation of the deep forest algorithm as an alternative to deep neural networks.
+
+deepnet - One of the better performing implementations of first-order algorithms. "Implement some deep learning architectures and neural network algorithms, including BP,RBM,DBN,Deep autoencoder and so on (DESC)"
+
+neuralnet: Considering that this is the only package that uses 100000 iterations as its maxit parameter (excluding BNN which is not included in the official ranks), it can be considered not recommended. Nonetheless, the default algorithm, rprop+ and its similar friend rprop-, managed to rank 20 and 21 respectively, out of 60 algorithms for minimum RMSE. These two also do not do bad in terms of speed. After, in order, are slr, sag, and traditional backprop as the worst at rank 48/60. Notes on documentation show that is rather hard to configure this package, and should probably not be a dependency for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue.
+
+RSNNS: Algortihms Rprop and SCG rank at 16 and 17 respectively which is pretty good for a first-order algorithm, speed is average. Next, Std_Backpropagation (27), BackpropChunk (29), BackpropMomentum (30), BackpropWeightDecay (32), BackpropBatch (49), and Quickprop ranks the worst at 57/60 algorithms.
+
+B. External libraries that include deep learning
+
+h2o - Although this package's algorithm performs very well, in the last run ranking at 11, beating some of the second-order algorithms... it is not clear what algorithm it actually uses <!-- B: magic -->. The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages. ("adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). Some users might not want to setup java, which is needed, although it is not as painful to setup as some external libraries. 
+
+keras - adadelta was really slow < B: changed learning rate... still slow >. In the last run it was the at the very bottom, with adagrad ranking only 2 places higher at 58/60. Perhaps it is the very nature of having to call to Python, then to tensorflow, to operate on the GPU that makes the algorithms slow. The fastest, at rank 37, rmsprop is also the one with the worst convergence. On the other hand, keras's adamax ranked number 23 for minimum RMSE, and even ranked 16 for median RMSE and minimum WAE score. Algorithms adam, adagrad, and nadam had similar performance in terms of minimum RMSE. However, this package is probably not recommended for less experienced users. For users who want to manually build models utilizing GPUs, it is definitely more recommended.
+
+C. Only 1 or limited number of layers, some algorithms of the packages were included previously in second-order algorithms
+  - monmlp (Nelder-Mead)
+  - validann (Nelder-Mead, CG, SANN)
+
+D. ELMs
+elmNNRcpp - Fast, but the convergence is not good. Performs better on some datasets than others.
+
+ELMR - Fast, but the convergence is not good. Performs terribly on the Gauss datasets for some reason even with twice as many neurons (which did improve performance for the rest of datasets). There is no tanh option for activation so sig was used. Also, is it appropriate for our research? See to the right:
+EnsembleBase could be a valuable tool for those who wish to build ensembles that include neural networks. The package to build neural networks, nnet, is a good one. However, the documentation needs to be improved to attract less experienced users.
 
 
 
