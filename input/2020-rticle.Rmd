@@ -459,31 +459,51 @@ kableExtra::kable(Table1, format = "latex", booktabs = TRUE,
 B??: as the packages are cited quite often, is it necessary to always link to the CRAN page? What about for package::algorithms?
 -->
 
-### 2nd order algorithms
-Out of all the algorithms, the following second algorithms generally performed better in terms of convergence despite being set to a much lower number of iterations, to be precise a fifth or even less, than the first-order algorithms. 
+<!-- ### 2nd order algorithms -->
+<!-- JN??: For consistency, I'll suggest "Second" (or we can use "2nd", but throughout) -->
 
-An important finding is that 11 out of 15 of these package::algorithms use the algorithms included in \code{optim} from \CRANpkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, do so with no intermediate package. 
-However, it is not clearly stated in \CRANpkg{CaDENCE}'s documentation that optim's BFGS algorithm is used and not one of the other algorithms. 
-Furthermore, the mention of Nelder-Mead in the documentation might lead users to believe that \code{optim}'s Nelder-Mead is used instead. 
-Speed and variation between results are also not as good as other packages that use \code{optim}. 
+### Second order algorithms
+
+Of all approaches, the following second order algorithms generally performed better in terms of convergence 
+despite being limited to one fifth or fewer iterations than the first order algorithms. 
+
+<!-- JN??: "first-order" or "first order"? Another consistency choice -->
+
+We note that 11 out of 15 of these package::algorithms use \code{optim} from \CRANpkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, 
+<!-- do so with no intermediate package.  -->
+make the call directly.
+However, it is not clearly stated in \CRANpkg{CaDENCE}'s documentation that optim's BFGS method has been chosen rather
+than one of the other four methods.
+<!-- is used and not one of the other algorithms.  -->
+Furthermore, the mention of Nelder-Mead in the documentation might suggest that \code{optim}'s Nelder-Mead method is used. 
+Speed and variation between results for  \CRANpkg{CaDENCE} are also not as good as other packages that use \code{optim}. 
 This could be because \CRANpkg{CaDENCE} is intended for probabilistic nonlinear models with a full title of ``Conditional Density Estimation Network Construction and Evaluation''. 
-On the other hand, \CRANpkg{validann} is clearly a package that allows a user to use all optim's algorithms. \CRANpkg{validann}::L-BFGS-B ranks lower than \CRANpkg{validann}::BFGS in just about everything for most runs, despite the former being more sophisticated. 
-This is probably due to our efforts to harmonize parameters under-utilizing the possibilities of the L-BFGS-B algorithm. 
+
+By contrast, \CRANpkg{validann} is clearly a package that allows a user to use all optim's algorithms. (We caution users
+to avoid method SANN.) \CRANpkg{validann}::L-BFGS-B ranks mostly lower than \CRANpkg{validann}::BFGS, despite the former
+method being more sophisticated. We believe this is due to our efforts to harmonize parameters, thereby under-utilizing the possibilities of the L-BFGS-B algorithm. 
 Both \CRANpkg{CaDENCE} and validann's BFGS are outperformed by \CRANpkg{nnet}, especially in terms of speed.
 
-\CRANpkg{nnet} \citep{R-nnet} differs from the two packages because it uses the C code  from \code{optim} (converted earlier from Fortran) instead of calling optim from R. It also only implements the BFGS algorithm. 
-This could be what allows it to be faster. 
-\CRANpkg{nnet} is only beaten by the Extreme Learning Machine (ELM) algorithms in terms of speed. 
-However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \CRANpkg{validann}::BFGS. 
-Most likely, the different default values are the cause of this. 
-For instance, \CRANpkg{nnet} uses a range of initial random weights of 0.7 while \CRANpkg{validann} uses a value of 0.5. 
-In spite of these results, the real reason most authors or users are likely to choose \CRANpkg{nnet} is because it ships with base R and is even mentioned as the very first package in CRAN's task view for machine learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
+<!-- JN??: BFGS, CG and Nelder-Mead were converted with p2c from my Turbo Pascal. I am fairly sure L-BFGS-B was -->
+<!-- converted from Fortran, but the actual source that was converted appears to be one that is NOT now available. -->
 
-Our research found that 6 of the 11 packages that use optim do so through \CRANpkg{nnet}. 
-Moreover, 8 packages for neural networks, though not tested, use \CRANpkg{nnet}. 
+\CRANpkg{nnet} \citep{R-nnet} differs from the two packages above because it uses the C code for BFGS (\code{vmmin.c})
+from \code{optim} (converted earlier from Pascal) directly instead of calling optim from R. 
+This may be what allows it to be faster, but limits the optimization to the single method.
+\CRANpkg{nnet} is only beaten by the Extreme Learning Machine (ELM) algorithms in terms of speed. 
+However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \CRANpkg{validann}::BFGS. We believe the different default JN?? starting?? values are the cause of this. 
+For instance, \CRANpkg{nnet} uses a range of initial random weights of 0.7 while \CRANpkg{validann} uses a value of 0.5. 
+In spite of these results, the real reason most authors or users are likely to choose \CRANpkg{nnet} is because it is
+included in the distributed base R and is even mentioned as the very first package in CRAN's task view for machine learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
+
+Our research found that 6 of the 11 packages JN?? tested?? that use optim do so through \CRANpkg{nnet}. 
+Moreover, 8 packages not tested use it.
+<!-- Moreover, 8 packages for neural networks, though not tested, use \CRANpkg{nnet}.  -->
+<!-- JN?? Is that what you meant? -->
 The total number of \CRANpkg{nnet} dependencies found through a search through the offline database of CRAN with \CRANpkg{RWsearch} is 136 packages, although some might be using nnet for the multinomial log-linear models, not neural networks. 
-As for the ones we tested, there were several similarities and differences. 
-The packages that use \CRANpkg{nnet} for neural networks are often meta packages with a host of other machine learning algorithms. \CRANpkg{caret} \citep{R-caret}, also mentioned in the taskview, boasting 238 methods with around 13 different neural network packages, has a somewhat deceivingly simple name of ``Classification and Regression Training''. 
+<!-- For the packages we tested, there were several similarities and differences.  -->
+<!-- JN?? suggest dropping sentence as it does not add much to content. -->
+The packages that use \CRANpkg{nnet} for neural networks are often meta packages with a host of other machine learning algorithms. \CRANpkg{caret} \citep{R-caret}, also mentioned in the taskview, boasts 238 methods with 13 different neural network packages, under a deceivingly simple name of ``Classification and Regression Training''. 
 It has many pre-processing utilities available, as well as other tools. 
 
 <!-- B: purely alphabetically -->
@@ -640,7 +660,11 @@ EnsembleBase could be a valuable tool for those who wish to build ensembles that
 6. Not actually neural networks
 7. Error <!-- B?? : should tensorflow be here or in point 1? ATM, that package and some others no longer work with the latest version of TF so we judge the performance by keras in tested packages -->
 
-```{r echo=FALSE, message=FALSE}
+# ```{r echo=FALSE, message=FALSE}
+
+Following chunk has NOT been executed
+
+```
 library(kableExtra)
 options(knitr.kable.NA = '')
 
