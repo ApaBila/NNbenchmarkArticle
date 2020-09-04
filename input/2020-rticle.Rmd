@@ -509,60 +509,70 @@ It has many pre-processing utilities available, as well as other tools.
 <!-- B: purely alphabetically -->
 \CRANpkg{EnsembleBase} \citep{R-EnsembleBase} maybe useful for those who wish to make ensembles and test a grid of parameters although the documentation is rather confusing. 
 \CRANpkg{MachineShop} \citep{R-MachineShop} has 51 algorithms, with some additional information about the response variable types in the second vignette, functions for preprocessing and tuning, performance assessment, and presentation of results. 
-\CRANpkg{radiant.model} \citep{R-radiant.model} has an unchangeable maxit of 10000 in the original package. Perhaps the author thought this was reasonable as source of the algorithm, nnet, is quite fast. 
-We changed this to harmonize the parameters. 
-\CRANpkg{rminer} \citep{R-rminer} is the only package dependant on nnet that ranks above nnet at number 2 for minimum RMSE, and even number 1 in some runs. 
+\CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable maxit of 10000 in the original package. Perhaps the author thought this was reasonable as the algorithm, nnet, is quite fast. We changed this to harmonize the parameters. 
+\CRANpkg{rminer} \citep{R-rminer} is the only package dependent on nnet that ranks above nnet at number 2 for minimum RMSE, and even number 1 in some runs. 
 It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \CRANpkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
+<!-- JN?? Is RMSEd51 a reference? I would like to revisit this paragraph, as I find the expression clumsy.-->
+<!-- That is not a criticism! There is a lot of information we want to summarize in very few words. -->
 The difference is probably from the change of maximum allowable weights in rminer to 10000 from 1000 in \CRANpkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
-Something worth noting is that \CRANpkg{nnet} and \CRANpkg{validann} do not have external normalization, and it is especially recommended for validann <!-- B??: Patrice?? -->. 
-However, some of the packages dependent on nnet do have this utility and it is included in the scoring for ease of use. 
-With NNbenchmark, this is done through setting \code{scale = TRUE} in the function \code{prepare.ZZ}. Note that scaling might lead to complicating the constraints which is not always worth it. 
-Regardless, users might want to have the utility and most likely want a clear explanation of the method chosen to center the variables. 
-Scaling is one of the things that \CRANpkg{optimx} \citep{R-optimx} incorporates in an attempt to make a more useful version of optim that only allows for changing the sign of the function which might not even be considered as scaling \citep{Nash-nlpor14}.
+It is worth noting is that \CRANpkg{nnet} and \CRANpkg{validann} do not have external normalization, which is especially recommended for validann <!-- B??: Patrice?? -->. 
+However, some of the packages dependent on nnet do have this capability and it is included in the scoring for ease of use. 
+With \pkg{NNbenchmark}, this is done through setting \code{scale = TRUE} in the function \code{prepare.ZZ}. Note that 
+use of scaling may complicate the application of constraints, so not be worth the effort for some users. 
+Nevertheless, users might want scaling, or at least to have a clear explanation of the method chosen to center the variables. 
+Scaling of both function and parameters is one of the features that \CRANpkg{optimx} \citep{R-optimx} incorporates, as 
+some optimization algorithms can work significantly better on scaled problems \citep{Nash-nlpor14}.
 
-optimx itself still has several algorithms yet to be used by neural network packages, although it does have 45 packages dependent on it at the moment.  
-Of all the packages, only \CRANpkg{monmlp} \citep{R-monmlp} uses \CRANpkg{optimx} for its 2 algorithms: BFGS and Nelder-Mead. 
-It's implementation of BFGS does not particularly stand out in comparison to the ones from optim. 
-Note however, that the author, Alex J. Cannon who is also the author of \CRANpkg{CaDENCE}, has once again created a package meant to fill a certain niche. 
-This package is intended for multi-layer perceptrons with optional partial monotonicity constraints.
-GAM-style effect plots are also an interesting utility.
+<!-- optimx itself still has several algorithms yet to be used by neural network packages, although it does have 45 packages dependent on it at the moment.   -->
+Of all the packages, only \CRANpkg{monmlp} \citep{R-monmlp} call \CRANpkg{optimx}. Since the calls are for BFGS and Nelder-Mead, they could do better to call optim() directly, though the door is open to other optimization methods in
+\CRANpkg{optimx}. However, the author, Alex J. Cannon who is also the author of \CRANpkg{CaDENCE}, has created a package meant to fill a certain niche, namely for multi-layer perceptrons with optional partial monotonicity constraints.
+GAM-style effect plots are also an interesting feature.
 Another package by Cannon is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm: \code{nlm()},  a "Newton-type" algorithm, from \CRANpkg{stats}. 
-Although it's performance is at the bottom of second order algorithms, sometimes even being beaten by first order algorithms, this could also be because of what the package is intended to be used for. 
+Although it's performance is at the bottom of second order algorithms, sometimes even being beaten by first order algorithms, this could also be because of the intended use of the package compared to the tests here. 
 \CRANpkg{qrnn} is designed for quantile regression neural networks, with several options. 
-Cannon has included automatic scaling for all 3 of his packages as is clearly informed to users through documentation.
+Cannon has included automatic scaling for all 3 of his packages, as is clearly documented.
 
-stats also includes \code{nls()}, for nonlinear least squares, which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
-However, it notes clearly in it's documentation that nls does not work on "zero-residual" or even small residual problems. 
-One package that is clearly proposed to serve as an alternative is \CRANpkg{nslr} \citep{R-nlsr}. 
-nlsr uses John Nash's <!-- B??: John, would you prefer your paper to be cited here or ...? --> variant of the Levenberg-Marquardt algorithm. 
-Instead of using the usual Jacobian matrix, it augments it with extra rows and the y vector with null values.
-Another option for the Levenberg-Marquardt algorithm is \CRANpkg{minpack.lm} \citep{minpack.lm} which uses the lmder and lmdif from C's MINPACK library with the functions C_nls_iter and nls_port_fit removed so "Gauss-Newton", "port", or "plinear" types of optimization can be avoided. 
+\pkg{stats} also includes \code{nls()}, for nonlinear least squares, which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
+However, in its documentation, nls warns against "zero-residual" or even small residual problems. 
+This was one of the motivations for \CRANpkg{nslr} \citep{R-nlsr}. 
+nlsr uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain Gauss-Newton of nls(),
+and modifies the relative offset convergence criterion to avoid a zero divide when residuals are small.
+<!-- Instead of using the usual Jacobian matrix, it augments it with extra rows and the y vector with null values. -->
+<!-- Another Levenberg-Marquardt algorithm is used in \CRANpkg{minpack.lm} \citep{minpack.lm} which uses the lmder and lmdif from C's MINPACK library with the functions C_nls_iter and nls_port_fit removed so "Gauss-Newton", "port", or "plinear" types of optimization can be avoided.  -->
+\CRANpkg{minpack.lm} \citep{minpack.lm} offers another Marquardt approach. Where \CRANpkg{nlsr} is entirely in R,
+and also allows for symbolic or automatic derivatives (which are not relevant to the present study), \CRANpkg{minpack.lm}
+uses compiled Fortran and C code for some important computations. Its structure is also better adapted to use features
+already available in nls() that may be important for some uses.
+
+JN?? does minpack.lm fail on zero residuals?? Remind JN to test.
+
+<!-- JN??: Some of the above may be extra to our needs and could be dropped. -->
+
+
 However, despite the 2 packages ultimately performing well on all runs (capable of being in the top 3 for RMSE and not slow), there are some reasons why users might hesitate to choose them. 
 
 First, both require the full formula of the neural network including variables and parameters. 
-Secondly, they require good start values to achieve the best convergence. 
+Secondly, they require good starting values to achieve the best convergence. 
 Notice that in Table 1, minpack.lm does not have a high rank. 
 This is because we removed the random Gaussian start values we had originally used which means the default start values of minpack.lm were not appropriate for our datasets. 
-I suspect nlsr's performance on convergence would have similarly dropped if it was possible to use nlsr with no user-set start values and the author's chosen default values were inadequate. 
-nls deals with this by suggesting a fellow function in stats, selfStart. 
-Last but not least, the third point is that both packages were able to find better minima when the dataset was scaled. 
-With no start values and scaling, ::nlsLM fails on uNeuroOne but performance is better on Friedman & Ishigami. 
-On the other hand, with no start values and no scaling, it fails on everything but mFriedman, mIshigami, uDmod2, and the Dreyfus datasets. On the other hand, there is also a notable drop in performance for nlsr without scaling on the Gauss datasets and mRef153. 
-To conclude, both packages provide algorithms that are very capable of doing well on our datasets, but may not be suitable for less experienced users. 
-At the very least, nlsr provides vignettes with further information that might make it easier to use, if not at least more transparent.
+We suspect \CRANpkg{nlsr}'s performance on convergence would have similarly dropped if it was possible to use nlsr with no user-set starting values and the author's chosen default values were inadequate. 
+nls() deals with this by suggesting a companion function in \CRANpkg{stats}, selfStart(). 
+Finally, both packages were able to find better minima when the dataset was scaled. 
+With no starting values and no scaling, minpack.lm::nlsLM fails on uNeuroOne but performance is better on Friedman & Ishigami.
+On the other hand, with no start values and no scaling, it fails on everything but mFriedman, mIshigami, uDmod2, and the Dreyfus datasets. Similarly, there is also a notable drop in performance for \CRANpkg{nlsr} without scaling on the Gauss datasets and mRef153. 
+To conclude, both packages provide algorithms that are capable of doing well on our datasets, but may not be suitable for less experienced users. The vignetts for \CRANpkg{nlsr} and earlier book \citep{Nash-nlpor14} may be useful.
 
-\CRANpkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in R that does not rely on nls or nlm from stats. 
-Unfortunately, although it has one of (if not) the best documentations of the packages tested and good speed, brnn's implementation of the Gauss-Newton algorithm still ranks below some of the previous implementations of BFGS and Levenberg-Marquardt in terms of its global minimum RMSE. 
+\CRANpkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in R that does not rely on nls() or nlm() from \CRANpkg{stats}. Although it is well-documented and has good speed, \CRANpkg{brnn}'s implementation of the Gauss-Newton algorithm still ranks below some of the previously mentioned BFGS and Levenberg-Marquardt tools in terms of its global minimum RMSE. 
 We found 2 reasons that we believe to be the cause of this. 
-First, its model has one parameter less than the other algorithms. 
-Only datasets uDreyfus1 and uDreyfus2 which are purely 3 hidden neurons don't have the first term. <!-- B??: Patrice, do you want to include the explanation as detailed as in the emails here?-->
-Second, brnn does not minimize the sum of squares of the errors but the sum of squares of the errors plus a penalty on the parameters. 
-In certain circumstances - especially with an almost degenerated Jacobian matrix as with mDette, mIshigami, mRef153, uGauss3, and uNeuroOne - it will prevent some parameters to get highly correlated.
+First, its model uses one parameter fewer than the other algorithms. 
+Only datasets uDreyfus1 and uDreyfus2 which are purely 3 hidden neurons ignore the first term. <!-- B??: Patrice, do you want to include the explanation as detailed as in the emails here?-->
+Second, \CRANpkg{brnn} does not minimize the sum of squares of the errors but the sum of squares of the errors plus a penalty on the parameters. 
+In certain circumstances -- especially with an almost singular Jacobian matrix as with mDette, mIshigami, mRef153, uGauss3, and uNeuroOne -- this will avoid issues with highly correlated parameters.
 
 The only second-order algorithm which we are unable to recommended from the results of our research is \CRANpkg{snnR} \citep{R-snnR}. 
-It's ranked in the top 10 of the worst algorithms for minimum RMSE out of all 60 algorithms. 
+It ranked among the 10 worst algorithms for minimum RMSE out of all 60 algorithms. 
 <!-- B??: Mentors, it appears to some extent that this packae is serious, on the other hand its performance claims otherwise. I found examples that error. It's purpose is to solve the problem of over-parameterization in neural networks for genomic selection, thus the title is Sparse Neural Networks for Genomic Selection in Animal Breeding
  (DESC). Perhaps this is the reason why it does not perform well in the scope of our research? (References this article: https://bmcgenet.biomedcentral.com/articles/10.1186/1471-2156-12-87 ) -->
 
