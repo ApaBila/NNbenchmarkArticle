@@ -26,6 +26,7 @@ preamble:
     \usepackage{float}
     \usepackage{multirow}
     \usepackage{subcaption}
+    \usepackage{longtable}
     \newcommand{\atan}{\text{atan}}
     \newcommand{\invlogit}{\text{invlogit}}
 output: rticles::rjournal_article
@@ -592,7 +593,7 @@ D. ELMs
 These packages (11) + the ones before (15) have a total of the 26 packages tested with 60 algorithms
 
 <!-- B: otherwise purely alphabetically, per package not yet detailed to each algorithm -->
-<!-- B??: not sure of a good flow yet for the first order algorithms, for the 2ndorder ones it was quite easy to point out the red string that ties them together. Any suggestions? Going by order of number of algorithms ...? would be rather odd -->
+<!-- B??: not sure of a good flow yet for the first order algorithms, for the 2ndorder ones it was quite easy to point out the red string that ties them together. Any suggestions? Going by order of number of algorithms ...? would be rather odd. Or by the algorithm not packages? All adams, Nelder-Mead, etc together -->
 
 A. "deep" packages
 
@@ -638,6 +639,26 @@ EnsembleBase could be a valuable tool for those who wish to build ensembles that
 5. For tools to complement NN's by other packages
 6. Not actually neural networks
 7. Error <!-- B?? : should tensorflow be here or in point 1? ATM, that package and some others no longer work with the latest version of TF so we judge the performance by keras in tested packages -->
+
+```{r echo=FALSE, message=FALSE}
+library(kableExtra)
+options(knitr.kable.NA = '')
+
+if(file.exists("./tables/Table2.csv")) {  
+  Table2 <- read.csv("./tables/Table2.csv", sep = ";")
+  Table2 <- Table2[Table2[,3] != "", ]
+  Table2 <- Table2[,1:3]
+}
+
+colnames(Table2) <- c("Package", "Category", "Reason to Dsicard (Where)")
+
+
+
+kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
+                  caption="Review of Discarded Packages") %>%
+  kable_styling(font_size=7) %>%
+  column_spec(4, width = "10cm")
+```
 
 # Conclusion and perspective
 
