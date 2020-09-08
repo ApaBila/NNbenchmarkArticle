@@ -567,7 +567,7 @@ Although it's performance is at the bottom of second order algorithms, sometimes
 Cannon has included automatic scaling for all 3 of his packages, as is clearly documented.
 
 \pkg{stats} also includes \code{nls()}, for nonlinear least squares, which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
-However, in its documentation, nls warns against "zero-residual" or even small residual problems. 
+However, in its documentation, nls warns against "zero-residual" or even small residual problems. [@Nash-nlpor14, Section 6.4.1]
 This was one of the motivations for \CRANpkg{nslr} \citep{R-nlsr}. 
 nlsr uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain Gauss-Newton of nls(),
 and modifies the relative offset convergence criterion to avoid a zero divide when residuals are small.
@@ -578,8 +578,8 @@ and also allows for symbolic or automatic derivatives (which are not relevant to
 uses compiled Fortran and C code for some important computations. Its structure is also better adapted to use features
 already available in nls() that may be important for some uses.
 
-JN?? does minpack.lm fail on zero residuals?? Remind JN to test.
-B: No. It works on uDreyfus1. uDreyfus1 help page: "This is a combination of 3 pure tanh() functions without noise. The Jacobian matrix is singular at the target parameter values and many algorithms could fail."
+<!-- JN?? does minpack.lm fail on zero residuals?? Remind JN to test. -- see citation above.-->
+<!-- B: No. It works on uDreyfus1. uDreyfus1 help page: "This is a combination of 3 pure tanh() functions without noise. The Jacobian matrix is singular at the target parameter values and many algorithms could fail." -->
 <!-- JN??: Some of the above may be extra to our needs and could be dropped. -->
 
 
