@@ -461,6 +461,7 @@ B??: as the packages are cited quite often, is it necessary to always link to th
 
 <!-- ### 2nd order algorithms -->
 <!-- JN??: For consistency, I'll suggest "Second" (or we can use "2nd", but throughout) -->
+<!-- B: agree. Sorry I was not quite sure about a lot of the consistency issues, although I did realize we were using different versions when writing, because we haven't really ever agreed to one and used on or another so far in emails --> 
 
 ### Second order algorithms
 
@@ -468,12 +469,13 @@ Of all approaches, the following second order algorithms generally performed bet
 despite being limited to one fifth or fewer iterations than the first order algorithms. 
 
 <!-- JN??: "first-order" or "first order"? Another consistency choice -->
+<!-- B: can't seem to find a consensus on this one online. Maybe the mentors can decide which they prefer? Then I can replace the wrong ones with the chosen one-->
 
 We note that 11 out of 15 of these package::algorithms use \code{optim} from \CRANpkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, 
-<!-- do so with no intermediate package.  -->
+<!-- do so with no intermediate package.  --> <!-- B: agree -->
 make the call directly.
 However, it is not clearly stated in \CRANpkg{CaDENCE}'s documentation that optim's BFGS method has been chosen rather
-than one of the other four methods.
+than one of the other four methods. <!-- B: optim has 6 methods? with "Brent" for one dimensional problems only -->
 <!-- is used and not one of the other algorithms.  -->
 Furthermore, the mention of Nelder-Mead in the documentation might suggest that \code{optim}'s Nelder-Mead method is used. 
 Speed and variation between results for  \CRANpkg{CaDENCE} are also not as good as other packages that use \code{optim}. 
@@ -487,22 +489,33 @@ Both \CRANpkg{CaDENCE} and validann's BFGS are outperformed by \CRANpkg{nnet}, e
 <!-- JN??: BFGS, CG and Nelder-Mead were converted with p2c from my Turbo Pascal. I am fairly sure L-BFGS-B was -->
 <!-- converted from Fortran, but the actual source that was converted appears to be one that is NOT now available. -->
 
+<!-- B: in optim's documentation (@Source):
+The code for methods "Nelder-Mead", "BFGS" and "CG" was based originally on Pascal code in Nash (1990) that was translated by p2c and then hand-optimized. Dr Nash has agreed that the code can be made freely available.
+
+The code for method "L-BFGS-B" is based on Fortran code by Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib (file ‘opt/lbfgs_bcm.shar’: another version is in ‘toms/778’).
+
+The code for method "SANN" was contributed by A. Trapletti.
+--
+Do you want to include this John? Sorry if there is a mix-up between some things, please do point it out
+-->
+
+
 \CRANpkg{nnet} \citep{R-nnet} differs from the two packages above because it uses the C code for BFGS (\code{vmmin.c})
 from \code{optim} (converted earlier from Pascal) directly instead of calling optim from R. 
 This may be what allows it to be faster, but limits the optimization to the single method.
 \CRANpkg{nnet} is only beaten by the Extreme Learning Machine (ELM) algorithms in terms of speed. 
-However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \CRANpkg{validann}::BFGS. We believe the different default JN?? starting?? values are the cause of this. 
+However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \CRANpkg{validann}::BFGS. We believe the different default JN?? starting?? <!-- can add --> values are the cause of this. 
 For instance, \CRANpkg{nnet} uses a range of initial random weights of 0.7 while \CRANpkg{validann} uses a value of 0.5. 
 In spite of these results, the real reason most authors or users are likely to choose \CRANpkg{nnet} is because it is
 included in the distributed base R and is even mentioned as the very first package in CRAN's task view for machine learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
 
-Our research found that 6 of the 11 packages JN?? tested?? that use optim do so through \CRANpkg{nnet}. 
-Moreover, 8 packages not tested use it.
-<!-- Moreover, 8 packages for neural networks, though not tested, use \CRANpkg{nnet}.  -->
-<!-- JN?? Is that what you meant? -->
+Our research found that 6 of the 11 packages JN?? tested?? <!-- can add --> that use optim do so through \CRANpkg{nnet}. 
+Moreover, approximately 8 packages not tested use it.
+<!-- Moreover, approximately 8 packages for neural networks, though not tested, use \CRANpkg{nnet}.  -->
+<!-- JN?? Is that what you meant? --> <!-- B: yes. Those that were discarded -->
 The total number of \CRANpkg{nnet} dependencies found through a search through the offline database of CRAN with \CRANpkg{RWsearch} is 136 packages, although some might be using nnet for the multinomial log-linear models, not neural networks. 
 <!-- For the packages we tested, there were several similarities and differences.  -->
-<!-- JN?? suggest dropping sentence as it does not add much to content. -->
+<!-- JN?? suggest dropping sentence as it does not add much to content. --> <!-- B: agree -->
 The packages that use \CRANpkg{nnet} for neural networks are often meta packages with a host of other machine learning algorithms. \CRANpkg{caret} \citep{R-caret}, also mentioned in the taskview, boasts 238 methods with 13 different neural network packages, under a deceivingly simple name of ``Classification and Regression Training''. 
 It has many pre-processing utilities available, as well as other tools. 
 
@@ -514,6 +527,7 @@ It has many pre-processing utilities available, as well as other tools.
 It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \CRANpkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
 <!-- JN?? Is RMSEd51 a reference? I would like to revisit this paragraph, as I find the expression clumsy.-->
 <!-- That is not a criticism! There is a lot of information we want to summarize in very few words. -->
+<!-- B: from above -- (see the `RMSEd51` in Appendix C). Should this reference be added too here? -->
 The difference is probably from the change of maximum allowable weights in rminer to 10000 from 1000 in \CRANpkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
@@ -525,7 +539,7 @@ Nevertheless, users might want scaling, or at least to have a clear explanation 
 Scaling of both function and parameters is one of the features that \CRANpkg{optimx} \citep{R-optimx} incorporates, as 
 some optimization algorithms can work significantly better on scaled problems \citep{Nash-nlpor14}.
 
-<!-- optimx itself still has several algorithms yet to be used by neural network packages, although it does have 45 packages dependent on it at the moment.   -->
+<!-- optimx itself still has several algorithms yet to be used by neural network packages, although it does have 45 packages dependent on it at the moment.   --> <!-- B: why was this commented John? Should it not be suggested that authors explore other options for algorithms? -->
 Of all the packages, only \CRANpkg{monmlp} \citep{R-monmlp} call \CRANpkg{optimx}. Since the calls are for BFGS and Nelder-Mead, they could do better to call optim() directly, though the door is open to other optimization methods in
 \CRANpkg{optimx}. However, the author, Alex J. Cannon who is also the author of \CRANpkg{CaDENCE}, has created a package meant to fill a certain niche, namely for multi-layer perceptrons with optional partial monotonicity constraints.
 GAM-style effect plots are also an interesting feature.
@@ -547,7 +561,7 @@ uses compiled Fortran and C code for some important computations. Its structure 
 already available in nls() that may be important for some uses.
 
 JN?? does minpack.lm fail on zero residuals?? Remind JN to test.
-
+B: No. It works on uDreyfus1. uDreyfus1 help page: "This is a combination of 3 pure tanh() functions without noise. The Jacobian matrix is singular at the target parameter values and many algorithms could fail."
 <!-- JN??: Some of the above may be extra to our needs and could be dropped. -->
 
 
