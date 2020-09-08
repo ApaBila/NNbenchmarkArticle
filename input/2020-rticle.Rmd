@@ -247,18 +247,36 @@ the three datasets:
 - \url{http://www.sfu.ca/~ssurjano/detpep10curv.html} (Dette - medium)  
 - \url{http://www.sfu.ca/~ssurjano/ishigami.html}     (Ishigami - high)  
 
-The other multivariate dataset, Ref153, was taken from ... ??JN: Need this. Bila?
-
+The other multivariate dataset, Ref153, was used to teach neural networks at ESPCI from 2003 to 2013 and is available in the software Neuro One at \url{http://www.inmodelia.com/software.html} <!-- ??JN: Need this. Bila? -->
 
 Three of the univariate datasets we used were taken from a website of the US National Institute
 for Standards and Technology (NIST):
 https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml. (Gauss1 - low; Gauss2 - low; Gauss3 - average)
 
-Univariate datasets Dmod1, Dmod2 are from ... ??JN: Need this. Bila?
+Univariate datasets Dmod1, Dmod2 are  ... <!-- ??JN: Need this. Bila? -->
+<!-- B??: Patrice only this is available in the docs of uDmod1 - "An univariate dataset (x, y) of class data.frame and dim 51 x 2 to be fitted by a neural network with 6 hidden neurons (19 parameters). The parameters are highly correlated and singular Jacobian matrices often appear. A difficult dataset." -->
 
 Dreyfus1 is a pure neural network which has no error. This can make it difficult for algorithms 
-that assume an error exists. Dreyfus2 is Dreyfus1 with errors.
-NeuroOne  from ...  
+that assume an error exists. Dreyfus2 is Dreyfus1 with errors. Both are considered to be of low difficulty and usually appeared in the first slides when used to teach neural networks at ESPCI from 1991 to 2013 (\url{https://www.neurones.espci.fr/})
+
+The last univariate dataset, NeuroOne,  was also used to teach the same course and is now available in the software Neuro One. <!-- B??: repeat the link? add to above? -->   
+
+<!-- B: should we also add that further information is in the docs? and/or
+> NNbenchmark::NNdataSummary(NNbenchmark::NNdatasets)
+     Dataset n_rows n_inputs n_neurons n_parameters
+1     mDette    500        3         5           26
+2  mFriedman    500        5         5           36
+3  mIshigami    500        3        10           51
+4    mRef153    153        5         3           22
+5     uDmod1     51        1         6           19
+6     uDmod2     51        1         5           16
+7  uDreyfus1     51        1         3           10
+8  uDreyfus2     51        1         3           10
+9    uGauss1    250        1         5           16
+10   uGauss2    250        1         4           13
+11   uGauss3    250        1         4           13
+12 uNeuroOne     51        1         2            7
+-->
 
 Finally, we also consider a Simon Wood test dataset, used in 
 \citep{wood2011fast} for benchmarking generalized additive models. 
