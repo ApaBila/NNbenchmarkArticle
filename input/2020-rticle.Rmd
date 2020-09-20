@@ -630,7 +630,7 @@ B. "deep" packages
     8.  neuralnet
     9.  RSNNS
     10. h2o 
-    12. keras
+    11. keras
 
 These packages (11) + the ones before (15) have a total of the 26 packages tested with 60 algorithms
 
@@ -668,25 +668,70 @@ Even increasing the amount of neurons did not lead to better convergence for tho
 
 B. More than one hidden layer
 
-AMORE - It's a shame that the focus of the paper behind this package, it's unique point, is not explained or documented well enough. An addition of some examples using the TAO option as the error criterium would be helpful for using the TAO-robust learning algorithm. However, this type of error is most useful for data with outliers. The function for creating a dot file to use with \url{http://www.graphviz.org} is also interesting. ADAPT algorithms appear to perform better than the BATCH algorithms with the parameters used in this research.
+Following the trend of "deep learning", the last 9 packages provide the option for more than one layer with a first order learning algorithm.
+Our results show that they are often either/both slower or worse at converging than the second order algorithms with the same amount of neurons or layers than their counterparts.
+We recommend choosing better algorithms over more layers for datasets similar to the ones we used.
 
-ANN2 - This package's implementation of adam or rmsprop is recommended for those who wish to use a first-order algorithm. It's not only quite accurate, but also quite fast. C++ code was used to enhance the speed. Functions for autoencoding are included with anomaly detection in mind.
+Choosing more layers often comes at the expense of speed. 
+An example of this is the implementation of the first order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
+With the same numbers of neurons it already is quite slow - coming in at 51 out of the 60 algorithms. 
+With the default hidden layer sizes of 2 layers, each with 200 neurons, it takes around 10 minutes on mFriedman with a minimum RMSE of 0.0022.
+On the other hand, \CRANpkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less than a second with less neurons and only one layer.
+Thus, despite having a ranking of 11 in minmum RMSE in the final run, beating some of the second order algorithms, users should be wary of the trade off.
+Moreover, users might hesitate as it is not actually clear what algorithm is used <!-- B: magic -->.
+The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
+Some users also might not want to setup Java, which is needed, although it is not as painful to setup as some external libraries.
 
-automl - It would be easier to use the algorithms if they did not rely on the beta parameters, and instead, had an argument of their own. However, it is nice that there are notes on what parametes have a higher tuning priority. Rather slow (adam - rank 50/60) with good enough convergence (adam - 19/60).
+By far, the hardest package to setup which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives.
+In the  summer of 2019, it took quite some time to figure out how things worked.
+Then the latest TensorFlow 2.2.0 became available and we hoped to be able to use the Eager Execution provided to avoid the R Session crashing in the summer of 2020.
+Unfortunately, this led to different problems with the translation between R and Python so we could not use the 2019 code.
+\CRANpkg{tfestimators} \citep{R-tfestimators} also had similar issues and is even less supported.
+\CRANpkg{kerasR} \citep{R-kerasR}, which provides a consistent interface to Keras, a Python API which provides an easier use interface to TensorFlow, had the same issue.
+In the end, we tested the algorithms in \CRANpkg{keras} \citep{R-keras} with the hope that it would be able to represent the performance of the other packages.
+\CRANpkg{keras} has the second amount of most algorithms, a total of 7, with most of them being "adaptive" algorithms.
+The highest ranking algorithm for minimum RMSE is adamax at 23 and the highest ranking algorithm for speed was rmsprop at 37 (quite slow). 
+However, these results were achieved with a reasonable GPU so users might want to decide on whether to use \CRANpkg{keras} based on their own hardware specifications.
+Other algorithms did not perform well in terms of minimum RMSE and the spread of RMSE represented by RMSEd51.
+As \CRANpkg{keras} also has many options available, including a convolutional layer for CNNs, more experienced users may prefer it.
+On the other hand, just deciding the learning rate (the default was not appropriate for our datasets) can be a challenge.
 
-deepdive - All algorithms are very good in terms of little variance between results (see its RMSEd51.score). However, the results aren't that good with the worst being gradientDescent which ranks 3rd from the bottom. Not a lot of exported functions. The novelty of this package is apparently from the "deeptree" and "deepforest" functions it provides. Although, before 2020 (the year this package appeared) gcForest already provided an implementation of the deep forest algorithm as an alternative to deep neural networks.
+The default learning rates in \CRANpkg{RSNNS} \citep{R-RSNNS} were more appropriate to use directly.
+<!-- B: but I wouldn't go as far as to support their claim in the docs that "The defaults that are set for initialization and update functions usually don't have to be changed." -->
+\CRANpkg{RSNNS}  is an example of a package that directly wraps around an external library, the Stuttgart Neural Network Simulator (SNNS), to provide an easy to use interface. 
+This library is rather large with many implementations of neural networks.
+It contains the biggest number of algorithms tested at a total of 8.
+Algorithms Rprop and SCG, the best for minimum RMSE, rank at 16 and 17 respectively which is pretty good for a first order algorithm. 
+Speed for Rprop is better but SCG's results vary less. 
 
-deepnet - One of the better performing implementations of first-order algorithms. "Implement some deep learning architectures and neural network algorithms, including BP,RBM,DBN,Deep autoencoder and so on (DESC)"
+<!-- B: the rest that don't use a particularly well known external library I list alphabetically below, what do you think? -->
 
-neuralnet: Considering that this is the only package that uses 100000 iterations as its maxit parameter (excluding BNN which is not included in the official ranks), it can be considered not recommended. Nonetheless, the default algorithm, rprop+ and its similar friend rprop-, managed to rank 20 and 21 respectively, out of 60 algorithms for minimum RMSE. These two also do not do bad in terms of speed. After, in order, are slr, sag, and traditional backprop as the worst at rank 48/60. Notes on documentation show that is rather hard to configure this package, and should probably not be a dependency for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue.
+\CRANpkg{AMORE} \citep{R-AMORE}: It's a shame that the focus of the paper behind this package, it's unique point, is not explained or documented well enough. 
+An addition of some examples using the TAO option as the error criterium would be helpful for using the TAO-robust learning algorithm. 
+Note, this type of error is most useful for data with outliers. 
+The function for creating a dot file to use with \url{http://www.graphviz.org} is also interesting. ADAPT algorithms appear to perform better than the BATCH algorithms with the parameters used in this research.
 
-RSNNS: Algortihms Rprop and SCG rank at 16 and 17 respectively which is pretty good for a first-order algorithm, speed is average. Next, Std_Backpropagation (27), BackpropChunk (29), BackpropMomentum (30), BackpropWeightDecay (32), BackpropBatch (49), and Quickprop ranks the worst at 57/60 algorithms.
+\CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or rmsprop consistently ranked in the top half for minimum RMSE which is not bad for a first order algorithm. 
+It's not as accurate as second order algorithms but all its algorithms are quite fast. 
+C++ code was used to enhance the speed. 
+Functions for autoencoding are included with anomaly detection in mind.
 
-B. External libraries that include deep learning (rather well known) <!-- B?? should RSNNS be included below... -->
+\CRANpkg{automl} \citep{R-automl}: It would be easier to use the algorithms if they did not rely on the beta parameters, and instead, had an argument of their own. 
+However, it is nice that there are notes on what parametes have a higher tuning priority. 
+Rather slow (highest ranking algorithm for speed is RMSprop at 47) with good enough convergence (highest ranking is adam  at 18).
 
-h2o - Although this package's algorithm performs very well, in the last run ranking at 11, beating some of the second-order algorithms... it is not clear what algorithm it actually uses <!-- B: magic -->. The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages. ("adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). Some users might not want to setup java, which is needed, although it is not as painful to setup as some external libraries. 
+\CRANpkg{deepdive} \citep{R-deepdive}: All algorithms are very good in terms of little variance between results (see its RMSEd51.score). 
+However, the results on convergence by minimum RMSE score aren't that good with the worst being gradientDescent which ranks 3rd from the bottom. 
+Not a lot of exported functions. 
+The novelty of this package is apparently from the "deeptree" and "deepforest" functions it provides. 
+<!-- B: Although, before 2020 (the year this package appeared) gcForest already provided an implementation of the deep forest algorithm as an alternative to deep neural networks. -->
 
-keras - adadelta was really slow < B: changed learning rate... still slow >. In the last run it was the at the very bottom, with adagrad ranking only 2 places higher at 58/60. Perhaps it is the very nature of having to call to Python, then to tensorflow, to operate on the GPU that makes the algorithms slow. The fastest, at rank 37, rmsprop is also the one with the worst convergence. On the other hand, keras's adamax ranked number 23 for minimum RMSE, and even ranked 16 for median RMSE and minimum WAE score. Algorithms adam, adagrad, and nadam had similar performance in terms of minimum RMSE. However, this package is probably not recommended for less experienced users. For users who want to manually build models utilizing GPUs, it is definitely more recommended.
+\CRANpkg{deepnet} \citep{R-deepnet}: One of the better performing implementations of the first order algorithms backpropagation, ranking at 18 for minimum RMSE. It's also relatively fast, ranking at 23 for speed.
+
+\CRANpkg{neuralnet} \citep{R-neuralnet}: Considering that this is the only package that uses 100000 iterations as its maxit parameter (excluding BNN which is not included in the official ranks), it can be considered as not recommended. 
+Nonetheless, the default algorithm, rprop+ and the similar rprop-, managed to rank 20 and 21 respectively, out of 60 algorithms for minimum RMSE. 
+These two also do not do bad in terms of speed. 
+After, in order, are slr, sag, and traditional backprop as the worst at rank 48 out of 60 for minimum RMSE. Notes on documentation show that is rather hard to configure this package, and should probably not be a dependency for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue.
 
 
 ### Untested => TO DO - LIST
