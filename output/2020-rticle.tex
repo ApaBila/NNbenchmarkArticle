@@ -1040,9 +1040,8 @@ should probably not be a dependency for other packages that wish to be
 more certain of the results. For simple datasets, it is less of an
 issue.
 
-\hypertarget{untested-to-do---list}{%
-\subsubsection{Untested =\textgreater{} TO DO -
-LIST}\label{untested-to-do---list}}
+\hypertarget{untested}{%
+\subsubsection{Untested}\label{untested}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1063,31 +1062,96 @@ LIST}\label{untested-to-do---list}}
   Error 
 \end{enumerate}
 
-\hypertarget{r-echofalse-messagefalse}{%
-\section{```\{r echo=FALSE,
-message=FALSE\}}\label{r-echofalse-messagefalse}}
+\begin{Schunk}
+\begingroup\fontsize{7}{9}\selectfont
 
-Following chunk has NOT been executed
+\begin{longtable}[t]{ll>{\raggedright\arraybackslash}p{10cm}}
+\caption{\label{tab:unnamed-chunk-3}Review of Discarded Packages}\\
+\toprule
+Package & Category & Reason to Dsicard (Where)\\
+\midrule
+appnn & AP & This package provides a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESC)\\
+autoencoder & AP & This package provides a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
+BNN & RE* & This package uses a feed forward neural network to perform regression as provided in the examples, however, it is unclear whether it fits the form of perceptron that is the scope of our research. Moreover, it states that it is intended for variable selection. Although how exactly the package would be used to do so isn't accessible in the package, especially considering the source code is based on .c code that users of R might not understand. It's performance is slow, which may have to do with the 100.000 iterations it needs, although quite accurate for simple datasets. (::BNNsel-examples \& abstract of paper)\\
+Buddle & CL & This package did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)\\
+cld2 & XX & This package provides bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESC \& link to github)\\
+\addlinespace
+cld3 & AP & Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESC)\\
+condmixt & AP & This package uses neural networks to predict parameters of mixture models (DESC)\\
+DamiaNN & RE & This package was designed specificly for training datasets from Numerai, <https://numer.ai/>. We were unable to adapt it to our datasets even after exporting functions from the interactive interface (DESC, help pages)\\
+deep & CL & This package seems to implement a perceptron to classify data (implicitly known from choice of iris as example \& in source code: output = function(inputs) \{
+            as.integer(sum(ws*inputs) - bias > 0)
+        \},)\\
+deepNN & RE & This package is another implementation of deep learning. Its input format of lists of vectors is not standard require users to understand how to use lapply or other functions to convert the format of their data. Univariate datasets can't be used with the functions and we could not manage to adapt it to 2020 code so this package is not in the final loop (::train)\\
+\addlinespace
+DNMF & XX & This package helps extract features that enforce spatial locality with separability between classes in a discriminant manner (DESC)\\
+evclass & CL & This package provides an evidential neural network that outputs Dempster-Shafer mass functions (DESC)\\
+gamlss.add & UT & This package allows users to use nnet with a variety of Generalized Additive Models for Location Scale and Shape (::nn). It is not particularly appropriate for all our datasets.\\
+gcForest & XX & Based on an article with "Towards an Alternative to Deep Neural Networks" in it title (DESC)\\
+GMDH & TS & This package provides GMDH type neural network algorithms for short term forecasting on a univariate time series (DESC)\\
+\addlinespace
+GMDH2 & CL & This package provides GMDH type neural network algorithms for performing binary classification (DESC)\\
+GMDHreg & RE* & Regression using GMDH algorithms (Title in DESC). We only managed to tested the COMBI algorithm (the most basic and first in the vignette) on the multivariate datasets (it only works for multivariate datasets). It is strangely slow on the "easy" datasets, mFriedman and mRef153. The convergence is relatively not good considering the ammount of layers.\\
+gnn & AP & "Generative moment matching networks (GMMNs) are introduced for generating quasi-random samples from multivariate models with any underlying copula in order to compute estimates under variance reduction." (article abstract)\\
+grnn & RE & This package provides an implementation of Specht's General Regression Neural Network in 1991 (DESC). We could not manage to make the functions work on the multivariate datasets. ::guess, the function for predicting, only allows for 1 data at a time. Performance of General Regression Neural Networks can be seen from package yager instead.\\
+hybridEnsemble & RE & Hybrid ensemble of eight different sub-ensembles (DESC)\\
+\addlinespace
+image.libfacedetection & AP & Face detection with CNNs (DESC)\\
+isingLenzMC & AP & "This package provides utilities to simulate one dimensional Ising Model with Metropolis and Glauber Monte Carlo with single flip dynamics in periodic boundary conditions" (DESC)\\
+kerasR & RE & See section on keras\\
+leabRa & RE & This package provides the local error driven and associative biologically realistic algorithm (Leabra) from O'Reilly 1996. However, since it combines supervised and unsupervised learning, it did not fit the scope of our research (DESC)\\
+learNN & CL & This package implements some basic neural networks from \textbackslash{}url\{http://qua.st/\} (DESC). It's examples seem to point to binary classification (::learn\_gd, ::learn\_bp)\\
+\addlinespace
+LilRhino & AP & This package provides binary neural networks meant for reducing data (DESC), a random forest style collection of neural networks for classification (::Random\_Brains), and code for even more purposes. Documentation is satisfyingly clear for a package for applications: a 3 layer network with an adam optimizer, with an explanation of its activation functions (::Binary\_Network). Unfortunately, the packages it chooses for neural networks are not ones we would recommend for regression. However, they may prove to be a good choice for classification in the future (???)\\
+neural & CL & An implementation of "a simple MLP neural network that is suitable for classification tasks" (::mlptrain)\\
+NeuralNetTools & UT & "Functions are available for plotting, quantifying variable importance (Garson's algorithm), conducting a sensitivity analysis (Lek's profile), and obtaining a simple list of model weights" (DESC - (Help Pages titles))\\
+NeuralSens & UT & A greater focus on sensitivity, with additional functions\\
+NlinTS & TS & A non-linear version of a causality test with feed forward neural networks and a Vector Auto-Regressive Neural Network (VARNN) among some other tools for non-linear time series analysis models and causality detection (DESC)\\
+\addlinespace
+nnetpredint & UT & "Computing prediction intervals of neural network models (e.g.backpropagation) at certain confidence level" (DESC)\\
+nnfor & TS & Automatic to fully manual time series modelling with neural networks (DESC)\\
+nnlib2Rcpp & CL & This package provides a collection of neural networks. However, the examples seem to indicate classification and testing our code with the functions provided led to error. It uses the RcppClass which might be confusing for less experienced R users (::NN-class)\\
+nntrf & AP & Provides useful pre-processing for Machine Learning tasks through data transformation in a non-linear, supervised way with a perceptron (DESC)\\
+onnx & UT & Aims to provide an open source format for neural networks, with definitions of an extensible computation graph model, built-in operators, and standard data types (DESC)\\
+\addlinespace
+OptimClassifier & UT & This package searches for the best amount of neurons for binary classifcation neural networks, among other types of binary classifiers (based on how Optim.NN works \& DESC)\\
+OSTSC & UT & A tool to solve imbalanced data for univariate time series classification with oversampling using integrated ESPO and ADASYN methods (DESC) thus improving the performance of RNN classifiers (vignette)\\
+passt & AP & This package provides implementation of the Probability Associator Time (PASS-T) model, a memory model based on a simple competitive artificial neural network which imitates human judgment of frequency and duration (DESC)\\
+pnn & CL & This package provides implementation of the Specht algorithm, 1990, for classification with four functions: learn, smooth, perf, and guess (DESC)\\
+polyreg & XX & Polyregression as alternative to NN (DESC)\\
+\addlinespace
+predictoR & RE & A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESC \& ::init\_predictor)\\
+ProcData & AP & ProcData provides tools for exploratory process data analysis via functions for "reading responses from a csv file, process manipulation, action sequence generators, feature extraction methods fitting, and making prediction from sequence models" (recurrent neural networks). An example dataset is provided. (link + DESC)\\
+quarrint & AP & This package provides two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network. specified classifier for quarry data. Given the conditions of the area, the neural network gives probabilities for the classes of interaction - low, medium, high, and very high (help page - quarrint-package and DESC)\\
+rasclass & CL & This package provides neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESC)\\
+rcane & RE & This package only provides parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESC)\\
+\addlinespace
+regressoR & RE & A manual rich version of predictoR.\\
+rnn & AP & Implementations of the vanilla Recurrent Neural Network, Long Short-Term Memory (LSTM), and Gated Recurrent Unit (GRU) in native R (DESC)\\
+RTextTools & AP & "A machine learning package for automatic text classification that makes it simple for novice users to get started with machine learning, while allowing experienced users to easily experiment with different settings and algorithm combinations." (DESC)\\
+ruta & AP & unsupervised neural networks (DESC)\\
+simpleNeural & CL & Neural networks for multi-class or binary classification (DESC)\\
+\addlinespace
+softmaxreg & CL & "Implementation of 'softmax' regression and classification models with multiple layer neural network" (DESC)\\
+Sojourn.Data & AP & Stores some neural networks used for Sojourn Accelerometer methods (DESC)\\
+spnn & CL & "Scale invariant version of the original PNN proposed by Specht (1990) with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set." (DESC)\\
+studyStrap & AP & "Implements multi-study learning algorithms such as merging, the study-specific ensemble (trained-on-observed-studies ensemble) the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret." (DESC)\\
+TeachNet & CL & This package provides neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification. However it is slow. (DESC \& ::TeachNet => more for learning)\\
+\addlinespace
+tensorflow & RE & See section on keras\\
+tfestimators & RE & See section on keras\\
+trackdem & AP & An artificial neural network can be trained for filtering false positives present (due to e.g. debris, air bubbles, or reflection) in video materials or image sequences\\
+TrafficBDE & RE* & It uses caret for a grid of parameters for 3 layers combined with neuralnet. Very slow. As we only sought to test one layer perceptrons, this package was not included. We recommend the author to use other packages and lessen the number of layers if the datasets that are normally used in Traffic Status Prediction in Urban Places are similar in nature to the ones used in this research (TrainCR.R, DESC)\\
+tsfgrnn & TS & "A general regression neural network (GRNN) is a variant of a Radial Basis Function Network characterized by a fast single-pass learning. 'tsfgrnn' allows you to forecast time series using a GRNN model" that is autoregressive (DESC)\\
+\addlinespace
+yager & RE* & This package provides a neural network that behaves differently from a perceptron. Results indicate that predictions are quite close to the real values, however this comes at the cost of a large number of weights. With less weights or insufficient training data, the performance isn't as great. (::grnn.fit)\\
+yap & CL & Yet another PNN, with a N-level response, where N > 2 (DESC)\\
+zFactor & AP & Computational algorithms to solve equations and find the 'compressibility' factor `z` of hydrocarbon gases (DESC)\\
+\bottomrule
+\end{longtable}
+\endgroup{}
 
-\begin{verbatim}
-library(kableExtra)
-options(knitr.kable.NA = '')
-
-if(file.exists("./tables/Table2.csv")) {  
-  Table2 <- read.csv("./tables/Table2.csv", sep = ";")
-  Table2 <- Table2[Table2[,3] != "", ]
-  Table2 <- Table2[,1:3]
-}
-
-colnames(Table2) <- c("Package", "Category", "Reason to Dsicard (Where)")
-
-
-
-kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
-                  caption="Review of Discarded Packages") %>%
-  kable_styling(font_size=7) %>%
-  column_spec(4, width = "10cm")
-\end{verbatim}
+\end{Schunk}
 
 \hypertarget{conclusion-and-perspective}{%
 \section{Conclusion and perspective}\label{conclusion-and-perspective}}
@@ -1204,7 +1268,7 @@ f_4=2-1_{(x <= 1/3)}(6x)^3 - 1_{(x >= 2/3)} (6-6x)^3 -
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-3}All convergence scores per package:algorithm}
+\caption{\label{tab:unnamed-chunk-4}All convergence scores per package:algorithm}
 \centering
 \fontsize{8}{10}\selectfont
 \begin{tabular}[t]{r>{\bfseries}llllrrrr}
@@ -1408,8 +1472,8 @@ res <- trainPredict_1pkg(4:5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
   csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
 \end{Sinput}
 
-\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-4-1} 
-\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-4-2} \end{Schunk}
+\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-5-1} 
+\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-5-2} \end{Schunk}
 
 
 \address{%

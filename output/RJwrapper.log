@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.1)  20 SEP 2020 16:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.1)  21 SEP 2020 12:58
 entering extended mode
 **./RJwrapper.tex
 (RJwrapper.tex
@@ -1056,19 +1056,19 @@ d [][]$\T1/zi4/m/n/10 https : / / github . com / pkR -[] pkR / NNbenchmark$[][]
 ]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 111.
-<RN3a2.png, id=119, 87.4467pt x 119.2455pt>
+<RN3a2.png, id=115, 87.4467pt x 119.2455pt>
 File: RN3a2.png Graphic file (type png)
 <use RN3a2.png>
 Package pdftex.def Info: RN3a2.png  used on input line 158.
 (pdftex.def)             Requested size: 96.39967pt x 131.45428pt.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <8> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 159.
-<RN3b2.png, id=121, 90.3375pt x 119.2455pt>
+<RN3b2.png, id=117, 90.3375pt x 119.2455pt>
 File: RN3b2.png Graphic file (type png)
 <use RN3b2.png>
 Package pdftex.def Info: RN3b2.png  used on input line 164.
 (pdftex.def)             Requested size: 99.58464pt x 131.45247pt.
-<RN3c2.png, id=122, 143.0946pt x 119.2455pt>
+<RN3c2.png, id=118, 143.0946pt x 119.2455pt>
 File: RN3c2.png Graphic file (type png)
 <use RN3c2.png>
 Package pdftex.def Info: RN3c2.png  used on input line 170.
@@ -1099,112 +1099,119 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <7> not available
 
 LaTeX Warning: Float too large for page by 6.98572pt on input line 706.
 
-[7] [8] [9] [10] [11] [12]
-LaTeX Font Info:    Try loading font information for TS1+zi4 on input line 1090
-.
-("C:\Program Files\MiKTeX 2.9\tex/latex/inconsolata\ts1zi4.fd"
-File: ts1zi4.fd 2018/01/14 TS1/zi4 (Inconsolata)
-)
-LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
-(Font)              scaled to size 10.20004pt on input line 1090.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `zi4' (encoding: TS1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-[13] (RJwrapper.bbl (RJwrapper.brf)
+[7] [8] [9] [10] [11]
+Overfull \hbox (20.19458pt too wide) in alignment at lines 1068--1096
+ [] [] [] 
+ []
+
+
+Overfull \hbox (20.19458pt too wide) in alignment at lines 1096--1120
+ [] [] [] 
+ []
+
+[12]
+Overfull \hbox (20.19458pt too wide) in alignment at lines 1120--1144
+ [] [] [] 
+ []
+
+[13]
+Overfull \hbox (20.19458pt too wide) in alignment at lines 1144--1151
+ [] [] [] 
+ []
+
+[14] [15] (RJwrapper.bbl (RJwrapper.brf)
 \tf@brf=\write6
 \openout6 = `RJwrapper.brf'.
 
-[14] [15])
-Overfull \hbox (50.09926pt too wide) in paragraph at lines 1210--1289
+[16] [17])
+Overfull \hbox (50.09926pt too wide) in paragraph at lines 1274--1353
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 3.48279pt on input line 1289.
+LaTeX Warning: Float too large for page by 3.48279pt on input line 1353.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 9.18004pt on input line 1384.
+(Font)              scaled to size 9.18004pt on input line 1448.
 Package microtype Info: Character `textendash ' is missing
 (microtype)             in font `T1/zi4/m/n/9'.
 (microtype)             Ignoring protrusion settings for this character.
 Package microtype Info: Character `textemdash ' is missing
 (microtype)             in font `T1/zi4/m/n/9'.
 (microtype)             Ignoring protrusion settings for this character.
-[16] [17] [18]
-<2020-rticle_files/figure-latex/unnamed-chunk-4-1.pdf, id=579, 469.755pt x 325.
+[18] [19]
+<2020-rticle_files/figure-latex/unnamed-chunk-5-1.pdf, id=578, 469.755pt x 325.
 215pt>
-File: 2020-rticle_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type p
+File: 2020-rticle_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type p
 df)
-<use 2020-rticle_files/figure-latex/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: 2020-rticle_files/figure-latex/unnamed-chunk-4-1.pdf  
-used on input line 1411.
+<use 2020-rticle_files/figure-latex/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: 2020-rticle_files/figure-latex/unnamed-chunk-5-1.pdf  
+used on input line 1475.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<2020-rticle_files/figure-latex/unnamed-chunk-4-2.pdf, id=580, 469.755pt x 325.
+<2020-rticle_files/figure-latex/unnamed-chunk-5-2.pdf, id=579, 469.755pt x 325.
 215pt>
-File: 2020-rticle_files/figure-latex/unnamed-chunk-4-2.pdf Graphic file (type p
+File: 2020-rticle_files/figure-latex/unnamed-chunk-5-2.pdf Graphic file (type p
 df)
-<use 2020-rticle_files/figure-latex/unnamed-chunk-4-2.pdf>
-Package pdftex.def Info: 2020-rticle_files/figure-latex/unnamed-chunk-4-2.pdf  
-used on input line 1412.
+<use 2020-rticle_files/figure-latex/unnamed-chunk-5-2.pdf>
+Package pdftex.def Info: 2020-rticle_files/figure-latex/unnamed-chunk-5-2.pdf  
+used on input line 1476.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (86.41528pt too wide) in paragraph at lines 1411--1413
+Overfull \hbox (86.41528pt too wide) in paragraph at lines 1475--1477
 [][]
  []
 
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 1411--1413
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 1475--1477
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1411--1413
+Underfull \hbox (badness 10000) in paragraph at lines 1475--1477
 
  []
 
-[19 <./2020-rticle_files/figure-latex/unnamed-chunk-4-1.pdf> <./2020-rticle_fil
-es/figure-latex/unnamed-chunk-4-2.pdf>]) [20]
+[20] [21 <./2020-rticle_files/figure-latex/unnamed-chunk-5-1.pdf> <./2020-rticl
+e_files/figure-latex/unnamed-chunk-5-2.pdf>]) [22]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
 (RJwrapper.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
-(rerunfilecheck)             Checksum: B2E1269073447A988E6C1C06152BF145;1835.
+(rerunfilecheck)             Checksum: 759043CBDC7E64EE11FDB009F3D579C7;1748.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
 (rerunfilecheck)             Checksum: D30F80AE4E7E5E45F3F80E354B0F699E;2044.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 26.
  ) 
 Here is how much of TeX's memory you used:
- 23017 strings out of 492945
- 410700 string characters out of 3135497
- 556934 words of memory out of 3000000
- 26062 multiletter control sequences out of 15000+200000
- 65472 words of font info for 263 fonts, out of 3000000 for 9000
+ 22999 strings out of 492945
+ 410295 string characters out of 3135497
+ 556939 words of memory out of 3000000
+ 26047 multiletter control sequences out of 15000+200000
+ 65183 words of font info for 262 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,12n,94p,434b,719s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 62i,12n,94p,671b,715s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-ts1.enc}{C:/Program
- Files/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{C:/Program Files/MiK
-TeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/inconsolata/Inconsolata-zi4r.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmr.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmri.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/p
-alatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (20 pages, 412663 bytes).
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{C:/Progra
+m Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/inconsolata/Inconsolata-zi4r.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmr.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmri.pfb><C:/Pro
+gram Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/urw/palatino/uplri8a.pfb>
+Output written on RJwrapper.pdf (22 pages, 419189 bytes).
 PDF statistics:
- 678 PDF objects out of 1000 (max. 8388607)
- 162 named destinations out of 1000 (max. 500000)
- 41702 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 680 PDF objects out of 1000 (max. 8388607)
+ 163 named destinations out of 1000 (max. 500000)
+ 41182 words of extra memory for PDF output out of 42996 (max. 10000000)
 
