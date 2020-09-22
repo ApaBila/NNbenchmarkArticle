@@ -753,11 +753,11 @@ library(kableExtra)
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table2.csv")) {  
-  Table2 <- read.csv("./tables/Table2.csv", sep = ";")
+#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
+  Table2 <- read.csv("./tables/Table2-UTF8.csv")
   Table2 <- Table2[Table2[,3] != "", ]
   Table2 <- Table2[,1:3]
 }
-
 colnames(Table2) <- c("Package", "Category", "Reason to Dsicard (Where)")
 
 
