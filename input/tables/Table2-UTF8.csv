@@ -1,4 +1,4 @@
-"","Package","Category","Reason to Dsicard (Where)"
+"","Package","Category","Reason to Discard (Where)"
 "1","appnn","AP","This package provides a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESC)"
 "2","autoencoder","AP","This package provides a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)"
 "3","BNN","RE*","This package uses a feed forward neural network to perform regression as provided in the examples, however, it is unclear whether it fits the form of perceptron that is the scope of our research. Moreover, it states that it is intended for variable selection. Although how exactly the package would be used to do so isn't accessible in the package, especially considering the source code is based on .c code that users of R might not understand. It's performance is slow, which may have to do with the 100.000 iterations it needs, although quite accurate for simple datasets. (::BNNsel-examples & abstract of paper)"
