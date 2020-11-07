@@ -352,23 +352,28 @@ An example of call to \code{trainPredict\_1pkg} is given in Appendix E.
 
 **Ease of Use Scoring**
 
-We define an ease-of-use measure based on what we considered a user would need when using a neural network 
-package for nonlinear regression, namely, utility functions, (non-trivial) examples and 
-sufficient documentation (well-written manual, vignette(s).). 
+We define an ease-of-use measure based on what we considered a user would need 
+when using a neural network package for nonlinear regression, namely, utility
+functions, (non-trivial) examples and sufficient documentation 
+(well-written manual, vignette(s).). 
 
-1. Utilities (1 star)
-    a. a predict function exists 
-    b. scaling capabilities exist
-2. Sufficient documentation (2 stars)
-    a. the existence of useful and relevant example(s)/vignette(s) = (1 star)
-        - clear, with regression = 2 points
-        - unclear, examples use iris or are for classification only = 1 point
-        - no examples = 0 points
+1. Utilities in R to deal with NN 
+    a. a predict function exists (1 star)
+    b. scaling capabilities exist (1 star)
+2. Sufficient and reliable documentation
+    a. the existence of useful and relevant example(s)/vignette(s) 
+        - clear, with regression = 2 stars
+        - unclear, examples use iris or are for classification only = 1 star
+        - no examples = 0 star
     b. input/output is clearly documented, e.g., what values are expected and returned 
-    by a function = (1 star)
-        - clear input and output = 2 points
-        - only one is clear = 1 point
-        - both are not documented = 0 points
+    by a function 
+        - clear input and output = 2 stars
+        - only one is clear = 1 star
+        - both are not documented = 0 star
+3. User-friendly call to fit a NN 
+    a. simple one-line call or a single function = 2 stars
+    b. multiple-lines call to a single function = 1 star
+    c. multiple-lines call to many functions = 0 star
 
 Hence, ease-of-use measure ranges from 0 to 3 stars which will help new users to find user-friendly NN packages.
 
@@ -429,34 +434,56 @@ library(kableExtra)
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table1.csv")) {  
-  Table1 <- read.csv("./tables/Table1.csv", sep = ";")
+  Table1 <- read.table("./tables/Table1-final.csv", sep = ";", dec=".",
+                       header=TRUE)
   Table1 <- Table1[Table1[,2] != "", ]
 }else 
    Table1 <- rbind(rep("missing",6))
 
 colnames(Table1) <- c("Package", "Algorithm", "Time", "RMSE",
-                    "Util", "Doc")
+                    "Util", "Doc", "Call")
 
 pkg.name <- Table1$Package[Table1$Package != ""]
 idx.pkg.name <- (1+0:NROW(Table1))[Table1$Package != ""]
-#repeate value
+Table1$Doc <- floor(Table1$Doc)
+
+#repeat value
 Table1$Package <- rep(pkg.name, times=diff(idx.pkg.name))
 Table1$Util <- rep(Table1$Util[!is.na(Table1$Util)], times=diff(idx.pkg.name))
 Table1$Doc <- rep(Table1$Doc[!is.na(Table1$Doc)], times=diff(idx.pkg.name))
+Table1$Call <- rep(Table1$Call[!is.na(Table1$Call)], times=diff(idx.pkg.name))
+
+#convert to stars
+cvt2star <- function(j)
+{
+  switch(as.character(j), "0" = " ", "1"="*", "2"="**", "3"="***", "4"="****")
+}
+Table1$Doc <- unlist(sapply(Table1$Doc, cvt2star))
+Table1$Util <- unlist(sapply(Table1$Util, cvt2star))
+Table1$Call <- unlist(sapply(Table1$Call, cvt2star))
+
 #reorder columns
-Table1 <- Table1[, c(1, 5:6, 2:4)]
-
+Table1 <- Table1[, c(1, 5:7, 2:4)]
+#get the min RMSE by pkg
 pkgRkbyRMSE <- sort(tapply(Table1$RMSE, Table1$Package, min))
-
+#create new index
 n <- NROW(Table1)
-idxRk <- unlist(sapply(names(pkgRkbyRMSE), function(p) (1:n)[Table1$Package == p]))
+getorderbypkg <- function(p)
+{
+  idx <- (1:n)[Table1$Package == p]
+  if(length(idx) > 1)
+    return(idx[order(Table1[idx, "RMSE"])])
+  else
+    return(idx)
+}
+idxRk <- unlist(sapply(names(pkgRkbyRMSE), getorderbypkg))
 Table1rk <- Table1[idxRk, ]
 rownames(Table1rk) <- 1:n
 
 kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE, 
                   centering = TRUE, align="lcclcc",
                   caption="Result from Tested Packages") %>%
-  add_header_above(c(" "=1, "Individual score"=2, " "=1,  "Global score"=2)) %>%
+  add_header_above(c(" "=1, "Individual rating"=3, " "=1,  "Global score"=2)) %>%
   column_spec(1, bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7)
