@@ -10,7 +10,7 @@ author:
     address: Manipal, Karnataka, 576104, India
     email:  akshajverma7@gmail.com
   - name: Christophe Dutang
-    affiliation: University Paris-Dauphine, University PSL, CNRS, CEREMADE
+    affiliation: Université Paris-Dauphine, University PSL, CNRS, CEREMADE
     address: Place du Maréchal de Lattre de Tassigny, 75016 Paris, France
     email:  dutang@ceremade.dauphine.fr
   - name: Patrice Kiener
@@ -188,7 +188,7 @@ time is reached.
 
 More precisely, second-order algorithms are all set to a maximum of 200 iterations. 
 On the other hand, first-order algorithms were set to several values, depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
-The full list of the maximum iteration number per \code{package:algorithm} is given in Appendix C. 
+The full list of the maximum iteration number per \code{package:algorithm} is given in Table 4 in Appendix D. 
 It can be seen that we were unable to completely harmonize the hyperparameters as an appropriate learning rate differed between packages, despite the algorithm being similarly named.
 
 
@@ -342,7 +342,7 @@ made generic with an extensive use of the incredible \code{do.call} function, we
 3.    \code{trainPredict\_1pkg} serves as a wrapper function for trainPredict_1mth1data for multiple datasets.
 
 A function for the summary of accuracy and speed, \code{NNsummary}, was also added. The package repository is https://github.com/pkR-pkR/NNbenchmark, with package templates in https://github.com/pkR-pkR/NNbenchmarkTemplates. 
-An example of call to \code{trainPredict\_1pkg} is given in Appendix E.
+An example of call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 <!-- B: should we add some examples with the code? As some package authors who publish in the R Journal do to introduce their package. Or we could link to specific pages of the website here?
 ==> CD: maybe we can put one example in Appendix but not in the body 
@@ -481,7 +481,7 @@ Table1rk <- Table1[idxRk, ]
 rownames(Table1rk) <- 1:n
 
 kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, align="lcclcc",
+                  centering = TRUE, align="lccclcc",
                   caption="Result from Tested Packages") %>%
   add_header_above(c(" "=1, "Individual rating"=3, " "=1,  "Global score"=2)) %>%
   column_spec(1, bold = TRUE) %>%
@@ -834,9 +834,25 @@ kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE, longtable = TRUE,
   footnote(general="statistics taken over 20 runs")
 ```
 
-Figures in Appendix F provides some answer where a package performs reasonably well 
-with respect to one explanatory variable and where the fit miss the correct behavior of
+Figures in Appendix E provides some insights where a package performs reasonably well 
+with respect to one explanatory variable and where the fit misses the correct behavior of
 an explanatory variable.
+It displays the average response per rounded explanatory variable for the predicted, 
+the empirical and the theoretical values.
+That is, the empirical value and the predicted value for the $j$th explanatory 
+variable are respectively computed at x-value $x$ as
+$$
+\bar y^{emp}_j(x) =  \left(\sum_{i=1}^n y_i 1_{r(x_{i,j}) = x} \right)
+\left(\sum_{i=1}^n 1_{r(x_{i,j}) = x}\right)^{-1},~
+\bar y^{pred}_j(x) = \left(\sum_{i=1}^n \hat y_i 1_{r(x_{i,j}) = x} \right) 
+\left(\sum_{i=1}^n 1_{r(x_{i,j}) = x}\right)^{-1} ,
+$$
+where $r()$ denotes the round function with two decimal places and $y_i, \hat y_i$ 
+stand respectively for the $i$th observed response and the $i$th predicted response.
+For instance, `MachineShop`, `nnet`, `nlsr` do not correctly capture the sinusoidal 
+aspect of explanatory variable $x_5$ on the expected response, whereas `rminer`, `validann`
+miss the increasing non-linear trend of explanatory variable $x_1$ on the expected response.
+
 
 
 # Conclusion and perspective
@@ -863,7 +879,7 @@ and using many different types of algorithms. ?? have we defined hyperparameters
 
 ## Future work
 As the field of neural networks continue to grow, there will always be more algorithms to validate. 
-For current algorithms in R, our research should be extended to encompass more types of neural networks 
+For current algorithms in \soft{R}, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
 
@@ -900,10 +916,10 @@ These values represent the absolute, the squared and the maximum norm of residua
 We define five smooth functions for Simon Wood's test dataset
 $$
 f_0=5\sin(2\pi x),~
-f_1=exp(3x)-7
-f_2=0.5 x^{11}(10(1 - x))^6 - 10 (10x)^3(1 - x)^{10},~
+f_1=\exp(3x)-7,
 $$
 $$
+f_2=0.5\times x^{11}(10(1 - x))^6 - 10 (10x)^3(1 - x)^{10},~
 f_3=15 \exp(-5 |x-1/2|)-6,
 $$
 $$
@@ -911,37 +927,121 @@ f_4=2-1_{(x <= 1/3)}(6x)^3 - 1_{(x >= 2/3)} (6-6x)^3 -
 1_{(2/3 > x > 1/3)}(8+2\sin(9(x-1/3)\pi)).
 $$
 
+
+
+
 ## Appendix C
+
+An example of our template for the package `nnet`:
+```{r, fig.width=6, fig.height=3, fig.align='center', message=FALSE}
+library(NNbenchmark)
+nrep <- 3       
+odir <- tempdir()
+
+library(nnet)
+nnet.method <- "BFGS"
+hyperParams.nnet <- function(...) {
+    return (list(iter=200, trace=FALSE))
+}
+NNtrain.nnet <- function(x, y, dataxy, formula, neur, method, hyperParams, ...) {
+    
+    hyper_params <- do.call(hyperParams, list(...))
+    
+    NNreg <- nnet::nnet(x, y, size = neur, linout = TRUE, 
+                        maxit = hyper_params$iter, trace=hyper_params$trace)
+    return(NNreg)
+}
+NNpredict.nnet  <- function(object, x, ...) { predict(object, newdata=x) }
+NNclose.nnet    <- function() {  if("package:nnet" %in% search())
+                                detach("package:nnet", unload=TRUE) }
+nnet.prepareZZ  <- list(xdmv = "d", ydmv = "v", zdm = "d", scale = TRUE)
+```
+
+```{r, fig.width=6, fig.height=3, fig.align='center', fig.cap="Example of nnet on mRef153", message=FALSE}
+res <- trainPredict_1pkg(4, pkgname = "nnet", pkgfun = "nnet", nnet.method,
+  prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
+  csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
+```
+
+```{r, fig.width=6, fig.height=3, fig.align='center', fig.cap="Example of nnet on uDmod1", message=FALSE}
+res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
+  prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
+  csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
+```
+
+
+## Appendix D
 
 ```{r echo=FALSE, message=FALSE}
 library(kableExtra)
 if(file.exists("./tables/TableAppendixC.csv")) {  
-  supC <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
-}
-# 
-# }else if(file.exists("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
-# {  supC <- read.csv("D:/DevGSoC/Packages/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
-# }else if(file.exists("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv"))
-# {  supC <- read.csv("~/Documents/recherche-enseignement/code/R/NNbenchmark-project/NNbenchmarkArticle/input/tables/TableAppendixC.csv", sep = ";")
-# }else 
-#   supC <- rep("missing",2)
-colnames(supC) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
+  Table1SupplApp <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
+}else 
+  Table1SupplApp <- rep("missing",8)
+colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
                     "d51", "MAE", "WAE")
-supC[, "Package:Algorithm"] <- paste0(Table1[supC$Num, "Package"], ":",
-                        substr(Table1[supC$Num, "Algorithm"], 5, nchar(Table1[supC$Num, "Algorithm"])))
+#Table1SupplApp[, "Package:Algorithm"] <- paste0(Table1[Table1SupplApp$Num, "Package"], ":",
+#                        substr(Table1[Table1SupplApp$Num, "Algorithm"], 4, nchar(Table1[Table1SupplApp$Num, "Algorithm"])))
+#Table1SupplApp <- Table1SupplApp[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
+#                    "d51", "MAE", "WAE")]
 
-supC <- supC[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
+Table1SupplApp[, "Package"] <- Table1[Table1SupplApp$Num, "Package"]
+Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
+
+Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
                     "d51", "MAE", "WAE")]
 
-kableExtra::kable(supC, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, 
+TOP5pkg <- head(unique(Table1rk$Package), 5)
+TOP5algo <- head(Table1rk$Algorithm[order(Table1rk$RMSE)], 5)
+TOP5algo <- substr(TOP5algo, 5, nchar(TOP5algo))
+TOP5sentence <- paste0("TOP5 packages are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), collapse=", "), ".")      
+
+kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcllcccc",
                   caption="All convergence scores per package:algorithm") %>%
   add_header_above(c(" "=2, "Input parameter"=3, "RMSE Score"=2, "Other score"=2)) %>%
-  column_spec(2, bold = TRUE) %>%
-  kable_styling(font_size=8)
+  column_spec(1, bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general=TOP5sentence)
 ```
 
-<!-- ## Appendix D -->
+## Appendix E
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/MachineShop.png}
+        \label{fig:MachineShop}
+        \caption{Average predicted mean per explanatory variable for \code{MachineShop}}
+\end{figure}
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/nnet.png}
+        \label{fig:nnet}
+        \caption{Average predicted mean per explanatory variable for \code{nnet}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/rminer.png}
+        \label{fig:rminer}
+        \caption{Average predicted mean per explanatory variable for \code{rminer}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/nlsr.png}
+        \label{fig:nlsr}
+        \caption{Average predicted mean per explanatory variable for \code{nlsr}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/validann.png}
+        \label{fig:validann}
+        \caption{Average predicted mean per explanatory variable for \code{validann}}
+\end{figure}
+
+
+<!-- ## old Appendix D -->
 
 <!-- \begin{table}[htb!] -->
 <!-- \begin{center} -->
@@ -1026,73 +1126,5 @@ kableExtra::kable(supC, format = "latex", booktabs = TRUE,
 <!-- \end{tabular} -->
 <!-- \end{center} -->
 <!-- \end{table} -->
-
-
-
-## Appendix E
-
-An example of our template for the package `nnet`:
-```{r}
-library(NNbenchmark)
-nrep <- 3       
-odir <- tempdir()
-
-library(nnet)
-nnet.method <- "BFGS"
-hyperParams.nnet <- function(...) {
-    return (list(iter=200, trace=FALSE))
-}
-NNtrain.nnet <- function(x, y, dataxy, formula, neur, method, hyperParams, ...) {
-    
-    hyper_params <- do.call(hyperParams, list(...))
-    
-    NNreg <- nnet::nnet(x, y, size = neur, linout = TRUE, 
-                        maxit = hyper_params$iter, trace=hyper_params$trace)
-    return(NNreg)
-}
-NNpredict.nnet  <- function(object, x, ...) { predict(object, newdata=x) }
-NNclose.nnet    <- function() {  if("package:nnet" %in% search())
-                                detach("package:nnet", unload=TRUE) }
-nnet.prepareZZ  <- list(xdmv = "d", ydmv = "v", zdm = "d", scale = TRUE)
-
-res <- trainPredict_1pkg(4:5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
-  prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
-  csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
-```
-
-## Appendix F
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{img/MachineShop.png}
-        \label{fig:MachineShop}
-        \caption{Average predicted mean per explanatory variable for `MachineShop`}
-\end{figure}
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{img/nnet.png}
-        \label{fig:nnet}
-        \caption{Average predicted mean per explanatory variable for `nnet`}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{img/rminer.png}
-        \label{fig:rminer}
-        \caption{Average predicted mean per explanatory variable for `rminer`}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{img/nlsr.png}
-        \label{fig:nlsr}
-        \caption{Average predicted mean per explanatory variable for `nlsr`}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{img/validann.png}
-        \label{fig:validann}
-        \caption{Average predicted mean per explanatory variable for `validann`}
-\end{figure}
-
 
 
