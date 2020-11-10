@@ -245,9 +245,9 @@ several values, depending on how well and how fast they converged:
 \texttt{maxit1storderA=1000} iterations, \texttt{maxit1storderB=10000}
 iterations, and \texttt{maxit1storderC=100000} iterations. The full list
 of the maximum iteration number per \code{package:algorithm} is given in
-Appendix C. It can be seen that we were unable to completely harmonize
-the hyperparameters as an appropriate learning rate differed between
-packages, despite the algorithm being similarly named.
+Table 4 in Appendix D. It can be seen that we were unable to completely
+harmonize the hyperparameters as an appropriate learning rate differed
+between packages, despite the algorithm being similarly named.
 
 \hypertarget{performance}{%
 \subsection{Performance}\label{performance}}
@@ -427,7 +427,7 @@ A function for the summary of accuracy and speed, \code{NNsummary}, was
 also added. The package repository is
 \url{https://github.com/pkR-pkR/NNbenchmark}, with package templates in
 \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}. An example of
-call to \code{trainPredict\_1pkg} is given in Appendix E.
+call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 \textbf{Ease of Use Scoring}
 
@@ -440,49 +440,60 @@ documentation (well-written manual, vignette(s).).
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Utilities (1 star)
+  Utilities in R to deal with NN
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    a predict function exists
+    a predict function exists (1 star)
   \item
-    scaling capabilities exist
+    scaling capabilities exist (1 star)
   \end{enumerate}
 \item
-  Sufficient documentation (2 stars)
+  Sufficient and reliable documentation
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    the existence of useful and relevant example(s)/vignette(s) = (1
-    star)
+    the existence of useful and relevant example(s)/vignette(s)
 
     \begin{itemize}
     \tightlist
     \item
-      clear, with regression = 2 points
+      clear, with regression = 2 stars
     \item
-      unclear, examples use iris or are for classification only = 1
-      point
+      unclear, examples use iris or are for classification only = 1 star
     \item
-      no examples = 0 points
+      no examples = 0 star
     \end{itemize}
   \item
     input/output is clearly documented, e.g., what values are expected
-    and returned by a function = (1 star)
+    and returned by a function
 
     \begin{itemize}
     \tightlist
     \item
-      clear input and output = 2 points
+      clear input and output = 2 stars
     \item
-      only one is clear = 1 point
+      only one is clear = 1 star
     \item
-      both are not documented = 0 points
+      both are not documented = 0 star
     \end{itemize}
+  \end{enumerate}
+\item
+  User-friendly call to fit a NN
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    simple one-line call or a single function = 2 stars
+  \item
+    multiple-lines call to a single function = 1 star
+  \item
+    multiple-lines call to many functions = 0 star
   \end{enumerate}
 \end{enumerate}
 
@@ -584,131 +595,131 @@ and packages implementing first order algorithms.
 \caption{\label{tab:unnamed-chunk-2}Result from Tested Packages}
 \centering
 \fontsize{7}{9}\selectfont
-\begin{tabular}[t]{>{\bfseries}lcclcc}
+\begin{tabular}[t]{>{\bfseries}lccclcc}
 \toprule
-\multicolumn{1}{c}{ } & \multicolumn{2}{c}{Individual score} & \multicolumn{1}{c}{ } & \multicolumn{2}{c}{Global score} \\
-\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){5-6}
-Package & Util & Doc & Algorithm & Time & RMSE\\
+\multicolumn{1}{c}{ } & \multicolumn{3}{c}{Individual rating} & \multicolumn{1}{c}{ } & \multicolumn{2}{c}{Global score} \\
+\cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){6-7}
+Package & Util & Doc & Call & Algorithm & Time & RMSE\\
 \midrule
-nlsr & 1 & 4.0 & 41. NashLM & 18 & 1\\
-\cmidrule{1-6}
-rminer & 2 & 3.5 & 45. nnet\_optim(BFGS) & 12 & 2\\
-\cmidrule{1-6}
-nnet & 1 & 3.0 & 42. optim (BFGS) & 3 & 3\\
-\cmidrule{1-6}
- & 1 & 4.0 & 56. optim(BFGS) & 35 & 4\\
+nlsr & * & **** & ** & 41. NashLM & 18 & 1\\
+\cmidrule{1-7}
+rminer & ** & *** & ** & 45. nnet\_optim(BFGS) & 12 & 2\\
+\cmidrule{1-7}
+nnet & * & *** & ** & 42. optim (BFGS) & 3 & 3\\
+\cmidrule{1-7}
+ & * & **** & ** & 56. optim(BFGS) & 35 & 4\\
 
- & 1 & 4.0 & 57. optim(CG) & 60 & 8\\
+ & * & **** & ** & 57. optim(CG) & 60 & 8\\
 
- & 1 & 4.0 & 58. optim(L-BFGS-B) & 36 & 15\\
+ & * & **** & ** & 58. optim(L-BFGS-B) & 36 & 15\\
 
- & 1 & 4.0 & 59. optim(Nelder-Mead) & 55 & 45\\
+ & * & **** & ** & 59. optim(Nelder-Mead) & 55 & 45\\
 
-\multirow{-5}{*}{\raggedright\arraybackslash validann} & 1 & 4.0 & 60. optim(SANN) & 20 & 55\\
-\cmidrule{1-6}
-MachineShop & 1 & 3.0 & 32. nnet\_optim(BFGS) & 6 & 5\\
-\cmidrule{1-6}
-traineR & 1 & 2.5 & 55. nnet\_optim(BFGS) & 4 & 6\\
-\cmidrule{1-6}
-radiant.model & 2 & 2.0 & 44. nnet\_optim(BFGS) & 10 & 7\\
-\cmidrule{1-6}
- & 2 & 3.5 & 34. optimx(BFGS) & 26 & 9\\
+\multirow{-5}{*}{\raggedright\arraybackslash validann} & * & **** & ** & 60. optim(SANN) & 20 & 55\\
+\cmidrule{1-7}
+MachineShop & * & *** & * & 32. nnet\_optim(BFGS) & 6 & 5\\
+\cmidrule{1-7}
+traineR & * & ** & ** & 55. nnet\_optim(BFGS) & 4 & 6\\
+\cmidrule{1-7}
+radiant.model & ** & ** & ** & 44. nnet\_optim(BFGS) & 10 & 7\\
+\cmidrule{1-7}
+ & ** & *** & ** & 34. optimx(BFGS) & 26 & 9\\
 
-\multirow{-2}{*}{\raggedright\arraybackslash monmlp} & 2 & 3.5 & 35. optimx(Nelder-Mead) & 32 & 47\\
-\cmidrule{1-6}
- & 2 & 3.0 & 12. optim(BFGS) & 46 & 10\\
+\multirow{-2}{*}{\raggedright\arraybackslash monmlp} & ** & *** & ** & 35. optimx(Nelder-Mead) & 32 & 47\\
+\cmidrule{1-7}
+ & ** & *** & ** & 12. optim(BFGS) & 46 & 10\\
 
- & 2 & 3.0 & 13. pso\_psoptim & 54 & 54\\
+ & ** & *** & ** & 14. Rprop & 56 & 51\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash CaDENCE} & 2 & 3.0 & 14. Rprop & 56 & 51\\
-\cmidrule{1-6}
-h2o & 2 & 2.0 & 24. first-order & 51 & 11\\
-\cmidrule{1-6}
-EnsembleBase & 1 & 1.0 & 23. nnet\_optim(BFGS) & 5 & 12\\
-\cmidrule{1-6}
-caret & 2 & 3.0 & 15. avNNet\_nnet\_optim(BFGS) & 17 & 13\\
-\cmidrule{1-6}
-brnn & 2 & 4.0 & 11. Gauss-Newton & 8 & 14\\
-\cmidrule{1-6}
-qrnn & 2 & 3.0 & 43. nlm() & 28 & 16\\
-\cmidrule{1-6}
- & 2 & 3.0 & 46. BackpropBatch & 43 & 49\\
+\multirow{-3}{*}{\raggedright\arraybackslash CaDENCE} & ** & *** & ** & 13. pso\_psoptim & 54 & 54\\
+\cmidrule{1-7}
+h2o & ** & ** &  & 24. first-order & 51 & 11\\
+\cmidrule{1-7}
+EnsembleBase & * & * & ** & 23. nnet\_optim(BFGS) & 5 & 12\\
+\cmidrule{1-7}
+caret & ** & *** & ** & 15. avNNet\_nnet\_optim(BFGS) & 17 & 13\\
+\cmidrule{1-7}
+brnn & ** & **** & ** & 11. Gauss-Newton & 8 & 14\\
+\cmidrule{1-7}
+qrnn & ** & *** & ** & 43. nlm() & 28 & 16\\
+\cmidrule{1-7}
+ & ** & *** & ** & 51. Rprop & 24 & 17\\
 
- & 2 & 3.0 & 47. BackpropChunk & 26 & 29\\
+ & ** & *** & ** & 52. SCG & 30 & 18\\
 
- & 2 & 3.0 & 48. BackpropMomentum & 25 & 30\\
+ & ** & *** & ** & 53. Std\_Backpropagation & 22 & 27\\
 
- & 2 & 3.0 & 49. BackpropWeightDecay & 29 & 31\\
+ & ** & *** & ** & 47. BackpropChunk & 26 & 29\\
 
- & 2 & 3.0 & 50. Quickprop & 45 & 57\\
+ & ** & *** & ** & 48. BackpropMomentum & 25 & 30\\
 
- & 2 & 3.0 & 51. Rprop & 24 & 17\\
+ & ** & *** & ** & 49. BackpropWeightDecay & 29 & 31\\
 
- & 2 & 3.0 & 52. SCG & 30 & 18\\
+ & ** & *** & ** & 46. BackpropBatch & 43 & 49\\
 
-\multirow{-8}{*}{\raggedright\arraybackslash RSNNS} & 2 & 3.0 & 53. Std\_Backpropagation & 22 & 27\\
-\cmidrule{1-6}
- & 1 & 3.0 & 8. trainwgrad\_adam & 50 & 18\\
+\multirow{-8}{*}{\raggedright\arraybackslash RSNNS} & ** & *** & ** & 50. Quickprop & 45 & 57\\
+\cmidrule{1-7}
+ & * & *** & ** & 8. trainwgrad\_adam & 50 & 18\\
 
- & 1 & 3.0 & 9. trainwgrad\_RMSprop & 47 & 26\\
+ & * & *** & ** & 9. trainwgrad\_RMSprop & 47 & 26\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash automl} & 1 & 3.0 & 10. trainwpso & 57 & 43\\
-\cmidrule{1-6}
-deepnet & 1 & 3.0 & 20. BP & 23 & 18\\
-\cmidrule{1-6}
- & 1 & 3.0 & 36. backprop & 37 & 50\\
+\multirow{-3}{*}{\raggedright\arraybackslash automl} & * & *** & ** & 10. trainwpso & 57 & 43\\
+\cmidrule{1-7}
+deepnet & * & *** & ** & 20. BP & 23 & 18\\
+\cmidrule{1-7}
+ & * & *** & ** & 38. rprop+ & 19 & 21\\
 
- & 1 & 3.0 & 37. rprop- & 21 & 22\\
+ & * & *** & ** & 37. rprop- & 21 & 22\\
 
- & 1 & 3.0 & 38. rprop+ & 19 & 21\\
+ & * & *** & ** & 40. slr & 31 & 31\\
 
- & 1 & 3.0 & 39. sag & 41 & 38\\
+ & * & *** & ** & 39. sag & 41 & 38\\
 
-\multirow{-5}{*}{\raggedright\arraybackslash neuralnet} & 1 & 3.0 & 40. slr & 31 & 31\\
-\cmidrule{1-6}
- & 2 & 0.0 & 25. adadelta & 59 & 40\\
+\multirow{-5}{*}{\raggedright\arraybackslash neuralnet} & * & *** & ** & 36. backprop & 37 & 50\\
+\cmidrule{1-7}
+ & ** &  &  & 28. adamax & 48 & 23\\
 
- & 2 & 0.0 & 26. adagrad & 58 & 37\\
+ & ** &  &  & 27. adam & 42 & 34\\
 
- & 2 & 0.0 & 27. adam & 42 & 34\\
+ & ** &  &  & 29. nadam & 44 & 36\\
 
- & 2 & 0.0 & 28. adamax & 48 & 23\\
+ & ** &  &  & 26. adagrad & 58 & 37\\
 
- & 2 & 0.0 & 29. nadam & 44 & 36\\
+ & ** &  &  & 25. adadelta & 59 & 40\\
 
- & 2 & 0.0 & 30. rmsprop & 37 & 52\\
+ & ** &  &  & 31. sgd & 48 & 44\\
 
-\multirow{-7}{*}{\raggedright\arraybackslash keras} & 2 & 0.0 & 31. sgd & 48 & 44\\
-\cmidrule{1-6}
- & 1 & 3.0 & 1. ADAPTgd & 9 & 35\\
+\multirow{-7}{*}{\raggedright\arraybackslash keras} & ** &  &  & 30. rmsprop & 37 & 52\\
+\cmidrule{1-7}
+ & * & *** & * & 2. ADAPTgdwm & 16 & 24\\
 
- & 1 & 3.0 & 2. ADAPTgdwm & 16 & 24\\
+ & * & *** & * & 1. ADAPTgd & 9 & 35\\
 
- & 1 & 3.0 & 3. BATCHgd & 39 & 41\\
+ & * & *** & * & 4. BATCHgdwm & 40 & 39\\
 
-\multirow{-4}{*}{\raggedright\arraybackslash AMORE} & 1 & 3.0 & 4. BATCHgdwm & 40 & 39\\
-\cmidrule{1-6}
-minpack.lm & 1 & 3.5 & 33. Levenberg-Marquardt & 15 & 24\\
-\cmidrule{1-6}
- & 2 & 3.0 & 5. adam & 13 & 33\\
+\multirow{-4}{*}{\raggedright\arraybackslash AMORE} & * & *** & * & 3. BATCHgd & 39 & 41\\
+\cmidrule{1-7}
+minpack.lm & * & *** & ** & 33. Levenberg-Marquardt & 15 & 24\\
+\cmidrule{1-7}
+ & ** & *** & * & 6. rmsprop & 14 & 28\\
 
- & 2 & 3.0 & 6. rmsprop & 14 & 28\\
+ & ** & *** & * & 5. adam & 13 & 33\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash ANN2} & 2 & 3.0 & 7. sgd & 11 & 42\\
-\cmidrule{1-6}
- & 2 & 3.0 & 16. adam & 32 & 46\\
+\multirow{-3}{*}{\raggedright\arraybackslash ANN2} & ** & *** & * & 7. sgd & 11 & 42\\
+\cmidrule{1-7}
+ & ** & *** & ** & 16. adam & 32 & 46\\
 
- & 2 & 3.0 & 17. gradientDescent & 52 & 58\\
+ & ** & *** & ** & 19. rmsProp & 34 & 53\\
 
- & 2 & 3.0 & 18. momentum & 53 & 56\\
+ & ** & *** & ** & 18. momentum & 53 & 56\\
 
-\multirow{-4}{*}{\raggedright\arraybackslash deepdive} & 2 & 3.0 & 19. rmsProp & 34 & 53\\
-\cmidrule{1-6}
-snnR & 2 & 2.0 & 54. SemiSmoothNewton & 7 & 48\\
-\cmidrule{1-6}
-elmNNRcpp & 2 & 3.0 & 21. ELM & 1 & 59\\
-\cmidrule{1-6}
-ELMR & 2 & 3.0 & 22. ELM & 2 & 60\\
+\multirow{-4}{*}{\raggedright\arraybackslash deepdive} & ** & *** & ** & 17. gradientDescent & 52 & 58\\
+\cmidrule{1-7}
+snnR & ** & ** & ** & 54. SemiSmoothNewton & 7 & 48\\
+\cmidrule{1-7}
+elmNNRcpp & ** & *** & ** & 21. ELM & 1 & 59\\
+\cmidrule{1-7}
+ELMR & ** & *** & ** & 22. ELM & 2 & 60\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1053,24 +1064,28 @@ issue.
 \hypertarget{untested-packages}{%
 \subsection{Untested packages}\label{untested-packages}}
 
+A certain number of packages have been discarded from this study for at
+least one of the following reasons:
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  For regression but unsuitable for the scope of our research
+  For regression but unsuitable for the scope of our research, coded RE
+  in Table 2.
 \item
-  For time series
+  For time series, coded TS in Table 2.
 \item
-  For classification
+  For classification, coded CL in Table 2.
 \item
-  For specific purpose
+  For specific purpose, coded AP in Table 2.
 \item
-  For tools to complement NN's by other packages
+  For tools to complement NN's by other packages, coded UT in Table 2.
 \item
-  Not actually neural networks
-\item
-  Error
+  Not actually neural networks and other reasons, coded XX in Table 2.
 \end{enumerate}
+
+The full list of untested packages is given in Table 2.
 
 \begin{Schunk}
 \begingroup\fontsize{7}{9}\selectfont
@@ -1078,90 +1093,153 @@ issue.
 \begin{longtable}[t]{ll>{\raggedright\arraybackslash}p{10cm}}
 \caption{\label{tab:unnamed-chunk-3}Review of Discarded Packages}\\
 \toprule
-Package & Category & Reason to Discard (Where)\\
+Package & Category & Reason to Discard (File(s) and/or function(s))\\
 \midrule
-appnn & AP & This package provides a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESC)\\
-autoencoder & AP & This package provides a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
-BNN & RE* & This package uses a feed forward neural network to perform regression as provided in the examples, however, it is unclear whether it fits the form of perceptron that is the scope of our research. Moreover, it states that it is intended for variable selection. Although how exactly the package would be used to do so isn't accessible in the package, especially considering the source code is based on .c code that users of R might not understand. It's performance is slow, which may have to do with the 100.000 iterations it needs, although quite accurate for simple datasets. (::BNNsel-examples \& abstract of paper)\\
-Buddle & CL & This package did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)\\
-cld2 & XX & This package provides bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESC \& link to github)\\
+appnn & AP & Provide a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESCRIPTION file)\\
+autoencoder & AP & Provide a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
+BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slow : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
+Buddle & CL & Did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)\\
+cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
 \addlinespace
-cld3 & AP & Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESC)\\
-condmixt & AP & This package uses neural networks to predict parameters of mixture models (DESC)\\
-DamiaNN & RE & This package was designed specificly for training datasets from Numerai, <https://numer.ai/>. We were unable to adapt it to our datasets even after exporting functions from the interactive interface (DESC, help pages)\\
-deep & CL & This package seems to implement a perceptron to classify data (implicitly known from choice of iris as example \& in source code: output = function(inputs) \{
-            as.integer(sum(ws*inputs) - bias > 0)
-        \},)\\
-deepNN & RE & This package is another implementation of deep learning. Its input format of lists of vectors is not standard require users to understand how to use lapply or other functions to convert the format of their data. Univariate datasets can't be used with the functions and we could not manage to adapt it to 2020 code so this package is not in the final loop (::train)\\
+cld3 & AP & Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESCRIPTION file)\\
+condmixt & AP & Use neural networks to predict parameters of mixture models (DESCRIPTION file)\\
+DamiaNN & RE & Was designed specificly for training datasets from Numerai, <https://numer.ai/>. We were unable to adapt it to our datasets even after exporting functions from the interactive interface (DESCRIPTION file, help pages)\\
+deep & CL & Seem to implement a perceptron to classify data (implicitly known from choice of iris as example and in source code)\\
+deepNN & RE & Another implementation of deep learning. Its input format of lists of vectors is not standard require users to understand how to use lapply or other functions to convert the format of their data. Univariate datasets can't be used with the functions and we could not manage to adapt it to 2020 code (::train).\\
 \addlinespace
-DNMF & XX & This package helps extract features that enforce spatial locality with separability between classes in a discriminant manner (DESC)\\
-evclass & CL & This package provides an evidential neural network that outputs Dempster-Shafer mass functions (DESC)\\
-gamlss.add & UT & This package allows users to use nnet with a variety of Generalized Additive Models for Location Scale and Shape (::nn). It is not particularly appropriate for all our datasets.\\
-gcForest & XX & Based on an article with "Towards an Alternative to Deep Neural Networks" in it title (DESC)\\
-GMDH & TS & This package provides GMDH type neural network algorithms for short term forecasting on a univariate time series (DESC)\\
+DNMF & XX & Help extract features that enforce spatial locality with separability between classes in a discriminant manner (DESCRIPTION file)\\
+evclass & CL & Provide an evidential neural network that outputs Dempster-Shafer mass functions (DESCRIPTION file)\\
+gamlss.add & UT & Allow users to use nnet with a variety of Generalized Additive Models for Location Scale and Shape (::nn). It is not particularly appropriate for all our datasets.\\
+gcForest & XX & Based on an article with "Towards an Alternative to Deep Neural Networks" in its title (DESCRIPTION file)\\
+GMDH & TS & Provide GMDH type neural network algorithms for short term forecasting on a univariate time series (DESCRIPTION file)\\
 \addlinespace
-GMDH2 & CL & This package provides GMDH type neural network algorithms for performing binary classification (DESC)\\
-GMDHreg & RE* & Regression using GMDH algorithms (Title in DESC). We only managed to tested the COMBI algorithm (the most basic and first in the vignette) on the multivariate datasets (it only works for multivariate datasets). It is strangely slow on the "easy" datasets, mFriedman and mRef153. The convergence is relatively not good considering the ammount of layers.\\
-gnn & AP & "Generative moment matching networks (GMMNs) are introduced for generating quasi-random samples from multivariate models with any underlying copula in order to compute estimates under variance reduction." (article abstract)\\
-grnn & RE & This package provides an implementation of Specht's General Regression Neural Network in 1991 (DESC). We could not manage to make the functions work on the multivariate datasets. ::guess, the function for predicting, only allows for 1 data at a time. Performance of General Regression Neural Networks can be seen from package yager instead.\\
-hybridEnsemble & RE & Hybrid ensemble of eight different sub-ensembles (DESC)\\
+GMDH2 & CL & Provide GMDH type neural network algorithms for performing binary classification (DESCRIPTION file)\\
+GMDHreg & RE* & Regression using GMDH algorithms. We only managed to tested the COMBI algorithm (the most basic and first in the vignette) on the multivariate datasets. It is strangely slow on the "easy" datasets, mFriedman and mRef153. The convergence is relatively not good considering the ammount of layers (Title in DESCRIPTION file)\\
+gnn & AP & Out of scope: Generative moment matching networks (GMMNs) are introduced for generating quasi-random samples from multivariate models (article abstract)\\
+grnn & RE & Provide an implementation of Specht's General Regression Neural Network in 1991 (DESCRIPTION file). We could not manage to make the functions work on the multivariate datasets. ::guess, the function for predicting, only allows for 1 data at a time. Performance of General Regression Neural Networks can be seen from package yager instead.\\
+hybridEnsemble & RE & Hybrid ensemble of eight different sub-ensembles (DESCRIPTION file)\\
 \addlinespace
-image.libfacedetection & AP & Face detection with CNNs (DESC)\\
-isingLenzMC & AP & "This package provides utilities to simulate one dimensional Ising Model with Metropolis and Glauber Monte Carlo with single flip dynamics in periodic boundary conditions" (DESC)\\
+image.libfacedetection & AP & Face detection with CNNs (DESCRIPTION file)\\
+isingLenzMC & AP & Out of scope: This package provides utilities to simulate one dimensional Ising Model with Metropolis and Glauber Monte Carlo (DESCRIPTION file)\\
 kerasR & RE & See section on keras\\
-leabRa & RE & This package provides the local error driven and associative biologically realistic algorithm (Leabra) from O'Reilly 1996. However, since it combines supervised and unsupervised learning, it did not fit the scope of our research (DESC)\\
-learNN & CL & This package implements some basic neural networks from \textbackslash{}url\{http://qua.st/\} (DESC). It's examples seem to point to binary classification (::learn\_gd, ::learn\_bp)\\
+leabRa & RE & Provide the local error driven and associative biologically realistic algorithm (Leabra) from O'Reilly 1996. It combines supervised and unsupervised learning, so out of scope (DESCRIPTION file).\\
+learNN & CL & Implement some basic neural networks from \textbackslash{}url\{http://qua.st/\} (DESCRIPTION file). Examples seem to focus on binary classification (::learn\_gd, ::learn\_bp).\\
 \addlinespace
-LilRhino & AP & This package provides binary neural networks meant for reducing data (DESC), a random forest style collection of neural networks for classification (::Random\_Brains), and code for even more purposes. Documentation is satisfyingly clear for a package for applications: a 3 layer network with an adam optimizer, with an explanation of its activation functions (::Binary\_Network). Unfortunately, the packages it chooses for neural networks are not ones we would recommend for regression. However, they may prove to be a good choice for classification in the future (???)\\
+LilRhino & AP & Provide binary neural networks meant for reducing data (DESCRIPTION file), a random forest style collection of neural networks for classification (::Random\_Brains), and code for even more purposes. Documentation is satisfyingly clear for a package for applications: a 3 layer network with an adam optimizer, with an explanation of its activation functions (::Binary\_Network)\\
 neural & CL & An implementation of "a simple MLP neural network that is suitable for classification tasks" (::mlptrain)\\
-NeuralNetTools & UT & "Functions are available for plotting, quantifying variable importance (Garson's algorithm), conducting a sensitivity analysis (Lek's profile), and obtaining a simple list of model weights" (DESC - (Help Pages titles))\\
-NeuralSens & UT & A greater focus on sensitivity, with additional functions\\
-NlinTS & TS & A non-linear version of a causality test with feed forward neural networks and a Vector Auto-Regressive Neural Network (VARNN) among some other tools for non-linear time series analysis models and causality detection (DESC)\\
+NeuralNetTools & UT & Out of scope: Functions are available for plotting, quantifying variable importance, conducting a sensitivity analysis, and obtaining a simple list of model weights (DESCRIPTION file and Help Pages titles)\\
+NeuralSens & UT & A greater focus on sensitivity, with additional functions (DESCRIPTION file)\\
+NlinTS & TS & A non-linear version of a causality test with feed forward neural networks and a Vector Auto-Regressive Neural Network (VARNN) for non-linear time series analysis models (DESCRIPTION file)\\
 \addlinespace
-nnetpredint & UT & "Computing prediction intervals of neural network models (e.g.backpropagation) at certain confidence level" (DESC)\\
-nnfor & TS & Automatic to fully manual time series modelling with neural networks (DESC)\\
-nnlib2Rcpp & CL & This package provides a collection of neural networks. However, the examples seem to indicate classification and testing our code with the functions provided led to error. It uses the RcppClass which might be confusing for less experienced R users (::NN-class)\\
-nntrf & AP & Provides useful pre-processing for Machine Learning tasks through data transformation in a non-linear, supervised way with a perceptron (DESC)\\
-onnx & UT & Aims to provide an open source format for neural networks, with definitions of an extensible computation graph model, built-in operators, and standard data types (DESC)\\
+nnetpredint & UT & Out of scope: Computing prediction intervals of neural network models at certain confidence level (DESCRIPTION file)\\
+nnfor & TS & Automatic to fully manual time series modelling with neural networks (DESCRIPTION file)\\
+nnlib2Rcpp & CL & Provide a collection of neural networks, but examples seem to indicate classification and testing our code with the functions provided led to error. Using the RcppClass might be confusing for less experienced R users (::NN-class)\\
+nntrf & AP & Provide useful pre-processing for Machine Learning tasks through data transformation in a non-linear, supervised way with a perceptron (DESCRIPTION file)\\
+onnx & UT & Aims to provide an open source format for neural networks, with definitions of an extensible computation graph model, built-in operators, and standard data types (DESCRIPTION file)\\
 \addlinespace
-OptimClassifier & UT & This package searches for the best amount of neurons for binary classifcation neural networks, among other types of binary classifiers (based on how Optim.NN works \& DESC)\\
-OSTSC & UT & A tool to solve imbalanced data for univariate time series classification with oversampling using integrated ESPO and ADASYN methods (DESC) thus improving the performance of RNN classifiers (vignette)\\
-passt & AP & This package provides implementation of the Probability Associator Time (PASS-T) model, a memory model based on a simple competitive artificial neural network which imitates human judgment of frequency and duration (DESC)\\
-pnn & CL & This package provides implementation of the Specht algorithm, 1990, for classification with four functions: learn, smooth, perf, and guess (DESC)\\
-polyreg & XX & Polyregression as alternative to NN (DESC)\\
+OptimClassifier & UT & Search for the best amount of neurons for binary classifcation neural networks, among other types of binary classifiers (based on how Optim.NN works \& DESCRIPTION file)\\
+OSTSC & UT & A tool to solve imbalanced data for univariate time series classification with oversampling using integrated ESPO and ADASYN methods (DESCRIPTION file) thus improving the performance of RNN classifiers (vignette)\\
+passt & AP & This package provides implementation of the Probability Associator Time (PASS-T) model, a memory model based on a simple competitive artificial neural network which imitates human judgment of frequency and duration (DESCRIPTION file)\\
+pnn & CL & This package provides implementation of the Specht algorithm, 1990, for classification with four functions: learn, smooth, perf, and guess (DESCRIPTION file)\\
+polyreg & XX & Polyregression as alternative to NN (DESCRIPTION file)\\
 \addlinespace
-predictoR & RE & A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESC \& ::init\_predictor)\\
-ProcData & AP & ProcData provides tools for exploratory process data analysis via functions for "reading responses from a csv file, process manipulation, action sequence generators, feature extraction methods fitting, and making prediction from sequence models" (recurrent neural networks). An example dataset is provided. (link + DESC)\\
-quarrint & AP & This package provides two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network. specified classifier for quarry data. Given the conditions of the area, the neural network gives probabilities for the classes of interaction - low, medium, high, and very high (help page - quarrint-package and DESC)\\
-rasclass & CL & This package provides neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESC)\\
-rcane & RE & This package only provides parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESC)\\
+predictoR & RE & A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESCRIPTION file \& ::init\_predictor)\\
+ProcData & AP & Provide tools for exploratory process data analysis via functions: reading, process manipulation, action sequence generators, feature extraction and prediction (link + DESCRIPTION file)\\
+quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
+rasclass & CL & Provide neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESCRIPTION file)\\
+rcane & RE & Provide parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESCRIPTION file)\\
 \addlinespace
-regressoR & RE & A manual rich version of predictoR.\\
-rnn & AP & Implementations of the vanilla Recurrent Neural Network, Long Short-Term Memory (LSTM), and Gated Recurrent Unit (GRU) in native R (DESC)\\
-RTextTools & AP & "A machine learning package for automatic text classification that makes it simple for novice users to get started with machine learning, while allowing experienced users to easily experiment with different settings and algorithm combinations." (DESC)\\
-ruta & AP & unsupervised neural networks (DESC)\\
-simpleNeural & CL & Neural networks for multi-class or binary classification (DESC)\\
+regressoR & RE & A manual rich version of predictoR\\
+rnn & AP & Implementations of the vanilla Recurrent Neural Network, Long Short-Term Memory (LSTM), and Gated Recurrent Unit (GRU) in native R (DESCRIPTION file)\\
+RTextTools & AP & Out of scope: A machine learning package for automatic text classification (DESCRIPTION file)\\
+ruta & AP & unsupervised neural networks (DESCRIPTION file)\\
+simpleNeural & CL & Neural networks for multi-class or binary classification (DESCRIPTION file)\\
 \addlinespace
-softmaxreg & CL & "Implementation of 'softmax' regression and classification models with multiple layer neural network" (DESC)\\
-Sojourn.Data & AP & Stores some neural networks used for Sojourn Accelerometer methods (DESC)\\
-spnn & CL & "Scale invariant version of the original PNN proposed by Specht (1990) with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set." (DESC)\\
-studyStrap & AP & "Implements multi-study learning algorithms such as merging, the study-specific ensemble (trained-on-observed-studies ensemble) the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret." (DESC)\\
-TeachNet & CL & This package provides neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification. However it is slow. (DESC \& ::TeachNet => more for learning)\\
+softmaxreg & CL & Out of scope: Implementation of 'softmax' regression and classification models with multiple layer neural network (DESCRIPTION file)\\
+Sojourn.Data & AP & Stores some neural networks used for Sojourn Accelerometer methods (DESCRIPTION file)\\
+spnn & CL & Out of scope : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
+studyStrap & AP & Implements multi-study learning algorithms such as merging, the study-specific ensemble the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret (DESCRIPTION file)\\
+TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification : it is slow. (DESCRIPTION file \& ::TeachNet)\\
 \addlinespace
 tensorflow & RE & See section on keras\\
 tfestimators & RE & See section on keras\\
-trackdem & AP & An artificial neural network can be trained for filtering false positives present (due to e.g. debris, air bubbles, or reflection) in video materials or image sequences\\
-TrafficBDE & RE* & It uses caret for a grid of parameters for 3 layers combined with neuralnet. Very slow. As we only sought to test one layer perceptrons, this package was not included. We recommend the author to use other packages and lessen the number of layers if the datasets that are normally used in Traffic Status Prediction in Urban Places are similar in nature to the ones used in this research (TrainCR.R, DESC)\\
-tsfgrnn & TS & "A general regression neural network (GRNN) is a variant of a Radial Basis Function Network characterized by a fast single-pass learning. 'tsfgrnn' allows you to forecast time series using a GRNN model" that is autoregressive (DESC)\\
+trackdem & AP & An artificial neural network can be trained for filtering false positives present in video materials or image sequences (DESCRIPTION file)\\
+TrafficBDE & RE* & Use caret for a grid of parameters for 3 layers combined with neuralnet. Is very slow. Out of scope to test one layer perceptrons. We recommend the author to use other packages and lessen the number of layers. Datasets in Traffic Status Prediction and Urban Places are similar in nature to ours (TrainCR.R, DESCRIPTION file)\\
+tsfgrnn & TS & Out of scope: A general regression neural network (GRNN) is a variant of a Radial Basis Function Network. Allow you to forecast time series using an autoregressive GRNN model (DESCRIPTION file)\\
 \addlinespace
 yager & RE* & This package provides a neural network that behaves differently from a perceptron. Results indicate that predictions are quite close to the real values, however this comes at the cost of a large number of weights. With less weights or insufficient training data, the performance isn't as great. (::grnn.fit)\\
-yap & CL & Yet another PNN, with a N-level response, where N > 2 (DESC)\\
-zFactor & AP & Computational algorithms to solve equations and find the 'compressibility' factor `z` of hydrocarbon gases (DESC)\\
+yap & CL & Yet another PNN, with a N-level response, where N > 2 (DESCRIPTION file)\\
+zFactor & AP & Computational algorithms to solve equations and find the 'compressibility' factor `z` of hydrocarbon gases (DESCRIPTION file)\\
 \bottomrule
+\multicolumn{3}{l}{\textit{Note: }}\\
+\multicolumn{3}{l}{AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.}\\
 \end{longtable}
 \endgroup{}
 
 \end{Schunk}
+
+\hypertarget{further-analysis-of-top5-packages}{%
+\subsection{Further analysis of TOP5
+packages}\label{further-analysis-of-top5-packages}}
+
+In this final subsection, we present further performance results of the
+Top 5 packages given Table1. That is, we consider packages
+\texttt{nlsr}, \texttt{rminer}, \texttt{nnet}, \texttt{validann} with
+algorithm BFGS and \texttt{MachineShop}. We fit the NN packages on Simon
+Wood's Gaussian dataset, see \texttt{bWoodN1} in dataset description,
+which contains 20,000 rows with 6 inputs valued in {[}0,1{]} for a
+(single) numeric output. Due to the non-linear functions considered, see
+Appendix B, the link between the output and each explanatory variable is
+highly nonlinear which affects deeply the fitting time. Table 3 gives
+the metric performance over 20 runs of these Top 5 five packages on
+\texttt{bWoodN1}.
+
+We observe that the minimum RMSE (over 20 runs) is very similar for all
+package, yet \texttt{rminer} and \texttt{validann} are little bit behind
+others. The median RMSE and D51 RMSE reveal the very good fits by
+\texttt{rminer}, and it is also true for other metric norms: WAE and
+MAE. Regarding computation time, the two best in class are \texttt{nnet}
+and \texttt{MachineShop}.
+
+\begin{Schunk}
+\begingroup\fontsize{7}{9}\selectfont
+
+\begin{longtable}[t]{lrrrrrr}
+\caption{\label{tab:unnamed-chunk-4}Performance on bWoodN1}\\
+\toprule
+Package::algorithm & RMSE min & RMSE median & RMSE D51 & MAE median & WAE median & Time median\\
+\midrule
+MachineShop::fit\_none & 3.5467 & 4.75645 & 1.20975 & 3.90085 & 16.02080 & 3.3995\\
+nlsr::nlxb\_none & 3.5482 & 4.70550 & 1.15730 & 3.80060 & 16.56460 & 76.7275\\
+nnet::nnet\_none & 3.5499 & 4.70570 & 1.15580 & 3.80055 & 16.57275 & 3.3805\\
+rminer::fit\_none & 3.3662 & 3.68795 & 0.32175 & 2.95600 & 15.42995 & 11.0725\\
+validann::ann\_BFGS & 3.3599 & 4.49705 & 1.13715 & 3.71070 & 15.89260 & 140.7880\\
+\bottomrule
+\multicolumn{7}{l}{\textit{Note: }}\\
+\multicolumn{7}{l}{statistics taken over 20 runs}\\
+\end{longtable}
+\endgroup{}
+
+\end{Schunk}
+
+Figures in Appendix E provides some insights where a package performs
+reasonably well with respect to one explanatory variable and where the
+fit misses the correct behavior of an explanatory variable. It displays
+the average response per rounded explanatory variable for the predicted,
+the empirical and the theoretical values. That is, the empirical value
+and the predicted value for the \(j\)th explanatory variable are
+respectively computed at x-value \(x\) as \[
+\bar y^{emp}_j(x) =  \left(\sum_{i=1}^n y_i 1_{r(x_{i,j}) = x} \right)
+\left(\sum_{i=1}^n 1_{r(x_{i,j}) = x}\right)^{-1},~
+\bar y^{pred}_j(x) = \left(\sum_{i=1}^n \hat y_i 1_{r(x_{i,j}) = x} \right) 
+\left(\sum_{i=1}^n 1_{r(x_{i,j}) = x}\right)^{-1} ,
+\] where \(r()\) denotes the round function with two decimal places and
+\(y_i, \hat y_i\) stand respectively for the \(i\)th observed response
+and the \(i\)th predicted response. For instance, \texttt{MachineShop},
+\texttt{nnet}, \texttt{nlsr} do not correctly capture the sinusoidal
+aspect of explanatory variable \(x_5\) on the expected response, whereas
+\texttt{rminer}, \texttt{validann} miss the increasing non-linear trend
+of explanatory variable \(x_1\) on the expected response.
 
 \hypertarget{conclusion-and-perspective}{%
 \section{Conclusion and perspective}\label{conclusion-and-perspective}}
@@ -1220,11 +1298,11 @@ order)}\label{positives-no-particular-order}}
 \subsection{Future work}\label{future-work}}
 
 As the field of neural networks continue to grow, there will always be
-more algorithms to validate. For current algorithms in R, our research
-should be extended to encompass more types of neural networks and their
-data formats (classifier neural networks, recurrent neural networks, and
-so on). Different rating schemes and different parameters for package
-functions can also be tried out.
+more algorithms to validate. For current algorithms in \textsf{R}, our
+research should be extended to encompass more types of neural networks
+and their data formats (classifier neural networks, recurrent neural
+networks, and so on). Different rating schemes and different parameters
+for package functions can also be tried out.
 
 \begin{itemize}
 \tightlist
@@ -1263,9 +1341,9 @@ of residual vectors.
 
 We define five smooth functions for Simon Wood's test dataset \[
 f_0=5\sin(2\pi x),~
-f_1=exp(3x)-7
-f_2=0.5 x^{11}(10(1 - x))^6 - 10 (10x)^3(1 - x)^{10},~
+f_1=\exp(3x)-7,
 \] \[
+f_2=0.5\times x^{11}(10(1 - x))^6 - 10 (10x)^3(1 - x)^{10},~
 f_3=15 \exp(-5 |x-1/2|)-6,
 \] \[
 f_4=2-1_{(x <= 1/3)}(6x)^3 - 1_{(x >= 2/3)} (6-6x)^3 - 
@@ -1275,184 +1353,7 @@ f_4=2-1_{(x <= 1/3)}(6x)^3 - 1_{(x >= 2/3)} (6-6x)^3 -
 \hypertarget{appendix-c}{%
 \subsection{Appendix C}\label{appendix-c}}
 
-\begin{Schunk}
-\begin{table}
-
-\caption{\label{tab:unnamed-chunk-4}All convergence scores per package:algorithm}
-\centering
-\fontsize{8}{10}\selectfont
-\begin{tabular}[t]{r>{\bfseries}llllrrrr}
-\toprule
-\multicolumn{2}{c}{ } & \multicolumn{3}{c}{Input parameter} & \multicolumn{2}{c}{RMSE Score} & \multicolumn{2}{c}{Other score} \\
-\cmidrule(l{3pt}r{3pt}){3-5} \cmidrule(l{3pt}r{3pt}){6-7} \cmidrule(l{3pt}r{3pt}){8-9}
-Num & Package:Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & WAE\\
-\midrule
-1 & AMORE:DAPTgd & x \& y & 1000 & 0.01 & 25 & 8 & 26 & 21\\
-2 & AMORE:DAPTgdwm & x \& y & 1000 & 0.01 & 22 & 29 & 16 & 26\\
-3 & AMORE:ATCHgd & x \& y & 10000 & 0.1 & 38 & 24 & 42 & 31\\
-4 & AMORE:ATCHgdwm & x \& y & 10000 & 0.1 & 33 & 14 & 37 & 27\\
-5 & ANN2:dam & x \& y & 1000 & 0.01 & 27 & 27 & 28 & 21\\
-\addlinespace
-6 & ANN2:msprop & x \& y & 1000 & 0.01 & 25 & 33 & 27 & 23\\
-7 & ANN2:gd & x \& y & 1000 & 0.01 & 37 & 22 & 36 & 29\\
-8 & automl:rainwgrad\_adam & x \& y & 1000 & 0.01 & 20 & 35 & 16 & 20\\
-9 & automl:rainwgrad\_RMSprop & x \& y & 1000 & 0.01 & 31 & 50 & 29 & 39\\
-10 & automl:trainwpso & x \& y & 1000 & - & 41 & 49 & 41 & 38\\
-\addlinespace
-11 & brnn:Gauss-Newton & x \& y & 200 & - & 12 & 9 & 13 & 12\\
-12 & CaDENCE:optim(BFGS) & x \& y & 200 & - & 28 & 48 & 21 & 40\\
-13 & CaDENCE:pso\_psoptim & x \& y & 1000 & - & 56 & 56 & 54 & 56\\
-14 & CaDENCE:Rprop & x \& y & 1000 & 0.01 & 54 & 60 & 52 & 58\\
-15 & caret:avNNet\_nnet\_optim(BFGS) & x \& y & 200 & - & 10 & 21 & 11 & 9\\
-\addlinespace
-16 & deepdive:adam & x \& y & 10000 & 0.4 & 42 & 1 & 38 & 44\\
-17 & deepdive:gradientDescent & x \& y & 10000 & 0.8 & 57 & 2 & 57 & 53\\
-18 & deepdive:momentum & x \& y & 1000 & 0.8 & 52 & 3 & 53 & 51\\
-19 & deepdive:rmsProp & x \& y & 1000 & 0.8 & 46 & 4 & 48 & 50\\
-20 & deepnet:BP & x \& y & 1000 & 0.8 & 18 & 38 & 24 & 17\\
-\addlinespace
-21 & elmNNRcpp:ELM & x \& y & - & - & 59 & 55 & 59 & 59\\
-22 & ELMR:ELM & fmla \& data & - & - & 60 & 53 & 60 & 60\\
-23 & EnsembleBase:nnet\_optim(BFGS) & x \& y & 200 & - & 15 & 34 & 15 & 15\\
-24 & h2o:first-order & "y" \& data & 10000 & 0.01 & 7 & 7 & 8 & 8\\
-25 & keras:adadelta & x \& y & 10000 & 0.1 & 35 & 19 & 34 & 33\\
-\addlinespace
-26 & keras:adagrad & x \& y & 10000 & 0.1 & 43 & 53 & 42 & 35\\
-27 & keras:adam & x \& y & 10000 & 0.1 & 28 & 44 & 30 & 25\\
-28 & keras:adamax & x \& y & 10000 & 0.1 & 18 & 20 & 20 & 16\\
-29 & keras:nadam & x \& y & 10000 & 0.1 & 39 & 58 & 40 & 41\\
-30 & keras:rmsprop & x \& y & 10000 & 0.1 & 55 & 57 & 55 & 54\\
-\addlinespace
-31 & keras:sgd & x \& y & 10000 & 0.1 & 45 & 47 & 45 & 43\\
-32 & MachineShop:nnet\_optim(BFGS) & fmla \& data & 200 & - & 9 & 22 & 9 & 7\\
-33 & minpack.lm:Levenberg-Marquardt & full fmla \& data & 200 & - & 16 & 5 & 19 & 14\\
-34 & monmlp:optimx(BFGS) & x \& y & 200 & - & 10 & 18 & 9 & 11\\
-35 & monmlp:optimx(Nelder-Mead) & x \& y & 10000 & - & 47 & 45 & 44 & 47\\
-\addlinespace
-36 & neuralnet:backprop & fmla \& data & 100000 & 0.001 & 51 & 10 & 49 & 45\\
-37 & neuralnet:rprop- & fmla \& data & 100000 & - & 21 & 42 & 21 & 18\\
-38 & neuralnet:rprop+ & fmla \& data & 100000 & - & 23 & 40 & 23 & 24\\
-39 & neuralnet:sag & fmla \& data & 100000 & - & 49 & 59 & 47 & 52\\
-40 & neuralnet:slr & fmla \& data & 100000 & - & 39 & 37 & 39 & 46\\
-\addlinespace
-41 & nlsr:NashLM & full fmla \& data & 200 & - & 3 & 16 & 3 & 6\\
-42 & nnet:optim (BFGS) & x \& y & 200 & - & 2 & 17 & 2 & 3\\
-43 & qrnn:nlm() & x \& y & 200 & - & 14 & 25 & 7 & 36\\
-44 & radiant.model:nnet\_optim(BFGS) & "y" \& data & 200 & - & 8 & 32 & 12 & 10\\
-45 & rminer:nnet\_optim(BFGS) & fmla \& data & 200 & - & 1 & 6 & 1 & 1\\
-\addlinespace
-46 & RSNNS:BackpropBatch & x \& y & 10000 & 0.1 & 48 & 27 & 50 & 48\\
-47 & RSNNS:BackpropChunk & x \& y & 1000 & - & 34 & 41 & 32 & 34\\
-48 & RSNNS:BackpropMomentum & x \& y & 1000 & - & 35 & 39 & 35 & 30\\
-49 & RSNNS:BackpropWeightDecay & x \& y & 1000 & - & 30 & 43 & 33 & 31\\
-50 & RSNNS:Quickprop & x \& y & 10000 & - & 58 & 36 & 58 & 57\\
-\addlinespace
-51 & RSNNS:Rprop & x \& y & 1000 & - & 23 & 52 & 25 & 28\\
-52 & RSNNS:SCG & x \& y & 1000 & - & 17 & 26 & 18 & 19\\
-53 & RSNNS:Std\_Backpropagation & x \& y & 1000 & 0.1 & 32 & 31 & 31 & 36\\
-54 & snnR:SemiSmoothNewton & x \& y & 200 & - & 49 & 13 & 50 & 48\\
-55 & traineR:nnet\_optim(BFGS) & fmla \& data & 200 & - & 5 & 15 & 6 & 2\\
-\addlinespace
-56 & validann:optim(BFGS) & x \& y & 200 & - & 4 & 10 & 4 & 5\\
-57 & validann:optim(CG) & x \& y & 1000 & - & 6 & 10 & 5 & 4\\
-58 & validann:optim(L-BFGS-B) & x \& y & 200 & - & 13 & 30 & 14 & 13\\
-59 & validann:optim(Nelder-Mead) & x \& y & 10000 & - & 44 & 45 & 46 & 42\\
-60 & validann:optim(SANN) & x \& y & 1000 & - & 53 & 51 & 56 & 55\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\end{Schunk}
-
-\hypertarget{appendix-d}{%
-\subsection{Appendix D}\label{appendix-d}}
-
-\begin{table}[htb!]
-\begin{center}
-\caption{\textbf{Review of Ommitted Packages}}
-\scriptsize
-
-\begin{tabular}{l l l l}
-  \toprule
-  No & Name (package)         & Category & Comment \\
-  \midrule
-  1  &\pkg{appnn}             & AP        & This package provides a feed forward neural network to predict\\
-     &                        &           & the amyloidogenicity propensity of polypeptide sequences      \\
-  2  &\pkg{autoencoder}       & AP        & This package provides a sparse autoencoder, an unsupervised   \\
-     &                        &           & algorithm that learns useful features from the data its given \\
-  3  &\pkg{BNN}               & RE*       & This package uses a feed forward neural network to perform    \\
-     &                        &           & regression as provided in the examples, however, it is unclear\\      &                        &           & whether it fits the form of perceptron that is the scope of   \\
-     &                        &           & our research. Moreover, it states that it is intended for     \\      &                        &           & variable selection. Although how exactly the package would be \\
-     &                        &           & used to do so isn't accessible in the package, especially     \\
-     &                        &           & considering the source code is based on .c code that users of \\
-     &                        &           & R might not understand. It's performance is slow, which may   \\
-     &                        &           & have to do with the 100.000 iterations it needs, although     \\
-     &                        &           & quite accurate for simple datasets.                           \\
-  4  &\pkg{Buddle}            & RE**      & (errors)\\
-  5  &\pkg{cld2}              & 00        & \\
-  6  &\pkg{cld3}              & AP        & \\
-  7  &\pkg{condmixt}          & AP        & \\
-  8  &\pkg{deep}              & CL        & \\
-  9  &\pkg{DALEX2}            & 00        & removed keyword, included in 2019 \\
-  10 &\pkg{DamiaNN}           & RE**      & (errors) exported functions, still doesn't work \\
-  11 &\pkg{DChaos}            & ??        & removed keyword for some reason, need to check out! \\
-  12 &\pkg{deepNN}            & RE**      & (errors) I/O weird, ragged vector array \\
-  13 &\pkg{DNMF}              & AP        & \\
-  14 &\pkg{evclass}           & CL        & \\
-  15 &\pkg{gamlss.add}        & RE        & there is some code but dist not appropriate \\
-  16 &\pkg{gcForest}          & 00        & \\
-  17 &\pkg{GMDH}              & TS        & \\
-  18 &\pkg{GMDH2}             & CL        & \\
-  19 &\pkg{GMDHreg}           & RE*       & \\
-  20 &\pkg{grnn}              & RE**      & \\
-  21 &\pkg{hybridEnsemble}    & ??        & \\ 
-  22 &\pkg{isingLenzMC}       & AP        & \\
-  23 &\pkg{leabRa}            & ??        & \\      
-  24 &\pkg{learNN}            & ??        & \\     
-  25 &\pkg{LilRhino}          & AP        & \\
-  26 &\pkg{neural}            & CL        & \\
-  27 &\pkg{NeuralNetTools}    & UT        & tools for neural networks           \\
-  28 &\pkg{NeuralSens}        & UT        & tools for neural networks           \\
-  29 &\pkg{NlinTS}            & TS        & Time Series                         \\
-  30 &\pkg{nnetpredint}       & UT        & confidence intervals for NN          \\
-  31 &\pkg{nnfor}             & TS        & Times Series, uses neuralnet         \\
-  32 &\pkg{nntrf}             & UT        & \\
-  33 &\pkg{onnx}              &           & provides an open source format       \\
-  34 &\pkg{OptimClassifier}   &           & choose classifier parameters, nnet   \\
-  35 &\pkg{OSTSC}             &           & solving oversampling classification  \\
-  36 &\pkg{passt}             &           & \\
-  36 &\pkg{pnn}               &           & Probabilistic                        \\
-  37 &\pkg{polyreg}           &           & polyregression as alternative to NN  \\
-  38 &\pkg{predictoR}         &           & shiny interface, neuralnet           \\
-  39 &\pkg{ProcData}          &           & \\
-  40 &\pkg{QuantumOps}        &           & classifies MNIST, Schuld (2018), removed keyword, in 2019 \\
-  41 &\pkg{quarrint}          &           & specified classifier for quarry data \\
-  42 &\pkg{rasclass}          &           & classifier for raster images, nnet?  \\
-  43 &\pkg{rcane}             &           & \\
-  44 &\pkg{regressoR}         &           & a manual rich version of predictoR   \\
-  45 &\pkg{rnn}               &           & Recurrent                            \\
-  46 &\pkg{RTextTools}        &           & \\
-  47 &\pkg{ruta}              &           & \\
-  48 &\pkg{simpleNeural}      &           & \\
-  49 &\pkg{softmaxreg}        &           & \\
-  50 &\pkg{Sojourn.Data}      &           & sojourn Accelerometer methods, nnet? \\
-  51 &\pkg{spnn}              &           & classifier, probabilistic            \\
-  52 &\pkg{studyStrap}        &           & \\
-  53 &\pkg{TeachNet}          &           & classifier, selfbuilt, slow          \\
-  54 &\pkg{tensorflow}        &           & \\
-  55 &\pkg{tfestimators}      &           & \\
-  56 &\pkg{trackdem}          &           & classifier for particle tracking     \\
-  57 &\pkg{TrafficBDE}        & RE*       & \\
-  58 &\pkg{tsfgrnn}           &           & \\
-  59 &\pkg{yap}               &           & \\
-  60 &\pkg{yager}             & RE*       & \\
-  61 &\pkg{zFactor}           & AP        & 'compressibility' of hydrocarbon gas \\
-\end{tabular}
-\end{center}
-\end{table}
-
-\hypertarget{appendix-e}{%
-\subsection{Appendix E}\label{appendix-e}}
+An example of our template for the package \texttt{nnet}:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1469,21 +1370,223 @@ NNtrain.nnet <- function(x, y, dataxy, formula, neur, method, hyperParams, ...) 
     
     hyper_params <- do.call(hyperParams, list(...))
     
-    NNreg <- nnet::nnet(x, y, size = neur, linout = TRUE, maxit = hyper_params$iter, trace=hyper_params$trace)
+    NNreg <- nnet::nnet(x, y, size = neur, linout = TRUE, 
+                        maxit = hyper_params$iter, trace=hyper_params$trace)
     return(NNreg)
 }
 NNpredict.nnet  <- function(object, x, ...) { predict(object, newdata=x) }
 NNclose.nnet    <- function() {  if("package:nnet" %in% search())
                                 detach("package:nnet", unload=TRUE) }
 nnet.prepareZZ  <- list(xdmv = "d", ydmv = "v", zdm = "d", scale = TRUE)
+\end{Sinput}
+\end{Schunk}
 
-res <- trainPredict_1pkg(4:5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
+\begin{Schunk}
+\begin{Sinput}
+res <- trainPredict_1pkg(4, pkgname = "nnet", pkgfun = "nnet", nnet.method,
   prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
   csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
 \end{Sinput}
+\begin{figure}
 
-\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-5-1} 
-\includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-5-2} \end{Schunk}
+{\centering \includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-6-1} 
+
+}
+
+\caption[Example of nnet on mRef153]{Example of nnet on mRef153}\label{fig:unnamed-chunk-6}
+\end{figure}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
+  prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
+  csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
+\end{Sinput}
+\begin{figure}
+
+{\centering \includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-7-1} 
+
+}
+
+\caption[Example of nnet on uDmod1]{Example of nnet on uDmod1}\label{fig:unnamed-chunk-7}
+\end{figure}
+\end{Schunk}
+
+\hypertarget{appendix-d}{%
+\subsection{Appendix D}\label{appendix-d}}
+
+\begin{Schunk}
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-8}All convergence scores per package:algorithm}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{>{\bfseries}llcllcccc}
+\toprule
+\multicolumn{2}{c}{ } & \multicolumn{3}{c}{Input parameter} & \multicolumn{2}{c}{RMSE Score} & \multicolumn{2}{c}{Other score} \\
+\cmidrule(l{3pt}r{3pt}){3-5} \cmidrule(l{3pt}r{3pt}){6-7} \cmidrule(l{3pt}r{3pt}){8-9}
+Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & WAE\\
+\midrule
+ & 1. ADAPTgd & x \& y & 1000 & 0.01 & 25 & 8 & 26 & 21\\
+
+ & 2. ADAPTgdwm & x \& y & 1000 & 0.01 & 22 & 29 & 16 & 26\\
+
+ & 3. BATCHgd & x \& y & 10000 & 0.1 & 38 & 24 & 42 & 31\\
+
+\multirow{-4}{*}{\raggedright\arraybackslash AMORE} & 4. BATCHgdwm & x \& y & 10000 & 0.1 & 33 & 14 & 37 & 27\\
+\cmidrule{1-9}
+ & 5. adam & x \& y & 1000 & 0.01 & 27 & 27 & 28 & 21\\
+
+ & 6. rmsprop & x \& y & 1000 & 0.01 & 25 & 33 & 27 & 23\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash ANN2} & 7. sgd & x \& y & 1000 & 0.01 & 37 & 22 & 36 & 29\\
+\cmidrule{1-9}
+ & 8. trainwgrad\_adam & x \& y & 1000 & 0.01 & 20 & 35 & 16 & 20\\
+
+ & 9. trainwgrad\_RMSprop & x \& y & 1000 & 0.01 & 31 & 50 & 29 & 39\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash automl} & 10. trainwpso & x \& y & 1000 & - & 41 & 49 & 41 & 38\\
+\cmidrule{1-9}
+brnn & 11. Gauss-Newton & x \& y & 200 & - & 12 & 9 & 13 & 12\\
+\cmidrule{1-9}
+ & 12. optim(BFGS) & x \& y & 200 & - & 28 & 48 & 21 & 40\\
+
+ & 13. pso\_psoptim & x \& y & 1000 & - & 56 & 56 & 54 & 56\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash CaDENCE} & 14. Rprop & x \& y & 1000 & 0.01 & 54 & 60 & 52 & 58\\
+\cmidrule{1-9}
+caret & 15. avNNet\_nnet\_optim(BFGS) & x \& y & 200 & - & 10 & 21 & 11 & 9\\
+\cmidrule{1-9}
+ & 16. adam & x \& y & 10000 & 0.4 & 42 & 1 & 38 & 44\\
+
+ & 17. gradientDescent & x \& y & 10000 & 0.8 & 57 & 2 & 57 & 53\\
+
+ & 18. momentum & x \& y & 1000 & 0.8 & 52 & 3 & 53 & 51\\
+
+\multirow{-4}{*}{\raggedright\arraybackslash deepdive} & 19. rmsProp & x \& y & 1000 & 0.8 & 46 & 4 & 48 & 50\\
+\cmidrule{1-9}
+deepnet & 20. BP & x \& y & 1000 & 0.8 & 18 & 38 & 24 & 17\\
+\cmidrule{1-9}
+elmNNRcpp & 21. ELM & x \& y & - & - & 59 & 55 & 59 & 59\\
+\cmidrule{1-9}
+ELMR & 22. ELM & fmla \& data & - & - & 60 & 53 & 60 & 60\\
+\cmidrule{1-9}
+EnsembleBase & 23. nnet\_optim(BFGS) & x \& y & 200 & - & 15 & 34 & 15 & 15\\
+\cmidrule{1-9}
+h2o & 24. first-order & "y" \& data & 10000 & 0.01 & 7 & 7 & 8 & 8\\
+\cmidrule{1-9}
+ & 25. adadelta & x \& y & 10000 & 0.1 & 35 & 19 & 34 & 33\\
+
+ & 26. adagrad & x \& y & 10000 & 0.1 & 43 & 53 & 42 & 35\\
+
+ & 27. adam & x \& y & 10000 & 0.1 & 28 & 44 & 30 & 25\\
+
+ & 28. adamax & x \& y & 10000 & 0.1 & 18 & 20 & 20 & 16\\
+
+ & 29. nadam & x \& y & 10000 & 0.1 & 39 & 58 & 40 & 41\\
+
+ & 30. rmsprop & x \& y & 10000 & 0.1 & 55 & 57 & 55 & 54\\
+
+\multirow{-7}{*}{\raggedright\arraybackslash keras} & 31. sgd & x \& y & 10000 & 0.1 & 45 & 47 & 45 & 43\\
+\cmidrule{1-9}
+MachineShop & 32. nnet\_optim(BFGS) & fmla \& data & 200 & - & 9 & 22 & 9 & 7\\
+\cmidrule{1-9}
+minpack.lm & 33. Levenberg-Marquardt & full fmla \& data & 200 & - & 16 & 5 & 19 & 14\\
+\cmidrule{1-9}
+ & 34. optimx(BFGS) & x \& y & 200 & - & 10 & 18 & 9 & 11\\
+
+\multirow{-2}{*}{\raggedright\arraybackslash monmlp} & 35. optimx(Nelder-Mead) & x \& y & 10000 & - & 47 & 45 & 44 & 47\\
+\cmidrule{1-9}
+ & 36. backprop & fmla \& data & 100000 & 0.001 & 51 & 10 & 49 & 45\\
+
+ & 37. rprop- & fmla \& data & 100000 & - & 21 & 42 & 21 & 18\\
+
+ & 38. rprop+ & fmla \& data & 100000 & - & 23 & 40 & 23 & 24\\
+
+ & 39. sag & fmla \& data & 100000 & - & 49 & 59 & 47 & 52\\
+
+\multirow{-5}{*}{\raggedright\arraybackslash neuralnet} & 40. slr & fmla \& data & 100000 & - & 39 & 37 & 39 & 46\\
+\cmidrule{1-9}
+nlsr & 41. NashLM & full fmla \& data & 200 & - & 3 & 16 & 3 & 6\\
+\cmidrule{1-9}
+nnet & 42. optim (BFGS) & x \& y & 200 & - & 2 & 17 & 2 & 3\\
+\cmidrule{1-9}
+qrnn & 43. nlm() & x \& y & 200 & - & 14 & 25 & 7 & 36\\
+\cmidrule{1-9}
+radiant.model & 44. nnet\_optim(BFGS) & "y" \& data & 200 & - & 8 & 32 & 12 & 10\\
+\cmidrule{1-9}
+rminer & 45. nnet\_optim(BFGS) & fmla \& data & 200 & - & 1 & 6 & 1 & 1\\
+\cmidrule{1-9}
+ & 46. BackpropBatch & x \& y & 10000 & 0.1 & 48 & 27 & 50 & 48\\
+
+ & 47. BackpropChunk & x \& y & 1000 & - & 34 & 41 & 32 & 34\\
+
+ & 48. BackpropMomentum & x \& y & 1000 & - & 35 & 39 & 35 & 30\\
+
+ & 49. BackpropWeightDecay & x \& y & 1000 & - & 30 & 43 & 33 & 31\\
+
+ & 50. Quickprop & x \& y & 10000 & - & 58 & 36 & 58 & 57\\
+
+ & 51. Rprop & x \& y & 1000 & - & 23 & 52 & 25 & 28\\
+
+ & 52. SCG & x \& y & 1000 & - & 17 & 26 & 18 & 19\\
+
+\multirow{-8}{*}{\raggedright\arraybackslash RSNNS} & 53. Std\_Backpropagation & x \& y & 1000 & 0.1 & 32 & 31 & 31 & 36\\
+\cmidrule{1-9}
+snnR & 54. SemiSmoothNewton & x \& y & 200 & - & 49 & 13 & 50 & 48\\
+\cmidrule{1-9}
+traineR & 55. nnet\_optim(BFGS) & fmla \& data & 200 & - & 5 & 15 & 6 & 2\\
+\cmidrule{1-9}
+ & 56. optim(BFGS) & x \& y & 200 & - & 4 & 10 & 4 & 5\\
+
+ & 57. optim(CG) & x \& y & 1000 & - & 6 & 10 & 5 & 4\\
+
+ & 58. optim(L-BFGS-B) & x \& y & 200 & - & 13 & 30 & 14 & 13\\
+
+ & 59. optim(Nelder-Mead) & x \& y & 10000 & - & 44 & 45 & 46 & 42\\
+
+\multirow{-5}{*}{\raggedright\arraybackslash validann} & 60. optim(SANN) & x \& y & 1000 & - & 53 & 51 & 56 & 55\\
+\bottomrule
+\multicolumn{9}{l}{\textit{Note: }}\\
+\multicolumn{9}{l}{TOP5 packages are nlsr:NashLM, rminer:nnet\_optim(BFGS), nnet:optim (BFGS), validann:optim(BFGS), MachineShop:nnet\_optim(BFGS).}\\
+\end{tabular}
+\end{table}
+
+\end{Schunk}
+
+\hypertarget{appendix-e}{%
+\subsection{Appendix E}\label{appendix-e}}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/MachineShop.png}
+        \label{fig:MachineShop}
+        \caption{Average predicted mean per explanatory variable for \code{MachineShop}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/nnet.png}
+        \label{fig:nnet}
+        \caption{Average predicted mean per explanatory variable for \code{nnet}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/rminer.png}
+        \label{fig:rminer}
+        \caption{Average predicted mean per explanatory variable for \code{rminer}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/nlsr.png}
+        \label{fig:nlsr}
+        \caption{Average predicted mean per explanatory variable for \code{nlsr}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{img/validann.png}
+        \label{fig:validann}
+        \caption{Average predicted mean per explanatory variable for \code{validann}}
+\end{figure}
 
 
 \address{%
@@ -1502,7 +1605,7 @@ Manipal, Karnataka, 576104, India\\
 
 \address{%
 Christophe Dutang\\
-University Paris-Dauphine, University PSL, CNRS, CEREMADE\\
+Université Paris-Dauphine, University PSL, CNRS, CEREMADE\\
 Place du Maréchal de Lattre de Tassigny, 75016 Paris, France\\
 }
 \href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
