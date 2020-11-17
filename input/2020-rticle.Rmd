@@ -36,6 +36,7 @@ output: rticles::rjournal_article
 ```{r, echo=FALSE}
 library(knitr)
 library(kableExtra)
+library(NNbenchmark)
 ```
 
 
@@ -56,14 +57,16 @@ Overall, 15 pairs are considered accurate and reliable and can be recommended fo
 Most others should be avoided as they are either less accurate, too slow, too difficult to handle, or have poor or no documentation.
 
 To carry out this work, we developed various codes and templates, as well as the NNbenchmark package used for testing. 
-This material is available at https://akshajverma.com/NNbenchmarkWeb/index.html and https://github.com/pkR-pkR/NNbenchmark, and can be used to verify our work and, we hope, improve both packages and their evaluation.
+This material is available at \url{https://akshajverma.com/NNbenchmarkWeb/index.html} and
+\url{https://github.com/pkR-pkR/NNbenchmark}, and can be used to verify our work and, we hope, 
+improve both packages and their evaluation.
 Finally, we provide some hints and features to guide the development of an idealized neural network package for R.
 
 
 ## Introduction
 
-The \soft{R} Project for Statistical Computing (\url{www.r-project.org}), as any opensource platform, relies on its contributors to keep it up to date. 
-Neural networks (NN), inspired on the brain's own connections system, are a class of models in the growing field of machine learning for which R has a number of tools.
+The \soft{R} Project for Statistical Computing by \citep{Rsoft20}, as any opensource platform, relies on its contributors to keep it up to date. 
+Neural networks (NN), inspired on the brain's own connections system, are a class of models in the growing field of machine learning for which \soft{R} has a number of tools.
 During the last 30 years, neural networks have evolved from an academic topic to a common tool in scientific computing.
 Previously, neural networks were often considered theoretically instead of pragmatically, partly because the algorithms used were computationally demanding. 
 
@@ -145,7 +148,7 @@ Such good practices help find good local minima and possibly the global minimum.
 
 The dataset used for the training is assumed to have a number of rows much larger than the number of parameters. While "much larger" is subject to discussion, values of 3 to 5 are generally accepted (in experimental design, some iterative strategies start with a dataset having a number of distinct experiments equal to 1.8 times the number of parameters and then increase the number of experiments to finetune the model).
 
-It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some collinearities between its columns and become nearly singular. As a result, appropriate algorithms for such \code{dataset::model} pairs are rather limited and well-known. They pertain to the class of second-order algorithms such as the BFGS algorithm which is Quasi-Newton in how it updates the approximate inverse Hessian or the Levenberg-Marquardt algorithm which stabilizes the Gauss-Newton search direction at every iteration.
+It is rather clear from the mathematical formula above that neural networks of perceptron type are nonlinear models and require for their parameter estimation some training algorithms that can handle (highly) nonlinear models. Indeed, the intrinsic and parametric curvatures of such models are usually very high and, with so many parameters, the Jacobian matrix might exhibit some colinearities between its columns and become nearly singular. As a result, appropriate algorithms for such \code{dataset::model} pairs are rather limited and well-known. They pertain to the class of second-order algorithms such as the BFGS algorithm which is Quasi-Newton in how it updates the approximate inverse Hessian or the Levenberg-Marquardt algorithm which stabilizes the Gauss-Newton search direction at every iteration.
 
 <!--Also Levenberg-Marquardt is a stabilization of the Jacobian that could be applied to several algorithms. Should we say 'Levenberg-Marquardt stabilized Gauss-Newton', which is what \CRANpkg{nlsr} uses.
 SB??: JN, I did not add this here as there is some discussion of the package side of things in the results, I did however add the point about LM stabilizing Gauss-Newton-->
@@ -164,6 +167,7 @@ we contend this is an error, and provide evidence to that effect in this paper.
 ==> CD : just split a sentence -->
 Unfortunately, due to some educative tools on the backpropagation, and an initial literature on the gradient in the early researches and more recently on the "deep neural networks" that manipulate ultra-large models with hundreds or thousands parameters (and sometimes more parameters than examples in the datasets), many papers emphasize the use of first-order gradient algorithms.
 Therefore, many \soft{R} packages have implemented such algorithms. In the case of the perceptron, we contend this is an error, and provide evidence to that effect in this paper.
+We refer interested readers to \citep{tan2019review} for a review of second-order algorithms for neural networks.
 
 
 # Methodology
@@ -235,53 +239,72 @@ B: I actually don't have much information on the datasets. In 2019, Patrice intr
 A non-iterative calculation such as Ordinary Least Squares cannot generally be used to model all
 the datasets in our evaluation set. Varying levels of difficulty in modeling the
 different data sets are intended to allow us to further classify different algorithms and the packages
-that implement them. Sonja Surjanovic and Derek Bingham of Simon Fraser University created a useful website 
+that implement them. As we focus on regression analysis, we select only datasets where the response variable is
+real-valued.
+
+
+
+Sonja Surjanovic and Derek Bingham of Simon Fraser University created a useful website 
 from which three of the multivariate datasets were drawn. We note the link, name and difficulty level of 
 the three datasets:  
-- \url{http://www.sfu.ca/~ssurjano/fried.html}        (Friedman - average)  
-- \url{http://www.sfu.ca/~ssurjano/detpep10curv.html} (Dette - medium)  
-- \url{http://www.sfu.ca/~ssurjano/ishigami.html}     (Ishigami - high)  
 
-The other multivariate dataset, Ref153, was used to teach neural networks at ESPCI from 2003 to 2013 and is available in the software Neuro One at \url{http://www.inmodelia.com/software.html} <!-- ??JN: Need this. Bila? -->
+- \url{http://www.sfu.ca/~ssurjano/fried.html}: \code{mFriedman}, Friedman's dataset, published in \citep{friedman91} (average difficulty),  
+- \url{http://www.sfu.ca/~ssurjano/detpep10curv.html}: \code{mDette}, Dette's dataset, published in \citep{dettePepelyshev10} (medium difficulty),   
+- \url{http://www.sfu.ca/~ssurjano/ishigami.html}: \code{mIshigami}, Ishigami's dataset, published in \citep{ishigamietal90} (high difficulty).  
 
-Three of the univariate datasets we used were taken from a website of the US National Institute
-for Standards and Technology (NIST):
-https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml. (Gauss1 - low; Gauss2 - low; Gauss3 - average)
+The last multivariate dataset, \code{mRef153}, was used to teach neural networks at ESPCI 
+(The City of Paris Industrial Physics and Chemistry Higher Educational Institution,
+\url{https://www.neurones.espci.fr/}) 
+from 2003 to 2013 and is available in the proprietary software Neuro One at \url{http://www.inmodelia.com/software.html}. This dataset presents some interesting non-linear
+feature. 
 
-Univariate datasets Dmod1, Dmod2 are  ... <!-- ??JN: Need this. Bila? -->
-<!-- B??: Patrice only this is available in the docs of uDmod1 - "An univariate dataset (x, y) of class data.frame and dim 51 x 2 to be fitted by a neural network with 6 hidden neurons (19 parameters). The parameters are highly correlated and singular Jacobian matrices often appear. A difficult dataset." -->
 
-Dreyfus1 is a pure neural network which has no error. This can make it difficult for algorithms 
-that assume an error exists. Dreyfus2 is Dreyfus1 with errors. Both are considered to be of low difficulty and usually appeared in the first slides when used to teach neural networks at ESPCI from 1991 to 2013 (\url{https://www.neurones.espci.fr/})
+\code{uDreyfus1} is a pure neural network which has no error. This can make it difficult for algorithms 
+that assume an error exists. \code{uDreyfus2} is \code{uDreyfus1} with errors. Both are considered to 
+be of low difficulty and used to teach neural networks at ESPCI from 1991 to 2013.
+\code{uDmod1} and \code{uDmod2} are univariate datasets with few observations but exhibit high nonlinear
+patterns and prove to be very challenging datasets. The parameters are highly correlated and singular Jacobian matrices often appear.
 
-The last univariate dataset, NeuroOne,  was also used to teach the same course and is now available in the software Neuro One. <!-- B??: repeat the link? add to above? -->   
 
-<!-- B: should we also add that further information is in the docs? and/or
-> NNbenchmark::NNdataSummary(NNbenchmark::NNdatasets)
-     Dataset n_rows n_inputs n_neurons n_parameters
-1     mDette    500        3         5           26
-2  mFriedman    500        5         5           36
-3  mIshigami    500        3        10           51
-4    mRef153    153        5         3           22
-5     uDmod1     51        1         6           19
-6     uDmod2     51        1         5           16
-7  uDreyfus1     51        1         3           10
-8  uDreyfus2     51        1         3           10
-9    uGauss1    250        1         5           16
-10   uGauss2    250        1         4           13
-11   uGauss3    250        1         4           13
-12 uNeuroOne     51        1         2            7
--->
+Three of the univariate datasets were taken from the US National Institute
+for Standards and Technology (NIST) website:
+\url{https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml}. 
+Namely \code{uGauss1}, \code{uGauss2} and \code{uGauss3} published in \citep[resp.]{rustnist96:Gauss1,rustnist96:Gauss2,rustnist96:Gauss3} 
+created by NIST to assess nonlinear least squares regressions are of low, low and 
+medium difficulty respectively.
 
-Finally, we also consider a Simon Wood test dataset, names \code{bWoodN1}, used in 
+The last univariate dataset, \code{uNeuroOne},  was also used to teach the same course 
+and is now available in the proprietary software Neuro One at \url{http://www.inmodelia.com/software.html}.
+In Table 1, we list some information on each dataset used in the first round of
+our analysis: the number of neurons and the induced parameter number are available
+in the last two columns.
+
+```{r, echo=FALSE}
+#check
+dimNNdata <- t(sapply(NNdatasets, function(x) dim(x$Z)))
+sumNNdata <- NNbenchmark::NNdataSummary(NNbenchmark::NNdatasets)
+colnames(sumNNdata) <- c("Dataset", "Row nb.", "Input nb.", "Neuron nb.", "Param. nb.")
+kableExtra::kable(sumNNdata, 
+                  format = "latex", booktabs = TRUE, centering = TRUE, align="lcccc",
+                  caption="Datasets' summary") %>%
+  pack_rows("Multivariate", 1, 4) %>% 
+  pack_rows("Univariate", 5, 12) %>%
+  kable_styling(font_size=7)
+```
+
+
+Finally, we also consider a Simon Wood test dataset, named \code{bWoodN1}, used in 
 \citep{wood2011fast} for benchmarking generalized additive models. 
-Precisely, we consider a generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ with the mean $\mu_i$ defined as
+Precisely, we consider a generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ 
+with the mean $\mu_i$ defined as
 $$
 \mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
 +f_4(x_{i,4})+f_0(x_{i,5})
 $$
 and standard deviation $\sigma=1/4$ where $f_j$ are Simon Wood's smooth 
 functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
+\code{bWoodN1} will only be used in the second round of our analysis when the TOP5 packages
+will be further analyzed with 5 neurons resulting in 41 parameters.
 
 
 **Packages**
@@ -290,7 +313,7 @@ Using \CRANpkg{RWsearch} \citep{R-RWsearch}, we sought to automate the process o
 All packages that have ``neural network'' as a keyword in the package title or in the package description were included. 
 In May 2020, around 80 packages falls into this category.
 Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added because the former 2 are important implementations of second-order algorithms while the latter is the first cited meta package in 
-the CRAN's task view for machine learning, 	https://CRAN.R-project.org/view=MachineLearning, as well as the dependency for some of the other packages tested. 
+the CRAN's task view for machine learning, 	\url{https://CRAN.R-project.org/view=MachineLearning}, as well as the dependency for some of the other packages tested. 
 Restricting to regression analysis left us with 49 \code{package:algorithm} pairs in 2019 and 60 \code{package:algorithm} pairs in 2020.
 
 
@@ -335,13 +358,13 @@ It is optional to print warnings.
 
 To simplify this process, we developed tools in the \pkg{NNbenchmark} package, of which the first version 
 was created as part of GSoC 2019. In GSoC 2020, 3 functions encapsulating the template, that had been 
-made generic with an extensive use of the incredible \code{do.call} function, were added:
+made generic with an extensive use of the incredible \code{do.call} function from \pkg{base} package, were added:
 
 1.    In \code{trainPredict\_1mth1data} a neural network is trained on one dataset and then used for predictions, with several utilities. Then, the performance of the neural network is exported, plotted and/or summarized.
-2.    \code{trainPredict\_1data} serves as a wrapper function for trainPredict_1mth1data for multiple methods.
-3.    \code{trainPredict\_1pkg} serves as a wrapper function for trainPredict_1mth1data for multiple datasets.
+2.    \code{trainPredict\_1data} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple methods.
+3.    \code{trainPredict\_1pkg} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple datasets.
 
-A function for the summary of accuracy and speed, \code{NNsummary}, was also added. The package repository is https://github.com/pkR-pkR/NNbenchmark, with package templates in https://github.com/pkR-pkR/NNbenchmarkTemplates. 
+A function for the summary of accuracy and speed, \code{NNsummary}, was also added. The package repository is \url{https://github.com/pkR-pkR/NNbenchmark}, with package templates in \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}. 
 An example of call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 <!-- B: should we add some examples with the code? As some package authors who publish in the R Journal do to introduce their package. Or we could link to specific pages of the website here?
@@ -409,16 +432,11 @@ To rank how well and how fast a package converged, we developed the following me
 
 
 
-To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
-- Functionality (util): scaling, input, output, trace
-- Documentation (docs): examples, structure/functions, vignettes
-
-<!-- CD: should we develop? -->
 
 # Results, discussion and recommendations
 
-Table 1 gives the RMSE and time score per package and per algorithm. The full list of score
-is given in Table 2 in Appendix C.
+Table 2 gives the RMSE and time score per package and per algorithm. The full list of score
+is given in Table 5 in Appendix C.
 We divide our analysis in two groups: packages implementing second order algorithms
 and packages implementing first order algorithms.
 
@@ -430,7 +448,6 @@ and packages implementing first order algorithms.
 <!-- B: but now that I see the output again, I wonder if we should do so? bcs then packages with more than 1 algorithm will be separated + in Appendix C, the authors would have to remember multiple numbers as the names don't fit. At least alphabetically, -->
 
 ```{r echo=FALSE, message=FALSE}
-library(kableExtra)
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table1.csv")) {  
@@ -484,9 +501,10 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
                   centering = TRUE, align="lccclcc",
                   caption="Result from Tested Packages") %>%
   add_header_above(c(" "=1, "Individual rating"=3, " "=1,  "Global score"=2)) %>%
-  column_spec(1, bold = TRUE) %>%
+  column_spec(c(1, 7), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7)
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
 ```
 
 
@@ -777,8 +795,6 @@ The full list of untested packages is given in Table 2.
 <!-- B?? : should tensorflow be here or in point 1? ATM, that package and some others no longer work with the latest version of TF so we judge the performance by keras in tested packages -->
 
 ```{r echo=FALSE, message=FALSE}
-
-library(kableExtra)
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
@@ -794,21 +810,23 @@ colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or 
 
 kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
                   caption="Review of Discarded Packages") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=7, latex_options = c("repeat_header")) %>%
   column_spec(3, width = "10cm") %>%
-  footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.")
+  footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.", 
+           footnote_as_chunk=TRUE)
 ```
 
 
 ## Further analysis of TOP5 packages
 
-In this final subsection, we present further performance results of the Top 5 packages given Table1.
+In this subsection, we perform a second round analysis with a larger dataset
+with a focus on the Top 5 packages given Table 2.
 That is, we consider packages `nlsr`, `rminer`, `nnet`, `validann` with algorithm BFGS and `MachineShop`.
 We fit the NN packages on Simon Wood's Gaussian dataset, see `bWoodN1` in dataset description, which contains
 20,000 rows with 6 inputs valued in [0,1] for a (single) numeric output.
 Due to the non-linear functions considered, see Appendix B, the link between the output and each
 explanatory variable is highly nonlinear which affects deeply the fitting time.
-Table 3 gives the metric performance over 20 runs of these Top 5 five packages on `bWoodN1`.
+Table 4 gives the metric performance over 20 runs of these Top 5 five packages on `bWoodN1`.
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all package, yet `rminer`
 and `validann` are little bit behind others.
@@ -817,8 +835,6 @@ other metric  norms: WAE and MAE.
 Regarding computation time, the two best in class are `nnet` and `MachineShop`.
 
 ```{r echo=FALSE, message=FALSE}
-
-library(kableExtra)
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table3.csv")) {  
@@ -826,12 +842,12 @@ if(file.exists("./tables/Table3.csv")) {
 }else
  Table3 <- rep("missing", 7)
 colnames(Table3) <- c("Package::algorithm", "RMSE min", "RMSE median", "RMSE D51", 
-                      "MAE median", "WAE median", "Time median")
+                      "MAE median", "WAE median", "Time median (sec)")
 
 kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE, longtable = TRUE,
                   caption="Performance on bWoodN1") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="statistics taken over 20 runs")
+  footnote(general="statistics taken over 20 runs.", footnote_as_chunk=TRUE)
 ```
 
 Figures in Appendix E provides some insights where a package performs reasonably well 
@@ -868,6 +884,8 @@ JN??: Why is this positive?
 - R users have access to a wide variety of neural network methods, including from libraries of other programming languages
 and using many different types of algorithms. ?? have we defined hyperparameters?? hyperparameters, and uses
 <!-- JN??: this bullet point still clumsy, but when we decide content, I'll edit -->
+
+Reproducibility : all our benchmark is reproducible by any user and any package maintainer.
 
 ## Negatives
 - We are disappointed that many of the packages we reviewed had poor documentation.
@@ -973,7 +991,6 @@ res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 ## Appendix D
 
 ```{r echo=FALSE, message=FALSE}
-library(kableExtra)
 if(file.exists("./tables/TableAppendixC.csv")) {  
   Table1SupplApp <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
 }else 
@@ -994,7 +1011,7 @@ Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Max
 TOP5pkg <- head(unique(Table1rk$Package), 5)
 TOP5algo <- head(Table1rk$Algorithm[order(Table1rk$RMSE)], 5)
 TOP5algo <- substr(TOP5algo, 5, nchar(TOP5algo))
-TOP5sentence <- paste0("TOP5 packages are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), collapse=", "), ".")      
+TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), collapse=", "), ".")      
 
 kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE, 
                   centering = TRUE, align="llcllcccc",
@@ -1003,7 +1020,7 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
   column_spec(1, bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general=TOP5sentence)
+  footnote(general=TOP5sentence, footnote_as_chunk=TRUE)
 ```
 
 ## Appendix E
