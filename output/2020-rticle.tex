@@ -49,15 +49,15 @@ an idealized neural network package for R.
 \hypertarget{introduction}{%
 \subsection{Introduction}\label{introduction}}
 
-The \textsf{R} Project for Statistical Computing
-(\url{www.r-project.org}), as any opensource platform, relies on its
-contributors to keep it up to date. Neural networks (NN), inspired on
-the brain's own connections system, are a class of models in the growing
-field of machine learning for which R has a number of tools. During the
-last 30 years, neural networks have evolved from an academic topic to a
-common tool in scientific computing. Previously, neural networks were
-often considered theoretically instead of pragmatically, partly because
-the algorithms used were computationally demanding.
+The \textsf{R} Project for Statistical Computing by \citep{Rsoft20}, as
+any opensource platform, relies on its contributors to keep it up to
+date. Neural networks (NN), inspired on the brain's own connections
+system, are a class of models in the growing field of machine learning
+for which \textsf{R} has a number of tools. During the last 30 years,
+neural networks have evolved from an academic topic to a common tool in
+scientific computing. Previously, neural networks were often considered
+theoretically instead of pragmatically, partly because the algorithms
+used were computationally demanding.
 
 As a convenience in the general conversation, the same term is used in a
 generic manner for different model structures and applications:
@@ -190,8 +190,8 @@ networks of perceptron type are nonlinear models and require for their
 parameter estimation some training algorithms that can handle (highly)
 nonlinear models. Indeed, the intrinsic and parametric curvatures of
 such models are usually very high and, with so many parameters, the
-Jacobian matrix might exhibit some collinearities between its columns
-and become nearly singular. As a result, appropriate algorithms for such
+Jacobian matrix might exhibit some colinearities between its columns and
+become nearly singular. As a result, appropriate algorithms for such
 \code{dataset::model} pairs are rather limited and well-known. They
 pertain to the class of second-order algorithms such as the BFGS
 algorithm which is Quasi-Newton in how it updates the approximate
@@ -206,7 +206,8 @@ parameters than examples in the datasets), many papers emphasize the use
 of first-order gradient algorithms. Therefore, many \textsf{R} packages
 have implemented such algorithms. In the case of the perceptron, we
 contend this is an error, and provide evidence to that effect in this
-paper.
+paper. We refer interested readers to \citep{tan2019review} for a review
+of second-order algorithms for neural networks.
 
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
@@ -277,35 +278,93 @@ A non-iterative calculation such as Ordinary Least Squares cannot
 generally be used to model all the datasets in our evaluation set.
 Varying levels of difficulty in modeling the different data sets are
 intended to allow us to further classify different algorithms and the
-packages that implement them. Sonja Surjanovic and Derek Bingham of
-Simon Fraser University created a useful website from which three of the
-multivariate datasets were drawn. We note the link, name and difficulty
-level of the three datasets:\\
-- \url{http://www.sfu.ca/~ssurjano/fried.html} (Friedman - average)\\
-- \url{http://www.sfu.ca/~ssurjano/detpep10curv.html} (Dette - medium)\\
-- \url{http://www.sfu.ca/~ssurjano/ishigami.html} (Ishigami - high)
+packages that implement them. As we focus on regression analysis, we
+select only datasets where the response variable is real-valued.
 
-The other multivariate dataset, Ref153, was used to teach neural
-networks at ESPCI from 2003 to 2013 and is available in the software
-Neuro One at \url{http://www.inmodelia.com/software.html}
+Sonja Surjanovic and Derek Bingham of Simon Fraser University created a
+useful website from which three of the multivariate datasets were drawn.
+We note the link, name and difficulty level of the three datasets:
 
-Three of the univariate datasets we used were taken from a website of
-the US National Institute for Standards and Technology (NIST):
-\url{https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml}. (Gauss1 -
-low; Gauss2 - low; Gauss3 - average)
+\begin{itemize}
+\tightlist
+\item
+  \url{http://www.sfu.ca/~ssurjano/fried.html}: \code{mFriedman},
+  Friedman's dataset, published in \citep{friedman91} (average
+  difficulty),\\
+\item
+  \url{http://www.sfu.ca/~ssurjano/detpep10curv.html}: \code{mDette},
+  Dette's dataset, published in \citep{dettePepelyshev10} (medium
+  difficulty),\\
+\item
+  \url{http://www.sfu.ca/~ssurjano/ishigami.html}: \code{mIshigami},
+  Ishigami's dataset, published in \citep{ishigamietal90} (high
+  difficulty).
+\end{itemize}
 
-Univariate datasets Dmod1, Dmod2 are \ldots{}
+The last multivariate dataset, \code{mRef153}, was used to teach neural
+networks at ESPCI (The City of Paris Industrial Physics and Chemistry
+Higher Educational Institution, \url{https://www.neurones.espci.fr/})
+from 2003 to 2013 and is available in the proprietary software Neuro One
+at \url{http://www.inmodelia.com/software.html}. This dataset presents
+some interesting non-linear feature.
 
-Dreyfus1 is a pure neural network which has no error. This can make it
-difficult for algorithms that assume an error exists. Dreyfus2 is
-Dreyfus1 with errors. Both are considered to be of low difficulty and
-usually appeared in the first slides when used to teach neural networks
-at ESPCI from 1991 to 2013 (\url{https://www.neurones.espci.fr/})
+\code{uDreyfus1} is a pure neural network which has no error. This can
+make it difficult for algorithms that assume an error exists.
+\code{uDreyfus2} is \code{uDreyfus1} with errors. Both are considered to
+be of low difficulty and used to teach neural networks at ESPCI from
+1991 to 2013. \code{uDmod1} and \code{uDmod2} are univariate datasets
+with few observations but exhibit high nonlinear patterns and prove to
+be very challenging datasets. The parameters are highly correlated and
+singular Jacobian matrices often appear.
 
-The last univariate dataset, NeuroOne, was also used to teach the same
-course and is now available in the software Neuro One.
+Three of the univariate datasets were taken from the US National
+Institute for Standards and Technology (NIST) website:
+\url{https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml}. Namely
+\code{uGauss1}, \code{uGauss2} and \code{uGauss3} published in
+\citep[resp.]{rustnist96:Gauss1,rustnist96:Gauss2,rustnist96:Gauss3}
+created by NIST to assess nonlinear least squares regressions are of
+low, low and medium difficulty respectively.
 
-Finally, we also consider a Simon Wood test dataset, names
+The last univariate dataset, \code{uNeuroOne}, was also used to teach
+the same course and is now available in the proprietary software Neuro
+One at \url{http://www.inmodelia.com/software.html}. In Table 1, we list
+some information on each dataset used in the first round of our
+analysis: the number of neurons and the induced parameter number are
+available in the last two columns.
+
+\begin{Schunk}
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-2}Datasets' summary}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{lcccc}
+\toprule
+Dataset & Row nb. & Input nb. & Neuron nb. & Param. nb.\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Multivariate}}\\
+\hspace{1em}mDette & 500 & 3 & 5 & 26\\
+\hspace{1em}mFriedman & 500 & 5 & 5 & 36\\
+\hspace{1em}mIshigami & 500 & 3 & 10 & 51\\
+\hspace{1em}mRef153 & 153 & 5 & 3 & 22\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Univariate}}\\
+\hspace{1em}uDmod1 & 51 & 1 & 6 & 19\\
+\hspace{1em}uDmod2 & 51 & 1 & 5 & 16\\
+\hspace{1em}uDreyfus1 & 51 & 1 & 3 & 10\\
+\hspace{1em}uDreyfus2 & 51 & 1 & 3 & 10\\
+\hspace{1em}uGauss1 & 250 & 1 & 5 & 16\\
+\hspace{1em}uGauss2 & 250 & 1 & 4 & 13\\
+\hspace{1em}uGauss3 & 250 & 1 & 4 & 13\\
+\hspace{1em}uNeuroOne & 51 & 1 & 2 & 7\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{Schunk}
+
+Finally, we also consider a Simon Wood test dataset, named
 \code{bWoodN1}, used in \citep{wood2011fast} for benchmarking
 generalized additive models. Precisely, we consider a generation of
 Gaussian random variates \(Y_i\), \(i=1,\dots,n\) with the mean
@@ -314,7 +373,9 @@ Gaussian random variates \(Y_i\), \(i=1,\dots,n\) with the mean
 +f_4(x_{i,4})+f_0(x_{i,5})
 \] and standard deviation \(\sigma=1/4\) where \(f_j\) are Simon Wood's
 smooth functions defined in Appendix B, \(x_{i,j}\) are uniform variates
-and \(n=20,000\).
+and \(n=20,000\). \code{bWoodN1} will only be used in the second round
+of our analysis when the TOP5 packages will be further analyzed with 5
+neurons resulting in 41 parameters.
 
 \textbf{Packages}
 
@@ -404,8 +465,8 @@ The structure of this template (for each package) is as follows:
 To simplify this process, we developed tools in the \pkg{NNbenchmark}
 package, of which the first version was created as part of GSoC 2019. In
 GSoC 2020, 3 functions encapsulating the template, that had been made
-generic with an extensive use of the incredible \code{do.call} function,
-were added:
+generic with an extensive use of the incredible \code{do.call} function
+from \pkg{base} package, were added:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -417,10 +478,10 @@ were added:
   summarized.
 \item
   \code{trainPredict\_1data} serves as a wrapper function for
-  trainPredict\_1mth1data for multiple methods.
+  \code{trainPredict\_1mth1data} for multiple methods.
 \item
   \code{trainPredict\_1pkg} serves as a wrapper function for
-  trainPredict\_1mth1data for multiple datasets.
+  \code{trainPredict\_1mth1data} for multiple datasets.
 \end{enumerate}
 
 A function for the summary of accuracy and speed, \code{NNsummary}, was
@@ -576,26 +637,29 @@ following method:
   scores for each \code{package:algorithm}.
 \end{enumerate}
 
-To rank how easy or not a package was to use (TO BE DISCUSSED FURTHER):
-- Functionality (util): scaling, input, output, trace - Documentation
-(docs): examples, structure/functions, vignettes
-
 \hypertarget{results-discussion-and-recommendations}{%
 \section{Results, discussion and
 recommendations}\label{results-discussion-and-recommendations}}
 
-Table 1 gives the RMSE and time score per package and per algorithm. The
-full list of score is given in Table 2 in Appendix C. We divide our
+Table 2 gives the RMSE and time score per package and per algorithm. The
+full list of score is given in Table 5 in Appendix C. We divide our
 analysis in two groups: packages implementing second order algorithms
-and packages implementing first order algorithms.
+and packages implementing first order algorithms. Figures 2 shows the
+minimum RMSE value per \code{package:algorithm} for two datasets
+\code{mIshigami} and \code{uDreyfus1}, whereas Figure 3 displays the
+average computation time. Both figures show that a good overall score,
+say score 16 corresponding to \CRANpkg{qrnn}, does not necessarily imply
+a good score on the two considered datasets. Furthermore, there is a
+break between the TOP10 \code{package:algorithm} and others in terms of
+RMSE value.
 
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-2}Result from Tested Packages}
+\caption{\label{tab:unnamed-chunk-3}Result from Tested Packages}
 \centering
 \fontsize{7}{9}\selectfont
-\begin{tabular}[t]{>{\bfseries}lccclcc}
+\begin{tabular}[t]{>{\bfseries}lccclc>{\bfseries}c}
 \toprule
 \multicolumn{1}{c}{ } & \multicolumn{3}{c}{Individual rating} & \multicolumn{1}{c}{ } & \multicolumn{2}{c}{Global score} \\
 \cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){6-7}
@@ -721,10 +785,27 @@ elmNNRcpp & ** & *** & ** & 21. ELM & 1 & 59\\
 \cmidrule{1-7}
 ELMR & ** & *** & ** & 22. ELM & 2 & 60\\
 \bottomrule
+\multicolumn{7}{l}{\textit{Note: } Statistics over 10 runs.}\\
 \end{tabular}
 \end{table}
 
 \end{Schunk}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{img/mIshigami-uDreyfus1-RMSEmin.png}
+        \label{fig:Allpkg:RMSEmin}
+        \caption{RMSE minimum value per package for \code{mIshigami}
+        and \code{uDreyfus1} datasets}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{img/mIshigami-uDreyfus1-timmean.png}
+        \label{fig:Allpkg:timemean}
+        \caption{Average time value per package for \code{mIshigami}
+        and \code{uDreyfus1}}
+\end{figure}
 
 \hypertarget{second-order-algorithms}{%
 \subsection{Second order algorithms}\label{second-order-algorithms}}
@@ -1091,10 +1172,21 @@ The full list of untested packages is given in Table 2.
 \begingroup\fontsize{7}{9}\selectfont
 
 \begin{longtable}[t]{ll>{\raggedright\arraybackslash}p{10cm}}
-\caption{\label{tab:unnamed-chunk-3}Review of Discarded Packages}\\
+\caption{\label{tab:unnamed-chunk-4}Review of Discarded Packages}\\
 \toprule
 Package & Category & Reason to Discard (File(s) and/or function(s))\\
 \midrule
+\endfirsthead
+\caption[]{Review of Discarded Packages \textit{(continued)}}\\
+\toprule
+Package & Category & Reason to Discard (File(s) and/or function(s))\\
+\midrule
+\endhead
+\
+\endfoot
+\bottomrule
+\multicolumn{3}{l}{\textit{Note: } AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.}\\
+\endlastfoot
 appnn & AP & Provide a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESCRIPTION file)\\
 autoencoder & AP & Provide a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
 BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slow : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
@@ -1169,10 +1261,7 @@ tsfgrnn & TS & Out of scope: A general regression neural network (GRNN) is a var
 \addlinespace
 yager & RE* & This package provides a neural network that behaves differently from a perceptron. Results indicate that predictions are quite close to the real values, however this comes at the cost of a large number of weights. With less weights or insufficient training data, the performance isn't as great. (::grnn.fit)\\
 yap & CL & Yet another PNN, with a N-level response, where N > 2 (DESCRIPTION file)\\
-zFactor & AP & Computational algorithms to solve equations and find the 'compressibility' factor `z` of hydrocarbon gases (DESCRIPTION file)\\
-\bottomrule
-\multicolumn{3}{l}{\textit{Note: }}\\
-\multicolumn{3}{l}{AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.}\\
+zFactor & AP & Computational algorithms to solve equations and find the 'compressibility' factor `z` of hydrocarbon gases (DESCRIPTION file)\\*
 \end{longtable}
 \endgroup{}
 
@@ -1182,17 +1271,17 @@ zFactor & AP & Computational algorithms to solve equations and find the 'compres
 \subsection{Further analysis of TOP5
 packages}\label{further-analysis-of-top5-packages}}
 
-In this final subsection, we present further performance results of the
-Top 5 packages given Table1. That is, we consider packages
-\texttt{nlsr}, \texttt{rminer}, \texttt{nnet}, \texttt{validann} with
-algorithm BFGS and \texttt{MachineShop}. We fit the NN packages on Simon
-Wood's Gaussian dataset, see \texttt{bWoodN1} in dataset description,
-which contains 20,000 rows with 6 inputs valued in {[}0,1{]} for a
-(single) numeric output. Due to the non-linear functions considered, see
-Appendix B, the link between the output and each explanatory variable is
-highly nonlinear which affects deeply the fitting time. Table 3 gives
-the metric performance over 20 runs of these Top 5 five packages on
-\texttt{bWoodN1}.
+In this subsection, we perform a second round analysis with a larger
+dataset with a focus on the Top 5 packages given Table 2. That is, we
+consider packages \texttt{nlsr}, \texttt{rminer}, \texttt{nnet},
+\texttt{validann} with algorithm BFGS and \texttt{MachineShop}. We fit
+the NN packages on Simon Wood's Gaussian dataset, see \texttt{bWoodN1}
+in dataset description, which contains 20,000 rows with 6 inputs valued
+in {[}0,1{]} for a (single) numeric output. Due to the non-linear
+functions considered, see Appendix B, the link between the output and
+each explanatory variable is highly nonlinear which affects deeply the
+fitting time. Table 4 gives the metric performance over 20 runs of these
+Top 5 five packages on \texttt{bWoodN1}.
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all
 package, yet \texttt{rminer} and \texttt{validann} are little bit behind
@@ -1202,23 +1291,24 @@ MAE. Regarding computation time, the two best in class are \texttt{nnet}
 and \texttt{MachineShop}.
 
 \begin{Schunk}
-\begingroup\fontsize{7}{9}\selectfont
+\begin{table}
 
-\begin{longtable}[t]{lrrrrrr}
-\caption{\label{tab:unnamed-chunk-4}Performance on bWoodN1}\\
+\caption{\label{tab:unnamed-chunk-5}Performance on bWoodN1 dataset}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{>{\bfseries}llccccc>{\bfseries}c}
 \toprule
-Package::algorithm & RMSE min & RMSE median & RMSE D51 & MAE median & WAE median & Time median\\
+Package & Algorithm & RMSE min & RMSE median & RMSE D51 & MAE median & WAE median & Time median\\
 \midrule
-MachineShop::fit\_none & 3.5467 & 4.75645 & 1.20975 & 3.90085 & 16.02080 & 3.3995\\
-nlsr::nlxb\_none & 3.5482 & 4.70550 & 1.15730 & 3.80060 & 16.56460 & 76.7275\\
-nnet::nnet\_none & 3.5499 & 4.70570 & 1.15580 & 3.80055 & 16.57275 & 3.3805\\
-rminer::fit\_none & 3.3662 & 3.68795 & 0.32175 & 2.95600 & 15.42995 & 11.0725\\
-validann::ann\_BFGS & 3.3599 & 4.49705 & 1.13715 & 3.71070 & 15.89260 & 140.7880\\
+MachineShop & 32. nnet\_optim(BFGS) & 3.5467 & 4.75645 & 1.20975 & 3.90085 & 16.02080 & 3.3995\\
+nlsr & 41. NashLM & 3.5482 & 4.70550 & 1.15730 & 3.80060 & 16.56460 & 76.7275\\
+nnet & 42. optim (BFGS) & 3.5499 & 4.70570 & 1.15580 & 3.80055 & 16.57275 & 3.3805\\
+rminer & 45. nnet\_optim(BFGS) & 3.3662 & 3.68795 & 0.32175 & 2.95600 & 15.42995 & 11.0725\\
+validann & 56. optim(BFGS) & 3.3599 & 4.49705 & 1.13715 & 3.71070 & 15.89260 & 140.7880\\
 \bottomrule
-\multicolumn{7}{l}{\textit{Note: }}\\
-\multicolumn{7}{l}{statistics taken over 20 runs}\\
-\end{longtable}
-\endgroup{}
+\multicolumn{8}{l}{\textit{Note: } statistics taken over 20 runs; time in seconds.}\\
+\end{tabular}
+\end{table}
 
 \end{Schunk}
 
@@ -1277,6 +1367,9 @@ order)}\label{positives-no-particular-order}}
   different types of algorithms. ?? have we defined hyperparameters??
   hyperparameters, and uses
 \end{itemize}
+
+Reproducibility : all our benchmark is reproducible by any user and any
+package maintainer.
 
 \hypertarget{negatives}{%
 \subsection{Negatives}\label{negatives}}
@@ -1389,11 +1482,11 @@ res <- trainPredict_1pkg(4, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 \end{Sinput}
 \begin{figure}
 
-{\centering \includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-6-1} 
+{\centering \includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-7-1} 
 
 }
 
-\caption[Example of nnet on mRef153]{Example of nnet on mRef153}\label{fig:unnamed-chunk-6}
+\caption[Example of nnet on mRef153]{Example of nnet on mRef153}\label{fig:unnamed-chunk-7}
 \end{figure}
 \end{Schunk}
 
@@ -1405,11 +1498,11 @@ res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 \end{Sinput}
 \begin{figure}
 
-{\centering \includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-7-1} 
+{\centering \includegraphics{2020-rticle_files/figure-latex/unnamed-chunk-8-1} 
 
 }
 
-\caption[Example of nnet on uDmod1]{Example of nnet on uDmod1}\label{fig:unnamed-chunk-7}
+\caption[Example of nnet on uDmod1]{Example of nnet on uDmod1}\label{fig:unnamed-chunk-8}
 \end{figure}
 \end{Schunk}
 
@@ -1419,7 +1512,7 @@ res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-8}All convergence scores per package:algorithm}
+\caption{\label{tab:unnamed-chunk-9}All convergence scores per package:algorithm}
 \centering
 \fontsize{7}{9}\selectfont
 \begin{tabular}[t]{>{\bfseries}llcllcccc}
@@ -1548,8 +1641,7 @@ traineR & 55. nnet\_optim(BFGS) & fmla \& data & 200 & - & 5 & 15 & 6 & 2\\
 
 \multirow{-5}{*}{\raggedright\arraybackslash validann} & 60. optim(SANN) & x \& y & 1000 & - & 53 & 51 & 56 & 55\\
 \bottomrule
-\multicolumn{9}{l}{\textit{Note: }}\\
-\multicolumn{9}{l}{TOP5 packages are nlsr:NashLM, rminer:nnet\_optim(BFGS), nnet:optim (BFGS), validann:optim(BFGS), MachineShop:nnet\_optim(BFGS).}\\
+\multicolumn{9}{l}{\textit{Note: } TOP5 are nlsr:NashLM, rminer:nnet\_optim(BFGS), nnet:optim (BFGS), validann:optim(BFGS), MachineShop:nnet\_optim(BFGS).}\\
 \end{tabular}
 \end{table}
 
