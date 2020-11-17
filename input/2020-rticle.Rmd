@@ -435,10 +435,17 @@ To rank how well and how fast a package converged, we developed the following me
 
 # Results, discussion and recommendations
 
-Table 2 gives the RMSE and time score per package and per algorithm. The full list of score
-is given in Table 5 in Appendix C.
+Table 2 gives the RMSE and time score per package and per algorithm. 
+The full list of score is given in Table 5 in Appendix C.
 We divide our analysis in two groups: packages implementing second order algorithms
 and packages implementing first order algorithms.
+Figures 2 shows the minimum RMSE value per \code{package:algorithm}
+for two datasets \code{mIshigami} and \code{uDreyfus1},
+whereas Figure 3 displays the average computation time.
+Both figures show that a good overall score, say score 16 corresponding
+to \CRANpkg{qrnn}, does not necessarily imply a good score on the
+two considered datasets. Furthermore, there is a break between the
+TOP10 \code{package:algorithm} and others in terms of RMSE value.
 
 <!--**Tables**-->
 
@@ -521,6 +528,27 @@ B??: as the packages are cited quite often, is it necessary to always link to th
 <!-- ### 2nd order algorithms -->
 <!-- JN??: For consistency, I'll suggest "Second" (or we can use "2nd", but throughout) -->
 <!-- B: agree. Sorry I was not quite sure about a lot of the consistency issues, although I did realize we were using different versions when writing, because we haven't really ever agreed  to one and used on or another so far in emails --> 
+
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{img/mIshigami-uDreyfus1-RMSEmin.png}
+        \label{fig:Allpkg:RMSEmin}
+        \caption{RMSE minimum value per package for \code{mIshigami}
+        and \code{uDreyfus1} datasets}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{img/mIshigami-uDreyfus1-timmean.png}
+        \label{fig:Allpkg:timemean}
+        \caption{Average time value per package for \code{mIshigami}
+        and \code{uDreyfus1}}
+\end{figure}
+
+
 
 ## Second order algorithms
 
@@ -779,6 +807,9 @@ These two also do not do bad in terms of speed.
 After, in order, are slr, sag, and traditional backprop as the worst at rank 48 out of 60 for minimum RMSE. Notes on documentation show that is rather hard to configure this package, and should probably not be a dependency for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue.
 
 
+
+
+
 ## Untested packages 
 
 A certain number of packages have been discarded from this study for at least one of the following reasons:
@@ -842,12 +873,22 @@ if(file.exists("./tables/Table3.csv")) {
 }else
  Table3 <- rep("missing", 7)
 colnames(Table3) <- c("Package::algorithm", "RMSE min", "RMSE median", "RMSE D51", 
-                      "MAE median", "WAE median", "Time median (sec)")
+                      "MAE median", "WAE median", "Time median")
 
-kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE, longtable = TRUE,
-                  caption="Performance on bWoodN1") %>%
+TOP5algo <- subset(Table1rk, RMSE %in% 1:5)[, c("Package", "Algorithm")]
+rownames(TOP5algo)  <- subset(Table1rk, RMSE %in% 1:5)[, "Package"]
+
+Table3$Package <- sapply(strsplit(Table3[, "Package::algorithm"], "::"), head, n=1)
+Table3$Algorithm <- TOP5algo[Table3$Package, "Algorithm"]
+Table3 <- Table3[, c("Package", "Algorithm", "RMSE min", "RMSE median", 
+                     "RMSE D51", "MAE median", "WAE median", "Time median")]
+
+kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE, 
+                  caption="Performance on bWoodN1 dataset",
+                  align="llcccccc") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="statistics taken over 20 runs.", footnote_as_chunk=TRUE)
+  column_spec(c(1, 8), bold = TRUE) %>%
+  footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 Figures in Appendix E provides some insights where a package performs reasonably well 
