@@ -397,7 +397,7 @@ functions, (non-trivial) examples and sufficient documentation
     c. multiple-lines call to many functions = 0 stars
 <!-- JN: "0 star" becomes "0 stars" -->
 
-Hence, ease-of-use measure ranges from 0 to 3 stars which will help new users to find user-friendly NN packages.
+Hence, ease-of-use measure ranges from 0 to 4 stars which will help new users to find user-friendly NN packages.
 
 ## Phase 3 - Collection of and analysis of results
 
