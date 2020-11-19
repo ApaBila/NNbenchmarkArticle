@@ -747,7 +747,7 @@ With the same numbers of neurons it already is quite slow - coming in at 51 out 
 With a default hidden layer size of 2, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \CRANpkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
 than a second with fewer neurons and only one layer.
-Thus, despite having a ranking of 11 in minmum RMSE in the final run, beating some of the second order algorithms, users should be wary of the trade off.
+Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second order algorithms, users of \CRANpkg{h2o} should be wary of the trade off.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
 Some users also might not want to setup Java, which is needed, although it is not as painful to setup as some external libraries.
