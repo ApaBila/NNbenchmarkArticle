@@ -225,7 +225,7 @@ Tests have also been performed on other platforms: computation times were reason
 
 <!-- Our research process was divided into 3 phases. -->
 
-## Phase 1 - Preparation of benchmark datasets
+## Phase 1 - Preparation of benchmark datasets and selection of packages
 
 **Datasets**
  
@@ -324,21 +324,22 @@ Restricting to regression analysis left us with 49 \code{package:algorithm} pair
 
 ## Phase 2 - Review of packages and development of a benchmarking template
 
+Basically, each package was inspected 3 times. Each assessment is described in detail below.
+
+**1. The decision to exclude or include**
+
 From documentation and example code, we learned that not all packages selected by the automated 
 search fit the scope of our research. Some have no function to generate neural networks. 
 Others were not regression neural networks of the perceptron type or 
-were only intended for very specific purposes. Basically, each package was inspected 3 times.
+were only intended for very specific purposes.
+Depending on the package, this could be decided as easily as looking at
+the DESCRIPTION file or having to go through the process of running some code and seeing the results.
 
-1. The discard/not discard phase: depending on the package, this could be decided as easily as looking at
-the DESCRIPTION file or having to go through the process of making the code and seeing the results.
 
+**2. Templates for testing accuracy and speed**
 
-2. Benchmarking with the template that was developed in 2019 and encapsulated in the functions of 2020, keeping
+Benchmarking with the template that was developed in 2019 and encapsulated in the functions of 2020, keeping
 notes of whether or not the package was easy to use.
-
-3. Summarizing or re-reviewing the tested packages utility functions & documentation.
-
-**Templates for Testing Accuracy and Speed** 
 
 As we inspected the packages, we developed a template for benchmarking. The structure of this
 template (for each package) is as follows:  
@@ -368,12 +369,11 @@ A function for the summary of accuracy and speed, \code{NNsummary}, was also add
 
 An example of a call to \code{trainPredict\_1pkg} is given in Appendix C.
 
- 
- 
- 
 
 
-**Ease of Use Scoring**
+**3. Ease of use scoring**
+
+Summarizing or re-reviewing the tested packages utility functions & documentation.
 
 We define an ease-of-use measure based on what we considered a user would need 
 when using a neural network package for nonlinear regression, namely, utility
