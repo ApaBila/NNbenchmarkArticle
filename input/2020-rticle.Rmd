@@ -441,8 +441,8 @@ To rank how well and how fast a package converged, we developed the following me
 
 Table 2 gives the RMSE and time score per package and per algorithm. 
 The full list of scores is given in Table 5 in Appendix C.
-We divide our analysis in two groups: packages implementing second order algorithms
-and packages implementing first order algorithms.
+We divide our analysis in two groups: packages implementing second-order algorithms
+and packages implementing first-order algorithms.
 Figure 2 shows the minimum RMSE value per \code{package:algorithm}
 for two datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure 3 displays the average computation time.
@@ -563,13 +563,13 @@ B??: as the packages are cited quite often, is it necessary to always link to th
 
 
 
-## Second order algorithms
+## Second-order algorithms
 
 <!-- CD: should we comment the package alphabetically? should we rank package in Table 1 according to RMSE?
 -->
 
-Of all approaches, the following second order algorithms generally performed better in terms of convergence 
-despite being limited to one fifth or fewer iterations than the first order algorithms. 
+Of all approaches, the following second-order algorithms generally performed better in terms of convergence 
+despite being limited to one fifth or fewer iterations than the first-order algorithms. 
 
 <!-- JN??: "first-order" or "first order"? Another consistency choice -->
 <!-- B: can't seem to find a consensus on this one online. Maybe the mentors can decide which they prefer? Then I can replace the wrong ones with the chosen one-->
@@ -638,7 +638,7 @@ Of all the packages, only \CRANpkg{monmlp} \citep{R-monmlp} calls \CRANpkg{optim
 \CRANpkg{optimx}. However, the author, Alex J. Cannon who is also the author of \CRANpkg{CaDENCE}, has created a package meant to fill a certain niche, namely for multi-layer perceptrons with optional partial monotonicity constraints.
 GAM-style effect plots are also an interesting feature.
 Another package by Cannon is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm: \code{nlm},  a "Newton-type" algorithm, from \CRANpkg{stats}. 
-Although it's performance is at the bottom of second order algorithms, sometimes even being beaten by first order algorithms, this could also be because of the intended use of the package compared to the tests here. 
+Although it's performance is at the bottom of second-order algorithms, sometimes even being beaten by first-order algorithms, this could also be because of the intended use of the package compared to the tests here. 
 \CRANpkg{qrnn} is designed for quantile regression neural networks, with several options. 
 Cannon has included automatic scaling for all 3 of his packages, as is clearly documented.
 
@@ -687,7 +687,7 @@ It ranked among the 10 worst algorithms for minimum RMSE out of all 60 algorithm
 <!-- CD: suggestion below --> 
 but this package, focusing on Sparse Neural Networks for Genomic Selection in Animal Breeding, might prove useful in that perspective.
 
-## Lower order algorithms
+## Lower-order algorithms
 <!-- B??: or should this be changed to lower order algorithms (is there even such a term?) or ... (??) because Nelder-Mead is technically  a "zero order" algorithm as in it does not use information from derivatives 
 B??: also, I am not entirely sure which methods belong to which order sometimes... please point out if I'm mistaken -->
 
@@ -717,12 +717,12 @@ These packages (11) + the ones before (15) have a total of the 26 packages teste
 B: otherwise purely alphabetically, per package not yet fully detailed to each algorithm
 B??: not sure of a good flow yet for the first order algorithms, for the 2ndorder ones it was quite easy to point out the red string that ties them together. Any suggestions? Going by order of number of algorithms ...? would be rather odd. Or by the algorithm not packages? All adams, Nelder-Mead, etc together -->
 
-Packages with first order algorithms can be broadly categorized into 2 types: (a) those that allow for one hidden layer (b) those that allow for more than one hidden layer.
+Packages with first-order algorithms can be broadly categorized into 2 types: (a) those that allow for one hidden layer (b) those that allow for more than one hidden layer.
 
 **A. One hidden layer** 
 
-The first category is comprised of either packages that also include second order algorithms previously discussed or packages that use the Extreme Learning Machine algorithm. 
-Only 2 packages include both second order algorithms and a lower order algorithm, that is, \CRANpkg{monmlp} and \CRANpkg{validann}. 
+The first category is comprised of either packages that also include second-order algorithms previously discussed or packages that use the Extreme Learning Machine algorithm. 
+Only 2 packages include both second-order algorithms and a lower-order algorithm, that is, \CRANpkg{monmlp} and \CRANpkg{validann}. 
 \CRANpkg{monmlp} has one algorithm besides BFGS, that is, \CRANpkg{optimx}'s Nelder-Mead. 
 \CRANpkg{validann} provides the same algorithm but from \code{optim}.
 \CRANpkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
@@ -748,19 +748,19 @@ Even increasing the number of neurons did not lead to better convergence for tho
 
 **B. More than one hidden layer**
 
-Following the trend of "deep learning", the last 9 packages provide the option for more than one layer with a first order learning algorithm.
-Our results show that they are often either/both slower or worse at converging than the second order algorithms with 
+Following the trend of "deep learning", the last 9 packages provide the option for more than one layer with a first-order learning algorithm.
+Our results show that they are often either/both slower or worse at converging than the second-order algorithms with 
 the same number of neurons or layers than their counterparts.
 We recommend choosing better algorithms over more layers for datasets similar to the ones we used.
 
 Choosing more layers often comes at the expense of speed. 
-An example of this is the implementation of the first order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
+An example of this is the implementation of the first-order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
 With the same numbers of neurons it already is quite slow - coming in at 51 out of the 60 algorithms. 
 
 With a default hidden layer size of 2, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \CRANpkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
 than a second with fewer neurons and only one layer.
-Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second order algorithms, users of \CRANpkg{h2o} should be wary of the trade off.
+Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \CRANpkg{h2o} should be wary of the trade off.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
 Some users also might not want to setup Java, which is needed, although it is not as painful to setup as some external libraries.
@@ -786,7 +786,7 @@ The default learning rates in \CRANpkg{RSNNS} \citep{R-RSNNS} were more appropri
 Simulator (SNNS), to provide an easy-to-use interface. 
 This library is rather large with many implementations of neural networks.
 It contains the biggest number of algorithms tested at a total of 8.
-Algorithms Rprop and SCG, the best for minimum RMSE, rank at 16 and 17 respectively which is pretty good for a first order algorithm. 
+Algorithms Rprop and SCG, the best for minimum RMSE, rank at 16 and 17 respectively which is pretty good for a first-order algorithm. 
 Speed for Rprop is better but SCG's results vary less. 
 
 <!-- B: the rest that don't use a particularly well known external library I list alphabetically below, what do you think? -->
@@ -799,8 +799,8 @@ An addition of some examples using the TAO option as the error criterion would b
 using the TAO-robust learning algorithm, since this type of error measure is most useful for data with outliers. 
 The function for creating a dot file to use with \url{http://www.graphviz.org} is also interesting. ADAPT algorithms appear to perform better than the BATCH algorithms with the parameters used in this research.
 
-\CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or rmsprop consistently ranked in the top half for minimum RMSE which is not bad for a first order algorithm. 
-It is not as accurate as second order algorithms but all its algorithms are quite fast. 
+\CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or rmsprop consistently ranked in the top half for minimum RMSE which is not bad for a first-order algorithm. 
+It is not as accurate as second-order algorithms but all its algorithms are quite fast. 
 \soft{C++} code was used to enhance the speed. 
 Functions for autoencoding are included with anomaly detection in mind.
 
@@ -819,7 +819,9 @@ The novelty of this package is apparently in the \code{deeptree} and \code{deepf
 <!-- B: Although, before 2020 (the year this package appeared) gcForest already provided an implementation of the deep forest algorithm as an alternative to deep neural networks. -->
 <!-- CD: this comment could be put uncommented -->
 
-\CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the first order algorithms backpropagation, ranking at 18 for minimum RMSE. It's also relatively fast, ranking at 23 for speed.
+\CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
+first-order algorithms backpropagation, ranking at 18 for minimum RMSE. 
+It's also relatively fast, ranking at 23 for speed.
 
 
 \CRANpkg{neuralnet} \citep{R-neuralnet}: Considering that this is the only package that uses 100000 iterations as its maxit parameter (excluding BNN which is not included in the official ranks), it can be considered as not recommended. 
@@ -950,7 +952,7 @@ Reproducibility : all our benchmark is reproducible by any user and any package 
 
 ## Negatives
 - We are disappointed that many of the packages we reviewed had poor documentation.
-- It would be helpful if there were more packages with (different) second order algorithms. A number of the
+- It would be helpful if there were more packages with (different) second-order algorithms. A number of the
 <!-- packages reviewed appear to offer essentially the same methods. JN??: Is that what we want to say? -->
 - We often found it difficult to discover what default starting values were used for model parameters, or 
 <!-- else bad choices. JN??: Again, is that our message? -->
