@@ -1,7 +1,8 @@
 % !TeX root = RJwrapper.tex
-\title{A review of R neural network packages (with NNbenchmark)\(:\) accuracy
-and ease of use}
-\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
+\title{A review of R neural network packages (with NNbenchmark)\(:\)
+accuracy and ease of use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
+Kiener, John C. Nash}
 
 \maketitle
 
@@ -497,10 +498,13 @@ C.
 Summarizing or re-reviewing the tested packages utility functions \&
 documentation.
 
-We define an ease-of-use measure based on what we considered a user
-would need when using a neural network package for nonlinear regression,
-namely, utility functions, (non-trivial) examples and sufficient
-documentation (well-written manual, vignette(s).).
+We define ease-of-use measures to rate NN packages on their
+user-friendliness. Based on what we considered a user is expected when
+using a neural network package, we consider: a measure for utility
+functions; a measure for (non-trivial) examples and sufficient
+documentation (well-written manual, vignette(s)); a measure to rate the
+\textsf{R} call to fit a given neural network. More details are given
+below.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -559,11 +563,12 @@ documentation (well-written manual, vignette(s).).
   \item
     multiple-lines call to a single function = 1 star
   \item
-    multiple-lines call to many functions = 0 stars 
+    multiple-lines call to many functions = 0 stars
   \end{enumerate}
 \end{enumerate}
 
-Hence, ease-of-use measure ranges from 0 to 4 stars which will help new
+Hence, the documentation ease-of-use measure ranges from 0 to 4 stars,
+while the utility and the R call from 0 to 2 stars: this will help new
 users to find user-friendly NN packages.
 
 \hypertarget{phase-3---collection-of-and-analysis-of-results}{%
@@ -642,15 +647,23 @@ recommendations}\label{results-discussion-and-recommendations}}
 
 Table 2 gives the RMSE and time score per package and per algorithm. The
 full list of scores is given in Table 5 in Appendix C. We divide our
-analysis in two groups: packages implementing second order algorithms
-and packages implementing first order algorithms. Figure 2 shows the
+analysis in two groups: packages implementing second-order algorithms
+and packages implementing first-order algorithms. Figure 2 shows the
 minimum RMSE value per \code{package:algorithm} for two datasets
 \code{mIshigami} and \code{uDreyfus1}, whereas Figure 3 displays the
-average computation time. Both figures show that a good overall score,
-say score 16 corresponding to \CRANpkg{qrnn}, does not necessarily imply
-a good score on the two datasets under consideration. Furthermore, there
+average computation time. The number on the x-level refers to the RMSE
+overall score of the package:algorithm given in Table 2 (last column),
+e.g., 8 refers to \pkg{validann}\code{:optim(CG)} which is a very slow
+algorithm.
+
+Both figures show that a good overall score does not necessarily imply a
+good score on the two datasets under consideration. Furthermore, there
 is a break between the TOP10 \code{package:algorithm} and others in
-terms of RMSE value.
+terms of RMSE value. Regarding computation time, we observe that some
+package:algorithms are very slow and poor RMSE, e.g.~41 corresponding to
+\pkg{AMORE}\code{:BATCHgd}. In the following, we first present the
+results for second-order algorithms, then low-order algorithms. Finally,
+we list the reasons for discareded packages.
 
 \begin{Schunk}
 \begin{table}
@@ -807,11 +820,11 @@ ELMR & ** & *** & ** & 22. ELM & 2 & 60\\
 \end{figure}
 
 \hypertarget{second-order-algorithms}{%
-\subsection{Second order algorithms}\label{second-order-algorithms}}
+\subsection{Second-order algorithms}\label{second-order-algorithms}}
 
-Of all approaches, the following second order algorithms generally
+Of all approaches, the following second-order algorithms generally
 performed better in terms of convergence despite being limited to one
-fifth or fewer iterations than the first order algorithms.
+fifth or fewer iterations than the first-order algorithms.
 
 We note that 11 out of 15 of these \code{package:algorithms} use
 \code{optim} from \CRANpkg{stats}. 2 of them, \CRANpkg{CaDENCE}`s BFGS
@@ -913,8 +926,8 @@ perceptrons with optional partial monotonicity constraints. GAM-style
 effect plots are also an interesting feature. Another package by Cannon
 is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm:
 \code{nlm}, a ``Newton-type'' algorithm, from \CRANpkg{stats}. Although
-it's performance is at the bottom of second order algorithms, sometimes
-even being beaten by first order algorithms, this could also be because
+it's performance is at the bottom of second-order algorithms, sometimes
+even being beaten by first-order algorithms, this could also be because
 of the intended use of the package compared to the tests here.
 \CRANpkg{qrnn} is designed for quantile regression neural networks, with
 several options. Cannon has included automatic scaling for all 3 of his
@@ -987,33 +1000,33 @@ but this package, focusing on Sparse Neural Networks for Genomic
 Selection in Animal Breeding, might prove useful in that perspective.
 
 \hypertarget{lower-order-algorithms}{%
-\subsection{Lower order algorithms}\label{lower-order-algorithms}}
+\subsection{Lower-order algorithms}\label{lower-order-algorithms}}
 
-Packages with first order algorithms can be broadly categorized into 2
+Packages with first-order algorithms can be broadly categorized into 2
 types: (a) those that allow for one hidden layer (b) those that allow
 for more than one hidden layer.
 
 \textbf{A. One hidden layer}
 
 The first category is comprised of either packages that also include
-second order algorithms previously discussed or packages that use the
-Extreme Learning Machine algorithm. Only 2 packages include both second
-order algorithms and a lower order algorithm, that is, \CRANpkg{monmlp}
-and \CRANpkg{validann}. \CRANpkg{monmlp} has one algorithm besides BFGS,
-that is, \CRANpkg{optimx}'s Nelder-Mead. \CRANpkg{validann} provides the
-same algorithm but from \code{optim}. \CRANpkg{validann}'s
-implementation is slower, as before, but ranks slightly better for
-minimum RMSE. Both implementations of Nelder-Mead do not rank well in
-minimum RMSE, around 40 out of 60, with similar ranks for the other
-criteria. We would also caution users to avoid the other methods in
-\CRANpkg{validann} from \code{optim}. From Table 1 it may appear that
-\CRANpkg{validann}'s implementation of the Conjugate Gradient (CG)
-algorithm finds reasonable minima and thus is a good option. It
-consistently ranked in the top 15 with minimum RMSE. However, it is the
-slowest algorithm of all 60 algorithms tested. Note, this includes
-algorithms from packages that call external libraries outside \textsf{R}
-in \textsf{Python} or \textsf{Java} and packages that use as much as
-100,000 iterations. On the other hand, \CRANpkg{validann}'s SANN
+second-order algorithms previously discussed or packages that use the
+Extreme Learning Machine algorithm. Only 2 packages include both
+second-order algorithms and a lower-order algorithm, that is,
+\CRANpkg{monmlp} and \CRANpkg{validann}. \CRANpkg{monmlp} has one
+algorithm besides BFGS, that is, \CRANpkg{optimx}'s Nelder-Mead.
+\CRANpkg{validann} provides the same algorithm but from \code{optim}.
+\CRANpkg{validann}'s implementation is slower, as before, but ranks
+slightly better for minimum RMSE. Both implementations of Nelder-Mead do
+not rank well in minimum RMSE, around 40 out of 60, with similar ranks
+for the other criteria. We would also caution users to avoid the other
+methods in \CRANpkg{validann} from \code{optim}. From Table 1 it may
+appear that \CRANpkg{validann}'s implementation of the Conjugate
+Gradient (CG) algorithm finds reasonable minima and thus is a good
+option. It consistently ranked in the top 15 with minimum RMSE. However,
+it is the slowest algorithm of all 60 algorithms tested. Note, this
+includes algorithms from packages that call external libraries outside
+\textsf{R} in \textsf{Python} or \textsf{Java} and packages that use as
+much as 100,000 iterations. On the other hand, \CRANpkg{validann}'s SANN
 algorithm is relatively worse than other packages as it ranks at number
 55 for minimum RMSE although it is in the top one third for speed (rank
 20).
@@ -1032,15 +1045,15 @@ better convergence for those particular datasets.
 \textbf{B. More than one hidden layer}
 
 Following the trend of ``deep learning'', the last 9 packages provide
-the option for more than one layer with a first order learning
+the option for more than one layer with a first-order learning
 algorithm. Our results show that they are often either/both slower or
-worse at converging than the second order algorithms with the same
+worse at converging than the second-order algorithms with the same
 number of neurons or layers than their counterparts. We recommend
 choosing better algorithms over more layers for datasets similar to the
 ones we used.
 
 Choosing more layers often comes at the expense of speed. An example of
-this is the implementation of the first order algorithm in \CRANpkg{h2o}
+this is the implementation of the first-order algorithm in \CRANpkg{h2o}
 \citep{R-h2o}. With the same numbers of neurons it already is quite slow
 - coming in at 51 out of the 60 algorithms.
 
@@ -1049,7 +1062,7 @@ around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022. On
 the other hand, \CRANpkg{nnet} can find a minima of the error function
 with a minimum RMSE of 0.0088 in less than a second with fewer neurons
 and only one layer. Thus, despite having a ranking of 11 in minimum RMSE
-in the final run, beating some of the second order algorithms, users of
+in the final run, beating some of the second-order algorithms, users of
 \CRANpkg{h2o} should be wary of the trade off. Moreover, users might
 hesitate as it is not actually clear what algorithm is used. The large
 number of options to choose from seem capable of changing the basic
@@ -1096,7 +1109,7 @@ Network Simulator (SNNS), to provide an easy-to-use interface. This
 library is rather large with many implementations of neural networks. It
 contains the biggest number of algorithms tested at a total of 8.
 Algorithms Rprop and SCG, the best for minimum RMSE, rank at 16 and 17
-respectively which is pretty good for a first order algorithm. Speed for
+respectively which is pretty good for a first-order algorithm. Speed for
 Rprop is better but SCG's results vary less.
 
 \textbf{Other packages } \CRANpkg{AMORE} \citep{R-AMORE}: Unfortunately,
@@ -1113,10 +1126,10 @@ used in this research.
 
 \CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or
 rmsprop consistently ranked in the top half for minimum RMSE which is
-not bad for a first order algorithm. It is not as accurate as second
-order algorithms but all its algorithms are quite fast. \textsf{C++}
-code was used to enhance the speed. Functions for autoencoding are
-included with anomaly detection in mind.
+not bad for a first-order algorithm. It is not as accurate as
+second-order algorithms but all its algorithms are quite fast.
+\textsf{C++} code was used to enhance the speed. Functions for
+autoencoding are included with anomaly detection in mind.
 
 \CRANpkg{automl} \citep{R-automl}: It would be easier to use the
 algorithms in this package if they did not rely on the beta parameters
@@ -1134,7 +1147,7 @@ apparently in the \code{deeptree} and \code{deepforest} functions it
 provides.
 
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better
-performing implementations of the first order algorithms
+performing implementations of the first-order algorithms
 backpropagation, ranking at 18 for minimum RMSE. It's also relatively
 fast, ranking at 23 for speed.
 
@@ -1198,9 +1211,9 @@ Package & Category & Reason to Discard (File(s) and/or function(s))\\
 \endlastfoot
 appnn & AP & Provide a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESCRIPTION file)\\
 autoencoder & AP & Provide a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
-BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slowÂ : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
+BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slow : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
 Buddle & CL & Did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)\\
-cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a NaÃ¯ve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
+cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
 \addlinespace
 cld3 & AP & Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESCRIPTION file)\\
 condmixt & AP & Use neural networks to predict parameters of mixture models (DESCRIPTION file)\\
@@ -1246,7 +1259,7 @@ polyreg & XX & Polyregression as alternative to NN (DESCRIPTION file)\\
 \addlinespace
 predictoR & RE & A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESCRIPTION file \& ::init\_predictor)\\
 ProcData & AP & Provide tools for exploratory process data analysis via functions: reading, process manipulation, action sequence generators, feature extraction and prediction (link + DESCRIPTION file)\\
-quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural networkÂ ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
+quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
 rasclass & CL & Provide neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESCRIPTION file)\\
 rcane & RE & Provide parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESCRIPTION file)\\
 \addlinespace
@@ -1258,9 +1271,9 @@ simpleNeural & CL & Neural networks for multi-class or binary classification (DE
 \addlinespace
 softmaxreg & CL & Out of scope: Implementation of 'softmax' regression and classification models with multiple layer neural network (DESCRIPTION file)\\
 Sojourn.Data & AP & Stores some neural networks used for Sojourn Accelerometer methods (DESCRIPTION file)\\
-spnn & CL & Out of scopeÂ : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
+spnn & CL & Out of scope : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
 studyStrap & AP & Implements multi-study learning algorithms such as merging, the study-specific ensemble the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret (DESCRIPTION file)\\
-TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classificationÂ : it is slow. (DESCRIPTION file \& ::TeachNet)\\
+TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification : it is slow. (DESCRIPTION file \& ::TeachNet)\\
 \addlinespace
 tensorflow & RE & See section on keras\\
 tfestimators & RE & See section on keras\\
@@ -1374,7 +1387,7 @@ order)}\label{positives-no-particular-order}}
   R users have access to a wide variety of neural network methods,
   including from libraries of other programming languages and using many
   different types of algorithms. ?? have we defined hyperparameters??
-  hyperparameters, and uses 
+  hyperparameters, and uses
 \end{itemize}
 
 Reproducibility : all our benchmark is reproducible by any user and any
@@ -1390,10 +1403,10 @@ package maintainer.
   documentation.
 \item
   It would be helpful if there were more packages with (different)
-  second order algorithms. A number of the 
+  second-order algorithms. A number of the
 \item
   We often found it difficult to discover what default starting values
-  were used for model parameters, or 
+  were used for model parameters, or
 \end{itemize}
 
 \hypertarget{future-work}{%
@@ -1724,4 +1737,3 @@ Telfer School of Management, University of Ottawa\\
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 }
 \href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
-
