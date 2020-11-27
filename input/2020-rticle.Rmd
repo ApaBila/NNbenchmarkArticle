@@ -375,10 +375,11 @@ An example of a call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 Summarizing or re-reviewing the tested packages utility functions & documentation.
 
-We define an ease-of-use measure based on what we considered a user would need 
-when using a neural network package for nonlinear regression, namely, utility
-functions, (non-trivial) examples and sufficient documentation 
-(well-written manual, vignette(s).). 
+We define ease-of-use measures to rate NN packages on their user-friendliness.
+Based on what we considered a user is expected when using a neural network package,
+we consider: a measure for utility functions; a measure for (non-trivial) examples 
+and sufficient documentation (well-written manual, vignette(s)); a measure
+to rate the \soft{R} call to fit a given neural network. More details are given below.
 
 1. Utilities in R to deal with NN 
     a. a predict function exists (1 star)
@@ -397,9 +398,11 @@ functions, (non-trivial) examples and sufficient documentation
     a. simple one-line call or a single function = 2 stars
     b. multiple-lines call to a single function = 1 star
     c. multiple-lines call to many functions = 0 stars
-<!-- JN: "0 star" becomes "0 stars" -->
 
-Hence, ease-of-use measure ranges from 0 to 4 stars which will help new users to find user-friendly NN packages.
+
+Hence, the documentation ease-of-use measure ranges from 0 to 4 stars, while 
+the utility and the R call from 0 to 2 stars: 
+this will help new users to find user-friendly NN packages.
 
 ## Phase 3 - Collection of and analysis of results
 
@@ -443,10 +446,18 @@ and packages implementing first order algorithms.
 Figure 2 shows the minimum RMSE value per \code{package:algorithm}
 for two datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure 3 displays the average computation time.
-Both figures show that a good overall score, say score 16 corresponding
-to \CRANpkg{qrnn}, does not necessarily imply a good score on the
-two datasets under consideration. Furthermore, there is a break between the
+The number on the x-level refers to the RMSE overall score of the 
+package:algorithm given in Table 2 (last column), e.g., 8 refers to 
+\pkg{validann}\code{:optim(CG)} which is a very slow algorithm.
+
+Both figures show that a good overall score does not necessarily imply 
+a good score on the two datasets under consideration. 
+Furthermore, there is a break between the
 TOP10 \code{package:algorithm} and others in terms of RMSE value.
+Regarding computation time, we observe that some package:algorithms are
+very slow and poor RMSE, e.g. 41 corresponding to \pkg{AMORE}\code{:BATCHgd}.
+In the following, we first present the results for second-order algorithms,
+then low-order algorithms. Finally, we list the reasons for discareded packages.
 
 <!--**Tables**-->
 
