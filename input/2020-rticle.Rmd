@@ -304,7 +304,7 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 \code{bWoodN1} will only be used in the second round of our analysis when the TOP5 packages
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
-Whatever the source of the test datasets, there are available in \CRANpkg{NNbenchmark}, so that maintainers ar users can perform the analysis.
+Whatever the source of the test datasets, there are all available in \CRANpkg{NNbenchmark}, so that maintainers or users can perform the analysis.
 
 **Packages**
 
