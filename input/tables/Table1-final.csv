@@ -23,7 +23,7 @@ elmNNRcpp;21. ELM;1;59;2;3;2
 ELMR;22. ELM;2;60;2;3;2
 EnsembleBase;23. nnet_optim(BFGS);5;12;1;1;2
 h2o;24. first-order;51;11;2;2;0
-keras;25. adadelta;59;40;2;0;0
+keras;25. adadelta;59;40;2;1;0
 ;26. adagrad;58;37;;;
 ;27. adam;42;34;;;
 ;28. adamax;48;23;;;
