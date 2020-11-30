@@ -794,8 +794,8 @@ It contains the biggest number of algorithms tested at a total of 8.
 Algorithms Rprop and SCG, the best for minimum RMSE, rank at 16 and 17 respectively which is pretty good for a first-order algorithm. 
 Speed for Rprop is better but SCG's results vary less. 
 
-<!-- B: the rest that don't use a particularly well known external library I list alphabetically below, what do you think? -->
-<!-- JN: removed colloquial "it's a shame" -->
+
+
 **Other packages **
 \CRANpkg{AMORE} \citep{R-AMORE}: Unfortunately, the focus of the paper behind this package, its 
 unique point, is not explained or documented well enough. 
@@ -821,8 +821,8 @@ The package is rather slow (highest ranking algorithm for speed is RMSprop at 47
 However, the results on convergence by minimum RMSE score are not as good with the worst being gradientDescent which ranks 3rd from the bottom. 
 There are few exported functions. 
 The novelty of this package is apparently in the \code{deeptree} and \code{deepforest} functions it provides. 
-<!-- B: Although, before 2020 (the year this package appeared) gcForest already provided an implementation of the deep forest algorithm as an alternative to deep neural networks. -->
-<!-- CD: this comment could be put uncommented -->
+
+
 
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
 first-order algorithms backpropagation, ranking at 18 for minimum RMSE. 
@@ -850,7 +850,7 @@ A certain number of packages have been discarded from this study for at least on
 
 The full list of untested packages is given in Table 2.
 
-<!-- B?? : should tensorflow be here or in point 1? ATM, that package and some others no longer work with the latest version of TF so we judge the performance by keras in tested packages -->
+
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
