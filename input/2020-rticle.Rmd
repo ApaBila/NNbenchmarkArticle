@@ -647,23 +647,23 @@ Although it's performance is at the bottom of second-order algorithms, sometimes
 \CRANpkg{qrnn} is designed for quantile regression neural networks, with several options. 
 Cannon has included automatic scaling for all 3 of his packages, as is clearly documented.
 
-<!-- JN: FWIW R-core is considering a patch I've suggested for nls() to fix the zero-resid issue -->
+
 \pkg{stats} also includes \code{nls}, for nonlinear least squares, which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
 However, in its documentation, \code{nls} warns against "zero-residual" or even small residual problems. [@Nash-nlpor14, Section 6.4.1]
 This was one of the motivations for \CRANpkg{nslr} \citep{R-nlsr}. 
 nlsr uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain Gauss-Newton of \code{nls},
 and modifies the relative offset convergence criterion to avoid a zero divide when residuals are small.
-<!-- Instead of using the usual Jacobian matrix, it augments it with extra rows and the y vector with null values. -->
-<!-- Another Levenberg-Marquardt algorithm is used in \CRANpkg{minpack.lm} \citep{minpack.lm} which uses the lmder and lmdif from C's MINPACK library with the functions C_nls_iter and nls_port_fit removed so "Gauss-Newton", "port", or "plinear" types of optimization can be avoided.  -->
+
+
 \CRANpkg{minpack.lm} \citep{minpack.lm} offers another Marquardt approach. Where \CRANpkg{nlsr} is entirely in \soft{R},
 and also allows for symbolic or automatic derivatives (which are not relevant to the present study), \CRANpkg{minpack.lm}
 uses compiled \soft{Fortran} and \soft{C} code for some important computations. Its structure is also better adapted to use features
 already available in \code{nls} that may be important for some uses.
 
-<!-- JN?? does minpack.lm fail on zero residuals?? Remind JN to test. -- see citation above.-->
-<!-- B: No. It works on uDreyfus1. uDreyfus1 help page: "This is a combination of 3 pure tanh() functions without noise. The Jacobian matrix is singular at the target parameter values and many algorithms could fail." -->
-<!-- JN??: Some of the above may be extra to our needs and could be dropped. -->
-<!-- CD: can we remove the above comments? -->
+
+
+
+
 
 However, despite the 2 packages ultimately performing well on all runs (capable of being in the top 3 for RMSE and not slow), there are some reasons why users might hesitate to choose them. 
 
@@ -736,7 +736,8 @@ We would also caution users to avoid the other methods in \CRANpkg{validann} fro
 From Table 1 it may appear that \CRANpkg{validann}'s implementation of the Conjugate Gradient (CG) algorithm finds reasonable minima and thus is a good option.
 It consistently ranked in the top 15 with minimum RMSE. 
 However, it is the slowest algorithm of all 60 algorithms tested.
-Note, this includes algorithms from packages that call external libraries outside \soft{R} in \soft{Python} or \soft{Java} and packages that use as much as 100,000 iterations. <!-- B??: is CG first order or second order? I've seen sources that seem to state one or another -->
+Note, this includes algorithms from packages that call external libraries outside \soft{R} in \soft{Python} or \soft{Java} and packages that use as much as 100,000 iterations. <!-- B??: is CG first order or second order? I've seen sources that seem to state one or another. JN: You can probably find people to argue 1st or 2nd. It is a linearization of a 2nd order
+approach in one viewpoint. Suggest we keep quiet here.-->
 On the other hand, \CRANpkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
 
 
