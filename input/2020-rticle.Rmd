@@ -85,11 +85,11 @@ Modern software allows much of this work, including approximation of the gradien
 
  
 
-<!-- B??: above we mention splitting datasets, but when we benchmarked we did not split the datasets. So should what we did be referred to as fitting? Also some packages were actually discarded because the split was obligatory
-=> CD : we say a word later about no splitting 
-=> B  : still checking, but have you put in a word about this yet CD (and where if yes)? Or should I?
-=> CD: no. but Patrice (?) put a sentence line 184
--->
+
+
+
+
+
 
 The training process can generally be made more efficient if we can also approximate second derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
 There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. 
@@ -220,13 +220,13 @@ Tests have also been performed on other platforms: computation times were reason
 
 
 
-<!-- JN??: Can I get some guidance of what to include/exclude in rest of this section? -->
 
-<!-- B: Basically,
-1. Introduce datasets, explain process of finding packages
-2. Results of reviewing and testing - explain how we got the result files with metrics (the template) & ease of use scores
-3. How we then ranked the results of speed and accuracy -> note, I didn't rank the ease of use and its per package, which might be why Christophe noted those as individual scores not global scores
--->
+
+
+
+
+
+
 
 <!-- Our research process was divided into 3 phases. -->
 
@@ -259,7 +259,7 @@ The last multivariate dataset, \code{mRef153}, was used to teach neural networks
 \url{https://www.neurones.espci.fr/}) 
 from 2003 to 2013 and is available in the proprietary software Neuro One at \url{http://www.inmodelia.com/software.html}. This dataset presents some interesting non-linear
 features.
-<!-- JN: features plural -->
+
 
 
 \code{uDreyfus1} is a pure neural network which has no error. This can make it difficult for algorithms 
@@ -382,14 +382,14 @@ An example of a call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 **3. Ease of use scoring**
 
-<!-- %% JN- I've commented this out. <Summarizing or re-reviewing the tested packages utility functions & documentation.> -->
+
 
 We define ease-of-use measures to rate NN packages on their user-friendliness.
 Based on our understanding of what a user may be required to know or do when using a neural network package,
 we consider: a measure for the availability of appropriate utility functions; a measure for (non-trivial) examples 
 and sufficient documentation (well-written manual, vignette(s)); and a measure
 to rate the clarity of the \soft{R} call to fit a given neural network. Our rating is as follows.
-<!-- JN: I added the idea of clarity ; CD : I'm fine with this proposal.-->
+
 
 1. Utilities in R to deal with NN - maximum of 1 star
     a. a predict function exists  = 0.5 stars
@@ -478,10 +478,10 @@ then low-order algorithms. Finally, we list the reasons for discarded packages.
 <!--**Tables**-->
 
 
-<!-- B??: would you prefer this ranked by RMSE score or alphabetically as it is now? -->
-<!-- B: if I'm not mistaken Christophe responded saying its better to rank -->
-<!-- B: but now that I see the output again, I wonder if we should do so? bcs then packages with more than 1 algorithm will be separated + in Appendix C, the authors would have to remember multiple numbers as the names don't fit. At least alphabetically, -->
-<!-- CD : I also use the same ordering for tables in Appendix -->
+
+
+
+
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -544,11 +544,11 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
 ```
 
 
-<!--## Discussion and Recommendations-->
 
-<!-- I think from Patrice: For the comments per package, I suggest one small text per package, at least for the best 12/15 packages, and some text for the significant bad or painful packages like tensorflow, keras, h2o. etc. -->
 
-<!-- (NOTE TO MENTORS: based on latest 2020 Run 04 with corrections) -->
+
+
+
 
 
 \begin{figure}
@@ -568,16 +568,16 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
         and \code{uDreyfus1}}
 \end{figure}
 
-<!-- B: NOTE FOR CHOICES ON CONSISTENCY 
-J: Second, not 2nd
-CD: first-order not first order
--->
+
+
+
+
 
 ## Second-order algorithms
 
-<!-- CD: should we comment the package alphabetically? should we rank package in Table 1 according to RMSE?
-B : I've done a mixture of both so far.. Sometimes it makes more sense to do on or the other, but perhaps this is bad for consistency
--->
+
+
+
 
 Of all approaches, the following second-order algorithms generally performed better in terms of convergence 
 despite being limited to one fifth or fewer iterations than the first-order algorithms. 
@@ -681,46 +681,46 @@ To conclude, both packages provide algorithms that are capable of doing well on 
 \CRANpkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in \soft{R} that does not rely on \code{nls} or \code{nlm} from \CRANpkg{stats}. Although it is well-documented and has good speed, \CRANpkg{brnn}'s implementation of the Gauss-Newton algorithm still ranks below some of the previously mentioned BFGS and Levenberg-Marquardt tools in terms of its global minimum RMSE. 
 We found 2 reasons that we believe to be the cause of this. 
 First, its model uses one parameter fewer than the other algorithms. 
-Only datasets \code{uDreyfus1} and \code{uDreyfus2} which are purely 3 hidden neurons ignore the first term. <!-- B??: Patrice, do you want to include the explanation as detailed as in the emails here?-->
+Only datasets \code{uDreyfus1} and \code{uDreyfus2} which are purely 3 hidden neurons ignore the first term. 
 Second, \CRANpkg{brnn} does not minimize the sum of squares of the errors but the sum of squares of the errors plus a penalty on the parameters. 
 In certain circumstances -- especially with an almost singular Jacobian matrix as with \code{mDette}, \code{mIshigami}, \code{mRef153}, \code{uGauss3}, and \code{uNeuroOne} -- this will avoid issues with highly correlated parameters.
 
 The only second-order algorithm which we are unable to recommended from the results of our research is \CRANpkg{snnR} \citep{R-snnR}. 
 It ranked among the 10 worst algorithms for minimum RMSE out of all 60 algorithms,
-<!-- B??: Mentors, it appears to some extent that this packae is serious, on the other hand its performance claims otherwise. I found examples that error. It's purpose is to solve the problem of over-parameterization in neural networks for genomic selection, thus the title is Sparse Neural Networks for Genomic Selection in Animal Breeding
- (DESC). Perhaps this is the reason why it does not perform well in the scope of our research? (References this article: https://bmcgenet.biomedcentral.com/articles/10.1186/1471-2156-12-87 ) -->
-<!-- CD: suggestion below --> 
 but this package, focusing on Sparse Neural Networks for Genomic Selection in Animal Breeding, might prove useful in that perspective.
 
+ 
+
+
 ## Lower-order algorithms
-<!-- B??: or should this be changed to lower order algorithms (is there even such a term?) or ... (??) because Nelder-Mead is technically  a "zero order" algorithm as in it does not use information from derivatives 
-B??: also, I am not entirely sure which methods belong to which order sometimes... please point out if I'm mistaken -->
 
-<!-- 
-Possible (current) structure:
-A. Only 1 or limited number of layers, some algorithms of the packages were included previously in second-order algorithms
- 1. - monmlp
-    - validann
 
- 2. ELMs
-    1. elmNNRcpp
-    2. ELMR
 
-B. "deep" packages
-    3.  AMORE
-    4.  ANN2
-    5.  automl (Deep Learning with Metaheuristic)
-    6.  deepdive
-    7.  deepnet
-    8.  neuralnet
-    9.  RSNNS
-    10. h2o 
-    11. keras
 
-These packages (11) + the ones before (15) have a total of the 26 packages tested with 60 algorithms
 
-B: otherwise purely alphabetically, per package not yet fully detailed to each algorithm
-B??: not sure of a good flow yet for the first order algorithms, for the 2ndorder ones it was quite easy to point out the red string that ties them together. Any suggestions? Going by order of number of algorithms ...? would be rather odd. Or by the algorithm not packages? All adams, Nelder-Mead, etc together -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Packages with first-order algorithms can be broadly categorized into 2 types: (a) those that allow for one hidden layer (b) those that allow for more than one hidden layer.
 
@@ -737,19 +737,19 @@ From Table 1 it may appear that \CRANpkg{validann}'s implementation of the Conju
 It consistently ranked in the top 15 with minimum RMSE. 
 However, it is the slowest algorithm of all 60 algorithms tested.
 Note, this includes algorithms from packages that call external libraries outside \soft{R} in \soft{Python} or \soft{Java} and packages that use as much as 100,000 iterations. <!-- B??: is CG first order or second order? I've seen sources that seem to state one or another -->
-On the other hand, \CRANpkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20). <!-- B??: John, SANN no longer seems to report "convergence. Would you still like to state that it does not belong in optim() because of the idea of "temperature" -->
+On the other hand, \CRANpkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
 
-<!-- B??: important - should these ELMs be included if it can't be confirmed that it is or is not a perceptron?
-Found this from the abstract of the paper behind ELMR:
-"=> In this paper, we develop an online sequential learning algorithm for single hidden layer feedforward networks (SLFNs) with additive or radial basis function (RBF) hidden nodes in a unified framework. The algorithm is referred to as online sequential extreme learning machine (OS-ELM) and can learn data one-by-one or chunk-by-chunk (a block of data) with fixed or varying chunk size. (ABSTRACT)"
--->
+
+
+
+
 
 Packages that implement the ELMR algorithm are similar to SANN from \CRANpkg{validann} in the sense that they are faster but do not converge as well as other package's algorithms. 
 The 2 packages that do so, \CRANpkg{elmNNRcpp} \citep{R-elmNNRcpp} and \CRANpkg{ELMR} \citep{R-ELMR} are, respectively, number 1 and number 2 in the ranks for time but 59 and 60 (bottom 2) for minimum RMSE.
 \CRANpkg{ELMR} converges slightly worse on all datasets than \CRANpkg{elmNNRcpp} but has noticeably worse performance on the Gauss datasets, especially \code{uGauss1}.
 Even increasing the number of neurons did not lead to better convergence for those particular datasets.
 
-<!-- B: I can send you the RMD file if you want to see how crazy the results are, where minimum RMSE reaches the hundreds. 948.8079 for uGauss2! -->
+
 
 **B. More than one hidden layer**
 
@@ -978,7 +978,7 @@ This work was possible due to the support of the Google Summer of Code initiativ
 during years 2019 and 2020.
 Students Salsabila Mahdi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
 Google for the financial support.
-<!-- For the acknowledgments, maybe : ``  '' + later some acknowledgments to the referees. -->
+
 
 
 \bibliography{RJreferences}
