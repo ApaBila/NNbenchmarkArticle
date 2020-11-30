@@ -469,10 +469,11 @@ Both figures show that a good overall score does not necessarily imply
 a good score on the two datasets under consideration. 
 Furthermore, there is a break between the
 TOP10 \code{package:algorithm} and others in terms of RMSE value.
+Figure 6 in Appendix D displays the score probabilities per \code{package:algorithm}. 
 Regarding computation time, we observe that some package:algorithms are
-very slow and poor RMSE, e.g. 41 corresponding to \pkg{AMORE}\code{:BATCHgd}.
+very slow and have poor RMSE, e.g. 41 corresponding to \pkg{AMORE}\code{:BATCHgd}.
 In the following, we first present the results for second-order algorithms,
-then low-order algorithms. Finally, we list the reasons for discareded packages.
+then low-order algorithms. Finally, we list the reasons for discarded packages.
 
 <!--**Tables**-->
 
@@ -1097,10 +1098,21 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
   footnote(general=TOP5sentence, footnote_as_chunk=TRUE)
 ```
 
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\textwidth]{img/scoreprobperpkg.png}
+        \label{fig:scoreprob}
+        \caption{Score probabilities of \code{package:algorithm}}
+\end{figure}
+
 ## Appendix E
 
 
 \begin{figure}
+    \centering    
     \includegraphics[width=\textwidth]{img/MachineShop.png}
         \label{fig:MachineShop}
         \caption{Average predicted mean per explanatory variable for \code{MachineShop}}
@@ -1108,24 +1120,28 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
 
 
 \begin{figure}
+    \centering
     \includegraphics[width=\textwidth]{img/nnet.png}
         \label{fig:nnet}
         \caption{Average predicted mean per explanatory variable for \code{nnet}}
 \end{figure}
 
 \begin{figure}
+    \centering
     \includegraphics[width=\textwidth]{img/rminer.png}
         \label{fig:rminer}
         \caption{Average predicted mean per explanatory variable for \code{rminer}}
 \end{figure}
 
 \begin{figure}
+    \centering
     \includegraphics[width=\textwidth]{img/nlsr.png}
         \label{fig:nlsr}
         \caption{Average predicted mean per explanatory variable for \code{nlsr}}
 \end{figure}
 
 \begin{figure}
+    \centering
     \includegraphics[width=\textwidth]{img/validann.png}
         \label{fig:validann}
         \caption{Average predicted mean per explanatory variable for \code{validann}}
