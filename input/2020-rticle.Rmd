@@ -87,7 +87,9 @@ Modern software allows much of this work, including approximation of the gradien
 
 <!-- B??: above we mention splitting datasets, but when we benchmarked we did not split the datasets. So should what we did be referred to as fitting? Also some packages were actually discarded because the split was obligatory
 => CD : we say a word later about no splitting 
-=> B  : still checking, but have you put in a word about this yet CD (and where if yes)? Or should I?-->
+=> B  : still checking, but have you put in a word about this yet CD (and where if yes)? Or should I?
+=> CD: no. but Patrice (?) put a sentence line 184
+-->
 
 The training process can generally be made more efficient if we can also approximate second derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
 There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. 
@@ -177,7 +179,9 @@ We refer interested readers to \citep{tan2019review} for a review of second-orde
 
 ## Convergence and termination
 
-Most of the \code{package:algorithm} pairs try to minimize the root mean squared error (RMSE) during the training step. Two exceptions are the \CRANpkg{brnn} package which minimizes the RMSE plus the sum of the parameters (hence the name Bayesian Regularized Neural Network), and the \CRANpkg{qrnn} package which performs quantile regression. For all packages, the datasets were learnt as a whole and without any weighting scheme to favour one part of the datasets. There was no validation subset or test subset as the purpose of our study is just to verify the ability to reach good minima. 
+Most of the \code{package:algorithm} pairs try to minimize the root mean squared error (RMSE) during the training step. Two exceptions are the \CRANpkg{brnn} package which minimizes the RMSE plus the sum of the parameters (hence the name Bayesian Regularized Neural Network), and the \CRANpkg{qrnn} package which performs quantile regression. 
+For all packages, the datasets were learnt as a whole and without any weighting scheme to favour one part of the datasets. 
+There was no validation subset or test subset as the purpose of our study is just to verify the ability to reach good minima. 
 
 When training neural networks, we attempt to tune a set of hyperparameters so that the root 
 mean squared error (RMSE) is minimized. 
@@ -291,10 +295,6 @@ kableExtra::kable(sumNNdata,
   kable_styling(font_size=7)
 ```
 
-To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
-Furthermore the 2019 GSoC code uses all 12 datasets. 
-Our package still allows access to all 12 datasets.
-
 Finally, we also consider a Simon Wood test dataset, named \code{bWoodN1}, used in 
 \citep{wood2011fast} for benchmarking generalized additive models. 
 Precisely, we consider a generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ 
@@ -308,6 +308,9 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 \code{bWoodN1} will only be used in the second round of our analysis when the TOP5 packages
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
+To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
+Furthermore the 2019 GSoC code uses all 12 datasets. <!-- final paragraph from discussion on Nov 29 --> 
+<!-- CD commented 'Our package still allows access to all 12 datasets.' --> 
 Whatever the source of the test datasets, there are all available in \CRANpkg{NNbenchmark}, so that maintainers or users can perform the analysis.
 
 <!-- B?? : Does the line above become repetitive because of the added lines for number of datasets?--> 
@@ -386,7 +389,7 @@ Based on our understanding of what a user may be required to know or do when usi
 we consider: a measure for the availability of appropriate utility functions; a measure for (non-trivial) examples 
 and sufficient documentation (well-written manual, vignette(s)); and a measure
 to rate the clarity of the \soft{R} call to fit a given neural network. Our rating is as follows.
-<!-- JN: I added the idea of clarity -->
+<!-- JN: I added the idea of clarity ; CD : I'm fine with this proposal.-->
 
 1. Utilities in R to deal with NN - maximum of 1 star
     a. a predict function exists  = 0.5 stars
@@ -412,6 +415,7 @@ ranges from 0 to 3 stars, while the utility and the R call from 0 to 2 stars.
 <!-- B??: I see how John got 8 stars from one of the other versions. What the actual scoring (at least my part) is like is as above. Stars were an accumulation of points divided, but now I think it makes more sense to just divide the stars so they add up properly. Christophe, not sure if thats how you scored also. If not, then there are a total of 5 stars for ease of use 
 
 Also, do the ease of use scores in the final tables properly reflect the above?
+CD : I'm in favor of keeping three ratings, yet they might be scaled so that each rating ranges from 0 to 2 stars.
 --> 
 
 
@@ -936,12 +940,12 @@ miss the increasing non-linear trend of explanatory variable $x_1$ on the expect
 
 # Conclusion and perspective
 
-??JN: Can we start to put in some major findings? i.e., important positive findings,
-big negatives?
+This paper focuses on benchmarking neural network packages available on CRAN with the
+ideal goal to recommend or disrecommend some packages.
 
 ## Positives (no particular order)
 1. We are happy to note the existence of neural network packages in R with  algorithms that converge well.
-- \pkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ... ?? need to complete sentence??. 
+- \CRANpkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ... ?? need to complete sentence??. 
 JN??: Why is this positive?
 ==> B: its meant to be part of the above, because nnet's algorithm converged well in our tests, thus the fact that it is being used by other packages is a plus? See the part about nnet & packages that depend on it in the results
 - R users have access to a wide variety of neural network methods, including from libraries of other programming languages
