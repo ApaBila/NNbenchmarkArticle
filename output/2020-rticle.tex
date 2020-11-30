@@ -1,8 +1,7 @@
 % !TeX root = RJwrapper.tex
-\title{A review of R neural network packages (with NNbenchmark)\(:\)
-accuracy and ease of use}
-\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
-Kiener, John C. Nash}
+\title{A review of R neural network packages (with NNbenchmark)\(:\) accuracy
+and ease of use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
 
 \maketitle
 
@@ -365,6 +364,12 @@ Dataset & Row nb. & Input nb. & Neuron nb. & Param. nb.\\
 
 \end{Schunk}
 
+To build the final result table, we selected all four multivariate
+datasets and 4 out of the 8 univariate datasets so that the overall
+score does not overly weight the univariate datasets. Furthermore the
+2019 GSoC code uses all 12 datasets. Our package still allows access to
+all 12 datasets.
+
 Finally, we also consider a Simon Wood test dataset, named
 \code{bWoodN1}, used in \citep{wood2011fast} for benchmarking
 generalized additive models. Precisely, we consider a generation of
@@ -378,8 +383,8 @@ and \(n=20,000\). \code{bWoodN1} will only be used in the second round
 of our analysis when the TOP5 packages will be further analyzed with 5
 neurons resulting in 41 parameters.
 
-Whatever the source of the test datasets, there are available in
-\CRANpkg{NNbenchmark}, so that maintainers ar users can perform the
+Whatever the source of the test datasets, there are all available in
+\CRANpkg{NNbenchmark}, so that maintainers or users can perform the
 analysis.
 
 \textbf{Packages}
@@ -495,33 +500,31 @@ C.
 
 \textbf{3. Ease of use scoring}
 
-Summarizing or re-reviewing the tested packages utility functions \&
-documentation.
-
 We define ease-of-use measures to rate NN packages on their
-user-friendliness. Based on what we considered a user is expected when
-using a neural network package, we consider: a measure for utility
-functions; a measure for (non-trivial) examples and sufficient
-documentation (well-written manual, vignette(s)); a measure to rate the
-\textsf{R} call to fit a given neural network. More details are given
-below.
+user-friendliness. Based on our understanding of what a user may be
+required to know or do when using a neural network package, we consider:
+a measure for the availability of appropriate utility functions; a
+measure for (non-trivial) examples and sufficient documentation
+(well-written manual, vignette(s)); and a measure to rate the clarity of
+the \textsf{R} call to fit a given neural network. Our rating is as
+follows.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Utilities in R to deal with NN
+  Utilities in R to deal with NN - maximum of 1 star
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    a predict function exists (1 star)
+    a predict function exists = 0.5 stars
   \item
-    scaling capabilities exist (1 star)
+    scaling capabilities exist = 0.5 stars
   \end{enumerate}
 \item
-  Sufficient and reliable documentation
+  Sufficient and reliable documentation - maximum of 2 stars
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
@@ -532,9 +535,10 @@ below.
     \begin{itemize}
     \tightlist
     \item
-      clear, with regression = 2 stars
+      clear, with regression = 1 star
     \item
-      unclear, examples use iris or are for classification only = 1 star
+      unclear, examples use iris or are for classification only = 0.5
+      stars
     \item
       no examples = 0 stars
     \end{itemize}
@@ -545,9 +549,9 @@ below.
     \begin{itemize}
     \tightlist
     \item
-      clear input and output = 2 stars
+      clear input and output = 1 star
     \item
-      only one is clear = 1 star
+      only one is clear = 0.5 stars
     \item
       both are not documented = 0 stars
     \end{itemize}
@@ -567,9 +571,9 @@ below.
   \end{enumerate}
 \end{enumerate}
 
-Hence, the documentation ease-of-use measure ranges from 0 to 4 stars,
-while the utility and the R call from 0 to 2 stars: this will help new
-users to find user-friendly NN packages.
+Hence, to inform users about the usability of packages, the
+documentation ease-of-use measure ranges from 0 to 3 stars, while the
+utility and the R call from 0 to 2 stars.
 
 \hypertarget{phase-3---collection-of-and-analysis-of-results}{%
 \subsection{Phase 3 - Collection of and analysis of
@@ -1211,9 +1215,9 @@ Package & Category & Reason to Discard (File(s) and/or function(s))\\
 \endlastfoot
 appnn & AP & Provide a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESCRIPTION file)\\
 autoencoder & AP & Provide a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
-BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slow : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
+BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slowÂ : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
 Buddle & CL & Did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)\\
-cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
+cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a NaÃ¯ve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
 \addlinespace
 cld3 & AP & Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESCRIPTION file)\\
 condmixt & AP & Use neural networks to predict parameters of mixture models (DESCRIPTION file)\\
@@ -1259,7 +1263,7 @@ polyreg & XX & Polyregression as alternative to NN (DESCRIPTION file)\\
 \addlinespace
 predictoR & RE & A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESCRIPTION file \& ::init\_predictor)\\
 ProcData & AP & Provide tools for exploratory process data analysis via functions: reading, process manipulation, action sequence generators, feature extraction and prediction (link + DESCRIPTION file)\\
-quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
+quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural networkÂ ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
 rasclass & CL & Provide neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESCRIPTION file)\\
 rcane & RE & Provide parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESCRIPTION file)\\
 \addlinespace
@@ -1271,9 +1275,9 @@ simpleNeural & CL & Neural networks for multi-class or binary classification (DE
 \addlinespace
 softmaxreg & CL & Out of scope: Implementation of 'softmax' regression and classification models with multiple layer neural network (DESCRIPTION file)\\
 Sojourn.Data & AP & Stores some neural networks used for Sojourn Accelerometer methods (DESCRIPTION file)\\
-spnn & CL & Out of scope : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
+spnn & CL & Out of scopeÂ : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
 studyStrap & AP & Implements multi-study learning algorithms such as merging, the study-specific ensemble the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret (DESCRIPTION file)\\
-TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification : it is slow. (DESCRIPTION file \& ::TeachNet)\\
+TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classificationÂ : it is slow. (DESCRIPTION file \& ::TeachNet)\\
 \addlinespace
 tensorflow & RE & See section on keras\\
 tfestimators & RE & See section on keras\\
@@ -1387,7 +1391,7 @@ order)}\label{positives-no-particular-order}}
   R users have access to a wide variety of neural network methods,
   including from libraries of other programming languages and using many
   different types of algorithms. ?? have we defined hyperparameters??
-  hyperparameters, and uses
+  hyperparameters, and uses 
 \end{itemize}
 
 Reproducibility : all our benchmark is reproducible by any user and any
@@ -1403,10 +1407,10 @@ package maintainer.
   documentation.
 \item
   It would be helpful if there were more packages with (different)
-  second-order algorithms. A number of the
+  second-order algorithms. A number of the 
 \item
   We often found it difficult to discover what default starting values
-  were used for model parameters, or
+  were used for model parameters, or 
 \end{itemize}
 
 \hypertarget{future-work}{%
@@ -1737,3 +1741,4 @@ Telfer School of Management, University of Ottawa\\
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 }
 \href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
+

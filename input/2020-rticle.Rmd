@@ -86,7 +86,8 @@ Modern software allows much of this work, including approximation of the gradien
  
 
 <!-- B??: above we mention splitting datasets, but when we benchmarked we did not split the datasets. So should what we did be referred to as fitting? Also some packages were actually discarded because the split was obligatory
-=> CD : we say a word later about no splitting -->
+=> CD : we say a word later about no splitting 
+=> B  : still checking, but have you put in a word about this yet CD (and where if yes)? Or should I?-->
 
 The training process can generally be made more efficient if we can also approximate second derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
 There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. 
@@ -290,6 +291,9 @@ kableExtra::kable(sumNNdata,
   kable_styling(font_size=7)
 ```
 
+To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
+Furthermore the 2019 GSoC code uses all 12 datasets. 
+Our package still allows access to all 12 datasets.
 
 Finally, we also consider a Simon Wood test dataset, named \code{bWoodN1}, used in 
 \citep{wood2011fast} for benchmarking generalized additive models. 
@@ -305,6 +309,8 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
 Whatever the source of the test datasets, there are all available in \CRANpkg{NNbenchmark}, so that maintainers or users can perform the analysis.
+
+<!-- B?? : Does the line above become repetitive because of the added lines for number of datasets?--> 
 
 **Packages**
 
@@ -382,18 +388,18 @@ and sufficient documentation (well-written manual, vignette(s)); and a measure
 to rate the clarity of the \soft{R} call to fit a given neural network. Our rating is as follows.
 <!-- JN: I added the idea of clarity -->
 
-1. Utilities in R to deal with NN 
-    a. a predict function exists (1 star)
-    b. scaling capabilities exist (1 star)
-2. Sufficient and reliable documentation or examples
+1. Utilities in R to deal with NN - maximum of 1 star
+    a. a predict function exists  = 0.5 stars
+    b. scaling capabilities exist = 0.5 stars
+2. Sufficient and reliable documentation - maximum of 2 stars
     a. the existence of useful and relevant example(s)/vignette(s) 
-        - clear, with regression = 2 stars
-        - unclear, examples use iris or are for classification only = 1 star
+        - clear, with regression = 1 star
+        - unclear, examples use iris or are for classification only = 0.5 stars
         - no examples = 0 stars
     b. input/output is clearly documented, e.g., what values are expected and returned 
     by a function 
-        - clear input and output = 2 stars
-        - only one is clear = 1 star
+        - clear input and output = 1 star
+        - only one is clear = 0.5 stars
         - both are not documented = 0 stars
 3. User-friendly call to fit a NN 
     a. simple one-line call or a single function = 2 stars
@@ -401,7 +407,13 @@ to rate the clarity of the \soft{R} call to fit a given neural network. Our rati
     c. multiple-lines call to many functions = 0 stars
 
 Hence, to inform users about the usability of packages, the documentation ease-of-use measure 
-ranges from 0 to 4 stars, while the utility and the R call from 0 to 2 stars. 
+ranges from 0 to 3 stars, while the utility and the R call from 0 to 2 stars. 
+
+<!-- B??: I see how John got 8 stars from one of the other versions. What the actual scoring (at least my part) is like is as above. Stars were an accumulation of points divided, but now I think it makes more sense to just divide the stars so they add up properly. Christophe, not sure if thats how you scored also. If not, then there are a total of 5 stars for ease of use 
+
+Also, do the ease of use scores in the final tables properly reflect the above?
+--> 
+
 
 ## Phase 3 - Collection of and analysis of results
 
@@ -533,15 +545,6 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
 
 <!-- (NOTE TO MENTORS: based on latest 2020 Run 04 with corrections) -->
 
-<!-- @ MENTORS
-B??: as the packages are cited quite often, is it necessary to always link to the CRAN page? What about for package:algorithms?
--->
-
-<!-- ### 2nd order algorithms -->
-<!-- JN??: For consistency, I'll suggest "Second" (or we can use "2nd", but throughout) -->
-<!-- B: agree. Sorry I was not quite sure about a lot of the consistency issues, although I did realize we were using different versions when writing, because we haven't really ever agreed  to one and used on or another so far in emails --> 
-
-
 
 \begin{figure}
   \centering
@@ -560,23 +563,21 @@ B??: as the packages are cited quite often, is it necessary to always link to th
         and \code{uDreyfus1}}
 \end{figure}
 
-
+<!-- B: NOTE FOR CHOICES ON CONSISTENCY 
+J: Second, not 2nd
+CD: first-order not first order
+-->
 
 ## Second-order algorithms
 
 <!-- CD: should we comment the package alphabetically? should we rank package in Table 1 according to RMSE?
+B : I've done a mixture of both so far.. Sometimes it makes more sense to do on or the other, but perhaps this is bad for consistency
 -->
 
 Of all approaches, the following second-order algorithms generally performed better in terms of convergence 
 despite being limited to one fifth or fewer iterations than the first-order algorithms. 
 
-<!-- JN??: "first-order" or "first order"? Another consistency choice -->
-<!-- B: can't seem to find a consensus on this one online. Maybe the mentors can decide which they prefer? Then I can replace the wrong ones with the chosen one-->
-<!-- CD: I prefer we use first-order throughout in the paper -->
-
-We note that 11 out of 15 of these \code{package:algorithms} use \code{optim} from \CRANpkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, 
-<!-- do so with no intermediate package.  --> <!-- B: agree -->
-make the call directly.
+We note that 11 out of 15 of these \code{package:algorithms} use \code{optim} from \CRANpkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, make the call directly.
 However, it is not clearly stated in \CRANpkg{CaDENCE}'s documentation that optim's BFGS method has been chosen rather
 than one of the other four methods. <!-- B: optim has 6 methods? with "Brent" for one dimensional problems only -->
 <!-- is used and not one of the other algorithms.  -->
