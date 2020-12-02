@@ -228,7 +228,7 @@ Tests have also been performed on other platforms: computation times were reason
 
 
 
-<!-- Our research process was divided into 3 phases. -->
+
 
 ## Phase 1 - Preparation of benchmark datasets and selection of packages
 
@@ -798,6 +798,7 @@ Speed for Rprop is better but SCG's results vary less.
 
 
 **Other packages **
+
 \CRANpkg{AMORE} \citep{R-AMORE}: Unfortunately, the focus of the paper behind this package, its 
 unique point, is not explained or documented well enough. 
 
@@ -908,8 +909,13 @@ rownames(TOP5algo)  <- subset(Table1rk, RMSE %in% 1:5)[, "Package"]
 
 Table3$Package <- sapply(strsplit(Table3[, "Package::algorithm"], "::"), head, n=1)
 Table3$Algorithm <- TOP5algo[Table3$Package, "Algorithm"]
+idx2shorten <- grep("(BFGS)", Table3$Algorithm)
+Table3$Algorithm[idx2shorten] <- substr(Table3$Algorithm[idx2shorten], 1, nchar(Table3$Algorithm[idx2shorten])-6)
 Table3 <- Table3[, c("Package", "Algorithm", "RMSE min", "RMSE median", 
                      "RMSE D51", "MAE median", "WAE median", "Time median")]
+Table3[, c("RMSE min", "RMSE median", "RMSE D51", "MAE median", "WAE median", "Time median")] <- apply(Table3[, c("RMSE min", "RMSE median", 
+                     "RMSE D51", "MAE median", "WAE median", "Time median")],
+      2, signif, digits=4)
 
 kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE, 
                   caption="Performance on bWoodN1 dataset",
@@ -927,10 +933,9 @@ the empirical and the theoretical values.
 That is, the empirical value and the predicted value for the $j$th explanatory 
 variable are respectively computed at x-value $x$ as
 $$
-\bar y^{emp}_j(x) =  \left(\sum_{i=1}^n y_i 1_{r(x_{i,j}) = x} \right)
-\left(\sum_{i=1}^n 1_{r(x_{i,j}) = x}\right)^{-1},~
-\bar y^{pred}_j(x) = \left(\sum_{i=1}^n \hat y_i 1_{r(x_{i,j}) = x} \right) 
-\left(\sum_{i=1}^n 1_{r(x_{i,j}) = x}\right)^{-1} ,
+\bar y^{emp}_j(x) = \frac1{n_x}  \sum_{i=1}^n y_i 1_{r(x_{i,j}) = x},~
+\bar y^{pred}_j(x) =  \frac1{n_x} \sum_{i=1}^n \hat y_i 1_{r(x_{i,j}) = x},~~
+n_x=\sum_{i=1}^n 1_{r(x_{i,j}) = x},
 $$
 where $r()$ denotes the round function with two decimal places and $y_i, \hat y_i$ 
 stand respectively for the $i$th observed response and the $i$th predicted response.
@@ -1104,7 +1109,7 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
 
 \begin{figure}
     \centering
-    \includegraphics[width=.8\textwidth]{img/scoreprobperpkg.png}
+    \includegraphics[width=.8\textwidth]{img/scoreprobperpkgBnW.png}
         \label{fig:scoreprob}
         \caption{Score probabilities of \code{package:algorithm}}
 \end{figure}
