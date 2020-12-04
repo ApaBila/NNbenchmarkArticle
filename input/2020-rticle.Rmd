@@ -78,7 +78,7 @@ This is an issue as many slow or poor algorithms are available in the literature
 
 A neural network algorithm requires complicated calculations to improve the model control parameters. 
 As with other optimization problems, the gradient of the chosen cost function that indicates the lack the model's suitability is sought. 
-This lets us improve the model by changing the parameters in the negative gradient direction.
+Optimization methods improve the current iterate by changing the parameters in the opposite of the gradient direction generally with an adaptive step.
 Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
 Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
 
@@ -129,19 +129,19 @@ These practices help us find good local-minima and possibly the global-minima.
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.242\textwidth}
-        \includegraphics[width=\textwidth]{RN3a2.png}
+        \includegraphics[width=\textwidth]{img/RN3a2.png}
         \caption{NN 1-3-1}
         \label{fig:N131}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.250\textwidth}
-        \includegraphics[width=\textwidth]{RN3b2.png}
+        \includegraphics[width=\textwidth]{img/RN3b2.png}
         \caption{NN 5-3-1}
         \label{fig:N531}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.396\textwidth}
-        \includegraphics[width=\textwidth]{RN3c2.png}
+        \includegraphics[width=\textwidth]{img/RN3c2.png}
         \caption{NN 5-5N-3-1N-1}
         \label{fig:N55311}
     \end{subfigure}
@@ -195,23 +195,22 @@ time is reached.
 
 Specifically, second-order algorithms are all set to a maximum of 200 iterations. 
 On the other hand, first-order algorithms were set to several values, depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
-The full list of the maximum iteration number per \code{package:algorithm} is given in Table 4 in Appendix D. 
+The full list of the maximum iteration number per \code{package:algorithm} is given in Table 5 in Appendix D. 
 It can be seen that we were unable to completely harmonize the hyperparameters as an appropriate learning rate differed between packages, despite the algorithm being similarly named.
 
 
 
 ## Performance
 
-We measure **performance** primarily by relative computing time between methods on a particular computing 
-platform. We could also count measures of iterations, function evaluations or similar quantities that
-indicate the computing effort. We note that differences in machine architecture and in the attached
-libraries (e.g., BLAS choices for \soft{R}) will modify our measures. We are putting our tools on a
-Github repository so that further evaluation can be made by ourselves and others as hardware and software
+We measure **performance** primarily by relative computing time between methods on a particular computing platform. 
+We might have count the number of iterations, function evaluations or similar quantities, that indicate the computing effort, but this would have required a large effort in R coding in order to get comparable values between NN packages. 
+We note that differences in machine architecture and in the attached libraries (e.g., BLAS choices for \soft{R}) will modify our performance measure. 
+We are putting our tools on a Github repository so that further evaluation can be made by ourselves and others as hardware and software
 evolves.
 
 The majority of the resulting files in our repository were generated on a Windows system build 
-10.0.18362.752. The machine specifications are - (i) i7-8750H CPU (ii) Intel(R) UHD Graphics 630 (iii) NVIDIA GeForce GTX 1060 chip
-(iv) 16 GB of RAM.
+10.0.18362.752. The machine specifications are - (i) i7-8750H CPU, (ii) Intel(R) UHD Graphics 630, 
+(iii) NVIDIA GeForce GTX 1060 chip, (iv) 16 GB of RAM.
 
 Tests were also performed on other platforms and the computation times were found to be reasonably similar. 
  
@@ -309,11 +308,10 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
 To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
-Furthermore the 2019 GSoC code uses all 12 datasets. <!-- final paragraph from discussion on Nov 29 --> 
-<!-- CD commented 'Our package still allows access to all 12 datasets.' --> 
-For convenience, all datasets are made available in \CRANpkg{NNbenchmark}.
+Furthermore the 2019 GSoC code uses all 12 datasets. 
+For convenience, all datasets are made available in \CRANpkg{NNbenchmark}, so that anyone can replicate
+our analysis.
 
-<!-- B?? : Does the line above become repetitive because of the added lines for number of datasets?--> 
 
 **Packages**
 
@@ -332,6 +330,7 @@ Restricting to regression analysis left us with 49 \code{package:algorithm} pair
 
 
 
+
 ## Phase 2 - Review of packages and development of a benchmarking template
 
 All packages were tested 3 times. Each assessment is described in detail below.
@@ -339,8 +338,9 @@ All packages were tested 3 times. Each assessment is described in detail below.
 **1. The decision to exclude or include**
 
 From documentation and example code, we learned that not all packages selected by the automated 
-search fit the scope of our research. Some have no function to generate neural networks while others were not regression neural networks of the perceptron type or were only intended for very specific purposes such as...
-Depending on the package, this could be decided by looking at the DESCRIPTION file or by trial and error.
+search fit the scope of our research. 
+Some have no function to generate neural networks while others were not regression neural networks of the perceptron type or were only intended for very specific purposes: for instance to predict the amyloidogenicity propensity of polypeptide sequences.
+Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error.
 
 
 **2. Templates for testing accuracy and speed**
@@ -448,14 +448,14 @@ To rank the speed and quality of convergence, we have devised the following meth
 # Results, discussion and recommendations
 
 Table 2 gives the RMSE and time score per package and per algorithm. 
-The full list of scores is given in Table 5 in Appendix C.
+The full list of scores is given in Table 5 in Appendix D.
 We divide our analysis in two groups: packages implementing second-order algorithms
 and packages implementing first-order algorithms.
 Figure 2 shows the minimum RMSE value per \code{package:algorithm}
 for two datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure 3 displays the average computation time.
 The number on the x-level refers to the RMSE overall score of the 
-package:algorithm given in Table 2 (last column), e.g., 8 refers to 
+\code{package:algorithm} given in Table 2 (last column), e.g., 8 refers to 
 \pkg{validann}\code{:optim(CG)} which is a very slow algorithm.
 
 Both figures show that a good overall score does not necessarily imply 
@@ -606,7 +606,7 @@ It has many pre-processing utilities available, as well as other tools.
 <!-- B: purely alphabetically -->
 \CRANpkg{EnsembleBase} \citep{R-EnsembleBase} maybe useful for those who wish to make model ensembles and test a grid of parameters. Although, the documentation is rather confusing.
 \CRANpkg{MachineShop} \citep{R-MachineShop} has 51 algorithms, with some additional information about the response variable types in the second vignette, functions for preprocessing and tuning, performance assessment, and presentation of results. 
-\CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the parameters. 
+\CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the \code{maxit} parameter. 
 \CRANpkg{rminer} \citep{R-rminer} is the only package dependent on \CRANpkg{nnet} that ranks above \CRANpkg{nnet} at number 2 for minimum RMSE, and even number 1 in some runs. 
 It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \CRANpkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
 <!-- JN?? Is RMSEd51 a reference? I would like to revisit this paragraph, as I find the expression clumsy.-->
@@ -658,7 +658,7 @@ Despite the 2 packages ultimately performing well on all runs (capable of being 
 
 First, both require the full formula of the neural network including variables and parameters. 
 Secondly, they require good starting values to achieve the best convergence. 
-Notice that in Table 1, \code{minpack.lm} does not have a high rank. 
+Notice that in Table 2, \code{minpack.lm} does not have a high rank. 
 This is because we removed the random Gaussian start values we had originally used; which means that the default start values of \code{minpack.lm} were not appropriate for our datasets. 
 We suspect \CRANpkg{nlsr}'s performance on convergence would have similarly dropped if it was possible to use \CRANpkg{nlsr} with no user-set starting values and the author's chosen default values were inadequate. 
 \code{nls} deals with this by suggesting a companion function in \CRANpkg{stats}, \code{selfStart}. 
@@ -695,7 +695,7 @@ Only 2 packages include both second-order algorithms and a lower-order algorithm
 \CRANpkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
 Both implementations of Nelder-Mead do not rank well in minimum RMSE, around 40 out of 60, with similar ranks for the other criteria.
 We would also caution users to avoid the other methods in \CRANpkg{validann} from \code{optim}.
-From Table 1 it may appear that \CRANpkg{validann}'s implementation of the Conjugate Gradient (CG) algorithm finds reasonable minima and thus is a good option.
+From Table 2 it may appear that \CRANpkg{validann}'s implementation of the Conjugate Gradient (CG) algorithm finds reasonable minima and thus is a good option.
 It consistently ranked in the top 15 with minimum RMSE. 
 However, it is the slowest algorithm of all 60 algorithms tested.
 Note, this includes algorithms from packages that call external libraries outside \soft{R} in \soft{Python} or \soft{Java} and packages that use as much as 100,000 iterations. <!-- B??: is CG first order or second order? I've seen sources that seem to state one or another. JN: You can probably find people to argue 1st or 2nd. It is a linearization of a 2nd order
@@ -806,13 +806,13 @@ A certain number of packages have been discarded from this study for at least on
 
 
 1. For regression but unsuitable for the scope of our research, coded RE in Table 3.
-2. For time series, coded TS in Table 2.
-3. For classification, coded CL in Table 2. 
-4. For specific purpose, coded AP in Table 2.
-5. For tools to complement NN's by other packages, coded UT in Table 2.
-6. Not actually neural networks and other reasons, coded XX in Table 2.
+2. For time series, coded TS in Table 3.
+3. For classification, coded CL in Table 3. 
+4. For specific application purpose, coded AP in Table 3.
+5. For tools to complement NN's by other packages, coded UT in Table 3.
+6. Not actually neural networks and other reasons, coded XX in Table 3.
 
-The full list of untested packages is given in Table 2.
+The full list of untested packages is given in Table 3.
 
 
 
