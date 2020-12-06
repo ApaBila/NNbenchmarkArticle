@@ -69,14 +69,14 @@ CRAN.
 
 A neural network algorithm requires complicated calculations to improve
 the model control parameters. As with other optimization problems, the
-gradient of the chosen cost function that indicates the lack the model's
-suitability is sought. Optimization methods improve the current iterate
-by changing the parameters in the opposite of the gradient direction
-generally with an adaptive step. Parameters for the model are generally
-obtained by using part of the available data (a training set) and tested
-on the remaining data. Modern software allows much of this work,
-including approximation of the gradient, to be carried out without a
-large effort by the user.
+gradient of the chosen cost function that indicates the the model's lack
+of suitability is sought. Optimization methods improve the current
+iterate by changing the parameters in the opposite of the gradient
+direction generally with an adaptive step. Parameters for the model are
+generally obtained by using part of the available data (a training set)
+and tested on the remaining data. Modern software allows much of this
+work, including approximation of the gradient, to be carried out without
+a large effort by the user.
 
 The training process can generally be made more efficient if we can also
 approximate second derivatives of the cost function, allowing us to use
@@ -142,11 +142,12 @@ neurons, one output model where \(x\) is the input, \(\text{atan}()\) is
 the activation function, \(y\) is the output and \(a_1,\dots,a_{22}\)
 are the parameters.
 
-In order to get large gradients at the first steps of the training
-algorithm, the following is recommended: (i) normalized inputs and
+While the final gradient should be small, we believe it is helpful to
+have relatively large gradients at the first steps of the training
+algorithm, so the following is recommended: (i) normalized inputs and
 outputs (Fig. 1c), (ii) odd functions like the hyperbolic tangent
 function or the arctangent function, (iii) small random values to
-initialize the parameters. A common example is values extracted from a
+initialize the parameters. A common example uses values extracted from a
 centred Gaussian \(\mathcal N(0, 0.1)\) distribution.
 
 These practices help us find good local-minima and possibly the
@@ -243,7 +244,7 @@ several values, depending on how well and how fast they converged:
 \texttt{maxit1storderA=1000} iterations, \texttt{maxit1storderB=10000}
 iterations, and \texttt{maxit1storderC=100000} iterations. The full list
 of the maximum iteration number per \code{package:algorithm} is given in
-Table 4 in Appendix D. It can be seen that we were unable to completely
+Table 5 in Appendix D. It can be seen that we were unable to completely
 harmonize the hyperparameters as an appropriate learning rate differed
 between packages, despite the algorithm being similarly named.
 
@@ -251,10 +252,10 @@ between packages, despite the algorithm being similarly named.
 \subsection{Performance}\label{performance}}
 
 We measure \textbf{performance} primarily by relative computing time
-between methods on a particular computing platform. We might have count
-the number of iterations, function evaluations or similar quantities,
-that indicate the computing effort, but this would have required a large
-effort in R coding in order to get comparable values between NN
+between methods on a particular computing platform. We could count the
+number of iterations, function evaluations or similar quantities that
+indicate the computing effort, but this would have required a large
+effort in R coding in order to get values that are comparable between NN
 packages. We note that differences in machine architecture and in the
 attached libraries (e.g., BLAS choices for \textsf{R}) will modify our
 performance measure. We are putting our tools on a Github repository so
@@ -510,15 +511,15 @@ Our ratings are as follows.
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Utilities in R to deal with NN - maximum of 1 star
+  Utilities in R to deal with NN - maximum of 2 stars
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    a predict function exists = 0.5 stars
+    a predict function exists = 1 star
   \item
-    scaling capabilities exist = 0.5 stars
+    scaling capabilities exist = 1 star
   \end{enumerate}
 \item
   Sufficient and reliable documentation - maximum of 2 stars
@@ -532,10 +533,9 @@ Our ratings are as follows.
     \begin{itemize}
     \tightlist
     \item
-      clear, with regression = 1 star
+      clear, with regression = 2 stars
     \item
-      unclear, examples use iris or are for classification only = 0.5
-      stars
+      unclear, examples use iris or are for classification only = 1 star
     \item
       no examples = 0 stars
     \end{itemize}
@@ -546,9 +546,9 @@ Our ratings are as follows.
     \begin{itemize}
     \tightlist
     \item
-      clear input and output = 1 star
+      clear input and output = 2 stars
     \item
-      only one is clear = 0.5 stars
+      only one is clear = 1 star
     \item
       both are not documented = 0 stars
     \end{itemize}
@@ -647,15 +647,15 @@ following method:
 recommendations}\label{results-discussion-and-recommendations}}
 
 Table 2 gives the RMSE and time score per package and per algorithm. The
-full list of scores is given in Table 5 in Appendix C. We divide our
+full list of scores is given in Table 5 in Appendix D. We divide our
 analysis in two groups: packages implementing second-order algorithms
 and packages implementing first-order algorithms. Figure 2 shows the
 minimum RMSE value per \code{package:algorithm} for two datasets
 \code{mIshigami} and \code{uDreyfus1}, whereas Figure 3 displays the
 average computation time. The number on the x-level refers to the RMSE
-overall score of the package:algorithm given in Table 2 (last column),
-e.g., 8 refers to \pkg{validann}\code{:optim(CG)} which is a very slow
-algorithm.
+overall score of the \code{package:algorithm} given in Table 2 (last
+column), e.g., 8 refers to \pkg{validann}\code{:optim(CG)} which is a
+very slow algorithm.
 
 Both figures show that a good overall score does not necessarily imply a
 good performance on the two datasets under consideration. Furthermore,
@@ -882,8 +882,8 @@ packages with a host of other machine learning algorithms.
 deceivingly simple name of ``Classification and Regression Training''.
 It has many pre-processing utilities available, as well as other tools.
 
-\CRANpkg{EnsembleBase} \citep{R-EnsembleBase} maybe useful for those who
-wish to make model ensembles and test a grid of parameters. Although,
+\CRANpkg{EnsembleBase} \citep{R-EnsembleBase} may be useful for those
+who wish to make model ensembles and test a grid of parameters, although
 the documentation is rather confusing. \CRANpkg{MachineShop}
 \citep{R-MachineShop} has 51 algorithms, with some additional
 information about the response variable types in the second vignette,
@@ -959,7 +959,7 @@ users might hesitate to choose them.
 
 First, both require the full formula of the neural network including
 variables and parameters. Secondly, they require good starting values to
-achieve the best convergence. Notice that in Table 1, \code{minpack.lm}
+achieve the best convergence. Notice that in Table 2, \code{minpack.lm}
 does not have a high rank. This is because we removed the random
 Gaussian start values we had originally used; which means that the
 default start values of \code{minpack.lm} were not appropriate for our
@@ -1022,7 +1022,7 @@ algorithm besides BFGS, that is, \CRANpkg{optimx}'s Nelder-Mead.
 slightly better for minimum RMSE. Both implementations of Nelder-Mead do
 not rank well in minimum RMSE, around 40 out of 60, with similar ranks
 for the other criteria. We would also caution users to avoid the other
-methods in \CRANpkg{validann} from \code{optim}. From Table 1 it may
+methods in \CRANpkg{validann} from \code{optim}. From Table 2 it may
 appear that \CRANpkg{validann}'s implementation of the Conjugate
 Gradient (CG) algorithm finds reasonable minima and thus is a good
 option. It consistently ranked in the top 15 with minimum RMSE. However,
@@ -1182,18 +1182,18 @@ least one of the following reasons:
   For regression but unsuitable for the scope of our research, coded RE
   in Table 3.
 \item
-  For time series, coded TS in Table 2.
+  For time series, coded TS in Table 3.
 \item
-  For classification, coded CL in Table 2.
+  For classification, coded CL in Table 3.
 \item
-  For specific application purpose, coded AP in Table 2.
+  For specific application purpose, coded AP in Table 3.
 \item
-  For tools to complement NN's by other packages, coded UT in Table 2.
+  For tools to complement NN's by other packages, coded UT in Table 3.
 \item
-  Not actually neural networks and other reasons, coded XX in Table 2.
+  Not actually neural networks and other reasons, coded XX in Table 3.
 \end{enumerate}
 
-The full list of untested packages is given in Table 2.
+The full list of untested packages is given in Table 3.
 
 \begin{Schunk}
 \begingroup\fontsize{7}{9}\selectfont
@@ -1339,7 +1339,7 @@ validann & 56. optim & 3.360 & 4.497 & 1.1370 & 3.711 & 15.89 & 140.80\\
 
 \end{Schunk}
 
-Figures in Appendix E provides some insights where a package performs
+Figures in Appendix D provides some insights where a package performs
 reasonably well with respect to one explanatory variable and where the
 fit misses the correct behavior of an explanatory variable. It displays
 the average response per rounded explanatory variable for the predicted,
@@ -1362,59 +1362,29 @@ of explanatory variable \(x_1\) on the expected response.
 
 This paper focuses on benchmarking neural network packages available on
 CRAN with the ideal goal to recommend or disrecommend some packages.
+Based \CRANpkg{RWsearch}'s outputs in 2019-2020, we appropriately
+selected 26 packages (and discard 63 packages) for which an in-depth
+analysis. Using \CRANpkg{NNbenchmark}, we ranked 60
+\code{package:algorithm} and are happy to note that most of them
+converge well within a reasonable time. Packages reviewed appear to
+offer essentially the same methods, and second-order algorithms perform
+generally better than first-order algorithms.
 
-\hypertarget{positives-no-particular-order}{%
-\subsection{Positives (no particular
-order)}\label{positives-no-particular-order}}
+\CRANpkg{nnet}, the only recommended package of our study, ranked third
+in terms on minimum RMSE, is probably the most efficient package.
+Notably \CRANpkg{nnet} is used by many other packages, such as
+\CRANpkg{MachineShop} and \CRANpkg{rminer} respectively ranked fifth and
+second. \CRANpkg{MachineShop} and \CRANpkg{rminer} are also very good
+challengers in our benchmark, in particular when considering a larger
+dataset. Other packages in the TOP-5, \CRANpkg{nlsr} and
+\CRANpkg{validann} are efficient packages but a little bit slower in our
+analysis.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  We are happy to note the existence of neural network packages in R
-  with algorithms that converge well.
-\end{enumerate}
-
-\begin{itemize}
-\tightlist
-\item
-  \CRANpkg{nnet}, which uses ?? need font choice?? optim's BFGS method,
-  is already often chosen to represent neural networks for packages that
-  are either a collection of independent machine learning algorithms,
-  ensembles, or even applications in a field such as \ldots{} ?? need to
-  complete sentence??. JN??: Why is this positive? ==\textgreater{} B:
-  its meant to be part of the above, because nnet's algorithm converged
-  well in our tests, thus the fact that it is being used by other
-  packages is a plus? See the part about nnet \& packages that depend on
-  it in the results
-\item
-  R users have access to a wide variety of neural network methods,
-  including from libraries of other programming languages and using many
-  different types of algorithms. ?? have we defined hyperparameters??
-  hyperparameters, and uses
-\end{itemize}
-
-Reproducibility : all our benchmark is reproducible by any user and any
-package maintainer.
-
-\hypertarget{negatives}{%
-\subsection{Negatives}\label{negatives}}
-
-\begin{itemize}
-\tightlist
-\item
-  We are disappointed that many of the packages we reviewed had poor
-  documentation.
-\item
-  It would be helpful if there were more packages with (different)
-  second-order algorithms. A number of the
-\item
-  We often found it difficult to discover what default starting values
-  were used for model parameters, or
-\end{itemize}
-
-\hypertarget{future-work}{%
-\subsection{Future work}\label{future-work}}
+However we are disappointed that many of the packages we reviewed had
+poor documentation, notably \CRANpkg{EnsembleBase} and \CRANpkg{keras}.
+We often found it difficult to discover what default starting values
+were used for model parameters and/or to understand how to change the
+hyper-parameters.
 
 As the field of neural networks continue to grow, there will always be
 more algorithms to validate. For current algorithms in \textsf{R}, our
@@ -1423,16 +1393,13 @@ and their data formats (classifier neural networks, recurrent neural
 networks, and so on). Different rating schemes and different parameters
 for package functions can also be tried out.
 
-\begin{itemize}
-\tightlist
-\item
-  The dreamed NN package: Recommendation to package authors
-\item
-  Conclusion
-\end{itemize}
+Our work is available on-line through
+\url{https://akshajverma.com/NNbenchmarkWeb/} and is entirely
+reproducible thanks to \CRANpkg{NNbenchmark}. We hope users and package
+maintainers find useful our work and will provide feedbacks in any.
 
 \hypertarget{acknowledgements}{%
-\subsection{Acknowledgements}\label{acknowledgements}}
+\section{Acknowledgements}\label{acknowledgements}}
 
 This work was possible due to the support of the Google Summer of Code
 initiative for R during years 2019 and 2020. Students Salsabila Mahdi
@@ -1679,9 +1646,6 @@ ELMR & 22. ELM & fmla \& data & - & - & 60 & 53 & 60 & 60\\
         \label{fig:scoreprob}
         \caption{Score probabilities of \code{package:algorithm}}
 \end{figure}
-
-\hypertarget{appendix-e}{%
-\subsection{Appendix E}\label{appendix-e}}
 
 \begin{figure}
     \centering    
