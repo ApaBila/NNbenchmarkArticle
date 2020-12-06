@@ -910,8 +910,32 @@ miss the increasing non-linear trend of explanatory variable $x_1$ on the expect
 # Conclusion and perspective
 
 This paper focuses on benchmarking neural network packages available on CRAN with the
-ideal goal to recommend or disrecommend some packages.
+ideal goal to recommend or disrecommend some packages. 
+Based \CRANpkg{RWsearch}'s outputs in 2019-2020, we appropriately selected 26 packages (and discard 
+63 packages) for which an in-depth analysis.
+Using \CRANpkg{NNbenchmark}, we ranked 60 \code{package:algorithm} and are happy to 
+note that most of them converge well within a reasonable time.
+Packages reviewed appear to offer essentially the same methods, and second-order algorithms
+perform generally better than first-order algorithms.
 
+\CRANpkg{nnet}, the only recommended package of our study, ranked third in terms on
+minimum RMSE, is probably the most efficient package. 
+Notably \CRANpkg{nnet} is used by many other packages, such as \CRANpkg{MachineShop}
+and \CRANpkg{rminer} respectively ranked fifth and second.
+\CRANpkg{MachineShop} and \CRANpkg{rminer} are also very good challengers in our benchmark, 
+in particular when considering a larger dataset.
+Other packages in the TOP-5,  \CRANpkg{nlsr} and \CRANpkg{validann} are efficient packages
+but a little bit slower in our analysis.
+
+<!-- should we test for bWoodN1 the best first-order algorithm? -->
+
+However we are disappointed that many of the packages we reviewed had poor documentation,
+notably \CRANpkg{EnsembleBase} and \CRANpkg{keras}.
+We often found it difficult to discover what default starting values were used for model 
+parameters and/or to understand how to change the hyper-parameters.
+
+
+<!--
 ## Positives (no particular order)
 1. We are happy to note the existence of neural network packages in R with  algorithms that converge well.
 - \CRANpkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ... ?? need to complete sentence??. 
@@ -919,29 +943,32 @@ JN??: Why is this positive?
 ==> B: its meant to be part of the above, because nnet's algorithm converged well in our tests, thus the fact that it is being used by other packages is a plus? See the part about nnet & packages that depend on it in the results
 - R users have access to a wide variety of neural network methods, including from libraries of other programming languages
 and using many different types of algorithms. ?? have we defined hyperparameters?? hyperparameters, and uses
-<!-- JN??: this bullet point still clumsy, but when we decide content, I'll edit -->
+ JN??: this bullet point still clumsy, but when we decide content, I'll edit -->
 
-Reproducibility : all our benchmark is reproducible by any user and any package maintainer.
 
+<!--
 ## Negatives
 - We are disappointed that many of the packages we reviewed had poor documentation.
 - It would be helpful if there were more packages with (different) second-order algorithms. A number of the
-<!-- packages reviewed appear to offer essentially the same methods. JN??: Is that what we want to say? -->
+<!-- packages reviewed appear to offer essentially the same methods. JN??: Is that what we want to say? 
 - We often found it difficult to discover what default starting values were used for model parameters, or 
 <!-- else bad choices. JN??: Again, is that our message? -->
 <!-- B: yes -->
 
-## Future work
+<!-- ## Future work -->
 As the field of neural networks continue to grow, there will always be more algorithms to validate. 
 For current algorithms in \soft{R}, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
 
-- The dreamed NN package: Recommendation to package authors
-- Conclusion
+
+Our work is available on-line through \url{https://akshajverma.com/NNbenchmarkWeb/} and
+is entirely reproducible thanks to \CRANpkg{NNbenchmark}.
+We hope users and package maintainers find useful our work and will provide feedbacks in any.
 
 
-## Acknowledgements
+
+# Acknowledgements
 This work was possible due to the support of the Google Summer of Code initiative for R
 during years 2019 and 2020.
 Students Salsabila Mahdi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
