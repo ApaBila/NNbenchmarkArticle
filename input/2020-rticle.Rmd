@@ -887,7 +887,7 @@ kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE,
   footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
-Figures in Appendix E provides some insights where a package performs reasonably well 
+Figures in Appendix D provides some insights where a package performs reasonably well 
 with respect to one explanatory variable and where the fit misses the correct behavior of
 an explanatory variable.
 It displays the average response per rounded explanatory variable for the predicted, 
@@ -1103,7 +1103,7 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
         \caption{Score probabilities of \code{package:algorithm}}
 \end{figure}
 
-## Appendix E
+<!--## Appendix E-->
 
 
 \begin{figure}
