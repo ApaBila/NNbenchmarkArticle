@@ -388,18 +388,18 @@ to rate the clarity of the \soft{R} call to fit a given neural network.
 Our ratings are as follows.
 
 
-1. Utilities in R to deal with NN - maximum of 1 star
-    a. a predict function exists  = 0.5 stars
-    b. scaling capabilities exist = 0.5 stars
+1. Utilities in R to deal with NN - maximum of 2 stars
+    a. a predict function exists  = 1 star
+    b. scaling capabilities exist = 1 star
 2. Sufficient and reliable documentation - maximum of 2 stars
     a. the existence of useful and relevant example(s)/vignette(s) 
-        - clear, with regression = 1 star
-        - unclear, examples use iris or are for classification only = 0.5 stars
+        - clear, with regression = 2 stars
+        - unclear, examples use iris or are for classification only = 1 star
         - no examples = 0 stars
     b. input/output is clearly documented, e.g., what values are expected and returned 
     by a function 
-        - clear input and output = 1 star
-        - only one is clear = 0.5 stars
+        - clear input and output = 2 stars
+        - only one is clear = 1 star
         - both are not documented = 0 stars
 3. User-friendly call to fit a NN 
     a. simple one-line call or a single function = 2 stars
