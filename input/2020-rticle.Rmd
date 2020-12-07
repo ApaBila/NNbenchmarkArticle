@@ -77,7 +77,7 @@ This is an issue as many slow or poor algorithms are available in the literature
  
 
 A neural network algorithm requires complicated calculations to improve the model control parameters. 
-As with other optimization problems, the gradient of the chosen cost function that indicates the model's lack of suitability is sought. <!-- B??: not sure, should it be "the chosen cost function which" or if the sentence should be split into one for the gradient and one for the cost function. Remove double the -->
+As with other optimization problems, the gradient of the chosen cost function that indicates the model's lack of suitability is sought. <!-- B??: not sure, should it be "the chosen cost function which" or if the sentence should be split into one for the gradient and one for the cost function. Remove double the. CD yest it could be improved -->
 Optimization methods improve the current iterate by changing the parameters in the opposite of the gradient direction generally with an adaptive step.
 Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
 Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
@@ -607,7 +607,7 @@ It has many pre-processing utilities available, as well as other tools.
 \CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the \code{maxit} parameter. 
 \CRANpkg{rminer} \citep{R-rminer} is the only package dependent on \CRANpkg{nnet} that ranks above \CRANpkg{nnet} at number 2 for minimum RMSE, and even number 1 in some runs. 
 It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \CRANpkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
-<!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy.-->
+<!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted-->
 
 
 
@@ -839,19 +839,19 @@ kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
 
 ## Further analysis of TOP-5 packages
 
-In this subsection <!-- B: Is "In this subsection" necessary? -->, we perform a second round of analysis with a larger dataset
+In this subsection <!-- B: Is "In this subsection" necessary? CD: indeed it can be removed -->, we perform a second round of analysis with a larger dataset
 and a focus on the TOP-5 packages given in Table 2.
-That is, we consider packages `nlsr`, `rminer`, `nnet`, `validann` with algorithm BFGS and `MachineShop`.
+That is, we consider packages \CRANpkg{nlsr}, \CRANpkg{rminer}, \CRANpkg{nnet}, \CRANpkg{validann} with algorithm BFGS and \CRANpkg{MachineShop}.
 We fit the NN packages on Simon Wood's Gaussian dataset, see `bWoodN1` in dataset description, which contains
 20,000 rows with 6 inputs valued in [0,1] for a (single) numeric output.
 Due to the non-linear functions considered, see Appendix B, the link between the output and each
 explanatory variable is highly non-linear which greatly affects the fitting time.
 Table 4 gives the metric performance over 20 runs of these TOP-5 five packages on `bWoodN1`.
 
-We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet `rminer`
-and `validann` are a little bit behind the others.
-However, once again, the metrics median RMSE and RMSEd51 reveal how consistent `rminer`'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
-Regarding computation time, the best two in this class are `nnet` and `MachineShop`.
+We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \CRANpkg{rminer}
+and \CRANpkg{validann} are a little bit behind the others.
+However, once again, the metrics median RMSE and RMSEd51 reveal how consistent \CRANpkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
+Regarding computation time, the best two in this class are \CRANpkg{nnet} and \CRANpkg{MachineShop}.
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -898,8 +898,8 @@ n_x=\sum_{i=1}^n 1_{r(x_{i,j}) = x},
 $$
 where $r()$ denotes the round function with two decimal places and $y_i, \hat y_i$ 
 stand respectively for the $i$th observed response and the $i$th predicted response.
-For instance, `MachineShop`, `nnet`, `nlsr` do not correctly capture the sinusoidal 
-aspect of explanatory variable $x_5$ on the expected response, whereas `rminer`, `validann`
+For instance, \CRANpkg{MachineShop}, \CRANpkg{nnet}, \CRANpkg{nlsr} do not correctly capture the sinusoidal 
+aspect of explanatory variable $x_5$ on the expected response, whereas \CRANpkg{rminer}, \CRANpkg{validann}
 miss the increasing non-linear trend of explanatory variable $x_1$ on the expected response.
 
 
@@ -919,18 +919,23 @@ minimum RMSE, and is probably the most efficient package.
 \CRANpkg{nnet} is notably used by many other packages, such as \CRANpkg{MachineShop}
 and \CRANpkg{rminer} respectively ranked fifth and second.
 \CRANpkg{MachineShop} and \CRANpkg{rminer} are also very good challengers in our benchmark, 
-in particular when considering a larger dataset. <!-- B?? I'm not sure about this since the results for the big datasets start of with validann rminer behind on minimum RMSE?? Are we suggesting that minimum RMSE, which we based the order of the final table on, is not an important measure? ... B?? made some changes to the above-->
-Other packages in the TOP-5,  \CRANpkg{nlsr} and \CRANpkg{validann} are efficient packages
-but a little bit slower in our analysis.
+in particular when considering a larger dataset. <!-- 
+1) B?? I'm not sure about this since the results for the big datasets start of with validann rminer behind on minimum RMSE?? CD: MachineShop has very good time median and very close RMSE min; rminer is slower but has better MAE median and WAE median, see Table 4
+2) Are we suggesting that minimum RMSE, which we based the order of the final table on, is not an important measure? CD: we are suggesting other measures could help distinguish packages with very similar RMSE min.
+3) B?? made some changes to the above-->
+Other packages in the TOP-5,  \CRANpkg{nlsr} (the best in terms of RMSE minimum) 
+and \CRANpkg{validann} are efficient packages but a little bit slower in our analysis.
 
-<!-- CD?? (B: I think) should we test for bWoodN1 the best first-order algorithm? -- B: I did run some and have questioned about this before. I think since one of the claims about first-order algorithms is that they are more efficient on large datasets, it should be done. However, I no longer recollect the exact results and wonder if its wise to spend our time on that right now. I think the general result (of a few runs) is that the first-order algorithms were still at least slower -->
+<!-- CD?? (B: I think) should we test for bWoodN1 the best first-order algorithm? 
+-- B: I did run some and have questioned about this before. I think since one of the claims about first-order algorithms is that they are more efficient on large datasets, it should be done. However, I no longer recollect the exact results and wonder if its wise to spend our time on that right now. I think the general result (of a few runs) is that the first-order algorithms were still at least slower
+-- CD: if we perform, it can give an idea of computing time and minimum RMSE for the best 1-order algo. -->
 
 However we are disappointed that many of the packages we reviewed had poor documentation,
 notably \CRANpkg{EnsembleBase} and \CRANpkg{keras}.
 We often found it difficult to discover what default starting values were used for model 
 parameters and/or to understand how to change the hyper-parameters.
 
-<!-- ## Future work -- B?? not sure if this section header should stay or go but I'm leaving it up here for now-->
+<!-- ## Future work -- B?? not sure if this section header should stay or go but I'm leaving it up here for now ; CD: I assume it is not necessary to subdivide conclusion, see latest issue of R journal -->
 As the field of neural networks continue to grow, there will always be more algorithms to validate. 
 For current algorithms in \soft{R}, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
