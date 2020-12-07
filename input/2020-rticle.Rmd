@@ -77,7 +77,7 @@ This is an issue as many slow or poor algorithms are available in the literature
  
 
 A neural network algorithm requires complicated calculations to improve the model control parameters. 
-As with other optimization problems, the gradient of the chosen cost function that indicates the model's lack of suitability is sought. <!-- B??: not sure, should it be "the chosen cost function which" or if the sentence should be split into one for the gradient and one for the cost function. Remove double the. CD yest it could be improved -->
+As with other optimization problems, the gradient of the chosen cost function indicates the model's lack of suitability. <!-- B??: not sure, should it be "the chosen cost function which" or if the sentence should be split into one for the gradient and one for the cost function. Remove double the. CD yest it could be improved. JN: Sentence grammar did not parse, so I edited further.-->
 Optimization methods improve the current iterate by changing the parameters in the opposite of the gradient direction generally with an adaptive step.
 Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
 Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
