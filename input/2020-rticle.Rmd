@@ -68,7 +68,7 @@ Finally, we provide some hints and features to guide the development of an ideal
 
 ## Introduction
 
-The R Project for Statistical Computing by \citep{Rsoft20}, as any open-source platform, relies on its contributors to keep it up to date. 
+The R Project for Statistical Computing, as any open-source platform, relies on its contributors to keep it up to date. 
 Neural Networks, inspired by the brain itself, are a class of models in the growing field of machine learning for which R has a number of tools.
 Previously, neural networks were often considered theoretically instead of pragmatically, partly because the algorithms used were computationally expensive. 
 
