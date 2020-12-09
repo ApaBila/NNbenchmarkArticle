@@ -4,23 +4,26 @@ author:
   - name: Salsabila Mahdi
     affiliation: Universitas Syiah Kuala
     address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia 
-    email:  bila.mahdi@mhs.unsyiah.ac.id
+    email: bila.mahdi@mhs.unsyiah.ac.id
   - name: Akshaj Verma
     affiliation: Manipal Institute of Technology
     address: Manipal, Karnataka, 576104, India
-    email:  akshajverma7@gmail.com
+    email: akshajverma7@gmail.com
   - name: Christophe Dutang
     affiliation: Université Paris-Dauphine, University PSL, CNRS, CEREMADE
     address: Place du Maréchal de Lattre de Tassigny, 75016 Paris, France
-    email:  dutang@ceremade.dauphine.fr
+    orcid: 0000-0001-6732-1501
+    email: dutang@ceremade.dauphine.fr
   - name: Patrice Kiener
     affiliation: InModelia
     address: 5 rue Malebranche, 75005 Paris, France
-    email:  patrice.kiener@inmodelia.com
+    orcid: 0000-0002-0505-9920
+    email: patrice.kiener@inmodelia.com
   - name: John C. Nash
     affiliation: Telfer School of Management, University of Ottawa
     address: 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada
-    email:  nashjc@uottawa.ca
+    orcid: 0000-0002-2762-8039
+    email: nashjc@uottawa.ca
 preamble: 
   includes: 
     \usepackage{float}
