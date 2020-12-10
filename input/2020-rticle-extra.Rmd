@@ -16,6 +16,7 @@ preamble:
     \newcommand{\code}{\texttt}
     \newcommand{\pkg}{\textbf}
     \newcommand{\soft}{\textsf}
+geometry: margin=1.5cm    
 output:
   pdf_document: 
     toc: true
@@ -167,20 +168,293 @@ TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), col
 ```
 
 # Additionnal materials for all packages 
+
+```{r, echo=FALSE}
+#custom format function
+formatResultRable <- function(Table, orderRkRMSE)
+{
+  colnames(Table) <- c("Package::algorithm", "Time mean", "RMSE min", "RMSE median", "RMSE D51", 
+                      "MAE median", "WAE median", "NPFA")
+
+  Table$Package <- sapply(strsplit(Table[, "Package::algorithm"], "::"), head, n=1)
+  
+  Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
+  Table$Algorithm <- sapply(strsplit(Table$Algorithm, "_"), tail, n=1)
+  Table$Algorithm <- paste0(Table$NPFA, ". ", Table$Algorithm)
+  Table <- Table[orderRkRMSE, c("Package", "Algorithm", "RMSE min", "RMSE median", "RMSE D51", 
+                      "MAE median", "WAE median", "Time mean")]
+  
+  rownames(Table) <- 1:NROW(Table)
+  Table
+}
+
+```
+
+
+## Result for dataset `mDette`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mDette-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mDette") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `mFriedman`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mFriedman-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mFriedman") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `mIshigami`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mIshigami-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mIshigami") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `mRef153`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mIshigami-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mRef153") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uDmod1`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDmod1-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDmod1") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uDmod2`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDmod2-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDmod2") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uDreyfus1`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDreyfus1-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDreyfus1") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+## Result for dataset `uDreyfus2`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDreyfus2-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDreyfus2") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+## Result for dataset `uGauss1`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uGauss1-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uGauss1") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uGauss2`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uGauss2-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uGauss2") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uGauss3`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uGauss3-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uGauss3") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+## Result for dataset `uNeuroOne`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uNeuroOne-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uNeuroOne") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+
+
 ## Score probabilities
 
 
 \begin{figure}
     \centering
-    \includegraphics[width=.8\textwidth]{img/scoreprobperpkgBnW.png}
+    \includegraphics[width=\textwidth]{img/scoreprobperpkgBnW.png}
         \label{fig:scoreprob}
         \caption{Score probabilities of \code{package:algorithm}}
 \end{figure}
 
 <!--## Appendix E-->
 
+\pagebreak
 
-# Additionnal materials for top-5 packages
+# Additionnal materials on the large dataset `bWoodN1`
+
+
+```{r, echo=FALSE}
+#custom format function
+formatResultRable <- function(Table)
+{
+  colnames(Table) <- c("Package::algorithm", "RMSE", "MSE", "MAE", "WAE", "time")
+
+  Table$Package <- sapply(strsplit(Table[, "Package::algorithm"], "::"), head, n=1)
+  
+  Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
+  Table <- Table[, c("Package", "Algorithm", "RMSE", "MSE", "MAE", "WAE", "time")]
+  rownames(Table) <- 1:NROW(Table)
+  Table
+}
+
+```
+
+## Summary statistics for non top-5 packages
+
+The table provides the summary statistics of the best run of NN packages over two runs
+on the large dataset `bWoodN1`.
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/bWoodN1-results-nontop5.csv")
+colnames(resPerDataSet) <- c("Package::algorithm", "RMSE", "MSE", "MAE", "WAE", "time")
+resPerDataSet[, "Package::algorithm"] <- substr(resPerDataSet[, "Package::algorithm"], 9, nchar(resPerDataSet[, "Package::algorithm"]))
+resPerDataSet <- formatResultRable(resPerDataSet)
+
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="lccccc",
+                  caption="Result for bWoodN1") %>%
+  column_spec(1, bold = TRUE) %>%
+  kable_styling(font_size=8, latex_options =c("striped","hold_position")) %>%
+  footnote(general="Time in seconds", footnote_as_chunk=TRUE)
+```
+
+
+\pagebreak
 
 ## Graphics for top-5 packages
 
