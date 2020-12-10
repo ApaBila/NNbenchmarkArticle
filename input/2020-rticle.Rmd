@@ -1,26 +1,29 @@
 ---
-title: A review of R neural network packages (with NNbenchmark)$:$ accuracy and ease of use
+title: A Review of R Neural Network Packages (with \pkg{NNbenchmark})$:$ Accuracy and Ease of Use
 author:
   - name: Salsabila Mahdi
     affiliation: Universitas Syiah Kuala
     address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia 
-    email:  bila.mahdi@mhs.unsyiah.ac.id
+    email: bila.mahdi@mhs.unsyiah.ac.id
   - name: Akshaj Verma
     affiliation: Manipal Institute of Technology
     address: Manipal, Karnataka, 576104, India
-    email:  akshajverma7@gmail.com
+    email: akshajverma7@gmail.com
   - name: Christophe Dutang
     affiliation: Université Paris-Dauphine, University PSL, CNRS, CEREMADE
     address: Place du Maréchal de Lattre de Tassigny, 75016 Paris, France
-    email:  dutang@ceremade.dauphine.fr
+    orcid: 0000-0001-6732-1501
+    email: dutang@ceremade.dauphine.fr
   - name: Patrice Kiener
     affiliation: InModelia
     address: 5 rue Malebranche, 75005 Paris, France
-    email:  patrice.kiener@inmodelia.com
+    orcid: 0000-0002-0505-9920
+    email: patrice.kiener@inmodelia.com
   - name: John C. Nash
     affiliation: Telfer School of Management, University of Ottawa
     address: 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada
-    email:  nashjc@uottawa.ca
+    orcid: 0000-0002-2762-8039
+    email: nashjc@uottawa.ca
 preamble: 
   includes: 
     \usepackage{float}
@@ -59,14 +62,14 @@ Other packages are either less accurate, slow, difficult to use, or have poor or
 
 To carry out this work, we developed multiple scripts along with the NNbenchmark package. 
 We have open-sourced our code for reproducibility which is available at \url{https://akshajverma.com/NNbenchmarkWeb/index.html} and
-\url{https://github.com/pkR-pkR/NNbenchmark}.
+\CRANpkg{NNbenchmark}.
 Finally, we provide some hints and features to guide the development of an idealized neural network package for R.
 
 
 ## Introduction
 
-The \soft{R} Project for Statistical Computing by \citep{Rsoft20}, as any open-source platform, relies on its contributors to keep it up to date. 
-Neural Networks, inspired by the brain itself, are a class of models in the growing field of machine learning for which \soft{R} has a number of tools.
+The R Project for Statistical Computing, as any open-source platform, relies on its contributors to keep it up to date. 
+Neural Networks, inspired by the brain itself, are a class of models in the growing field of machine learning for which R has a number of tools.
 Previously, neural networks were often considered theoretically instead of pragmatically, partly because the algorithms used were computationally expensive. 
 
 The term "neural-network" is colloquially used for different model structures and applications. For regression and classification, the term multilayer perceptron is used interchangeably. The term "Recurrent Neural Network" is mainly used in the context of autoregressive time-series while the term "Convolutional Neural Networks" for dimension reduction and pattern recognition (images/audio/text).
@@ -77,8 +80,8 @@ This is an issue as many slow or poor algorithms are available in the literature
  
 
 A neural network algorithm requires complicated calculations to improve the model control parameters. 
-As with other optimization problems, the gradient of the chosen cost function that indicates the lack the model's suitability is sought. 
-This lets us improve the model by changing the parameters in the negative gradient direction.
+As with other optimization problems, the gradient of the chosen cost function indicates the model's lack of suitability. <!-- B??: not sure, should it be "the chosen cost function which" or if the sentence should be split into one for the gradient and one for the cost function. Remove double the. CD yest it could be improved. JN: Sentence grammar did not parse, so I edited further.-->
+Optimization methods improve the current iterate by changing the parameters in the opposite of the gradient direction generally with an adaptive step.
 Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
 Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
 
@@ -95,7 +98,7 @@ There are a large number of approaches, of which quasi-Newton algorithms are per
 Within this group, methods based on the Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the (inverse) Hessian approximation provide several well-known examples. 
 In conducting this study, we hypothesize that these second-order algorithms would perform better than the first-order methods for datasets that fit in memory. 
 
-To test our hypothesis, we conduct a thorough examination of these training algorithms in \soft{R}. 
+To test our hypothesis, we conduct a thorough examination of these training algorithms in R. 
 There are many packages, but there's a dearth of information that would allow the users to make an informed decision. 
 Our work aims to provide a framework for benchmarking neural-network packages. 
 We focus our examination to neural networks of the perceptron type which consist of one input layer, one normalized layer, one hidden layer with a non-linear activation function which is usually the hyperbolic tangent
@@ -120,7 +123,7 @@ The model $y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + 
 
 The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural network (Fig. 1b) with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
 
-In order to get large gradients at the first steps of the training algorithm, the following is recommended: (i) normalized inputs and outputs (Fig. 1c), (ii) odd functions like the hyperbolic tangent function or the arctangent function, (iii) small random values to initialize the parameters. A common example is values extracted from a centred Gaussian $\mathcal N(0, 0.1)$ distribution. 
+While the final gradient should be small, we believe it is helpful to have relatively large gradients at the first steps of the training algorithm, so the following is recommended: (i) normalized inputs and outputs (Fig. 1c), (ii) odd functions like the hyperbolic tangent function or the arctangent function, (iii) small random values to initialize the parameters. A common example of this is to use values extracted from a centred Gaussian $\mathcal N(0, 0.1)$ distribution. 
 
 These practices help us find good local-minima and possibly the global-minima. 
 
@@ -129,19 +132,19 @@ These practices help us find good local-minima and possibly the global-minima.
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.242\textwidth}
-        \includegraphics[width=\textwidth]{RN3a2.png}
+        \includegraphics[width=\textwidth]{img/RN3a2.png}
         \caption{NN 1-3-1}
         \label{fig:N131}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.250\textwidth}
-        \includegraphics[width=\textwidth]{RN3b2.png}
+        \includegraphics[width=\textwidth]{img/RN3b2.png}
         \caption{NN 5-3-1}
         \label{fig:N531}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.396\textwidth}
-        \includegraphics[width=\textwidth]{RN3c2.png}
+        \includegraphics[width=\textwidth]{img/RN3c2.png}
         \caption{NN 5-5N-3-1N-1}
         \label{fig:N55311}
     \end{subfigure}
@@ -169,7 +172,7 @@ It is rather clear from the mathematical formula above that neural networks of p
 
 Unfortunately, due to certain educative tools on the backpropagation and recent popularity of "deep neural networks" that manipulate ultra-large models (sometimes more parameters than examples in the datasets), many papers emphasize the use of first-order gradient algorithms.
 
-Therefore, many \soft{R} packages have implemented such algorithms. In the case of the perceptron, we contend this is an oversight, and provide evidence to that effect in this paper.
+Therefore, many R packages have implemented such algorithms. In the case of the perceptron, we contend this is an oversight, and provide evidence to that effect in this paper.
 We refer interested readers to \citep{tan2019review} for a review of second-order algorithms for neural networks.
 
 
@@ -202,16 +205,15 @@ It can be seen that we were unable to completely harmonize the hyperparameters a
 
 ## Performance
 
-We measure **performance** primarily by relative computing time between methods on a particular computing 
-platform. We could also count measures of iterations, function evaluations or similar quantities that
-indicate the computing effort. We note that differences in machine architecture and in the attached
-libraries (e.g., BLAS choices for \soft{R}) will modify our measures. We are putting our tools on a
-Github repository so that further evaluation can be made by ourselves and others as hardware and software
+We measure **performance** primarily by relative computing time between methods on a particular computing platform. 
+We could count the precise number of iterations, function evaluations or similar quantities that indicate the computing effort, but this would have required a large effort in R coding in order to get values that are comparable between NN packages. 
+We note that differences in machine architecture and in the attached libraries (e.g., BLAS choices for R) will modify our performance measure. 
+We are putting our tools on a Github repository so that further evaluation can be made by ourselves and others as hardware and software
 evolves.
 
 The majority of the resulting files in our repository were generated on a Windows system build 
-10.0.18362.752. The machine specifications are - (i) i7-8750H CPU (ii) Intel(R) UHD Graphics 630 (iii) NVIDIA GeForce GTX 1060 chip
-(iv) 16 GB of RAM.
+10.0.18362.752. The machine specifications are - (i) i7-8750H CPU, (ii) Intel(R) UHD Graphics 630, 
+(iii) NVIDIA GeForce GTX 1060 chip, (iv) 16 GB of RAM.
 
 Tests were also performed on other platforms and the computation times were found to be reasonably similar. 
  
@@ -309,11 +311,10 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
 To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
-Furthermore the 2019 GSoC code uses all 12 datasets. <!-- final paragraph from discussion on Nov 29 --> 
-<!-- CD commented 'Our package still allows access to all 12 datasets.' --> 
-For convenience, all datasets are made available in \CRANpkg{NNbenchmark}.
+Furthermore the 2019 GSoC code uses all 12 datasets. 
+For convenience, all datasets are made available in \CRANpkg{NNbenchmark}, so that anyone can replicate
+our analysis.
 
-<!-- B?? : Does the line above become repetitive because of the added lines for number of datasets?--> 
 
 **Packages**
 
@@ -321,9 +322,10 @@ Using \CRANpkg{RWsearch} \citep{R-RWsearch}, we sought to automate the process o
 All packages that have "neural network" as a keyword in the package title or in the package description were included. 
 
 As of May 2020, around 80 packages fall into this category.
-Packages \pkg{nlsr}, \pkg{minpack.lm}, \pkg{caret} were added because the former two are important implementations of second-order algorithms while the latter is the first cited meta package in 
+Packages \CRANpkg{nlsr}, \CRANpkg{minpack.lm}, \CRANpkg{caret} were added because the former two are important implementations of second-order algorithms while the latter is the first cited meta package in 
 the CRAN task view for machine learning, 	\url{https://CRAN.R-project.org/view=MachineLearning}. It is also a dependency for some of the other packages tested. 
 Restricting to regression analysis left us with 49 \code{package:algorithm} pairs in 2019 and 60 \code{package:algorithm} pairs in 2020.
+
 
 
 
@@ -339,8 +341,9 @@ All packages were tested 3 times. Each assessment is described in detail below.
 **1. The decision to exclude or include**
 
 From documentation and example code, we learned that not all packages selected by the automated 
-search fit the scope of our research. Some have no function to generate neural networks while others were not regression neural networks of the perceptron type or were only intended for very specific purposes such as...
-Depending on the package, this could be decided by looking at the DESCRIPTION file or by trial and error.
+search fit the scope of our research. 
+Some have no function to generate neural networks while others were not regression neural networks of the perceptron type or were only intended for very specific purposes: for instance to predict the amyloidogenicity propensity of polypeptide sequences.
+Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error.
 
 
 **2. Templates for testing accuracy and speed**
@@ -383,37 +386,35 @@ We define ease-of-use measures to rate NN packages on their user-friendliness.
 Based on our understanding of what a user may be required to know or do when using a neural network package,
 we consider: (i) a measure for the availability of appropriate utility functions (ii) a measure for (non-trivial) examples 
 (iii) a sufficient documentation (well-written manual, vignette(s)) (iv) a measure
-to rate the clarity of the \soft{R} call to fit a given neural network. 
+to rate the clarity of the R call to fit a given neural network. 
 
 Our ratings are as follows.
 
 
-1. Utilities in R to deal with NN - maximum of 1 star
-    a. a predict function exists  = 0.5 stars
-    b. scaling capabilities exist = 0.5 stars
-2. Sufficient and reliable documentation - maximum of 2 stars
+1. Utilities in R to deal with NN
+    a. a predict function exists  = 1 star
+    b. scaling capabilities exist = 1 star
+2. Sufficient and reliable documentation 
     a. the existence of useful and relevant example(s)/vignette(s) 
-        - clear, with regression = 1 star
-        - unclear, examples use iris or are for classification only = 0.5 stars
+        - clear, with regression = 2 stars
+        - unclear, examples use iris or are for classification only = 1 star
         - no examples = 0 stars
     b. input/output is clearly documented, e.g., what values are expected and returned 
     by a function 
-        - clear input and output = 1 star
-        - only one is clear = 0.5 stars
+        - clear input and output = 2 stars
+        - only one is clear = 1 star
         - both are not documented = 0 stars
 3. User-friendly call to fit a NN 
     a. simple one-line call or a single function = 2 stars
     b. multiple-lines call to a single function = 1 star
     c. multiple-lines call to many functions = 0 stars
 
-Hence, to inform users about the usability of packages, the documentation ease-of-use measure 
-ranges from 0 to 3 stars, while the utility and the R call from 0 to 2 stars. 
+Hence, to inform users about the usability of packages, the documentation measure 
+ranges from 0 to 4 stars, while the utility and the R call range from 0 to 2 stars. 
 
-<!-- B??: I see how John got 8 stars from one of the other versions. What the actual scoring (at least my part) is like is as above. Stars were an accumulation of points divided, but now I think it makes more sense to just divide the stars so they add up properly. Christophe, not sure if thats how you scored also. If not, then there are a total of 5 stars for ease of use 
+ 
 
-Also, do the ease of use scores in the final tables properly reflect the above?
-CD : I'm in favor of keeping three ratings, yet they might be scaled so that each rating ranges from 0 to 2 stars.
---> 
+
 
 
 ## Phase 3 - Collection of and analysis of results
@@ -428,7 +429,7 @@ A large number of runs were carried out in order to obtain the best result for e
 
 To rank the speed and quality of convergence, we have devised the following method:
 
-1.	The results datasets are loaded into the \soft{R} environment as one large list. The dataset names, \code{package:algorithm} names and all 10 run numbers, durations, and RMSE are extracted from that list.
+1.	The results datasets are loaded into the R environment as one large list. The dataset names, \code{package:algorithm} names and all 10 run numbers, durations, and RMSE are extracted from that list.
 2.	For the duration score (DUR), the duration is averaged by dataset. 3 criteria for the RMSE score by dataset are calculated: 
     a.	The minimum value of RMSE for each \code{package:algorithm} as a measure of their best performance;
     b.	The median value of RMSE for each \code{package:algorithm} as a measure of their average performance, without the influence of outliers;
@@ -439,7 +440,7 @@ To rank the speed and quality of convergence, we have devised the following meth
     b.	For minimum RMSE values, ties are decided by duration mean, then the RMSE median;
     c.	For median RMSE values, ties are decided by the RMSE minimum, then the duration mean;
     d.	The d51 rank only depends on itself.
-4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE,  d51 RMSE) of each \code{package:algorithm} for each dataset.
+4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE, RMSE d51) of each \code{package:algorithm} for each dataset.
 5.	The final table is the result of ranking by the global minimum RMSE scores for each \code{package:algorithm}.
 
 
@@ -448,21 +449,21 @@ To rank the speed and quality of convergence, we have devised the following meth
 # Results, discussion and recommendations
 
 Table 2 gives the RMSE and time score per package and per algorithm. 
-The full list of scores is given in Table 5 in Appendix C.
+The full list of scores is given in Table 4 in Appendix D.
 We divide our analysis in two groups: packages implementing second-order algorithms
 and packages implementing first-order algorithms.
 Figure 2 shows the minimum RMSE value per \code{package:algorithm}
 for two datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure 3 displays the average computation time.
 The number on the x-level refers to the RMSE overall score of the 
-package:algorithm given in Table 2 (last column), e.g., 8 refers to 
-\pkg{validann}\code{:optim(CG)} which is a very slow algorithm.
+\code{package:algorithm} given in Table 2 (last column), e.g., 8 refers to 
+\code{validann:optim(CG)} which is a very slow algorithm.
 
 Both figures show that a good overall score does not necessarily imply 
 a good performance on the two datasets under consideration. 
 Furthermore, there is a break between the
 TOP-10 \code{package:algorithm} and others in terms of RMSE value.
-Figure 6 in Appendix D displays the score probabilities per \code{package:algorithm}. 
+
 Regarding computation time, we observe that some \code{package:algorithm} are
 very slow and have poor RMSE, e.g. 41 corresponding to \pkg{AMORE}\code{:BATCHgd}.
 In the following, we first present the results for second-order algorithms,
@@ -579,44 +580,44 @@ Furthermore, the mention of Nelder-Mead in the documentation suggests that \code
 Speed and variation between results for  \CRANpkg{CaDENCE} are also not as good as other packages that use \code{optim}. 
 This could be because \CRANpkg{CaDENCE} is intended for probabilistic non-linear models with a full title of ``Conditional Density Estimation Network Construction and Evaluation''. 
 
-By contrast, \CRANpkg{validann} is clearly a package that allows a user to use all optim's algorithms. <!-- B: John, moved this down to "first order algorithms" section. Correct or? See more there (We caution users to avoid method SANN.) --> \CRANpkg{validann}::L-BFGS-B ranks mostly lower than \CRANpkg{validann}::BFGS, despite the former
+By contrast, \pkg{validann} is clearly a package that allows a user to use all optim's algorithms. <!-- B: John, moved this down to "first order algorithms" section. Correct or? See more there (We caution users to avoid method SANN.) --> \pkg{validann}::L-BFGS-B ranks mostly lower than \pkg{validann}::BFGS, despite the former
 method being more sophisticated. We believe this is due to our efforts to harmonize parameters, thereby under-utilizing the possibilities of the L-BFGS-B algorithm. 
-Both \CRANpkg{CaDENCE} and \CRANpkg{validann}'s BFGS are outperformed by \CRANpkg{nnet}, especially in terms of speed.
+Both \CRANpkg{CaDENCE} and \pkg{validann}'s BFGS are outperformed by \CRANpkg{nnet}, especially in terms of speed.
 
-\CRANpkg{nnet} \citep{R-nnet} differs from the two packages above because it uses the \soft{C} code for BFGS (\code{vmmin.c})
-from \code{optim} (converted earlier from Pascal) directly instead of calling \code{optim} from \soft{R}. 
+\CRANpkg{nnet} \citep{R-nnet} differs from the two packages above because it uses the C code for BFGS (\code{vmmin.c})
+from \code{optim} (converted earlier from Pascal) directly instead of calling \code{optim} from R. 
 This may be what allows it to be faster, but limits the optimization to the single method.
 \CRANpkg{nnet} is only beaten by the Extreme Learning Machine (ELM) algorithms in terms of speed. 
-However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \CRANpkg{validann}:BFGS. We believe the different default starting values are the cause of this. 
-For instance, \CRANpkg{nnet} uses a range of initial random weights of 0.7 while \CRANpkg{validann} uses a value of 0.5. 
+However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \pkg{validann}:BFGS. We believe the different default starting values are the cause of this. 
+For instance, \CRANpkg{nnet} uses a range of initial random weights of 0.7 while \pkg{validann} uses a value of 0.5. 
 In spite of these results, the real reason most authors or users are likely to choose \CRANpkg{nnet} is because it is
-included in the distributed base \soft{R} and is even mentioned as the very first package in CRAN's task view for machine learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
+included in the distributed base R and is even mentioned as the very first package in CRAN's task view for machine learning (\url{https://CRAN.R-project.org/view=MachineLearning}).
 
 Our analysis found that 6 out of 11 packages tested that use \code{optim} do so through \CRANpkg{nnet}. 
 Moreover, approximately 8 packages for neural networks, though not tested, use \CRANpkg{nnet}.
-<!-- Moreover, approximately 8 packages for neural networks, though not tested, use \CRANpkg{nnet}.  -->
-<!-- JN?? Is that what you meant? --> <!-- B: yes. Those that were discarded ;  CD: change to JN sentence. --> 
-The total number of \CRANpkg{nnet} dependencies found through a search through the offline database of CRAN with \CRANpkg{RWsearch} is 136 packages, although some might be using \CRANpkg{nnet} for the multinomial log-linear models, not neural networks. 
+
+
+The total number of \CRANpkg{nnet} dependencies found through a search through the offline database of CRAN with \pkg{RWsearch} is 136 packages, although some might be using \CRANpkg{nnet} for the multinomial log-linear models, not neural networks. 
 
 The packages that use \CRANpkg{nnet} for neural networks are often meta packages with a host of other machine learning 
-algorithms. \CRANpkg{caret} \citep{R-caret}, also mentioned in the task-view, boasts 238 methods with 13 different neural
+algorithms. \pkg{caret} \citep{R-caret}, also mentioned in the task-view, boasts 238 methods with 13 different neural
 network packages, under a deceivingly simple name of "Classification and Regression Training". 
 It has many pre-processing utilities available, as well as other tools. 
 
 <!-- B: purely alphabetically -->
-\CRANpkg{EnsembleBase} \citep{R-EnsembleBase} maybe useful for those who wish to make model ensembles and test a grid of parameters. Although, the documentation is rather confusing.
+\CRANpkg{EnsembleBase} \citep{R-EnsembleBase} may be useful for those who wish to make model ensembles and test a grid of parameters, although the documentation is rather confusing.
 \CRANpkg{MachineShop} \citep{R-MachineShop} has 51 algorithms, with some additional information about the response variable types in the second vignette, functions for preprocessing and tuning, performance assessment, and presentation of results. 
-\CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the parameters. 
+\CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the \code{maxit} parameter. 
 \CRANpkg{rminer} \citep{R-rminer} is the only package dependent on \CRANpkg{nnet} that ranks above \CRANpkg{nnet} at number 2 for minimum RMSE, and even number 1 in some runs. 
-It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \CRANpkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
-<!-- JN?? Is RMSEd51 a reference? I would like to revisit this paragraph, as I find the expression clumsy.-->
-<!-- That is not a criticism! There is a lot of information we want to summarize in very few words. -->
-<!-- B: from above -- (see the `RMSEd51` in Appendix C). Should this reference be added too here? -->
+It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
+<!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted-->
+
+
 
 The difference is probably from the change of maximum allowable weights in \CRANpkg{rminer} to 10000 from 1000 in \CRANpkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
-It is worth noting is that \CRANpkg{nnet} and \CRANpkg{validann} do not have external normalization, which is especially recommended for \CRANpkg{validann} <!-- B??: Patrice?? -->. 
+It is worth noting is that \CRANpkg{nnet} and \pkg{validann} do not have external normalization, which is especially recommended for \pkg{validann} <!-- B??: Patrice?? -->. 
 However, some of the packages dependent on \CRANpkg{nnet} do have this capability and it is included in the scoring for ease of use. 
 With \pkg{NNbenchmark}, this is done through setting \code{scale = TRUE} in the function \code{prepare.ZZ}. Note that 
 use of scaling may complicate the application of constraints, so not be worth the effort for some users. 
@@ -631,9 +632,9 @@ some optimization algorithms can work significantly better on scaled problems \c
 Of all the packages, only \CRANpkg{monmlp} \citep{R-monmlp} calls \CRANpkg{optimx}. Since the calls are for BFGS and Nelder-Mead, they could do better to call \code{optim} directly, though the door is open to other optimization methods in
 \CRANpkg{optimx}. However, the author, Alex J. Cannon who is also the author of \CRANpkg{CaDENCE}, has created a package meant to fill a certain niche, namely for multi-layer perceptrons with optional partial monotonicity constraints.
 GAM-style effect plots are also an interesting feature.
-Another package by Cannon is \CRANpkg{qrnn} \citep{R-qrnn} which uses yet another algorithm: \code{nlm},  a "Newton-type" algorithm, from \CRANpkg{stats}. 
+Another package by Cannon is \pkg{qrnn} \citep{R-qrnn} which uses yet another algorithm: \code{nlm},  a "Newton-type" algorithm, from \CRANpkg{stats}. 
 Although it's performance is at the bottom of second-order algorithms, sometimes even being beaten by first-order algorithms, this could also be because of the intended use of the package compared to the tests here. 
-\CRANpkg{qrnn} is designed for quantile regression neural networks, with several options. 
+\pkg{qrnn} is designed for quantile regression neural networks, with several options. 
 Cannon has included automatic scaling for all 3 of his packages, as is clearly documented.
 
 
@@ -644,9 +645,9 @@ nlsr uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus 
 and modifies the relative offset convergence criterion to avoid a zero divide when residuals are small.
 
 
-\CRANpkg{minpack.lm} \citep{minpack.lm} offers another Marquardt approach. Where \CRANpkg{nlsr} is entirely in \soft{R},
-and also allows for symbolic or automatic derivatives (which are not relevant to the present study), \CRANpkg{minpack.lm}
-uses compiled \soft{Fortran} and \soft{C} code for some important computations. Its structure is also better adapted to use features
+\pkg{minpack.lm} \citep{minpack.lm} offers another Marquardt approach. Where \pkg{nlsr} is entirely in R,
+and also allows for symbolic or automatic derivatives (which are not relevant to the present study), \pkg{minpack.lm}
+uses compiled Fortran and C code for some important computations. Its structure is also better adapted to use features
 already available in \code{nls} that may be important for some uses.
 
 
@@ -658,20 +659,20 @@ Despite the 2 packages ultimately performing well on all runs (capable of being 
 
 First, both require the full formula of the neural network including variables and parameters. 
 Secondly, they require good starting values to achieve the best convergence. 
-Notice that in Table 1, \code{minpack.lm} does not have a high rank. 
+Notice that in Table 2, \code{minpack.lm} does not have a high rank. 
 This is because we removed the random Gaussian start values we had originally used; which means that the default start values of \code{minpack.lm} were not appropriate for our datasets. 
-We suspect \CRANpkg{nlsr}'s performance on convergence would have similarly dropped if it was possible to use \CRANpkg{nlsr} with no user-set starting values and the author's chosen default values were inadequate. 
+We suspect \pkg{nlsr}'s performance on convergence would have similarly dropped if it was possible to use \pkg{nlsr} with no user-set starting values and the author's chosen default values were inadequate. 
 \code{nls} deals with this by suggesting a companion function in \CRANpkg{stats}, \code{selfStart}. 
 Finally, both packages were able to find better minima when the dataset was scaled. 
 With no starting values and no scaling, \code{minpack.lm:nlsLM} fails on \code{uNeuroOne} but performance is better on Friedman & Ishigami datasets.
-On the other hand, with no start values and no scaling, it fails on everything but \code{mFriedman}, \code{mIshigami}, \code{uDmod2}, and the Dreyfus datasets. Similarly, there is also a notable drop in performance for \CRANpkg{nlsr} without scaling on the Gauss datasets and \code{mRef153}. 
-To conclude, both packages provide algorithms that are capable of doing well on our datasets, but may not be suitable for less experienced users. The vignettes for \CRANpkg{nlsr} and earlier book \citep{Nash-nlpor14} may be useful.
+On the other hand, with no start values and no scaling, it fails on everything but \code{mFriedman}, \code{mIshigami}, \code{uDmod2}, and the Dreyfus datasets. Similarly, there is also a notable drop in performance for \pkg{nlsr} without scaling on the Gauss datasets and \code{mRef153}. 
+To conclude, both packages provide algorithms that are capable of doing well on our datasets, but may not be suitable for less experienced users. The vignettes for \pkg{nlsr} and earlier book \citep{Nash-nlpor14} may be useful.
 
-\CRANpkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in \soft{R} that does not rely on \code{nls} or \code{nlm} from \CRANpkg{stats}. Although it is well-documented and has good speed, \CRANpkg{brnn}'s implementation of the Gauss-Newton algorithm still ranks below some of the previously mentioned BFGS and Levenberg-Marquardt tools in terms of its global minimum RMSE. 
+\pkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in R that does not rely on \code{nls} or \code{nlm} from \CRANpkg{stats}. Although it is well-documented and has good speed, \pkg{brnn}'s implementation of the Gauss-Newton algorithm still ranks below some of the previously mentioned BFGS and Levenberg-Marquardt tools in terms of its global minimum RMSE. 
 We found 2 reasons that we believe to be the cause of this. 
 First, its model uses one parameter fewer than the other algorithms. 
 Only datasets \code{uDreyfus1} and \code{uDreyfus2} which are purely 3 hidden neurons ignore the first term. 
-Second, \CRANpkg{brnn} does not minimize the sum of squares of the errors but the sum of squares of the errors plus a penalty on the parameters. 
+Second, \pkg{brnn} does not minimize the sum of squares of the errors but the sum of squares of the errors plus a penalty on the parameters. 
 In certain circumstances -- especially with an almost singular Jacobian matrix as with \code{mDette}, \code{mIshigami}, \code{mRef153}, \code{uGauss3}, and \code{uNeuroOne} -- this will avoid issues with highly correlated parameters.
 
 The only second-order algorithm which we are unable to recommended from the results of our research is \CRANpkg{snnR} \citep{R-snnR}. 
@@ -689,25 +690,25 @@ Packages with first-order algorithms can be broadly categorized into 2 types: (a
 **A. One hidden layer** 
 
 The first category is comprised of either packages that also include second-order algorithms previously discussed or packages that use the Extreme Learning Machine algorithm. 
-Only 2 packages include both second-order algorithms and a lower-order algorithm, that is, \CRANpkg{monmlp} and \CRANpkg{validann}. 
+Only 2 packages include both second-order algorithms and a lower-order algorithm, that is, \CRANpkg{monmlp} and \pkg{validann}. 
 \CRANpkg{monmlp} has one algorithm besides BFGS, that is, \CRANpkg{optimx}'s Nelder-Mead. 
-\CRANpkg{validann} provides the same algorithm but from \code{optim}.
-\CRANpkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
+\pkg{validann} provides the same algorithm but from \code{optim}.
+\pkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
 Both implementations of Nelder-Mead do not rank well in minimum RMSE, around 40 out of 60, with similar ranks for the other criteria.
-We would also caution users to avoid the other methods in \CRANpkg{validann} from \code{optim}.
-From Table 1 it may appear that \CRANpkg{validann}'s implementation of the Conjugate Gradient (CG) algorithm finds reasonable minima and thus is a good option.
+We would also caution users to avoid the other methods in \pkg{validann} from \code{optim}.
+From Table 2 it may appear that \pkg{validann}'s implementation of the Conjugate Gradient (CG) algorithm finds reasonable minima and thus is a good option.
 It consistently ranked in the top 15 with minimum RMSE. 
 However, it is the slowest algorithm of all 60 algorithms tested.
-Note, this includes algorithms from packages that call external libraries outside \soft{R} in \soft{Python} or \soft{Java} and packages that use as much as 100,000 iterations. <!-- B??: is CG first order or second order? I've seen sources that seem to state one or another. JN: You can probably find people to argue 1st or 2nd. It is a linearization of a 2nd order
-approach in one viewpoint. Suggest we keep quiet here.-->
-On the other hand, \CRANpkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
+Note, this includes algorithms from packages that call external libraries outside R in Python or Java and packages that use as much as 100,000 iterations. 
+
+On the other hand, \pkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
 
 
 
 
 
 
-Packages that implement the ELMR algorithm are similar to SANN from \CRANpkg{validann} in the sense that they are faster but do not converge as well as other package's algorithms. 
+Packages that implement the ELMR algorithm are similar to SANN from \pkg{validann} in the sense that they are faster but do not converge as well as other package's algorithms. 
 The 2 packages that do so, \CRANpkg{elmNNRcpp} \citep{R-elmNNRcpp} and \CRANpkg{ELMR} \citep{R-ELMR} are, respectively, number 1 and number 2 in the ranks for time but 59 and 60 (bottom 2) for minimum RMSE.
 \CRANpkg{ELMR} converges slightly worse on all datasets than \CRANpkg{elmNNRcpp} but has noticeably worse performance on the Gauss datasets, especially \code{uGauss1}.
 Even increasing the number of neurons did not lead to better convergence for those particular datasets.
@@ -728,7 +729,7 @@ With the same numbers of neurons it already is quite slow - coming in at 51 out 
 With a default hidden layer size of 2, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \CRANpkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
 than a second with fewer neurons and only one layer.
-Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \CRANpkg{h2o} should be wary of the trade off.
+Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \CRANpkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
 Some users also might not want to setup Java, which is needed, although it is not as painful to setup as some external libraries.
@@ -736,10 +737,10 @@ Some users also might not want to setup Java, which is needed, although it is no
 
 By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives.
 In the  summer of 2019, it took quite some time to figure out how things worked.
-Then the latest \soft{TensorFlow} 2.2.0 became available and we hoped to be able to use the Eager Execution provided to avoid the \soft{R} Session crashing in the summer of 2020.
-Unfortunately, this led to different problems with the translation between \soft{R} and \soft{Python} so we could not use the 2019 code.
+Then the latest TensorFlow 2.2.0 became available and we hoped to be able to use the Eager Execution provided to avoid the R Session crashing in the summer of 2020.
+Unfortunately, this led to different problems with the translation between R and Python so we could not use the 2019 code.
 \CRANpkg{tfestimators} \citep{R-tfestimators} also had similar issues and is even less supported.
-\CRANpkg{kerasR} \citep{R-kerasR}, which provides a consistent interface to Keras, a \soft{Python} API which provides an easier use interface to TensorFlow, had the same issue.
+\CRANpkg{kerasR} \citep{R-kerasR}, which provides a consistent interface to Keras, a Python API which provides an easier use interface to TensorFlow, had the same issue.
 In the end, we tested the algorithms in \CRANpkg{keras} \citep{R-keras} with the hope that it would be able to represent the performance of the other packages.
  
 \CRANpkg{keras} has the second-most number of algorithms, a total of 7, with most of them being "adaptive" algorithms.
@@ -770,7 +771,7 @@ The function for creating a dot file to use with \url{http://www.graphviz.org} i
 
 \CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or rmsprop consistently ranked in the top half for minimum RMSE which is not bad for a first-order algorithm. 
 It is not as accurate as second-order algorithms but all its algorithms are quite fast. 
-\soft{C++} code was used to enhance the speed. 
+C++ code was used to enhance the speed. 
 Functions for autoencoding are included with anomaly detection in mind.
 
 
@@ -805,56 +806,34 @@ for other packages that wish to be more certain of the results. For simple datas
 A certain number of packages have been discarded from this study for at least one of the following reasons:
 
 
-1. For regression but unsuitable for the scope of our research, coded RE in Table 3.
-2. For time series, coded TS in Table 2.
-3. For classification, coded CL in Table 2. 
-4. For specific purpose, coded AP in Table 2.
-5. For tools to complement NN's by other packages, coded UT in Table 2.
-6. Not actually neural networks and other reasons, coded XX in Table 2.
+1. For regression but unsuitable for the scope of our research, coded RE in Table 5.
+2. For time series, coded TS in Table 5.
+3. For classification, coded CL in Table 5. 
+4. For specific application purpose, coded AP in Table 5.
+5. For tools to complement NN's by other packages, coded UT in Table 5.
+6. Not actually neural networks and other reasons, coded XX in Table 5.
 
-The full list of untested packages is given in Table 2.
-
-
-
-```{r echo=FALSE, message=FALSE}
-options(knitr.kable.NA = '')
-
-if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
-#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
-  Table2 <- read.csv("./tables/Table2-UTF8-cleaned.csv")
-  Table2 <- Table2[Table2[,3] != "", ]
-  Table2 <- Table2[,c("Package", "Category", "Reason.to.Discard..Where.")]
-}else
- Table2 <- rep("missing", 3)
-colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
+The full list of untested packages is given in Table 5 in Appendix D.
 
 
 
-kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
-                  caption="Review of Discarded Packages") %>%
-  kable_styling(font_size=7, latex_options = c("repeat_header")) %>%
-  column_spec(3, width = "10cm") %>%
-  footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.", 
-           footnote_as_chunk=TRUE)
-```
 
 
 ## Further analysis of TOP-5 packages
 
-In this subsection, we perform a second round analysis with a larger dataset
-with a focus on the TOP-5 packages given Table 2.
-That is, we consider packages `nlsr`, `rminer`, `nnet`, `validann` with algorithm BFGS and `MachineShop`.
+In this subsection <!-- B: Is "In this subsection" necessary? CD: indeed it can be removed -->, we perform a second round of analysis with a larger dataset
+and a focus on the TOP-5 packages given in Table 2.
+That is, we consider packages \pkg{nlsr}, \CRANpkg{rminer}, \CRANpkg{nnet}, \pkg{validann} with algorithm BFGS and \CRANpkg{MachineShop}.
 We fit the NN packages on Simon Wood's Gaussian dataset, see `bWoodN1` in dataset description, which contains
 20,000 rows with 6 inputs valued in [0,1] for a (single) numeric output.
 Due to the non-linear functions considered, see Appendix B, the link between the output and each
-explanatory variable is highly non-linear which affects deeply the fitting time.
-Table 4 gives the metric performance over 20 runs of these TOP-5 five packages on `bWoodN1`.
+explanatory variable is highly non-linear which greatly affects the fitting time.
+Table 3 gives the metric performance over 20 runs of these TOP-5 five packages on `bWoodN1`.
 
-We observe that the minimum RMSE (over 20 runs) is very similar for all package, yet `rminer`
-and `validann` are little bit behind others.
-The median RMSE and D51 RMSE reveal the very good fits by `rminer`, and it is also true for
-other metric  norms: WAE and MAE.
-Regarding computation time, the two best in class are `nnet` and `MachineShop`.
+We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \CRANpkg{rminer}
+and \pkg{validann} are a little bit behind the others.
+However, once again, the metrics median RMSE and RMSEd51 reveal how consistent \CRANpkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
+Regarding computation time, the best two in this class are \CRANpkg{nnet} and \CRANpkg{MachineShop}.
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -887,61 +866,71 @@ kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE,
   footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
-Figures in Appendix E provides some insights where a package performs reasonably well 
+Figures at \url{???} provides some insights where a package performs reasonably well 
 with respect to one explanatory variable and where the fit misses the correct behavior of
 an explanatory variable.
-It displays the average response per rounded explanatory variable for the predicted, 
-the empirical and the theoretical values.
-That is, the empirical value and the predicted value for the $j$th explanatory 
-variable are respectively computed at x-value $x$ as
-$$
-\bar y^{emp}_j(x) = \frac1{n_x}  \sum_{i=1}^n y_i 1_{r(x_{i,j}) = x},~
-\bar y^{pred}_j(x) =  \frac1{n_x} \sum_{i=1}^n \hat y_i 1_{r(x_{i,j}) = x},~~
-n_x=\sum_{i=1}^n 1_{r(x_{i,j}) = x},
-$$
-where $r()$ denotes the round function with two decimal places and $y_i, \hat y_i$ 
-stand respectively for the $i$th observed response and the $i$th predicted response.
-For instance, `MachineShop`, `nnet`, `nlsr` do not correctly capture the sinusoidal 
-aspect of explanatory variable $x_5$ on the expected response, whereas `rminer`, `validann`
-miss the increasing non-linear trend of explanatory variable $x_1$ on the expected response.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 # Conclusion and perspective
 
 This paper focuses on benchmarking neural network packages available on CRAN with the
-ideal goal to recommend or disrecommend some packages.
+ideal goal to recommend or advise against some packages. 
+Based on \pkg{RWsearch}'s outputs in 2019-2020, we selected 26 appropriate packages to analyze in-depth and discarded the other 63 packages.
+Using \CRANpkg{NNbenchmark}, we ranked 60 \code{package:algorithm} pairs and are happy to 
+note that most of them converge well enough within a reasonable time.
+Packages reviewed appear to offer essentially the same methods, and second-order algorithms
+perform generally better than first-order algorithms.
 
-## Positives (no particular order)
-1. We are happy to note the existence of neural network packages in R with  algorithms that converge well.
-- \CRANpkg{nnet}, which uses ?? need font choice?? optim's BFGS method, is already often chosen to represent neural networks for packages that are either a collection of independent machine learning algorithms, ensembles, or even applications in a field such as ... ?? need to complete sentence??. 
-JN??: Why is this positive?
-==> B: its meant to be part of the above, because nnet's algorithm converged well in our tests, thus the fact that it is being used by other packages is a plus? See the part about nnet & packages that depend on it in the results
-- R users have access to a wide variety of neural network methods, including from libraries of other programming languages
-and using many different types of algorithms. ?? have we defined hyperparameters?? hyperparameters, and uses
-<!-- JN??: this bullet point still clumsy, but when we decide content, I'll edit -->
+\CRANpkg{nnet}, the most recommended package of our study, ranked third in terms on
+minimum RMSE, and is probably the most efficient package. 
+\CRANpkg{nnet} is notably used by many other packages, such as \CRANpkg{MachineShop}
+and \CRANpkg{rminer} respectively ranked fifth and second.
+\CRANpkg{MachineShop} and \CRANpkg{rminer} are also very good challengers in our benchmark, 
+in particular when considering a larger dataset. <!-- 
+1) B?? I'm not sure about this since the results for the big datasets start of with validann rminer behind on minimum RMSE?? CD: MachineShop has very good time median and very close RMSE min; rminer is slower but has better MAE median and WAE median, see Table 3
+2) Are we suggesting that minimum RMSE, which we based the order of the final table on, is not an important measure? CD: we are suggesting other measures could help distinguish packages with very similar RMSE min.
+3) B?? made some changes to the above-->
+Other packages in the TOP-5,  \pkg{nlsr} (the best in terms of RMSE minimum) 
+and \pkg{validann} are efficient packages but a little bit slower in our analysis.
 
-Reproducibility : all our benchmark is reproducible by any user and any package maintainer.
+<!-- CD?? (B: I think) should we test for bWoodN1 the best first-order algorithm? 
+-- B: I did run some and have questioned about this before. I think since one of the claims about first-order algorithms is that they are more efficient on large datasets, it should be done. However, I no longer recollect the exact results and wonder if its wise to spend our time on that right now. I think the general result (of a few runs) is that the first-order algorithms were still at least slower
+-- CD: if we perform, it can give an idea of computing time and minimum RMSE for the best 1-order algo. -->
 
-## Negatives
-- We are disappointed that many of the packages we reviewed had poor documentation.
-- It would be helpful if there were more packages with (different) second-order algorithms. A number of the
-<!-- packages reviewed appear to offer essentially the same methods. JN??: Is that what we want to say? -->
-- We often found it difficult to discover what default starting values were used for model parameters, or 
-<!-- else bad choices. JN??: Again, is that our message? -->
-<!-- B: yes -->
+However we are disappointed that many of the packages we reviewed had poor documentation,
+notably \CRANpkg{EnsembleBase} and \CRANpkg{keras}.
+We often found it difficult to discover what default starting values were used for model 
+parameters and/or to understand how to change the hyper-parameters.
 
-## Future work
+<!-- ## Future work -- B?? not sure if this section header should stay or go but I'm leaving it up here for now ; CD: I assume it is not necessary to subdivide conclusion, see latest issue of R journal -->
 As the field of neural networks continue to grow, there will always be more algorithms to validate. 
-For current algorithms in \soft{R}, our research should be extended to encompass more types of neural networks 
+For current algorithms in R, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
 
-- The dreamed NN package: Recommendation to package authors
-- Conclusion
+
+Our work is available online through \url{https://akshajverma.com/NNbenchmarkWeb/} and
+is entirely reproducible thanks to \pkg{NNbenchmark}.
+We hope users and package maintainers find our work useful and will provide any necessary feedback.
 
 
-## Acknowledgements
+
+# Acknowledgements
 This work was possible due to the support of the Google Summer of Code initiative for R
 during years 2019 and 2020.
 Students Salsabila Mahdi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
@@ -1011,11 +1000,13 @@ NNclose.nnet    <- function() {  if("package:nnet" %in% search())
 nnet.prepareZZ  <- list(xdmv = "d", ydmv = "v", zdm = "d", scale = TRUE)
 ```
 
+<!--
 ```{r, fig.width=6, fig.height=3, fig.align='center', fig.cap="Example of nnet on mRef153", message=FALSE}
 res <- trainPredict_1pkg(4, pkgname = "nnet", pkgfun = "nnet", nnet.method,
   prepareZZ.arg = nnet.prepareZZ, nrep = nrep, doplot = TRUE,
   csvfile = FALSE, rdafile = FALSE, odir = odir, echo = FALSE)
 ```
+-->
 
 ```{r, fig.width=6, fig.height=3, fig.align='center', fig.cap="Example of nnet on uDmod1", message=FALSE}
 res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
@@ -1068,52 +1059,25 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
 
 
 
+```{r echo=FALSE, message=FALSE}
+options(knitr.kable.NA = '')
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.8\textwidth]{img/scoreprobperpkgBnW.png}
-        \label{fig:scoreprob}
-        \caption{Score probabilities of \code{package:algorithm}}
-\end{figure}
-
-## Appendix E
-
-
-\begin{figure}
-    \centering    
-    \includegraphics[width=\textwidth]{img/MachineShop.png}
-        \label{fig:MachineShop}
-        \caption{Average predicted mean per explanatory variable for \code{MachineShop}}
-\end{figure}
+if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
+#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
+  Table2 <- read.csv("./tables/Table2-UTF8-cleaned.csv")
+  Table2 <- Table2[Table2[,3] != "", ]
+  Table2 <- Table2[,c("Package", "Category", "Reason.to.Discard..Where.")]
+}else
+ Table2 <- rep("missing", 3)
+colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{img/nnet.png}
-        \label{fig:nnet}
-        \caption{Average predicted mean per explanatory variable for \code{nnet}}
-\end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{img/rminer.png}
-        \label{fig:rminer}
-        \caption{Average predicted mean per explanatory variable for \code{rminer}}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{img/nlsr.png}
-        \label{fig:nlsr}
-        \caption{Average predicted mean per explanatory variable for \code{nlsr}}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{img/validann.png}
-        \label{fig:validann}
-        \caption{Average predicted mean per explanatory variable for \code{validann}}
-\end{figure}
-
-
+kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
+                  caption="Review of Discarded Packages") %>%
+  kable_styling(font_size=7, latex_options = c("repeat_header")) %>%
+  column_spec(3, width = "10cm") %>%
+  footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.", 
+           footnote_as_chunk=TRUE)
+```
 
