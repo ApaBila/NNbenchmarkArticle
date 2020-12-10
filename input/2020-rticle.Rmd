@@ -4,6 +4,7 @@ author:
   - name: Salsabila Mahdi
     affiliation: Universitas Syiah Kuala
     address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia 
+    orcid: 0000-0002-2559-4154
     email: bila.mahdi@mhs.unsyiah.ac.id
   - name: Akshaj Verma
     affiliation: Manipal Institute of Technology
