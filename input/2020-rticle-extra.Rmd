@@ -1,37 +1,29 @@
 ---
-title: Supplementary Materials for a Review of R Neural Network Packages (with NNbenchmark): Accuracy and Ease of Use
+title: Supplementary Materials for a Review of R Neural Network Packages (with NNbenchmark)$:$
+  Accuracy and Ease of Use
 author:
-  - name: Salsabila Mahdi
-    affiliation: Universitas Syiah Kuala
-    address: JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia 
-    email:  bila.mahdi@mhs.unsyiah.ac.id
-  - name: Akshaj Verma
-    affiliation: Manipal Institute of Technology
-    address: Manipal, Karnataka, 576104, India
-    email:  akshajverma7@gmail.com
-  - name: Christophe Dutang
-    affiliation: Université Paris-Dauphine, University PSL, CNRS, CEREMADE
-    address: Place du Maréchal de Lattre de Tassigny, 75016 Paris, France
-    email:  dutang@ceremade.dauphine.fr
-  - name: Patrice Kiener
-    affiliation: InModelia
-    address: 5 rue Malebranche, 75005 Paris, France
-    email:  patrice.kiener@inmodelia.com
-  - name: John C. Nash
-    affiliation: Telfer School of Management, University of Ottawa
-    address: 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada
-    email:  nashjc@uottawa.ca
-includes: 
-    \usepackage{float} 
-    \usepackage{multirow} 
-    \usepackage{subcaption} 
-    \usepackage{longtable} 
-    \newcommand{\atan}{\text{atan}} 
-    \newcommand{\invlogit}{\text{invlogit}} 
-    \newcommand{\soft}{\textsf}    
-    \newcommand{\code}{\texttt}    
-output: pdf_document
+- Salsabila Mahdi^[Universitas Syiah Kuala, Indonesia]
+- Akshaj Verma^[Manipal Institute of Technology, India]
+- Christophe Dutang^[Université Paris-Dauphine, University PSL, France]
+- Patrice Kiener^[InModelia, France]
+- John C. Nash^[Telfer School of Management, University of Ottawa, Canada]
+preamble: 
+  includes: 
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{subcaption}
+    \usepackage{longtable}
+    \newcommand{\code}{\texttt}
+    \newcommand{\pkg}{\textbf}
+    \newcommand{\soft}{\textsf}
+output:
+  pdf_document: 
+    toc: true
+    number_sections: true
 ---
+
+<!-- if we want html output, we may use https://rstudio.github.io/distill/ package -->
+
 
 ```{r, echo=FALSE}
 library(knitr)
@@ -174,7 +166,8 @@ TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), col
 
 ```
 
-# Score probabilities
+# Additionnal materials for all packages 
+## Score probabilities
 
 
 \begin{figure}
@@ -186,8 +179,10 @@ TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), col
 
 <!--## Appendix E-->
 
-# Graphics for top-5 packages
 
+# Additionnal materials for top-5 packages
+
+## Graphics for top-5 packages
 
 Figures below provides some insights where a package performs reasonably well 
 with respect to one explanatory variable and where the fit misses the correct behavior of
@@ -203,8 +198,8 @@ n_x=\sum_{i=1}^n 1_{r(x_{i,j}) = x},
 $$
 where $r()$ denotes the round function with two decimal places and $y_i, \hat y_i$ 
 stand respectively for the $i$th observed response and the $i$th predicted response.
-For instance, \CRANpkg{MachineShop}, \CRANpkg{nnet}, \CRANpkg{nlsr} do not correctly capture the sinusoidal 
-aspect of explanatory variable $x_5$ on the expected response, whereas \CRANpkg{rminer}, \CRANpkg{validann}
+For instance, \pkg{MachineShop}, \pkg{nnet}, \pkg{nlsr} do not correctly capture the sinusoidal 
+aspect of explanatory variable $x_5$ on the expected response, whereas \pkg{rminer}, \pkg{validann}
 miss the increasing non-linear trend of explanatory variable $x_1$ on the expected response.
 
 
