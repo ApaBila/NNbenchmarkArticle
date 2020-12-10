@@ -1,0 +1,7 @@
+event,RMSE,MSE,MAE,WAE,time
+bWoodN1_CaDENCE::cadence.fit_optim_02,4.5432,20.6404,3.7038,17.0066,295.83
+bWoodN1_h2o::deeplearning_first-order_01,4.572,20.9034,3.6973,17.4539,140.482
+bWoodN1_monmlp::monmlp.fit_BFGS_02,4.9109,24.1166,4.1281,15.4511,10.269
+bWoodN1_monmlp::monmlp.fit_Nelder-Mead_01,6.6516,44.2435,5.3684,24.6525,39.637
+bWoodN1_radiant.model::nn_none_01,10.9572,120.0608,8.7685,42.6188,0.008
+bWoodN1_traineR::train.nnet_none_02,4.9206,24.2125,4.1268,15.7517,3.774

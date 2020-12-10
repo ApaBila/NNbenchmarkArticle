@@ -313,6 +313,7 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
 To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
+Note that the 2020 GSoC results are available in Section 1 of the supplementary materials at \url{???}. 
 Furthermore the 2019 GSoC code uses all 12 datasets. 
 For convenience, all datasets are made available in \CRANpkg{NNbenchmark}, so that anyone can replicate
 our analysis.
@@ -455,7 +456,7 @@ The full list of scores is given in Table 4 in Appendix D.
 We divide our analysis in two groups: packages implementing second-order algorithms
 and packages implementing first-order algorithms.
 Figure 2 shows the minimum RMSE value per \code{package:algorithm}
-for two datasets \code{mIshigami} and \code{uDreyfus1},
+for two particular datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure 3 displays the average computation time.
 The number on the x-level refers to the RMSE overall score of the 
 \code{package:algorithm} given in Table 2 (last column), e.g., 8 refers to 
@@ -465,6 +466,8 @@ Both figures show that a good overall score does not necessarily imply
 a good performance on the two datasets under consideration. 
 Furthermore, there is a break between the
 TOP-10 \code{package:algorithm} and others in terms of RMSE value.
+In Section 1.13 of the supplementary materials at \url{???}, the score probabilities
+per \code{package:algorithm} also gives some insights how robust is the overall score. 
 
 Regarding computation time, we observe that some \code{package:algorithm} are
 very slow and have poor RMSE, e.g. 41 corresponding to \code{AMORE:BATCHgd}.
@@ -582,7 +585,7 @@ Furthermore, the mention of Nelder-Mead in the documentation suggests that \code
 Speed and variation between results for  \pkg{CaDENCE} are also not as good as other packages that use \code{optim}. 
 This could be because \pkg{CaDENCE} is intended for probabilistic non-linear models with a full title of ``Conditional Density Estimation Network Construction and Evaluation''. 
 
-By contrast, \pkg{validann} is clearly a package that allows a user to use all optim's algorithms. <!-- B: John, moved this down to "first order algorithms" section. Correct or? See more there (We caution users to avoid method SANN.) --> \pkg{validann}\code{:L-BFGS-B} ranks mostly lower than \pkg{validann}\code{:BFGS}, despite the former
+By contrast, \pkg{validann} is clearly a package that allows a user to use all \code{optim}'s algorithms. <!-- B: John, moved this down to "first order algorithms" section. Correct or? See more there (We caution users to avoid method SANN.) --> \pkg{validann}\code{:L-BFGS-B} ranks mostly lower than \pkg{validann}\code{:BFGS}, despite the former
 method being more sophisticated. We believe this is due to our efforts to harmonize parameters, thereby under-utilizing the possibilities of the L-BFGS-B algorithm. 
 Both \pkg{CaDENCE} and \pkg{validann}'s BFGS are outperformed by \CRANpkg{nnet}, especially in terms of speed.
 
@@ -825,16 +828,18 @@ The full list of untested packages is given in Table 5 in Appendix D.
 In this subsection <!-- B: Is "In this subsection" necessary? CD: indeed it can be removed -->, we perform a second round of analysis with a larger dataset
 and a focus on the TOP-5 packages given in Table 2.
 That is, we consider packages \pkg{nlsr}, \pkg{rminer}, \pkg{nnet}, \pkg{validann} with algorithm BFGS and \pkg{MachineShop}.
-We fit the NN packages on Simon Wood's Gaussian dataset, see `bWoodN1` in dataset description, which contains
+We fit the NN packages on Simon Wood's Gaussian dataset, see \code{bWoodN1} in dataset description, which contains
 20,000 rows with 6 inputs valued in [0,1] for a (single) numeric output.
 Due to the non-linear functions considered, see Appendix B, the link between the output and each
 explanatory variable is highly non-linear which greatly affects the fitting time.
-Table 3 gives the metric performance over 20 runs of these TOP-5 five packages on `bWoodN1`.
+Table 3 gives the metric performance over 20 runs of these TOP-5 five packages on \code{bWoodN1}.
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \pkg{rminer}
 and \pkg{validann} are a little bit behind the others.
 However, once again, the metrics median RMSE and RMSEd51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
 Regarding computation time, the best two in this class are \pkg{nnet} and \pkg{MachineShop}.
+Nevertheless, these TOP-5 packages performs significantly better than other packages, see Section 2.1 of
+the supplementary materials at \url{??}.
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -867,7 +872,8 @@ kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE,
   footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
-Figures at \url{???} provides some insights where a package performs reasonably well 
+Figures in Section 2.2 of the supplementary materials at \url{???} 
+provides some insights where a package performs reasonably well 
 with respect to one explanatory variable and where the fit misses the correct behavior of
 an explanatory variable.
 
@@ -1054,7 +1060,7 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
   add_header_above(c(" "=2, "Input parameter"=3, "RMSE Score"=2, "Other score"=2)) %>%
   column_spec(1, bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=7, latex_options =c("hold_position")) %>%
   footnote(general=TOP5sentence, footnote_as_chunk=TRUE)
 ```
 
@@ -1076,7 +1082,7 @@ colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or 
 
 kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
                   caption="Review of Discarded Packages") %>%
-  kable_styling(font_size=7, latex_options = c("repeat_header")) %>%
+  kable_styling(font_size=7, latex_options = c("repeat_header", "hold_position")) %>%
   column_spec(3, width = "10cm") %>%
   footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.", 
            footnote_as_chunk=TRUE)
