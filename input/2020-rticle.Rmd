@@ -8,6 +8,7 @@ author:
   - name: Akshaj Verma
     affiliation: Manipal Institute of Technology
     address: Manipal, Karnataka, 576104, India
+    orcid: 0000-0002-3936-0033
     email: akshajverma7@gmail.com
   - name: Christophe Dutang
     affiliation: Université Paris-Dauphine, University PSL, CNRS, CEREMADE
