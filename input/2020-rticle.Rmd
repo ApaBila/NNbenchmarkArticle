@@ -49,7 +49,7 @@ library(NNbenchmark)
 ## Abstract
 
 In the last three decades, neural-networks have evolved from an academic topic to a common scientific computing tool. 
-CRAN currently hosts around 80 packages (May 2020) that involve neural-network modelling; some offering more than one algorithm. 
+CRAN currently hosts around 80 packages (May 2020) that involve neural-network modeling; some offering more than one algorithm. 
 However, to our knowledge, there is no comprehensive study which tests the accuracy, the reliability, and the ease-of-use of those NN packages.
 
 In this paper, we test a large number of packages against a common set of datasets with varying levels of complexity to benchmark and rank them with statistical metrics.
@@ -185,7 +185,7 @@ We refer interested readers to \citep{tan2019review} for a review of second-orde
 ## Convergence and termination
 
 Most of the \code{package:algorithm} pairs try to minimize the Root Mean Squared Error (RMSE) during the training step. Two exceptions are the \CRANpkg{brnn} package which minimizes the RMSE plus the sum of the parameters (hence the name Bayesian Regularized Neural Network), and the \CRANpkg{qrnn} package which performs quantile regression. 
-For all packages, the datasets were learnt as a whole and without any weighting scheme to favour a single part of a dataset. 
+For all packages, the datasets were learnt as a whole and without any weighting scheme to favor a single part of a dataset. 
 We don't use a validation/test set because the purpose of our study is to verify the ability to reach good minima. This requirement is satisfied by using only a train set.
 
 When training neural networks, we attempt to tune a set of hyperparameters so that the root to minimize the RMSE.
@@ -243,7 +243,7 @@ Tests were also performed on other platforms and the computation times were foun
   
 
 A non-iterative calculation such as Ordinary Least Squares cannot generally be used to model all
-the datasets in our evaluation set. Varying levels of difficulty in modelling the
+the datasets in our evaluation set. Varying levels of difficulty in modeling the
 different data sets are intended to allow us to further classify different algorithms and the packages
 that implement them. As we focus on regression analysis, we select only datasets where the response variable is
 real-valued.
