@@ -65,7 +65,7 @@ Other packages are either less accurate, slow, difficult to use, or have poor or
 To carry out this work, we developed multiple scripts along with the \CRANpkg{NNbenchmark} package. 
 We have open-sourced our code for reproducibility which is available at \url{https://akshajverma.com/NNbenchmarkWeb/index.html} and
 \pkg{NNbenchmark}.
-Finally, we provide some hints and features to guide the development of an idealized neural network package for R.
+<!-- Finally, we provide some hints and features to guide the development of an idealized neural network package for R. JN?? Not now included? -->
 
 
 ## Introduction
@@ -895,8 +895,8 @@ an explanatory variable.
 
 # Conclusion and perspective
 
-This paper focuses on benchmarking neural network packages available on CRAN with the
-ideal goal to recommend or advise against some packages. 
+This paper focuses on benchmarking neural network packages available on CRAN <!--  with the
+ideal goal --> to recommend or advise against some packages. 
 Based on \pkg{RWsearch}'s outputs in 2019-2020, we selected 26 appropriate packages to analyze in-depth and discarded the other 63 packages.
 Using \pkg{NNbenchmark}, we ranked 60 \code{package:algorithm} pairs and are happy to 
 note that most of them converge well enough within a reasonable time.
@@ -919,13 +919,13 @@ and \pkg{validann} are efficient packages but a little bit slower in our analysi
 -- B: I did run some and have questioned about this before. I think since one of the claims about first-order algorithms is that they are more efficient on large datasets, it should be done. However, I no longer recollect the exact results and wonder if its wise to spend our time on that right now. I think the general result (of a few runs) is that the first-order algorithms were still at least slower
 -- CD: if we perform, it can give an idea of computing time and minimum RMSE for the best 1-order algo. -->
 
-However we are disappointed that many of the packages we reviewed had poor documentation,
+However, we are disappointed that many of the packages we reviewed had poor documentation, <!-- JN??: added comma -->
 notably \pkg{EnsembleBase} and \pkg{keras}.
 We often found it difficult to discover what default starting values were used for model 
 parameters and/or to understand how to change the hyper-parameters.
 
 <!-- ## Future work -- B?? not sure if this section header should stay or go but I'm leaving it up here for now ; CD: I assume it is not necessary to subdivide conclusion, see latest issue of R journal -->
-As the field of neural networks continue to grow, there will always be more algorithms to validate. 
+As the field of neural networks continues to grow, there will always be more algorithms to validate. <!-- JN? continue / continues -->
 For current algorithms in R, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
