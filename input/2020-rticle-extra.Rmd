@@ -1,0 +1,517 @@
+---
+title: Supplementary Materials for a Review of R Neural Network Packages (with NNbenchmark)$:$
+  Accuracy and Ease of Use
+author:
+- Salsabila Mahdi^[Universitas Syiah Kuala, Indonesia]
+- Akshaj Verma^[Manipal Institute of Technology, India]
+- Christophe Dutang^[Université Paris-Dauphine, University PSL, France]
+- Patrice Kiener^[InModelia, France]
+- John C. Nash^[Telfer School of Management, University of Ottawa, Canada]
+preamble: 
+  includes: 
+    \usepackage{float}
+    \usepackage{multirow}
+    \usepackage{subcaption}
+    \usepackage{longtable}
+    \newcommand{\code}{\texttt}
+    \newcommand{\pkg}{\textbf}
+    \newcommand{\soft}{\textsf}
+geometry: margin=1.5cm    
+output:
+  pdf_document: 
+    toc: true
+    number_sections: true
+---
+
+<!-- if we want html output, we may use https://rstudio.github.io/distill/ package -->
+
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+library(NNbenchmark)
+```
+
+
+
+<!-- Table final result -->
+
+```{r echo=FALSE, message=FALSE}
+options(knitr.kable.NA = '')
+
+if(file.exists("./tables/Table1.csv")) {  
+  Table1 <- read.table("./tables/Table1-final.csv", sep = ";", dec=".",
+                       header=TRUE)
+  Table1 <- Table1[Table1[,2] != "", ]
+}else 
+   Table1 <- rbind(rep("missing",6))
+
+colnames(Table1) <- c("Package", "Algorithm", "Time", "RMSE",
+                    "Util", "Doc", "Call")
+
+pkg.name <- Table1$Package[Table1$Package != ""]
+idx.pkg.name <- (1+0:NROW(Table1))[Table1$Package != ""]
+Table1$Doc <- floor(Table1$Doc)
+
+#repeat value
+Table1$Package <- rep(pkg.name, times=diff(idx.pkg.name))
+Table1$Util <- rep(Table1$Util[!is.na(Table1$Util)], times=diff(idx.pkg.name))
+Table1$Doc <- rep(Table1$Doc[!is.na(Table1$Doc)], times=diff(idx.pkg.name))
+Table1$Call <- rep(Table1$Call[!is.na(Table1$Call)], times=diff(idx.pkg.name))
+
+#convert to stars
+cvt2star <- function(j)
+{
+  switch(as.character(j), "0" = " ", "1"="*", "2"="**", "3"="***", "4"="****")
+}
+Table1$Doc <- unlist(sapply(Table1$Doc, cvt2star))
+Table1$Util <- unlist(sapply(Table1$Util, cvt2star))
+Table1$Call <- unlist(sapply(Table1$Call, cvt2star))
+
+#reorder columns
+Table1 <- Table1[, c(1, 5:7, 2:4)]
+#get the min RMSE by pkg
+pkgRkbyRMSE <- sort(tapply(Table1$RMSE, Table1$Package, min))
+#create new index
+n <- NROW(Table1)
+getorderbypkg <- function(p)
+{
+  idx <- (1:n)[Table1$Package == p]
+  if(length(idx) > 1)
+    return(idx[order(Table1[idx, "RMSE"])])
+  else
+    return(idx)
+}
+idxRk <- unlist(sapply(names(pkgRkbyRMSE), getorderbypkg))
+Table1rk <- Table1[idxRk, ]
+rownames(Table1rk) <- 1:n
+
+```
+
+<!-- Table of discarded packages -->
+```{r echo=FALSE, message=FALSE}
+options(knitr.kable.NA = '')
+
+if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
+#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
+  Table2 <- read.csv("./tables/Table2-UTF8-cleaned.csv")
+  Table2 <- Table2[Table2[,3] != "", ]
+  Table2 <- Table2[,c("Package", "Category", "Reason.to.Discard..Where.")]
+}else
+ Table2 <- rep("missing", 3)
+colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
+
+
+```
+
+
+<!-- Additionnal Table for final result -->
+
+```{r echo=FALSE, message=FALSE}
+options(knitr.kable.NA = '')
+
+if(file.exists("./tables/Table3.csv")) {  
+  Table3 <- read.csv("./tables/Table3.csv")
+}else
+ Table3 <- rep("missing", 7)
+colnames(Table3) <- c("Package::algorithm", "RMSE min", "RMSE median", "RMSE D51", 
+                      "MAE median", "WAE median", "Time median")
+
+TOP5algo <- subset(Table1rk, RMSE %in% 1:5)[, c("Package", "Algorithm")]
+rownames(TOP5algo)  <- subset(Table1rk, RMSE %in% 1:5)[, "Package"]
+
+Table3$Package <- sapply(strsplit(Table3[, "Package::algorithm"], "::"), head, n=1)
+Table3$Algorithm <- TOP5algo[Table3$Package, "Algorithm"]
+idx2shorten <- grep("(BFGS)", Table3$Algorithm)
+Table3$Algorithm[idx2shorten] <- substr(Table3$Algorithm[idx2shorten], 1, nchar(Table3$Algorithm[idx2shorten])-6)
+Table3 <- Table3[, c("Package", "Algorithm", "RMSE min", "RMSE median", 
+                     "RMSE D51", "MAE median", "WAE median", "Time median")]
+Table3[, c("RMSE min", "RMSE median", "RMSE D51", "MAE median", "WAE median", "Time median")] <- apply(Table3[, c("RMSE min", "RMSE median", 
+                     "RMSE D51", "MAE median", "WAE median", "Time median")],
+      2, signif, digits=4)
+
+```
+
+
+<!-- Parameter Table -->
+
+```{r echo=FALSE, message=FALSE}
+if(file.exists("./tables/TableAppendixC.csv")) {  
+  Table1SupplApp <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
+}else 
+  Table1SupplApp <- rep("missing",8)
+colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
+                    "d51", "MAE", "WAE")
+#Table1SupplApp[, "Package:Algorithm"] <- paste0(Table1[Table1SupplApp$Num, "Package"], ":",
+#                        substr(Table1[Table1SupplApp$Num, "Algorithm"], 4, nchar(Table1[Table1SupplApp$Num, "Algorithm"])))
+#Table1SupplApp <- Table1SupplApp[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
+#                    "d51", "MAE", "WAE")]
+
+Table1SupplApp[, "Package"] <- Table1[Table1SupplApp$Num, "Package"]
+Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
+
+Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
+                    "d51", "MAE", "WAE")]
+
+#use idxRk as for Table1rk
+if(all(Table1SupplApp[, "Algorithm"] == Table1$Algorithm))
+{
+  Table1SupplApp <- Table1SupplApp[idxRk, ]
+  rownames(Table1SupplApp) <- 1:NROW(Table1SupplApp)
+}
+
+TOP5pkg <- head(unique(Table1rk$Package), 5)
+TOP5algo <- head(Table1rk$Algorithm[order(Table1rk$RMSE)], 5)
+TOP5algo <- substr(TOP5algo, 5, nchar(TOP5algo))
+TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), collapse=", "), ".")      
+
+```
+
+# Additionnal materials for all packages 
+
+```{r, echo=FALSE}
+#custom format function
+formatResultRable <- function(Table, orderRkRMSE)
+{
+  colnames(Table) <- c("Package::algorithm", "Time mean", "RMSE min", "RMSE median", "RMSE D51", 
+                      "MAE median", "WAE median", "NPFA")
+
+  Table$Package <- sapply(strsplit(Table[, "Package::algorithm"], "::"), head, n=1)
+  
+  Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
+  Table$Algorithm <- sapply(strsplit(Table$Algorithm, "_"), tail, n=1)
+  Table$Algorithm <- paste0(Table$NPFA, ". ", Table$Algorithm)
+  Table <- Table[orderRkRMSE, c("Package", "Algorithm", "RMSE min", "RMSE median", "RMSE D51", 
+                      "MAE median", "WAE median", "Time mean")]
+  
+  rownames(Table) <- 1:NROW(Table)
+  Table
+}
+
+```
+
+
+## Result for dataset `mDette`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mDette-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mDette") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `mFriedman`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mFriedman-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mFriedman") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `mIshigami`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mIshigami-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mIshigami") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `mRef153`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/mIshigami-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for mRef153") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uDmod1`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDmod1-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDmod1") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uDmod2`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDmod2-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDmod2") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uDreyfus1`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDreyfus1-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDreyfus1") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+## Result for dataset `uDreyfus2`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uDreyfus2-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uDreyfus2") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+## Result for dataset `uGauss1`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uGauss1-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uGauss1") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uGauss2`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uGauss2-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uGauss2") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+## Result for dataset `uGauss3`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uGauss3-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uGauss3") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+## Result for dataset `uNeuroOne`
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/uNeuroOne-result-summary.csv")
+resPerDataSet <- formatResultRable(resPerDataSet, idxRk)
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llcccccc",
+                  caption="Result for uNeuroOne") %>%
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+\pagebreak
+
+
+
+
+
+## Score probabilities
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/scoreprobperpkgBnW.png}
+        \label{fig:scoreprob}
+        \caption{Score probabilities of \code{package:algorithm}}
+\end{figure}
+
+<!--## Appendix E-->
+
+\pagebreak
+
+# Additionnal materials on the large dataset `bWoodN1`
+
+
+```{r, echo=FALSE}
+#custom format function
+formatResultRable <- function(Table)
+{
+  colnames(Table) <- c("Package::algorithm", "RMSE", "MSE", "MAE", "WAE", "time")
+
+  Table$Package <- sapply(strsplit(Table[, "Package::algorithm"], "::"), head, n=1)
+  
+  Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
+  Table <- Table[, c("Package", "Algorithm", "RMSE", "MSE", "MAE", "WAE", "time")]
+  rownames(Table) <- 1:NROW(Table)
+  Table
+}
+
+```
+
+## Summary statistics for non top-5 packages
+
+The table provides the summary statistics of the best run of NN packages over two runs
+on the large dataset `bWoodN1`.
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/bWoodN1-results-nontop5.csv")
+colnames(resPerDataSet) <- c("Package::algorithm", "RMSE", "MSE", "MAE", "WAE", "time")
+resPerDataSet[, "Package::algorithm"] <- substr(resPerDataSet[, "Package::algorithm"], 9, nchar(resPerDataSet[, "Package::algorithm"]))
+resPerDataSet <- formatResultRable(resPerDataSet)
+
+kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="lccccc",
+                  caption="Result for bWoodN1") %>%
+  column_spec(1, bold = TRUE) %>%
+  kable_styling(font_size=8, latex_options =c("striped","hold_position")) %>%
+  footnote(general="Time in seconds", footnote_as_chunk=TRUE)
+```
+
+
+\pagebreak
+
+## Graphics for top-5 packages
+
+Figures below provides some insights where a package performs reasonably well 
+with respect to one explanatory variable and where the fit misses the correct behavior of
+an explanatory variable.
+It displays the average response per rounded explanatory variable for the predicted, 
+the empirical and the theoretical values.
+That is, the empirical value and the predicted value for the $j$th explanatory 
+variable are respectively computed at x-value $x$ as
+$$
+\bar y^{emp}_j(x) = \frac1{n_x}  \sum_{i=1}^n y_i 1_{r(x_{i,j}) = x},~
+\bar y^{pred}_j(x) =  \frac1{n_x} \sum_{i=1}^n \hat y_i 1_{r(x_{i,j}) = x},~~
+n_x=\sum_{i=1}^n 1_{r(x_{i,j}) = x},
+$$
+where $r()$ denotes the round function with two decimal places and $y_i, \hat y_i$ 
+stand respectively for the $i$th observed response and the $i$th predicted response.
+For instance, \pkg{MachineShop}, \pkg{nnet}, \pkg{nlsr} do not correctly capture the sinusoidal 
+aspect of explanatory variable $x_5$ on the expected response, whereas \pkg{rminer}, \pkg{validann}
+miss the increasing non-linear trend of explanatory variable $x_1$ on the expected response.
+
+
+\begin{figure}
+    \centering    
+    \includegraphics[width=\textwidth]{img/MachineShop.png}
+        \label{fig:MachineShop}
+        \caption{Average predicted mean per explanatory variable for \code{MachineShop}}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/nnet.png}
+        \label{fig:nnet}
+        \caption{Average predicted mean per explanatory variable for \code{nnet}}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/rminer.png}
+        \label{fig:rminer}
+        \caption{Average predicted mean per explanatory variable for \code{rminer}}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/nlsr.png}
+        \label{fig:nlsr}
+        \caption{Average predicted mean per explanatory variable for \code{nlsr}}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/validann.png}
+        \label{fig:validann}
+        \caption{Average predicted mean per explanatory variable for \code{validann}}
+\end{figure}
+
+
+
