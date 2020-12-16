@@ -36,7 +36,7 @@ library(NNbenchmark)
 
 <!-- Table final result -->
 
-```{r echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table1.csv")) {  
@@ -89,7 +89,7 @@ rownames(Table1rk) <- 1:n
 ```
 
 <!-- Table of discarded packages -->
-```{r echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
@@ -107,7 +107,7 @@ colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or 
 
 <!-- Additionnal Table for final result -->
 
-```{r echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table3.csv")) {  
@@ -135,7 +135,7 @@ Table3[, c("RMSE min", "RMSE median", "RMSE D51", "MAE median", "WAE median", "T
 
 <!-- Parameter Table -->
 
-```{r echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE}
 if(file.exists("./tables/TableAppendixC.csv")) {  
   Table1SupplApp <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
 }else 
@@ -181,7 +181,11 @@ formatResultRable <- function(Table, orderRkRMSE)
   Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
   Table$Algorithm <- sapply(strsplit(Table$Algorithm, "_"), tail, n=1)
   Table$Algorithm <- paste0(Table$NPFA, ". ", Table$Algorithm)
-  Table <- Table[orderRkRMSE, c("Package", "Algorithm", "RMSE min", "RMSE median", "RMSE D51", 
+  if(!missing(orderRkRMSE))
+    Table <- Table[orderRkRMSE, c("Package", "Algorithm", "RMSE min", "RMSE median", "RMSE D51", 
+                      "MAE median", "WAE median", "Time mean")]
+  else
+    Table <- Table[, c("Package", "Algorithm", "RMSE min", "RMSE median", "RMSE D51", 
                       "MAE median", "WAE median", "Time mean")]
   
   rownames(Table) <- 1:NROW(Table)
@@ -418,43 +422,33 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
 # Additionnal materials on the large dataset `bWoodN1`
 
 
-```{r, echo=FALSE}
-#custom format function
-formatResultRable <- function(Table)
-{
-  colnames(Table) <- c("Package::algorithm", "RMSE", "MSE", "MAE", "WAE", "time")
 
-  Table$Package <- sapply(strsplit(Table[, "Package::algorithm"], "::"), head, n=1)
-  
-  Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
-  Table <- Table[, c("Package", "Algorithm", "RMSE", "MSE", "MAE", "WAE", "time")]
-  rownames(Table) <- 1:NROW(Table)
-  Table
-}
-
-```
 
 ## Summary statistics for non top-5 packages
 
 The table provides the summary statistics of the best run of NN packages over two runs
 on the large dataset `bWoodN1`.
 
-```{r, echo=FALSE}
-resPerDataSet <- read.csv("tables-extra/bWoodN1-results-nontop5.csv")
-colnames(resPerDataSet) <- c("Package::algorithm", "RMSE", "MSE", "MAE", "WAE", "time")
-resPerDataSet[, "Package::algorithm"] <- substr(resPerDataSet[, "Package::algorithm"], 9, nchar(resPerDataSet[, "Package::algorithm"]))
-resPerDataSet <- formatResultRable(resPerDataSet)
 
+
+```{r, echo=FALSE}
+resPerDataSet <- read.csv("tables-extra/bWoodN1-results-summary-nontop5.csv")
+
+
+resPerDataSet <- formatResultRable(resPerDataSet)
 kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, align="lccccc",
+                  centering = TRUE, align="llcccccc",
                   caption="Result for bWoodN1") %>%
-  column_spec(1, bold = TRUE) %>%
-  kable_styling(font_size=8, latex_options =c("striped","hold_position")) %>%
-  footnote(general="Time in seconds", footnote_as_chunk=TRUE)
+  column_spec(c(1, 2), bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7, latex_options =c("hold_position")) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
 ```
 
 
-\pagebreak
+
+
+<!--\pagebreak-->
 
 ## Graphics for top-5 packages
 
