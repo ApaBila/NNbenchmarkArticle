@@ -180,6 +180,7 @@ formatResultRable <- function(Table, orderRkRMSE)
   
   Table$Algorithm <- sapply(strsplit(Table[, "Package::algorithm"], "::"), function(x) x[2])
   Table$Algorithm <- sapply(strsplit(Table$Algorithm, "_"), tail, n=1)
+  Table$Algorithm <- gsub("none", "default", Table$Algorithm)
   Table$Algorithm <- paste0(Table$NPFA, ". ", Table$Algorithm)
   if(!missing(orderRkRMSE))
     Table <- Table[orderRkRMSE, c("Package", "Algorithm", "RMSE min", "RMSE median", "RMSE D51", 
