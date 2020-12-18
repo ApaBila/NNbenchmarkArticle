@@ -1,6 +1,6 @@
 ---
-title: Supplementary Materials for a Review of R Neural Network Packages (with NNbenchmark)$:$
-  Accuracy and Ease of Use
+title: Supplementary Materials for the paper 'a Review of R Neural Network Packages (with NNbenchmark)$:$
+  Accuracy and Ease of Use'
 author:
 - Salsabila Mahdi^[Universitas Syiah Kuala, Indonesia]
 - Akshaj Verma^[Manipal Institute of Technology, India]
@@ -167,7 +167,8 @@ TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), col
 
 ```
 
-# Additionnal materials for all packages 
+\newpage
+# Additionnal materials on small/medium-size datasets for all packages 
 
 ```{r, echo=FALSE}
 #custom format function
@@ -207,7 +208,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -224,7 +225,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -241,7 +242,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -258,7 +259,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -275,7 +276,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -292,7 +293,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -309,7 +310,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -327,7 +328,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -345,7 +346,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -362,7 +363,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -379,7 +380,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -397,7 +398,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 \pagebreak
@@ -420,7 +421,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
 
 \pagebreak
 
-# Additionnal materials on the large dataset `bWoodN1`
+# Additionnal materials on the large dataset `bWoodN1` for TOP-10 packages
 
 
 
@@ -443,7 +444,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7, latex_options =c("hold_position")) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
 
