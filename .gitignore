@@ -11,4 +11,4 @@ kableExtra-v-legacy_features.html
 kableExtra-v-use_kable_in_shiny.html
 kableExtra.html
 kableExtra.pdf
-
+*.DS_Store
