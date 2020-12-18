@@ -313,7 +313,7 @@ functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
 To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
-Note that the 2020 GSoC results are available in Section 1 of the supplementary materials at \url{???}. 
+Note that the 2020 GSoC results are available in Section 1 of the supplementary materials, \citep{suppl:material:paper}.
 Furthermore the 2019 GSoC code uses all 12 datasets. 
 For convenience, all datasets are made available in \CRANpkg{NNbenchmark}, so that anyone can replicate
 our analysis.
@@ -466,7 +466,7 @@ Both figures show that a good overall score does not necessarily imply
 a good performance on the two datasets under consideration. 
 Furthermore, there is a break between the
 TOP-10 \code{package:algorithm} and others in terms of RMSE value.
-In Section 1.13 of the supplementary materials at \url{???}, the score probabilities
+In Section 1.13 of the supplementary materials, \citep{suppl:material:paper}, the score probabilities
 per \code{package:algorithm} also gives some insights how robust is the overall score. 
 
 Regarding computation time, we observe that some \code{package:algorithm} are
@@ -839,7 +839,7 @@ and \pkg{validann} are a little bit behind the others.
 However, once again, the metrics median RMSE and RMSEd51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
 Regarding computation time, the best two in this class are \pkg{nnet} and \pkg{MachineShop}.
 Nevertheless, these TOP-5 packages performs significantly better than other packages, see Section 2.1 of
-the supplementary materials at \url{??}.
+the supplementary materials, \citep{suppl:material:paper}.
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -872,7 +872,7 @@ kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE,
   footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
-Figures in Section 2.2 of the supplementary materials at \url{???} 
+Figures in Section 2.2 of the supplementary materials, \citep{suppl:material:paper},
 provides some insights where a package performs reasonably well 
 with respect to one explanatory variable and where the fit misses the correct behavior of
 an explanatory variable.
