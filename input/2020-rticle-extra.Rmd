@@ -7,6 +7,8 @@ author:
 - Christophe Dutang^[Université Paris-Dauphine, University PSL, France]
 - Patrice Kiener^[InModelia, France]
 - John C. Nash^[Telfer School of Management, University of Ottawa, Canada]
+documentclass: article
+classoption: a4paper
 preamble: 
   includes: 
     \usepackage{float}
@@ -16,7 +18,7 @@ preamble:
     \newcommand{\code}{\texttt}
     \newcommand{\pkg}{\textbf}
     \newcommand{\soft}{\textsf}
-geometry: margin=1.5cm    
+geometry: "left=1cm,right=1cm,top=1cm,bottom=1.5cm"    
 output:
   pdf_document: 
     toc: true
@@ -207,7 +209,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for mDette") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -224,7 +226,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for mFriedman") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -241,7 +243,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for mIshigami") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -258,7 +260,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for mRef153") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -275,7 +277,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uDmod1") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -292,7 +294,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uDmod2") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -309,7 +311,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uDreyfus1") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -327,7 +329,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uDreyfus2") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -345,7 +347,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uGauss1") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -362,7 +364,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uGauss2") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -379,7 +381,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uGauss3") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -397,7 +399,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for uNeuroOne") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=8) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
@@ -443,7 +445,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
                   caption="Result for bWoodN1") %>%
   column_spec(c(1, 2), bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7, latex_options =c("hold_position")) %>%
+  kable_styling(font_size=8, latex_options =c("hold_position")) %>%
   footnote(general="Statistics over 10 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
