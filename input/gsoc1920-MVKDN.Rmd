@@ -63,8 +63,8 @@ Other packages are either less accurate, slow, difficult to use, or have poor or
 
 
 To carry out this work, we developed multiple scripts along with the \CRANpkg{NNbenchmark} package. 
-We have open-sourced our code for reproducibility which is available at \url{https://akshajverma.com/NNbenchmarkWeb/index.html} and
-\pkg{NNbenchmark}.
+We have open-sourced our code for reproducibility on a github repository \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}
+as well as  outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb/index.html}.
 <!-- Finally, we provide some hints and features to guide the development of an idealized neural network package for R. JN?? Not now included? -->
 
 
@@ -134,19 +134,19 @@ These practices help us find good local-minima and possibly the global-minima.
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.242\textwidth}
-        \includegraphics[width=\textwidth]{img/RN3a2.png}
+        \includegraphics[width=\textwidth]{RN3a2.png}
         \caption{NN 1-3-1}
         \label{fig:N131}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.250\textwidth}
-        \includegraphics[width=\textwidth]{img/RN3b2.png}
+        \includegraphics[width=\textwidth]{RN3b2.png}
         \caption{NN 5-3-1}
         \label{fig:N531}
     \end{subfigure}
     ~ 
     \begin{subfigure}[b]{0.396\textwidth}
-        \includegraphics[width=\textwidth]{img/RN3c2.png}
+        \includegraphics[width=\textwidth]{RN3c2.png}
         \caption{NN 5-5N-3-1N-1}
         \label{fig:N55311}
     \end{subfigure}
@@ -375,8 +375,10 @@ made generic with the extensive use of the \code{do.call} function from the \pkg
 2.    \code{trainPredict\_1data} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple methods.
 3.    \code{trainPredict\_1pkg} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple datasets.
 
-A function for the summary of accuracy and speed, \code{NNsummary}, was also added. The package repository is \url{https://github.com/pkR-pkR/NNbenchmark}, with package templates in \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}. 
-
+A function for the summary of accuracy and speed, \code{NNsummary}, was also added. 
+The package repository is at \url{https://github.com/pkR-pkR/NNbenchmark}, with 
+template repository at \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}, and
+outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb/index.html}. 
 An example of a call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 
@@ -552,7 +554,7 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{img/mIshigami-uDreyfus1-RMSEmin.png}
+  \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-RMSEmin.png}
         \label{fig:Allpkg:RMSEmin}
         \caption{RMSE minimum value per package for \code{mIshigami}
         and \code{uDreyfus1} datasets}
@@ -561,7 +563,7 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{img/mIshigami-uDreyfus1-timmean.png}
+  \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-timmean.png}
         \label{fig:Allpkg:timemean}
         \caption{Average time value per package for \code{mIshigami}
         and \code{uDreyfus1} datasets}
@@ -579,8 +581,7 @@ despite being limited to $1/5^{th}$ or fewer iterations than the first-order alg
 
 We note that 11 out of 15 of these \code{package:algorithms} use \code{optim} from \pkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, make the call directly.
 However, it is not clearly stated in \pkg{CaDENCE}'s documentation that \code{optim}'s BFGS method has been chosen rather
-than one of the other four methods. <!-- B: optim has 6 methods? with "Brent" for one dimensional problems only -->
-<!-- is used and not one of the other algorithms.  -->
+than one of the other four methods. 
 Furthermore, the mention of Nelder-Mead in the documentation suggests that \code{optim}'s Nelder-Mead method is used. 
 Speed and variation between results for  \pkg{CaDENCE} are also not as good as other packages that use \code{optim}. 
 This could be because \pkg{CaDENCE} is intended for probabilistic non-linear models with a full title of ``Conditional Density Estimation Network Construction and Evaluation''. 
@@ -622,7 +623,7 @@ It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE,
 The difference is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
-It is worth noting is that \pkg{nnet} and \pkg{validann} do not have external normalization, which is especially recommended for \pkg{validann} <!-- B??: Patrice?? -->. 
+It is worth noting is that \pkg{nnet} and \pkg{validann} do not have external normalization, which is especially recommended for \pkg{validann}. 
 However, some of the packages dependent on \pkg{nnet} do have this capability and it is included in the scoring for ease of use. 
 With \pkg{NNbenchmark}, this is done through setting \code{scale = TRUE} in the function \code{prepare.ZZ}. Note that 
 use of scaling may complicate the application of constraints, so not be worth the effort for some users. 
@@ -896,8 +897,8 @@ an explanatory variable.
 
 # Conclusion and perspective
 
-This paper focuses on benchmarking neural network packages available on CRAN <!--  with the
-ideal goal --> to recommend or advise against some packages. 
+This paper focuses on benchmarking neural network packages available on CRAN 
+to recommend or advise against some packages. 
 Based on \pkg{RWsearch}'s outputs in 2019-2020, we selected 26 appropriate packages to analyze in-depth and discarded the other 63 packages.
 Using \pkg{NNbenchmark}, we ranked 60 \code{package:algorithm} pairs and are happy to 
 note that most of them converge well enough within a reasonable time.
@@ -913,17 +914,15 @@ in particular when considering a larger dataset.
 Other packages in the TOP-5,  \pkg{nlsr} (the best in terms of RMSE minimum) 
 and \pkg{validann} are efficient packages but a little bit slower in our analysis.
 
-<!-- CD?? (B: I think) should we test for bWoodN1 the best first-order algorithm? 
--- B: I did run some and have questioned about this before. I think since one of the claims about first-order algorithms is that they are more efficient on large datasets, it should be done. However, I no longer recollect the exact results and wonder if its wise to spend our time on that right now. I think the general result (of a few runs) is that the first-order algorithms were still at least slower
--- CD: if we perform, it can give an idea of computing time and minimum RMSE for the best 1-order algo. -->
 
-However, we are disappointed that many of the packages we reviewed had poor documentation, <!-- JN??: added comma -->
-notably \pkg{EnsembleBase} and \pkg{keras}.
-We often found it difficult to discover what default starting values were used for model 
-parameters and/or to understand how to change the hyper-parameters.
 
-<!-- ## Future work -- B?? not sure if this section header should stay or go but I'm leaving it up here for now ; CD: I assume it is not necessary to subdivide conclusion, see latest issue of R journal -->
-As the field of neural networks continues to grow, there will always be more algorithms to validate. <!-- JN? continue / continues -->
+However, we are disappointed that many of the packages we reviewed had poor
+documentation, notably \pkg{EnsembleBase} and \pkg{keras}.
+We often found it difficult to discover what default starting values were 
+used for model parameters and/or to understand how to change the hyper-parameters.
+
+
+As the field of neural networks continues to grow, there will always be more algorithms to validate. 
 For current algorithms in R, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
@@ -943,7 +942,7 @@ Google for the financial support.
 
 
 
-\bibliography{RJreferences}
+\bibliography{gsoc1920-MVKDN}
 
 
 # Appendix

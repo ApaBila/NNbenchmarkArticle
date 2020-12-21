@@ -80,28 +80,6 @@ kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE,
 ## ----echo=FALSE, message=FALSE------------------------------------------------
 options(knitr.kable.NA = '')
 
-if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
-#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
-  Table2 <- read.csv("./tables/Table2-UTF8-cleaned.csv")
-  Table2 <- Table2[Table2[,3] != "", ]
-  Table2 <- Table2[,c("Package", "Category", "Reason.to.Discard..Where.")]
-}else
- Table2 <- rep("missing", 3)
-colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
-
-
-
-kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
-                  caption="Review of Discarded Packages") %>%
-  kable_styling(font_size=7, latex_options = c("repeat_header")) %>%
-  column_spec(3, width = "10cm") %>%
-  footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.", 
-           footnote_as_chunk=TRUE)
-
-
-## ----echo=FALSE, message=FALSE------------------------------------------------
-options(knitr.kable.NA = '')
-
 if(file.exists("./tables/Table3.csv")) {  
   Table3 <- read.csv("./tables/Table3.csv")
 }else
@@ -172,17 +150,17 @@ if(file.exists("./tables/TableAppendixC.csv")) {
 }else 
   Table1SupplApp <- rep("missing",8)
 colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
-                    "d51", "MAE", "WAE")
+                    "D51", "MAE", "WAE")
 #Table1SupplApp[, "Package:Algorithm"] <- paste0(Table1[Table1SupplApp$Num, "Package"], ":",
 #                        substr(Table1[Table1SupplApp$Num, "Algorithm"], 4, nchar(Table1[Table1SupplApp$Num, "Algorithm"])))
 #Table1SupplApp <- Table1SupplApp[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-#                    "d51", "MAE", "WAE")]
+#                    "D51", "MAE", "WAE")]
 
 Table1SupplApp[, "Package"] <- Table1[Table1SupplApp$Num, "Package"]
 Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
 
 Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-                    "d51", "MAE", "WAE")]
+                    "D51", "MAE", "WAE")]
 
 #use idxRk as for Table1rk
 if(all(Table1SupplApp[, "Algorithm"] == Table1$Algorithm))
@@ -202,6 +180,28 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
   add_header_above(c(" "=2, "Input parameter"=3, "RMSE Score"=2, "Other score"=2)) %>%
   column_spec(1, bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
+  kable_styling(font_size=7, latex_options =c("hold_position")) %>%
   footnote(general=TOP5sentence, footnote_as_chunk=TRUE)
+
+
+## ----echo=FALSE, message=FALSE------------------------------------------------
+options(knitr.kable.NA = '')
+
+if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
+#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
+  Table2 <- read.csv("./tables/Table2-UTF8-cleaned.csv")
+  Table2 <- Table2[Table2[,3] != "", ]
+  Table2 <- Table2[,c("Package", "Category", "Reason.to.Discard..Where.")]
+}else
+ Table2 <- rep("missing", 3)
+colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
+
+
+
+kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
+                  caption="Review of Discarded Packages") %>%
+  kable_styling(font_size=7, latex_options = c("repeat_header", "hold_position")) %>%
+  column_spec(3, width = "10cm") %>%
+  footnote(general="AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.", 
+           footnote_as_chunk=TRUE)
 
