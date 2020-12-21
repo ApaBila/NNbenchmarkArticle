@@ -82,7 +82,7 @@ This is an issue as many slow or poor algorithms are available in the literature
  
 
 A neural network algorithm requires complicated calculations to improve the model control parameters. 
-As with other optimization problems, the gradient of the chosen cost function indicates the model's lack of suitability. <!-- B??: not sure, should it be "the chosen cost function which" or if the sentence should be split into one for the gradient and one for the cost function. Remove double the. CD yest it could be improved. JN: Sentence grammar did not parse, so I edited further.-->
+As with other optimization problems, the gradient of the chosen cost function indicates the model's lack of suitability.
 Optimization methods improve the current iterate by changing the parameters in the opposite of the gradient direction generally with an adaptive step.
 Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
 Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
@@ -825,7 +825,7 @@ The full list of untested packages is given in Table 5 in Appendix D.
 
 ## Further analysis of TOP-5 packages
 
-In this subsection <!-- B: Is "In this subsection" necessary? CD: indeed it can be removed -->, we perform a second round of analysis with a larger dataset
+We perform a second round of analysis with a larger dataset
 and a focus on the TOP-5 packages given in Table 2.
 That is, we consider packages \pkg{nlsr}, \pkg{rminer}, \pkg{nnet}, \pkg{validann} with algorithm BFGS and \pkg{MachineShop}.
 We fit the NN packages on Simon Wood's Gaussian dataset, see \code{bWoodN1} in dataset description, which contains
@@ -835,9 +835,10 @@ explanatory variable is highly non-linear which greatly affects the fitting time
 Table 3 gives the metric performance over 20 runs of these TOP-5 five packages on \code{bWoodN1}.
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \pkg{rminer}
-and \pkg{validann} are a little bit behind the others.
-However, once again, the metrics median RMSE and RMSEd51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
-Regarding computation time, the best two in this class are \pkg{nnet} and \pkg{MachineShop}.
+and \pkg{validann} are a little ahead of the others.
+The metrics median RMSE and RMSEd51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
+However, regarding computation time \pkg{rminer} is the 3rd slowest with \pkg{nlsr} being the 2nd slowest and \pkg{validann} being the slowest of all.
+The best two in terms of speed in this class are \pkg{nnet} and \pkg{MachineShop}.
 Nevertheless, these TOP-5 packages performs significantly better than other packages, see Section 2.1 of
 the supplementary materials, \citep{suppl:material:paper}.
 
@@ -903,15 +904,12 @@ note that most of them converge well enough within a reasonable time.
 Packages reviewed appear to offer essentially the same methods, and second-order algorithms
 perform generally better than first-order algorithms.
 
-\pkg{nnet}, the most recommended package of our study, ranked third in terms on
+\pkg{nnet}, the most recommended package of our study, ranked third in terms of
 minimum RMSE, and is probably the most efficient package. 
 \pkg{nnet} is notably used by many other packages, such as \pkg{MachineShop}
 and \pkg{rminer} respectively ranked fifth and second.
 \pkg{MachineShop} and \pkg{rminer} are also very good challengers in our benchmark, 
-in particular when considering a larger dataset. <!-- 
-1) B?? I'm not sure about this since the results for the big datasets start of with validann rminer behind on minimum RMSE?? CD: MachineShop has very good time median and very close RMSE min; rminer is slower but has better MAE median and WAE median, see Table 3
-2) Are we suggesting that minimum RMSE, which we based the order of the final table on, is not an important measure? CD: we are suggesting other measures could help distinguish packages with very similar RMSE min.
-3) B?? made some changes to the above-->
+in particular when considering a larger dataset. 
 Other packages in the TOP-5,  \pkg{nlsr} (the best in terms of RMSE minimum) 
 and \pkg{validann} are efficient packages but a little bit slower in our analysis.
 

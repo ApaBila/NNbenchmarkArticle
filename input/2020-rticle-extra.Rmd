@@ -107,7 +107,7 @@ colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or 
 ```
 
 
-<!-- Additionnal Table for final result -->
+<!-- Additional Table for final result -->
 
 ```{r, echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -170,7 +170,7 @@ TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), col
 ```
 
 \newpage
-# Additionnal materials on small/medium-size datasets for all packages 
+# Additional materials on small/medium-size datasets for all packages 
 
 ```{r, echo=FALSE}
 #custom format function
@@ -423,7 +423,7 @@ kableExtra::kable(resPerDataSet, format = "latex", booktabs = TRUE,
 
 \pagebreak
 
-# Additionnal materials on the large dataset `bWoodN1` for TOP-10 packages
+# Additional materials on the large dataset `bWoodN1` for TOP-10 packages
 
 
 

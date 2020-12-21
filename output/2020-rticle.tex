@@ -1,8 +1,7 @@
 % !TeX root = RJwrapper.tex
-\title{A Review of R Neural Network Packages (with
-\pkg{NNbenchmark})\(:\) Accuracy and Ease of Use}
-\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice
-Kiener, and John C. Nash}
+\title{A Review of R Neural Network Packages (with \pkg{NNbenchmark})\(:\)
+Accuracy and Ease of Use}
+\author{by Salsabila Mahdi, Akshaj Verma, Christophe Dutang, Patrice Kiener, John C. Nash}
 
 \maketitle
 
@@ -676,133 +675,133 @@ algorithms. Finally, we list the reasons for discarded packages.
 \caption{\label{tab:unnamed-chunk-3}Result from Tested Packages}
 \centering
 \fontsize{7}{9}\selectfont
-\begin{tabular}[t]{>{}lccclc>{}c}
+\begin{tabular}[t]{>{\bfseries}lccclc>{\bfseries}c}
 \toprule
 \multicolumn{1}{c}{ } & \multicolumn{3}{c}{Individual rating} & \multicolumn{1}{c}{ } & \multicolumn{2}{c}{Global score} \\
 \cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){6-7}
 Package & Util & Doc & Call & Algorithm & Time & RMSE\\
 \midrule
-\textbf{nlsr} & * & **** & ** & 41. NashLM & 18 & \textbf{1}\\
+nlsr & * & **** & ** & 41. NashLM & 18 & 1\\
 \cmidrule{1-7}
-\textbf{rminer} & ** & *** & ** & 45. nnet\_optim(BFGS) & 12 & \textbf{2}\\
+rminer & ** & *** & ** & 45. nnet\_optim(BFGS) & 12 & 2\\
 \cmidrule{1-7}
-\textbf{nnet} & * & *** & ** & 42. optim (BFGS) & 3 & \textbf{3}\\
+nnet & * & *** & ** & 42. optim (BFGS) & 3 & 3\\
 \cmidrule{1-7}
- & * & **** & ** & 56. optim(BFGS) & 35 & \textbf{4}\\
+ & * & **** & ** & 56. optim(BFGS) & 35 & 4\\
 
- & * & **** & ** & 57. optim(CG) & 60 & \textbf{8}\\
+ & * & **** & ** & 57. optim(CG) & 60 & 8\\
 
- & * & **** & ** & 58. optim(L-BFGS-B) & 36 & \textbf{15}\\
+ & * & **** & ** & 58. optim(L-BFGS-B) & 36 & 15\\
 
- & * & **** & ** & 59. optim(Nelder-Mead) & 55 & \textbf{45}\\
+ & * & **** & ** & 59. optim(Nelder-Mead) & 55 & 45\\
 
-\multirow{-5}{*}{\raggedright\arraybackslash \textbf{validann}} & * & **** & ** & 60. optim(SANN) & 20 & \textbf{55}\\
+\multirow{-5}{*}{\raggedright\arraybackslash validann} & * & **** & ** & 60. optim(SANN) & 20 & 55\\
 \cmidrule{1-7}
-\textbf{MachineShop} & * & *** & * & 32. nnet\_optim(BFGS) & 6 & \textbf{5}\\
+MachineShop & * & *** & * & 32. nnet\_optim(BFGS) & 6 & 5\\
 \cmidrule{1-7}
-\textbf{traineR} & * & ** & ** & 55. nnet\_optim(BFGS) & 4 & \textbf{6}\\
+traineR & * & ** & ** & 55. nnet\_optim(BFGS) & 4 & 6\\
 \cmidrule{1-7}
-\textbf{radiant.model} & ** & ** & ** & 44. nnet\_optim(BFGS) & 10 & \textbf{7}\\
+radiant.model & ** & ** & ** & 44. nnet\_optim(BFGS) & 10 & 7\\
 \cmidrule{1-7}
- & ** & *** & ** & 34. optimx(BFGS) & 26 & \textbf{9}\\
+ & ** & *** & ** & 34. optimx(BFGS) & 26 & 9\\
 
-\multirow{-2}{*}{\raggedright\arraybackslash \textbf{monmlp}} & ** & *** & ** & 35. optimx(Nelder-Mead) & 32 & \textbf{47}\\
+\multirow{-2}{*}{\raggedright\arraybackslash monmlp} & ** & *** & ** & 35. optimx(Nelder-Mead) & 32 & 47\\
 \cmidrule{1-7}
- & ** & *** & ** & 12. optim(BFGS) & 46 & \textbf{10}\\
+ & ** & *** & ** & 12. optim(BFGS) & 46 & 10\\
 
- & ** & *** & ** & 14. Rprop & 56 & \textbf{51}\\
+ & ** & *** & ** & 14. Rprop & 56 & 51\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash \textbf{CaDENCE}} & ** & *** & ** & 13. pso\_psoptim & 54 & \textbf{54}\\
+\multirow{-3}{*}{\raggedright\arraybackslash CaDENCE} & ** & *** & ** & 13. pso\_psoptim & 54 & 54\\
 \cmidrule{1-7}
-\textbf{h2o} & ** & ** &  & 24. first-order & 51 & \textbf{11}\\
+h2o & ** & ** &  & 24. first-order & 51 & 11\\
 \cmidrule{1-7}
-\textbf{EnsembleBase} & * & * & ** & 23. nnet\_optim(BFGS) & 5 & \textbf{12}\\
+EnsembleBase & * & * & ** & 23. nnet\_optim(BFGS) & 5 & 12\\
 \cmidrule{1-7}
-\textbf{caret} & ** & *** & ** & 15. avNNet\_nnet\_optim(BFGS) & 17 & \textbf{13}\\
+caret & ** & *** & ** & 15. avNNet\_nnet\_optim(BFGS) & 17 & 13\\
 \cmidrule{1-7}
-\textbf{brnn} & ** & **** & ** & 11. Gauss-Newton & 8 & \textbf{14}\\
+brnn & ** & **** & ** & 11. Gauss-Newton & 8 & 14\\
 \cmidrule{1-7}
-\textbf{qrnn} & ** & *** & ** & 43. nlm() & 28 & \textbf{16}\\
+qrnn & ** & *** & ** & 43. nlm() & 28 & 16\\
 \cmidrule{1-7}
- & ** & *** & ** & 51. Rprop & 24 & \textbf{17}\\
+ & ** & *** & ** & 51. Rprop & 24 & 17\\
 
- & ** & *** & ** & 52. SCG & 30 & \textbf{18}\\
+ & ** & *** & ** & 52. SCG & 30 & 18\\
 
- & ** & *** & ** & 53. Std\_Backpropagation & 22 & \textbf{27}\\
+ & ** & *** & ** & 53. Std\_Backpropagation & 22 & 27\\
 
- & ** & *** & ** & 47. BackpropChunk & 26 & \textbf{29}\\
+ & ** & *** & ** & 47. BackpropChunk & 26 & 29\\
 
- & ** & *** & ** & 48. BackpropMomentum & 25 & \textbf{30}\\
+ & ** & *** & ** & 48. BackpropMomentum & 25 & 30\\
 
- & ** & *** & ** & 49. BackpropWeightDecay & 29 & \textbf{31}\\
+ & ** & *** & ** & 49. BackpropWeightDecay & 29 & 31\\
 
- & ** & *** & ** & 46. BackpropBatch & 43 & \textbf{49}\\
+ & ** & *** & ** & 46. BackpropBatch & 43 & 49\\
 
-\multirow{-8}{*}{\raggedright\arraybackslash \textbf{RSNNS}} & ** & *** & ** & 50. Quickprop & 45 & \textbf{57}\\
+\multirow{-8}{*}{\raggedright\arraybackslash RSNNS} & ** & *** & ** & 50. Quickprop & 45 & 57\\
 \cmidrule{1-7}
- & * & *** & ** & 8. trainwgrad\_adam & 50 & \textbf{18}\\
+ & * & *** & ** & 8. trainwgrad\_adam & 50 & 18\\
 
- & * & *** & ** & 9. trainwgrad\_RMSprop & 47 & \textbf{26}\\
+ & * & *** & ** & 9. trainwgrad\_RMSprop & 47 & 26\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash \textbf{automl}} & * & *** & ** & 10. trainwpso & 57 & \textbf{43}\\
+\multirow{-3}{*}{\raggedright\arraybackslash automl} & * & *** & ** & 10. trainwpso & 57 & 43\\
 \cmidrule{1-7}
-\textbf{deepnet} & * & *** & ** & 20. BP & 23 & \textbf{18}\\
+deepnet & * & *** & ** & 20. BP & 23 & 18\\
 \cmidrule{1-7}
- & * & *** & ** & 38. rprop+ & 19 & \textbf{21}\\
+ & * & *** & ** & 38. rprop+ & 19 & 21\\
 
- & * & *** & ** & 37. rprop- & 21 & \textbf{22}\\
+ & * & *** & ** & 37. rprop- & 21 & 22\\
 
- & * & *** & ** & 40. slr & 31 & \textbf{31}\\
+ & * & *** & ** & 40. slr & 31 & 31\\
 
- & * & *** & ** & 39. sag & 41 & \textbf{38}\\
+ & * & *** & ** & 39. sag & 41 & 38\\
 
-\multirow{-5}{*}{\raggedright\arraybackslash \textbf{neuralnet}} & * & *** & ** & 36. backprop & 37 & \textbf{50}\\
+\multirow{-5}{*}{\raggedright\arraybackslash neuralnet} & * & *** & ** & 36. backprop & 37 & 50\\
 \cmidrule{1-7}
- & ** & * &  & 28. adamax & 48 & \textbf{23}\\
+ & ** & * &  & 28. adamax & 48 & 23\\
 
- & ** & * &  & 27. adam & 42 & \textbf{34}\\
+ & ** & * &  & 27. adam & 42 & 34\\
 
- & ** & * &  & 29. nadam & 44 & \textbf{36}\\
+ & ** & * &  & 29. nadam & 44 & 36\\
 
- & ** & * &  & 26. adagrad & 58 & \textbf{37}\\
+ & ** & * &  & 26. adagrad & 58 & 37\\
 
- & ** & * &  & 25. adadelta & 59 & \textbf{40}\\
+ & ** & * &  & 25. adadelta & 59 & 40\\
 
- & ** & * &  & 31. sgd & 48 & \textbf{44}\\
+ & ** & * &  & 31. sgd & 48 & 44\\
 
-\multirow{-7}{*}{\raggedright\arraybackslash \textbf{keras}} & ** & * &  & 30. rmsprop & 37 & \textbf{52}\\
+\multirow{-7}{*}{\raggedright\arraybackslash keras} & ** & * &  & 30. rmsprop & 37 & 52\\
 \cmidrule{1-7}
- & * & *** & * & 2. ADAPTgdwm & 16 & \textbf{24}\\
+ & * & *** & * & 2. ADAPTgdwm & 16 & 24\\
 
- & * & *** & * & 1. ADAPTgd & 9 & \textbf{35}\\
+ & * & *** & * & 1. ADAPTgd & 9 & 35\\
 
- & * & *** & * & 4. BATCHgdwm & 40 & \textbf{39}\\
+ & * & *** & * & 4. BATCHgdwm & 40 & 39\\
 
-\multirow{-4}{*}{\raggedright\arraybackslash \textbf{AMORE}} & * & *** & * & 3. BATCHgd & 39 & \textbf{41}\\
+\multirow{-4}{*}{\raggedright\arraybackslash AMORE} & * & *** & * & 3. BATCHgd & 39 & 41\\
 \cmidrule{1-7}
-\textbf{minpack.lm} & * & *** & ** & 33. Levenberg-Marquardt & 15 & \textbf{24}\\
+minpack.lm & * & *** & ** & 33. Levenberg-Marquardt & 15 & 24\\
 \cmidrule{1-7}
- & ** & *** & * & 6. rmsprop & 14 & \textbf{28}\\
+ & ** & *** & * & 6. rmsprop & 14 & 28\\
 
- & ** & *** & * & 5. adam & 13 & \textbf{33}\\
+ & ** & *** & * & 5. adam & 13 & 33\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash \textbf{ANN2}} & ** & *** & * & 7. sgd & 11 & \textbf{42}\\
+\multirow{-3}{*}{\raggedright\arraybackslash ANN2} & ** & *** & * & 7. sgd & 11 & 42\\
 \cmidrule{1-7}
- & ** & *** & ** & 16. adam & 32 & \textbf{46}\\
+ & ** & *** & ** & 16. adam & 32 & 46\\
 
- & ** & *** & ** & 19. rmsProp & 34 & \textbf{53}\\
+ & ** & *** & ** & 19. rmsProp & 34 & 53\\
 
- & ** & *** & ** & 18. momentum & 53 & \textbf{56}\\
+ & ** & *** & ** & 18. momentum & 53 & 56\\
 
-\multirow{-4}{*}{\raggedright\arraybackslash \textbf{deepdive}} & ** & *** & ** & 17. gradientDescent & 52 & \textbf{58}\\
+\multirow{-4}{*}{\raggedright\arraybackslash deepdive} & ** & *** & ** & 17. gradientDescent & 52 & 58\\
 \cmidrule{1-7}
-\textbf{snnR} & ** & ** & ** & 54. SemiSmoothNewton & 7 & \textbf{48}\\
+snnR & ** & ** & ** & 54. SemiSmoothNewton & 7 & 48\\
 \cmidrule{1-7}
-\textbf{elmNNRcpp} & ** & *** & ** & 21. ELM & 1 & \textbf{59}\\
+elmNNRcpp & ** & *** & ** & 21. ELM & 1 & 59\\
 \cmidrule{1-7}
-\textbf{ELMR} & ** & *** & ** & 22. ELM & 2 & \textbf{60}\\
+ELMR & ** & *** & ** & 22. ELM & 2 & 60\\
 \bottomrule
-\multicolumn{7}{l}{\rule{0pt}{1em}\textit{Note: } Statistics over 10 runs.}\\
+\multicolumn{7}{l}{\textit{Note: } Statistics over 10 runs.}\\
 \end{tabular}
 \end{table}
 
@@ -1198,25 +1197,27 @@ The full list of untested packages is given in Table 5 in Appendix D.
 \subsection{Further analysis of TOP-5
 packages}\label{further-analysis-of-top-5-packages}}
 
-In this subsection , we perform a second round of analysis with a larger
-dataset and a focus on the TOP-5 packages given in Table 2. That is, we
-consider packages \pkg{nlsr}, \pkg{rminer}, \pkg{nnet}, \pkg{validann}
-with algorithm BFGS and \pkg{MachineShop}. We fit the NN packages on
-Simon Wood's Gaussian dataset, see \code{bWoodN1} in dataset
-description, which contains 20,000 rows with 6 inputs valued in
-{[}0,1{]} for a (single) numeric output. Due to the non-linear functions
-considered, see Appendix B, the link between the output and each
-explanatory variable is highly non-linear which greatly affects the
-fitting time. Table 3 gives the metric performance over 20 runs of these
-TOP-5 five packages on \code{bWoodN1}.
+We perform a second round of analysis with a larger dataset and a focus
+on the TOP-5 packages given in Table 2. That is, we consider packages
+\pkg{nlsr}, \pkg{rminer}, \pkg{nnet}, \pkg{validann} with algorithm BFGS
+and \pkg{MachineShop}. We fit the NN packages on Simon Wood's Gaussian
+dataset, see \code{bWoodN1} in dataset description, which contains
+20,000 rows with 6 inputs valued in {[}0,1{]} for a (single) numeric
+output. Due to the non-linear functions considered, see Appendix B, the
+link between the output and each explanatory variable is highly
+non-linear which greatly affects the fitting time. Table 3 gives the
+metric performance over 20 runs of these TOP-5 five packages on
+\code{bWoodN1}.
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all
-packages, yet \pkg{rminer} and \pkg{validann} are a little bit behind
-the others. However, once again, the metrics median RMSE and RMSEd51
-reveal how consistent \pkg{rminer}'s results are in comparison to other
-packages. This is further proved by the other metric norms: WAE and MAE.
-Regarding computation time, the best two in this class are \pkg{nnet}
-and \pkg{MachineShop}. Nevertheless, these TOP-5 packages performs
+packages, yet \pkg{rminer} and \pkg{validann} are a little ahead of the
+others. The metrics median RMSE and RMSEd51 reveal how consistent
+\pkg{rminer}'s results are in comparison to other packages. This is
+further proved by the other metric norms: WAE and MAE. However,
+regarding computation time \pkg{rminer} is the 3rd slowest with
+\pkg{nlsr} being the 2nd slowest and \pkg{validann} being the slowest of
+all. The best two in terms of speed in this class are \pkg{nnet} and
+\pkg{MachineShop}. Nevertheless, these TOP-5 packages performs
 significantly better than other packages, see Section 2.1 of the
 supplementary materials, \citep{suppl:material:paper}.
 
@@ -1226,17 +1227,17 @@ supplementary materials, \citep{suppl:material:paper}.
 \caption{\label{tab:unnamed-chunk-4}Performance on bWoodN1 dataset}
 \centering
 \fontsize{7}{9}\selectfont
-\begin{tabular}[t]{>{}llccccc>{}c}
+\begin{tabular}[t]{>{\bfseries}llccccc>{\bfseries}c}
 \toprule
 Package & Algorithm & RMSE min & RMSE median & RMSE D51 & MAE median & WAE median & Time median\\
 \midrule
-\textbf{MachineShop} & 32. nnet\_optim & 3.547 & 4.756 & 1.2100 & 3.901 & 16.02 & \textbf{3.40}\\
-\textbf{nlsr} & 41. NashLM & 3.548 & 4.706 & 1.1570 & 3.801 & 16.56 & \textbf{76.73}\\
-\textbf{nnet} & 42. optim & 3.550 & 4.706 & 1.1560 & 3.801 & 16.57 & \textbf{3.38}\\
-\textbf{rminer} & 45. nnet\_optim & 3.366 & 3.688 & 0.3218 & 2.956 & 15.43 & \textbf{11.07}\\
-\textbf{validann} & 56. optim & 3.360 & 4.497 & 1.1370 & 3.711 & 15.89 & \textbf{140.80}\\
+MachineShop & 32. nnet\_optim & 3.547 & 4.756 & 1.2100 & 3.901 & 16.02 & 3.40\\
+nlsr & 41. NashLM & 3.548 & 4.706 & 1.1570 & 3.801 & 16.56 & 76.73\\
+nnet & 42. optim & 3.550 & 4.706 & 1.1560 & 3.801 & 16.57 & 3.38\\
+rminer & 45. nnet\_optim & 3.366 & 3.688 & 0.3218 & 2.956 & 15.43 & 11.07\\
+validann & 56. optim & 3.360 & 4.497 & 1.1370 & 3.711 & 15.89 & 140.80\\
 \bottomrule
-\multicolumn{8}{l}{\rule{0pt}{1em}\textit{Note: } statistics taken over 20 runs; time in seconds.}\\
+\multicolumn{8}{l}{\textit{Note: } statistics taken over 20 runs; time in seconds.}\\
 \end{tabular}
 \end{table}
 
@@ -1261,7 +1262,7 @@ and second-order algorithms perform generally better than first-order
 algorithms.
 
 \pkg{nnet}, the most recommended package of our study, ranked third in
-terms on minimum RMSE, and is probably the most efficient package.
+terms of minimum RMSE, and is probably the most efficient package.
 \pkg{nnet} is notably used by many other packages, such as
 \pkg{MachineShop} and \pkg{rminer} respectively ranked fifth and second.
 \pkg{MachineShop} and \pkg{rminer} are also very good challengers in our
@@ -1383,17 +1384,17 @@ res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 \caption{\label{tab:unnamed-chunk-8}All convergence scores per package:algorithm sorted by minimum RMSE}
 \centering
 \fontsize{7}{9}\selectfont
-\begin{tabular}[t]{>{}llcllcccc}
+\begin{tabular}[t]{>{\bfseries}llcllcccc}
 \toprule
 \multicolumn{2}{c}{ } & \multicolumn{3}{c}{Input parameter} & \multicolumn{2}{c}{RMSE Score} & \multicolumn{2}{c}{Other score} \\
 \cmidrule(l{3pt}r{3pt}){3-5} \cmidrule(l{3pt}r{3pt}){6-7} \cmidrule(l{3pt}r{3pt}){8-9}
 Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & WAE\\
 \midrule
-\textbf{nlsr} & 41. NashLM & full fmla \& data & 200 & - & 3 & 16 & 3 & 6\\
+nlsr & 41. NashLM & full fmla \& data & 200 & - & 3 & 16 & 3 & 6\\
 \cmidrule{1-9}
-\textbf{rminer} & 45. nnet\_optim(BFGS) & fmla \& data & 200 & - & 1 & 6 & 1 & 1\\
+rminer & 45. nnet\_optim(BFGS) & fmla \& data & 200 & - & 1 & 6 & 1 & 1\\
 \cmidrule{1-9}
-\textbf{nnet} & 42. optim (BFGS) & x \& y & 200 & - & 2 & 17 & 2 & 3\\
+nnet & 42. optim (BFGS) & x \& y & 200 & - & 2 & 17 & 2 & 3\\
 \cmidrule{1-9}
  & 56. optim(BFGS) & x \& y & 200 & - & 4 & 10 & 4 & 5\\
 
@@ -1403,33 +1404,33 @@ Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & 
 
  & 59. optim(Nelder-Mead) & x \& y & 10000 & - & 44 & 45 & 46 & 42\\
 
-\multirow{-5}{*}{\raggedright\arraybackslash \textbf{validann}} & 60. optim(SANN) & x \& y & 1000 & - & 53 & 51 & 56 & 55\\
+\multirow{-5}{*}{\raggedright\arraybackslash validann} & 60. optim(SANN) & x \& y & 1000 & - & 53 & 51 & 56 & 55\\
 \cmidrule{1-9}
-\textbf{MachineShop} & 32. nnet\_optim(BFGS) & fmla \& data & 200 & - & 9 & 22 & 9 & 7\\
+MachineShop & 32. nnet\_optim(BFGS) & fmla \& data & 200 & - & 9 & 22 & 9 & 7\\
 \cmidrule{1-9}
-\textbf{traineR} & 55. nnet\_optim(BFGS) & fmla \& data & 200 & - & 5 & 15 & 6 & 2\\
+traineR & 55. nnet\_optim(BFGS) & fmla \& data & 200 & - & 5 & 15 & 6 & 2\\
 \cmidrule{1-9}
-\textbf{radiant.model} & 44. nnet\_optim(BFGS) & "y" \& data & 200 & - & 8 & 32 & 12 & 10\\
+radiant.model & 44. nnet\_optim(BFGS) & "y" \& data & 200 & - & 8 & 32 & 12 & 10\\
 \cmidrule{1-9}
  & 34. optimx(BFGS) & x \& y & 200 & - & 10 & 18 & 9 & 11\\
 
-\multirow{-2}{*}{\raggedright\arraybackslash \textbf{monmlp}} & 35. optimx(Nelder-Mead) & x \& y & 10000 & - & 47 & 45 & 44 & 47\\
+\multirow{-2}{*}{\raggedright\arraybackslash monmlp} & 35. optimx(Nelder-Mead) & x \& y & 10000 & - & 47 & 45 & 44 & 47\\
 \cmidrule{1-9}
  & 12. optim(BFGS) & x \& y & 200 & - & 28 & 48 & 21 & 40\\
 
  & 14. Rprop & x \& y & 1000 & 0.01 & 54 & 60 & 52 & 58\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash \textbf{CaDENCE}} & 13. pso\_psoptim & x \& y & 1000 & - & 56 & 56 & 54 & 56\\
+\multirow{-3}{*}{\raggedright\arraybackslash CaDENCE} & 13. pso\_psoptim & x \& y & 1000 & - & 56 & 56 & 54 & 56\\
 \cmidrule{1-9}
-\textbf{h2o} & 24. first-order & "y" \& data & 10000 & 0.01 & 7 & 7 & 8 & 8\\
+h2o & 24. first-order & "y" \& data & 10000 & 0.01 & 7 & 7 & 8 & 8\\
 \cmidrule{1-9}
-\textbf{EnsembleBase} & 23. nnet\_optim(BFGS) & x \& y & 200 & - & 15 & 34 & 15 & 15\\
+EnsembleBase & 23. nnet\_optim(BFGS) & x \& y & 200 & - & 15 & 34 & 15 & 15\\
 \cmidrule{1-9}
-\textbf{caret} & 15. avNNet\_nnet\_optim(BFGS) & x \& y & 200 & - & 10 & 21 & 11 & 9\\
+caret & 15. avNNet\_nnet\_optim(BFGS) & x \& y & 200 & - & 10 & 21 & 11 & 9\\
 \cmidrule{1-9}
-\textbf{brnn} & 11. Gauss-Newton & x \& y & 200 & - & 12 & 9 & 13 & 12\\
+brnn & 11. Gauss-Newton & x \& y & 200 & - & 12 & 9 & 13 & 12\\
 \cmidrule{1-9}
-\textbf{qrnn} & 43. nlm() & x \& y & 200 & - & 14 & 25 & 7 & 36\\
+qrnn & 43. nlm() & x \& y & 200 & - & 14 & 25 & 7 & 36\\
 \cmidrule{1-9}
  & 51. Rprop & x \& y & 1000 & - & 23 & 52 & 25 & 28\\
 
@@ -1445,15 +1446,15 @@ Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & 
 
  & 46. BackpropBatch & x \& y & 10000 & 0.1 & 48 & 27 & 50 & 48\\
 
-\multirow{-8}{*}{\raggedright\arraybackslash \textbf{RSNNS}} & 50. Quickprop & x \& y & 10000 & - & 58 & 36 & 58 & 57\\
+\multirow{-8}{*}{\raggedright\arraybackslash RSNNS} & 50. Quickprop & x \& y & 10000 & - & 58 & 36 & 58 & 57\\
 \cmidrule{1-9}
  & 8. trainwgrad\_adam & x \& y & 1000 & 0.01 & 20 & 35 & 16 & 20\\
 
  & 9. trainwgrad\_RMSprop & x \& y & 1000 & 0.01 & 31 & 50 & 29 & 39\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash \textbf{automl}} & 10. trainwpso & x \& y & 1000 & - & 41 & 49 & 41 & 38\\
+\multirow{-3}{*}{\raggedright\arraybackslash automl} & 10. trainwpso & x \& y & 1000 & - & 41 & 49 & 41 & 38\\
 \cmidrule{1-9}
-\textbf{deepnet} & 20. BP & x \& y & 1000 & 0.8 & 18 & 38 & 24 & 17\\
+deepnet & 20. BP & x \& y & 1000 & 0.8 & 18 & 38 & 24 & 17\\
 \cmidrule{1-9}
  & 38. rprop+ & fmla \& data & 100000 & - & 23 & 40 & 23 & 24\\
 
@@ -1463,7 +1464,7 @@ Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & 
 
  & 39. sag & fmla \& data & 100000 & - & 49 & 59 & 47 & 52\\
 
-\multirow{-5}{*}{\raggedright\arraybackslash \textbf{neuralnet}} & 36. backprop & fmla \& data & 100000 & 0.001 & 51 & 10 & 49 & 45\\
+\multirow{-5}{*}{\raggedright\arraybackslash neuralnet} & 36. backprop & fmla \& data & 100000 & 0.001 & 51 & 10 & 49 & 45\\
 \cmidrule{1-9}
  & 28. adamax & x \& y & 10000 & 0.1 & 18 & 20 & 20 & 16\\
 
@@ -1477,7 +1478,7 @@ Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & 
 
  & 31. sgd & x \& y & 10000 & 0.1 & 45 & 47 & 45 & 43\\
 
-\multirow{-7}{*}{\raggedright\arraybackslash \textbf{keras}} & 30. rmsprop & x \& y & 10000 & 0.1 & 55 & 57 & 55 & 54\\
+\multirow{-7}{*}{\raggedright\arraybackslash keras} & 30. rmsprop & x \& y & 10000 & 0.1 & 55 & 57 & 55 & 54\\
 \cmidrule{1-9}
  & 2. ADAPTgdwm & x \& y & 1000 & 0.01 & 22 & 29 & 16 & 26\\
 
@@ -1485,15 +1486,15 @@ Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & 
 
  & 4. BATCHgdwm & x \& y & 10000 & 0.1 & 33 & 14 & 37 & 27\\
 
-\multirow{-4}{*}{\raggedright\arraybackslash \textbf{AMORE}} & 3. BATCHgd & x \& y & 10000 & 0.1 & 38 & 24 & 42 & 31\\
+\multirow{-4}{*}{\raggedright\arraybackslash AMORE} & 3. BATCHgd & x \& y & 10000 & 0.1 & 38 & 24 & 42 & 31\\
 \cmidrule{1-9}
-\textbf{minpack.lm} & 33. Levenberg-Marquardt & full fmla \& data & 200 & - & 16 & 5 & 19 & 14\\
+minpack.lm & 33. Levenberg-Marquardt & full fmla \& data & 200 & - & 16 & 5 & 19 & 14\\
 \cmidrule{1-9}
  & 6. rmsprop & x \& y & 1000 & 0.01 & 25 & 33 & 27 & 23\\
 
  & 5. adam & x \& y & 1000 & 0.01 & 27 & 27 & 28 & 21\\
 
-\multirow{-3}{*}{\raggedright\arraybackslash \textbf{ANN2}} & 7. sgd & x \& y & 1000 & 0.01 & 37 & 22 & 36 & 29\\
+\multirow{-3}{*}{\raggedright\arraybackslash ANN2} & 7. sgd & x \& y & 1000 & 0.01 & 37 & 22 & 36 & 29\\
 \cmidrule{1-9}
  & 16. adam & x \& y & 10000 & 0.4 & 42 & 1 & 38 & 44\\
 
@@ -1501,15 +1502,15 @@ Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & 
 
  & 18. momentum & x \& y & 1000 & 0.8 & 52 & 3 & 53 & 51\\
 
-\multirow{-4}{*}{\raggedright\arraybackslash \textbf{deepdive}} & 17. gradientDescent & x \& y & 10000 & 0.8 & 57 & 2 & 57 & 53\\
+\multirow{-4}{*}{\raggedright\arraybackslash deepdive} & 17. gradientDescent & x \& y & 10000 & 0.8 & 57 & 2 & 57 & 53\\
 \cmidrule{1-9}
-\textbf{snnR} & 54. SemiSmoothNewton & x \& y & 200 & - & 49 & 13 & 50 & 48\\
+snnR & 54. SemiSmoothNewton & x \& y & 200 & - & 49 & 13 & 50 & 48\\
 \cmidrule{1-9}
-\textbf{elmNNRcpp} & 21. ELM & x \& y & - & - & 59 & 55 & 59 & 59\\
+elmNNRcpp & 21. ELM & x \& y & - & - & 59 & 55 & 59 & 59\\
 \cmidrule{1-9}
-\textbf{ELMR} & 22. ELM & fmla \& data & - & - & 60 & 53 & 60 & 60\\
+ELMR & 22. ELM & fmla \& data & - & - & 60 & 53 & 60 & 60\\
 \bottomrule
-\multicolumn{9}{l}{\rule{0pt}{1em}\textit{Note: } TOP5 are nlsr:NashLM, rminer:nnet\_optim(BFGS), nnet:optim (BFGS), validann:optim(BFGS), MachineShop:nnet\_optim(BFGS).}\\
+\multicolumn{9}{l}{\textit{Note: } TOP5 are nlsr:NashLM, rminer:nnet\_optim(BFGS), nnet:optim (BFGS), validann:optim(BFGS), MachineShop:nnet\_optim(BFGS).}\\
 \end{tabular}
 \end{table}
 
@@ -1529,16 +1530,16 @@ Package & Category & Reason to Discard (File(s) and/or function(s))\\
 Package & Category & Reason to Discard (File(s) and/or function(s))\\
 \midrule
 \endhead
-
+\
 \endfoot
 \bottomrule
-\multicolumn{3}{l}{\rule{0pt}{1em}\textit{Note: } AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.}\\
+\multicolumn{3}{l}{\textit{Note: } AP=Application, CL=Classification, RE=Regression, RE*=?, TS=Time serie, UT=Utility, XX=Other.}\\
 \endlastfoot
 appnn & AP & Provide a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESCRIPTION file)\\
 autoencoder & AP & Provide a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)\\
-BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slow : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
+BNN & RE* & Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slowÂ : need 100.000 iterations. (::BNNsel-examples \& abstract of paper)\\
 Buddle & CL & Did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)\\
-cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
+cld2 & XX & Provide bindings to Google's C++ library CLD2, which detects languages using a NaÃ¯ve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file \& link to github)\\
 \addlinespace
 cld3 & AP & Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESCRIPTION file)\\
 condmixt & AP & Use neural networks to predict parameters of mixture models (DESCRIPTION file)\\
@@ -1584,7 +1585,7 @@ polyreg & XX & Polyregression as alternative to NN (DESCRIPTION file)\\
 \addlinespace
 predictoR & RE & A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESCRIPTION file \& ::init\_predictor)\\
 ProcData & AP & Provide tools for exploratory process data analysis via functions: reading, process manipulation, action sequence generators, feature extraction and prediction (link + DESCRIPTION file)\\
-quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
+quarrint & AP & Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural networkÂ ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)\\
 rasclass & CL & Provide neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESCRIPTION file)\\
 rcane & RE & Provide parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESCRIPTION file)\\
 \addlinespace
@@ -1596,9 +1597,9 @@ simpleNeural & CL & Neural networks for multi-class or binary classification (DE
 \addlinespace
 softmaxreg & CL & Out of scope: Implementation of 'softmax' regression and classification models with multiple layer neural network (DESCRIPTION file)\\
 Sojourn.Data & AP & Stores some neural networks used for Sojourn Accelerometer methods (DESCRIPTION file)\\
-spnn & CL & Out of scope : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
+spnn & CL & Out of scopeÂ : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file)\\
 studyStrap & AP & Implements multi-study learning algorithms such as merging, the study-specific ensemble the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret (DESCRIPTION file)\\
-TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification : it is slow. (DESCRIPTION file \& ::TeachNet)\\
+TeachNet & CL & Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classificationÂ : it is slow. (DESCRIPTION file \& ::TeachNet)\\
 \addlinespace
 tensorflow & RE & See section on keras\\
 tfestimators & RE & See section on keras\\
@@ -1617,50 +1618,36 @@ zFactor & AP & Computational algorithms to solve equations and find the 'compres
 
 \address{%
 Salsabila Mahdi\\
-Universitas Syiah Kuala\\%
+Universitas Syiah Kuala\\
 JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia\\
-%
-%
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-2559-4154}{0000-0002-2559-4154}}%
-\\\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}
 }
+\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}
 
 \address{%
 Akshaj Verma\\
-Manipal Institute of Technology\\%
+Manipal Institute of Technology\\
 Manipal, Karnataka, 576104, India\\
-%
-%
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-3936-0033}{0000-0002-3936-0033}}%
-\\\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}
 }
+\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}
 
 \address{%
 Christophe Dutang\\
-Université Paris-Dauphine, University PSL, CNRS, CEREMADE\\%
+Université Paris-Dauphine, University PSL, CNRS, CEREMADE\\
 Place du Maréchal de Lattre de Tassigny, 75016 Paris, France\\
-%
-%
-\\\textit{ORCiD: \href{https://orcid.org/0000-0001-6732-1501}{0000-0001-6732-1501}}%
-\\\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
 }
+\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
 
 \address{%
 Patrice Kiener\\
-InModelia\\%
+InModelia\\
 5 rue Malebranche, 75005 Paris, France\\
-%
-%
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-0505-9920}{0000-0002-0505-9920}}%
-\\\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}
 }
+\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}
 
 \address{%
 John C. Nash\\
-Telfer School of Management, University of Ottawa\\%
+Telfer School of Management, University of Ottawa\\
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
-%
-%
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-2762-8039}{0000-0002-2762-8039}}%
-\\\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
 }
+\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
+
