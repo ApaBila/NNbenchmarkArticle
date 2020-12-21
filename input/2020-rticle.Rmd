@@ -436,14 +436,14 @@ To rank the speed and quality of convergence, we have devised the following meth
 2.	For the duration score (DUR), the duration is averaged by dataset. 3 criteria for the RMSE score by dataset are calculated: 
     a.	The minimum value of RMSE for each \code{package:algorithm} as a measure of their best performance;
     b.	The median value of RMSE for each \code{package:algorithm} as a measure of their average performance, without the influence of outliers;
-    c.	The spread of the RMSE values for each package which is measured by the difference between the median and the minimum RMSE (d51).
+    c.	The spread of the RMSE values for each package which is measured by the difference between the median and the minimum RMSE (subsequently referred to as RMSE D51).
 
 3.	Then, the ranks are calculated for every dataset and the results are merged into one wide dataframe.
     a.	The duration rank only depends on the duration;
     b.	For minimum RMSE values, ties are decided by duration mean, then the RMSE median;
     c.	For median RMSE values, ties are decided by the RMSE minimum, then the duration mean;
-    d.	The d51 rank only depends on itself.
-4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE, RMSE d51) of each \code{package:algorithm} for each dataset.
+    d.	The RMSE D51 rank only depends on itself.
+4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE, RMSE D51) of each \code{package:algorithm} for each dataset.
 5.	The final table is the result of ranking by the global minimum RMSE scores for each \code{package:algorithm}.
 
 
@@ -593,7 +593,7 @@ Both \pkg{CaDENCE} and \pkg{validann}'s BFGS are outperformed by \CRANpkg{nnet},
 from \code{optim} (converted earlier from Pascal) directly instead of calling \code{optim} from R. 
 This may be what allows it to be faster, but limits the optimization to the single method.
 \pkg{nnet} is only beaten by the Extreme Learning Machine (ELM) algorithms in terms of speed. 
-However, there is a larger variation between results (see the `RMSEd51` in Appendix C) in comparison to \pkg{validann}:BFGS. We believe the different default starting values are the cause of this. 
+However, there is a larger variation between results (see the `RMSE D51` in Appendix D) in comparison to \pkg{validann}:BFGS. We believe the different default starting values are the cause of this. 
 For instance, \pkg{nnet} uses a range of initial random weights of 0.7 while \pkg{validann} uses a value of 0.5. 
 In spite of these results, the real reason most authors or users are likely to choose \pkg{nnet} is because it is
 included in the distributed base R and is even mentioned as the very first package in CRAN's task view for machine learning (\ctv{MachineLearning}).
@@ -614,7 +614,7 @@ It has many pre-processing utilities available, as well as other tools.
 \CRANpkg{MachineShop} \citep{R-MachineShop} has 51 algorithms, with some additional information about the response variable types in the second vignette, functions for preprocessing and tuning, performance assessment, and presentation of results. 
 \CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the \code{maxit} parameter. 
 \CRANpkg{rminer} \citep{R-rminer} is the only package dependent on \pkg{nnet} that ranks above \pkg{nnet} at number 2 for minimum RMSE, and even number 1 in some runs. 
-It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of results that are consistent and do not vary (RMSEd51). 
+It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of results that are consistent and do not vary (RMSE D51). 
 <!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted-->
 
 
@@ -751,7 +751,7 @@ In the end, we tested the algorithms in \CRANpkg{keras} \citep{R-keras} with the
 \pkg{keras} has the second-most number of algorithms, a total of 7, with most of them being "adaptive" algorithms.
 The highest ranking algorithm for minimum RMSE is \code{adamax} at 23 and the highest ranking algorithm for speed was \code{rmsprop} at 37 (quite slow). 
 However, these results were achieved with a reasonable GPU so users might want to decide on whether to use \pkg{keras} based on their own hardware specifications.
-Other algorithms did not perform well in terms of minimum RMSE and the spread of RMSE represented by RMSEd51.
+Other algorithms did not perform well in terms of minimum RMSE and the spread of RMSE represented by RMSE D51.
 As \pkg{keras} also has many options available, including a convolutional layer for CNNs, more experienced users may prefer it.
 On the other hand, just deciding the learning rate (the default was not appropriate for our datasets) can be a challenge.
 
@@ -787,7 +787,7 @@ The package is rather slow (highest ranking algorithm for speed is \code{RMSprop
 (highest ranking is \code{adam} at 18).
 
 
-\pkg{deepdive} \citep{R-deepdive}: All algorithms are very good in terms of little variance between results (see its RMSEd51 nscore). 
+\pkg{deepdive} \citep{R-deepdive}: All algorithms are very good in terms of little variance between results (see its RMSE D51 score). 
 However, the results on convergence by minimum RMSE score are not as good with the worst being \code{gradientDescent} which ranks 3rd from the bottom. 
 There are few exported functions. 
 The novelty of this package is apparently in the \code{deeptree} and \code{deepforest} functions it provides. 
@@ -836,7 +836,7 @@ Table 3 gives the metric performance over 20 runs of these TOP-5 five packages o
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \pkg{rminer}
 and \pkg{validann} are a little ahead of the others.
-The metrics median RMSE and RMSEd51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
+The metrics median RMSE and RMSE D51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
 However, regarding computation time \pkg{rminer} is the 3rd slowest with \pkg{nlsr} being the 2nd slowest and \pkg{validann} being the slowest of all.
 The best two in terms of speed in this class are \pkg{nnet} and \pkg{MachineShop}.
 Nevertheless, these TOP-5 packages performs significantly better than other packages, see Section 2.1 of
@@ -1028,17 +1028,17 @@ if(file.exists("./tables/TableAppendixC.csv")) {
 }else 
   Table1SupplApp <- rep("missing",8)
 colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
-                    "d51", "MAE", "WAE")
+                    "D51", "MAE", "WAE")
 #Table1SupplApp[, "Package:Algorithm"] <- paste0(Table1[Table1SupplApp$Num, "Package"], ":",
 #                        substr(Table1[Table1SupplApp$Num, "Algorithm"], 4, nchar(Table1[Table1SupplApp$Num, "Algorithm"])))
 #Table1SupplApp <- Table1SupplApp[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-#                    "d51", "MAE", "WAE")]
+#                    "D51", "MAE", "WAE")]
 
 Table1SupplApp[, "Package"] <- Table1[Table1SupplApp$Num, "Package"]
 Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
 
 Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-                    "d51", "MAE", "WAE")]
+                    "D51", "MAE", "WAE")]
 
 #use idxRk as for Table1rk
 if(all(Table1SupplApp[, "Algorithm"] == Table1$Algorithm))

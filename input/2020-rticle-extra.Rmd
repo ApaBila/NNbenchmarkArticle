@@ -143,17 +143,17 @@ if(file.exists("./tables/TableAppendixC.csv")) {
 }else 
   Table1SupplApp <- rep("missing",8)
 colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
-                    "d51", "MAE", "WAE")
+                    "D51", "MAE", "WAE")
 #Table1SupplApp[, "Package:Algorithm"] <- paste0(Table1[Table1SupplApp$Num, "Package"], ":",
 #                        substr(Table1[Table1SupplApp$Num, "Algorithm"], 4, nchar(Table1[Table1SupplApp$Num, "Algorithm"])))
 #Table1SupplApp <- Table1SupplApp[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-#                    "d51", "MAE", "WAE")]
+#                    "D51", "MAE", "WAE")]
 
 Table1SupplApp[, "Package"] <- Table1[Table1SupplApp$Num, "Package"]
 Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
 
 Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-                    "d51", "MAE", "WAE")]
+                    "D51", "MAE", "WAE")]
 
 #use idxRk as for Table1rk
 if(all(Table1SupplApp[, "Algorithm"] == Table1$Algorithm))

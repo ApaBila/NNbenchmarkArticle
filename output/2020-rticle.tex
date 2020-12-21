@@ -611,7 +611,8 @@ following method:
     outliers;
   \item
     The spread of the RMSE values for each package which is measured by
-    the difference between the median and the minimum RMSE (d51).
+    the difference between the median and the minimum RMSE (subsequently
+    referred to as RMSE D51).
   \end{enumerate}
 \item
   Then, the ranks are calculated for every dataset and the results are
@@ -629,11 +630,11 @@ following method:
     For median RMSE values, ties are decided by the RMSE minimum, then
     the duration mean;
   \item
-    The d51 rank only depends on itself.
+    The RMSE D51 rank only depends on itself.
   \end{enumerate}
 \item
   A global score for all datasets is found by a sum of the ranks (of
-  duration, minimum RMSE, median RMSE, RMSE d51) of each
+  duration, minimum RMSE, median RMSE, RMSE D51) of each
   \code{package:algorithm} for each dataset.
 \item
   The final table is the result of ranking by the global minimum RMSE
@@ -857,7 +858,7 @@ earlier from Pascal) directly instead of calling \code{optim} from R.
 This may be what allows it to be faster, but limits the optimization to
 the single method. \pkg{nnet} is only beaten by the Extreme Learning
 Machine (ELM) algorithms in terms of speed. However, there is a larger
-variation between results (see the \texttt{RMSEd51} in Appendix C) in
+variation between results (see the \texttt{RMSE\ D51} in Appendix D) in
 comparison to \pkg{validann}:BFGS. We believe the different default
 starting values are the cause of this. For instance, \pkg{nnet} uses a
 range of initial random weights of 0.7 while \pkg{validann} uses a value
@@ -896,7 +897,7 @@ above \pkg{nnet} at number 2 for minimum RMSE, and even number 1 in some
 runs. It also ranks number 1 on the other accuracy measures (median
 RMSE, minimum MAE, minimum WAE) and is only behind \CRANpkg{deepdive}
 and \pkg{minpack.lm} in terms of results that are consistent and do not
-vary (RMSEd51).
+vary (RMSE D51).
 
 The difference is probably from the change of maximum allowable weights
 in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably
@@ -1097,7 +1098,7 @@ ranking algorithm for speed was \code{rmsprop} at 37 (quite slow).
 However, these results were achieved with a reasonable GPU so users
 might want to decide on whether to use \pkg{keras} based on their own
 hardware specifications. Other algorithms did not perform well in terms
-of minimum RMSE and the spread of RMSE represented by RMSEd51. As
+of minimum RMSE and the spread of RMSE represented by RMSE D51. As
 \pkg{keras} also has many options available, including a convolutional
 layer for CNNs, more experienced users may prefer it. On the other hand,
 just deciding the learning rate (the default was not appropriate for our
@@ -1142,7 +1143,7 @@ is rather slow (highest ranking algorithm for speed is \code{RMSprop} at
 47) with good enough convergence (highest ranking is \code{adam} at 18).
 
 \pkg{deepdive} \citep{R-deepdive}: All algorithms are very good in terms
-of little variance between results (see its RMSEd51 nscore). However,
+of little variance between results (see its RMSE D51 score). However,
 the results on convergence by minimum RMSE score are not as good with
 the worst being \code{gradientDescent} which ranks 3rd from the bottom.
 There are few exported functions. The novelty of this package is
@@ -1211,7 +1212,7 @@ metric performance over 20 runs of these TOP-5 five packages on
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all
 packages, yet \pkg{rminer} and \pkg{validann} are a little ahead of the
-others. The metrics median RMSE and RMSEd51 reveal how consistent
+others. The metrics median RMSE and RMSE D51 reveal how consistent
 \pkg{rminer}'s results are in comparison to other packages. This is
 further proved by the other metric norms: WAE and MAE. However,
 regarding computation time \pkg{rminer} is the 3rd slowest with
@@ -1388,7 +1389,7 @@ res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 \toprule
 \multicolumn{2}{c}{ } & \multicolumn{3}{c}{Input parameter} & \multicolumn{2}{c}{RMSE Score} & \multicolumn{2}{c}{Other score} \\
 \cmidrule(l{3pt}r{3pt}){3-5} \cmidrule(l{3pt}r{3pt}){6-7} \cmidrule(l{3pt}r{3pt}){8-9}
-Package & Algorithm & Input format & Maxit & Learn. rate & median & d51 & MAE & WAE\\
+Package & Algorithm & Input format & Maxit & Learn. rate & median & D51 & MAE & WAE\\
 \midrule
 nlsr & 41. NashLM & full fmla \& data & 200 & - & 3 & 16 & 3 & 6\\
 \cmidrule{1-9}
