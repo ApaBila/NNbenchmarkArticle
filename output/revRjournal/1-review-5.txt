@@ -1,0 +1,20 @@
+
+The R language is highly enhanced by the installation of packages. 
+Currently, there is a vast number of packages, with several of them implementing the same or similar data analysis methods.
+
+The submitted manuscript is very interesting, since it compares a large number of packages that use Neural Networks (NN) for regression tasks.
+In particular, it uses 3 key criteria to evaluate the packages: usability, time effort and performance.
+Moreover, it benchmarks a quite large number of packages (60!).
+As such, this manuscript is pertinent for the R community and R journal.
+Overall, the presented methodology is sound and thus I recommend accept (with minor changes).
+
+The minor changes are suggestions of aspects that can improve the manuscript:
+
+- the writing could be improved in several cases, such as: removal of "oral" language: "there’s" -> "there is";
+change of title "Neural Networks: The Perceptron" -> "Multilayer Perceptron with a Single Hidden Layer"; in Table 1 "nb." -> size.
+- the NN acronym in Fig.1 is not detailed, nor the notation 1-3-1 is explained. Fig1 c) is not a single hidden layer networks.
+- the examples in page 2 assume the tanh and atan activation functions, why not use f(), where f is the activation function, which can include the logistic function?
+- in Phase 2, it could be explained how the NNbenchmark was used, with one example (and its characteristics).
+- some figures, such as Fig2, should have a x-axis with numbers and labels.
+- it should be explained that is a first order and second order algorithm.
+

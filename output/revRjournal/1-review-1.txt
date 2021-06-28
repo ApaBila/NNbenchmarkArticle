@@ -1,0 +1,43 @@
+Overview of RJournal 2021-19
+
+The authors provide a welcomed review of R packages that enable regression modeling with single hidden-layer perceptron neural networks (NNs).  The work represents a substantial amount of time and effort and received funding from the Google Summer of Code initiative.  In the review, a description of the neural networks and review methodology is given to orient readers to the subject and scoring criteria.  R users interested in applying such models stand to be helped by the list of packages found by the authors and the scoring of those packages with respect to prediction accuracy, speed, and ease-of-use.  Accuracy and speed are well-characterized through application of the packages to 13 datasets ranging in size and complexity.  Testing code from the performance review is available in the authors’ NNbenchmark R package available on GitHub.  Ease-of-use is based on stars awarded in three categories: (1) utilities in R to deal with NN, (2) sufficient and reliable documentation, and (3) user-friendly call to fit a NN.  Rubrics are given for staring the categories.  Many of the rules for awarding stars are objective and clear, while a few are subjective.  Subjectivity is understandable in a rating system like the one developed and can help improve packages by giving their developers a user’s perspective.  Nevertheless, what is considered a subjective strength/weakness to one user might be viewed differently by another.  Accordingly, provided below are some alternative views to and suggestions for the staring rubrics and their application.
+
+Article
+
+Comments on Rubric 1: Utilities in R to deal with NN
+       a. predict function exists = 1 star
+       b. scaling capabilities exist = 1 star
+
+1)  Some packages tested received 0 star for scaling, but do support scaling through integration with other packages, like recipes, that provide frameworks for data preprocessing.  In general, recipes could be used for scaling with any of the packages, and the packages do not necessarily deserve credit for the existence of recipes.  However, some are specifically designed to integrate with recipes (or other preprocessing packages) by supporting model fitting calls of the following general form.
+
+library(recipes)
+rec <- recipe(formula, data) %>% step_normalize(all_predictors())
+fit(rec, ...)
+
+In essence, recipes is a part of their interfaces.  Recipes integration may require a bit more coding than built-in scaling, but does enable scaling and has the added advantage of enabling other types of preprocessing steps.  A case could be made that capabilities are greater with the latter.  Thus, integration with other data preprocessing packages warrants credit in the rating.  To ensure that scaling capabilities are accurately characterized in the ratings, consider contacting the package maintainers to ask about their software’s support for scaling.
+
+Comments on Rubric 3: User-friendly call to fit a NN
+       a. simple one-line call or a single function = 2 star
+       b. multiple-lines call to a single function = 1 star
+       c. multiple-lines call to many function = 0 star
+
+2)  A 2 star rating for nlsr seems unwarranted because its usage is more involved than other packages, like nnet, given the same ranking.  In order to fit a NN with the nlsr::nlxb function, the mathematical form of the NN equation must be supplied as a formula.  This requires more complete knowledge of the underlying NN than, say, nnet which requires specification of a formula only in terms of the response and a linear combination of the predictor variables.  The operators (and functions) that appear in formulas are analogous to function calls.  Accordingly, the formula in nlsr consists of more calls than the formula in nnet.  Additionally, the testing code call to nlsr::nlxb is two lines and includes a call to the list function.  Therefore, nlxb calls appear to be multiple-lines call to many function, which is more in line with 0 stars than the 2 star rating given.
+
+3)  Rating packages on their ease-of-use is a worthwhile endeavor.  However, some of the subjective components of the current rubric and its application detract from the ratings as a measure of ease-of-use.  Consider the four examples below intended to illustrate how model fitting syntaxes might vary across different packages or users.
+
+# Example Syntax 1
+fit(formula, data, model = "model_name", param1 = value1, param2 = value2)
+
+# Example Syntax 2
+model <- model_name(param1 = value1, param2 = value2)
+fit(formula, data, model = model)
+
+# Example Syntax 3
+fit(formula, data, model = model_name(param1 = value1, param2 = value2))
+
+# Example Syntax 4
+fit(formula, data, params = list(param1 = value1, param2 = value2))
+
+Syntax 1 is similar to that used in caret (fit = train, model = method), Syntaxes 2 and 3 to MachineShop, and Syntax 4 to nlsr (fit = nlxb, params = control).  The number of stars awarded seems to differ across these types of syntaxes, and the reason for the differences is unclear for a number of reasons.  First, according to the current rubric, Syntax 3 might be considered less user-friendly than Syntax 1 because model_name appears as a second function call instead of as a character value.  Staring the two differently would seem arbitrary given that they require the same knowledge and similar specification of the model and parameter names.  Second, Syntaxes 2 and 3 differ only in the user’s choice to define the model on a line separate from the fit call.  The rubric to award more stars for fewer lines seems arbitrary in the case of these two syntaxes given that the number of lines is a user choice and not a package requirement.  Third, Syntax 2, which is equivalent to Syntax 3, received a different number of stars than Syntax 4 even though both can be written in one line and consist of two function calls.
+
+In summary, Rubric 3 has several subjective components.  The term “simple” in item (a) is non-specific.  The distinctions between single and multiple lines of code can be arbitrary in cases where the number of lines is a product of user choices.  Single lines can often be written as multiple lines, and multiple lines as a single one (particularly with use of the %>% pipe operator).  Additionally, there appear to be some inconsistencies in counting function calls (counting of model_name but not list) and arbitrariness in not counting function names supplied as argument values.  Rubric 3 should be revised with more objective rules that are clearly described and consistently applied.  For example, it makes sense to award fewer stars to packages that require a formula specification for the full NN equation (e.g. nlsr::nlxb) and more stars to those that only require a linear combination of the predictors in the formula or that accept x and y data structures directly.  More thought should be given to the awarding of stars based on number of lines or function calls.

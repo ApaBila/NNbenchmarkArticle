@@ -1,0 +1,28 @@
+Mahdi et al. evaluate in their review paper "A Review of R Neural Network Packages (with Nnbenchmark): Accuracy and Ease of Use" 26 R packages for training single hidden-layer neural networks on 13 regression datasets, particularly distinguishing between first-order and second-order gradient algorithms. In addition to performance measures like RMSE and the time spent, they included documentation quality and the presence of valuable utilities in the ratings. Despite a good idea, the restriction on single hidden-layer networks is too outdated and hardly relevant from today’s point of view. In addition, the focus is unclear since the promised informative comparison of the packages is increasingly pushed into the background by a hypothesis about first- and second-order algorithms.
+
+Major issues:
+
+1.	The manuscript is not set appropriately in relation to the literature, e.g., the introduction has no references at all. Moreover, I think I found very few references, which are not R packages or datasets, and most of these are from the 1990s.
+2.	The restriction on single hidden-layer regression networks with tanh() activation does not reflect state-of-the-art neural networks used in practice. Although such a restriction is understandable from the author’s practical perspective, it renders the comparison to be not very useful for applications of neural networks.
+3.	The description of neural networks on pages 2-3 is not up to date. For example, it is very common to use activation functions such as ReLU, which is not differentiable at 0 and not bounded.
+4.	For a benchmark paper, the number of included datasets is quite low, and the chosen datasets are very simple. Given that collections such as OpenML100 are readily available, a benchmark should be based on more and more complex data.
+5.	It is unclear how hyperparameters such as the learning rate were tuned. In a benchmark paper, hyperparameter tuning is essential to draw valid conclusions beyond the defaults.
+6.	The framing of this paper is not precise. The introduction states a still scientifically interesting hypothesis ("we hypothesize that these second-order algorithms would perform better than the first-order methods for datasets that fit in memory"), but according to the title, abstract, and evaluation criteria, they want to present a more general comparison of R packages.
+7.	Despite a very nicely designed and organized website (NNbenchmarkWeb), the documentation on GitHub is quite messy and without clear guidance on how to use the package.
+8.	Comparing the performance only on the training data is rather unrelated to common applications and does not indicate how well the network generalizes.
+
+Text-specific issues:
+
+1.	Figure 1: The figure caption does not describe the figure sufficiently well.
+2.	p. 2: It is unclear how Figure 1c relates to normalized inputs.
+3.	p. 2: Do not write large math equations inline. Use the display mode instead.
+
+Minor issues:
+
+1.	p. 1: "For regression and classification, the term multilayer perceptron is used interchangeably." - Multilayer perceptrons are a particular type of neural networks based on feedforward neural networks.
+2.	The term "Neural networks" is spelled in different ways: "Neural Network", "neural network", "neural-network", etc.
+3.	Sometimes quite drastic or fuzzy wording: p. 1 "[…] poor packages are implemented on CRAN.", p. 2 "[…] perform better than [...]" or p. 2 "[…] we believe it is helpful to have relatively large gradients […]"
+
+Other remarks:
+
+1.	Regardless of the major issues in this paper mentioned above, the basic idea of reviewing existing R neural network packages is highly relevant in current research and should be pursued further.
