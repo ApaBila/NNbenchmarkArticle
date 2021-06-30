@@ -1,0 +1,2 @@
+This file to verify I can commit to the repo on Github.
+Patrice
