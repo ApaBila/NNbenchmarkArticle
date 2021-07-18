@@ -64,7 +64,7 @@ Other packages are either less accurate, slow, difficult to use, or have poor or
 
 To carry out this work, we developed multiple scripts along with the \CRANpkg{NNbenchmark} package. 
 We have open-sourced our code for reproducibility on a github repository \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}
-as well as  outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb/index.html}.
+as well as  outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb}.
 <!-- Finally, we provide some hints and features to guide the development of an idealized neural network package for R. JN?? Not now included? -->
 
 
@@ -421,7 +421,7 @@ made generic with the extensive use of the \code{do.call} function from the \pkg
 A function for the summary of accuracy and speed, \code{NNsummary}, was also added. 
 The package repository is at \url{https://github.com/pkR-pkR/NNbenchmark}, with 
 template repository at \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}, and
-outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb/index.html}. 
+outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb}. 
 An example of a call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 
