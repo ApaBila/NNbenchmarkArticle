@@ -48,8 +48,12 @@ library(NNbenchmark)
 
 ## Abstract
 
-In the last three decades, neural-networks have evolved from an academic topic to a common scientific computing tool. 
-CRAN currently hosts around 80 packages (May 2020) that involve neural-network modeling; some offering more than one algorithm. 
+In the last three decades, 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{neural networks} have evolved from an academic topic to a common scientific computing tool. 
+CRAN currently hosts around 80 packages (May 2020) that involve 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{neural network} modeling; some offering more than one algorithm. 
 However, to our knowledge, there is no comprehensive study which tests the accuracy, the reliability, and the ease-of-use of those NN packages.
 
 In this paper, we test a large number of packages against a common set of datasets with varying levels of complexity to benchmark and rank them with statistical metrics.
@@ -64,17 +68,27 @@ Other packages are either less accurate, slow, difficult to use, or have poor or
 
 To carry out this work, we developed multiple scripts along with the \CRANpkg{NNbenchmark} package. 
 We have open-sourced our code for reproducibility on a github repository \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}
-as well as  outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb}.
+as well as  outputs per package/dataset at
+<!-- Ref 2 - Major comment 7-->
+\textcolor{blue}{\url{https://theairbend3r.github.io/NNbenchmarkWeb/index.html}.}
 <!-- Finally, we provide some hints and features to guide the development of an idealized neural network package for R. JN?? Not now included? -->
 
 
 ## Introduction
 
 The R Project for Statistical Computing, as any open-source platform, relies on its contributors to keep it up to date. 
-Neural Networks, inspired by the brain itself, are a class of models in the growing field of machine learning for which R has a number of tools.
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{Neural network},
+inspired by the brain itself, are a class of models in the growing field of machine learning for which R has a number of tools.
 Previously, neural networks were often considered theoretically instead of pragmatically, partly because the algorithms used were computationally expensive. 
 
-The term "neural-network" is colloquially used for different model structures and applications. For regression and classification, the term multilayer perceptron is used interchangeably. The term "Recurrent Neural Network" is mainly used in the context of autoregressive time-series while the term "Convolutional Neural Networks" for dimension reduction and pattern recognition (images/audio/text).
+The term 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{"neural network"} is colloquially used for different model structures and applications. For regression and classification, the term multilayer perceptron is used interchangeably. The term 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{"recurrent neural network"} is mainly used in the context of autoregressive time-series while the term 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{convolutional neural network} for dimension reduction and pattern recognition (images/audio/text).
 Most of the above types of neural networks can be found in R packages hosted on CRAN but without any study about the accuracy or the speed of computation.
 This is an issue as many slow or poor algorithms are available in the literature and hence poor packages are implemented on CRAN.
 
@@ -143,15 +157,21 @@ In conducting this study, we hypothesize that these second-order algorithms woul
 
 
 To test our hypothesis, we conduct a thorough examination of these training algorithms in \soft{R}. 
-There are many packages, but there's a dearth of information that would allow the users to make an informed decision. 
-Our work aims to provide a framework for benchmarking neural-network packages. 
+There are many packages, but 
+<!-- Ref 3 - Comment 1 -->
+\textcolor{blue}{there is} a dearth of information that would allow the users to make an informed decision. 
+Our work aims to provide a framework for benchmarking 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{neural network} packages. 
 We focus our examination to neural networks of the perceptron type which consist of one input layer, one normalized layer, one hidden layer with a non-linear activation function which is usually the hyperbolic tangent
 $\tanh()$, and one output layer. 
  
 Specifically, we focus only on regression based algorithms.
 The criteria used in our benchmark were: (i) accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a fixed number of iterations; (ii) speed of the training algorithm; (iii) availability of helpful utilities; (iv) quality of the documentation.
 
-# Neural Networks: The Perceptron
+<!-- Ref 2 - Comment 13 -->
+# \textcolor{blue}{Neural networks}: the perceptron
+
 
 In this section, we briefly describe the single hidden-layer
 perceptron. As the "layer" term suggests - some terms come 
@@ -164,20 +184,62 @@ We refer to \citep[Chapter 11]{friedman2001elements},
 \citep{ripley2007pattern} for a general introduction 
 of neural networks.}
 
-Using the graph description, a single-hidden layer neural network is made up of 3 parts: (i) layer of the input(s), (ii) hidden layer which consists of independent neurons, each of them performing two operations: a linear combination of the inputs plus an offset followed by a non-linear function, (iii) output layer which is a linear combination of the output of the previous layer. 
-
+Using the graph description, a single-hidden layer neural network is made up of 3 parts:
+(i) layer of the input(s), (ii) hidden layer which consists of independent neurons, 
+each of them performing two operations: a linear combination of the inputs plus an 
+offset followed by a non-linear function, (iii) output layer which is a linear
+combination of the output of the previous layer. 
+<!-- Ref 3 - Comment 3-->
+\textcolor{orange}{We introduce a generic notation NN $a$-$b$-$c$ for a neural network
+with $a$ inputs, $b$ hidden neurons and $c$ outputs. If inputs or outputs
+are normalized, we interleave either $a$N or $c$N in the notation.}
  
  
 
-The non-linear function used in the hidden layer must have the following four properties: continuous, differentiable, monotonic, and bounded. The logistic ($\invlogit$), hyperbolic tangent ($\tanh$) and arctangent ($\atan$) functions are the usual candidates. 
+The non-linear function used in the hidden layer must have the following four 
+properties: continuous, differentiable, monotonic, and bounded. 
+The logistic ($\invlogit$), hyperbolic tangent ($\tanh$) and 
+arctangent ($\atan$) functions are the usual candidates. 
+
+<!-- Ref 3 - Comment 4, Ref 2 - Comment 11 -->
+\textcolor{orange}{
+The resulting model has the following generic expression 
+$$
+y = a_1 + \sum_{j=1}^d a_{j,1} \times f(a_{j,2}+\sum_{l=1}^p a_{j,2+l}\times x_l),
+$$
+with $p$ inputs, $d$ hidden neurons and $f$ as the activation function.
+The total number of parameters to be estimated is $1+d(2+p)$
+The neural network depicted Fig. 1a corresponds to $p=1$, $d=3$ and $f=\tanh$
+for a total of 10 parameters,
+whereas the neural network depicted Fig. 1b corresponds to $p=5$, $d=3$ and $f=\atan$
+for a total of 22 parameters.}
+
+<!-- Ref 2 - Comment 3 -->
+\textcolor{blue}{In practice, modelers also use piecewise differentiable functions
+with bounded left/right derivatives, such as the 
+Rectified Linear Unit function (called ReLU in softwares).}
+
+<!-- 
 The above description has a simple mathematical equivalence. Let us take two examples. 
 
 The model $y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + a_7\times x) + a_8\times \tanh(a_9 + a_{10}\times x)$ describes a neural network (Fig. 1a) with one input, three hidden neurons, one output model where $x$ is the input, $\tanh()$ is the activation function, $y$ is the output and $a_1,\dots,a_{10}$ are the parameters. 
 
 The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural network (Fig. 1b) with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
+-->
 
-While the final gradient should be small, we believe it is helpful to have relatively large gradients at the first steps of the training algorithm, so the following is recommended: (i) normalized inputs and outputs (Fig. 1c), (ii) odd functions like the hyperbolic tangent function or the arctangent function, (iii) small random values to initialize the parameters. A common example of this is to use values extracted from a centred Gaussian $\mathcal N(0, 0.1)$ distribution. 
-
+While the final gradient should be small, we believe it is helpful to have 
+relatively large gradients at the first steps of the training algorithm, 
+so the following is recommended: (i) normalized inputs and outputs (Fig. 1c 
+<!-- Ref 2 - Comment 10 -->
+\textcolor{blue}{contains \code{Nx} nodes after inputs and before outputs}), 
+(ii) odd functions like the hyperbolic tangent function or the arctangent function, 
+(iii) small random values to initialize the parameters. 
+A common example of this is to use values extracted from a 
+\textcolor{cyan}{centered} Gaussian $\mathcal N(0, 0.1)$ distribution. 
+<!-- Ref 2 - Comment 10 -->
+\textcolor{blue}{When normalizing input/outputs, inputs $x_l$ are replaced
+by $F_N(x_l)$ and output by $F_N^{-1}(y)$ where $F_N$ and $F_N^{-1}$
+stand respectively for a Gaussian distribution function and a quantile function.}
 These practices help us find good local-minima and possibly the global-minima. 
 
 
@@ -198,10 +260,10 @@ These practices help us find good local-minima and possibly the global-minima.
     ~ 
     \begin{subfigure}[b]{0.396\textwidth}
         \includegraphics[width=\textwidth]{RN3c2.png}
-        \caption{NN 5-5N-3-1N-1}
+        \caption{NN 5-5N-3-1N-1 with normalized inputs/outputs}
         \label{fig:N55311}
     \end{subfigure}
-    \caption{Three neural networks}
+    \caption{Three neural networks using the NN $a$-$b$-$c$ notation}
 \end{figure}
 
 
@@ -217,7 +279,7 @@ It is rather clear from the mathematical formula above that neural networks of p
 
 Unfortunately, due to certain educative tools on the backpropagation and recent popularity of "deep neural networks" that manipulate ultra-large models (sometimes more parameters than examples in the datasets), many papers emphasize the use of first-order gradient algorithms.
 
-Therefore, many R packages have implemented such algorithms. In the case of the perceptron, we contend this is an oversight, and provide evidence to that effect in this paper.
+Therefore, many \soft{R} packages have implemented such algorithms. In the case of the perceptron, we contend this is an oversight, and provide evidence to that effect in this paper.
 We refer interested readers to \citep{tan2019review} for a review of second-order algorithms for neural networks.
 
 
@@ -227,7 +289,9 @@ We refer interested readers to \citep{tan2019review} for a review of second-orde
 
 ## Convergence and termination
 
-Most of the \code{package:algorithm} pairs try to minimize the Root Mean Squared Error (RMSE) during the training step. Two exceptions are the \CRANpkg{brnn} package which minimizes the RMSE plus the sum of the parameters (hence the name Bayesian Regularized Neural Network), and the \CRANpkg{qrnn} package which performs quantile regression. 
+Most of the \code{package:algorithm} pairs try to minimize the Root Mean Squared Error (RMSE) during the training step. Two exceptions are the \CRANpkg{brnn} package which minimizes the RMSE plus the sum of the parameters (hence the name Bayesian Regularized
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{neural network}), and the \CRANpkg{qrnn} package which performs quantile regression. 
 For all packages, the datasets were learnt as a whole and without any weighting scheme to favor a single part of a dataset. 
 We don't use a validation/test set because the purpose of our study is to verify the ability to reach good minima. This requirement is satisfied by using only a train set.
 
@@ -421,7 +485,9 @@ made generic with the extensive use of the \code{do.call} function from the \pkg
 A function for the summary of accuracy and speed, \code{NNsummary}, was also added. 
 The package repository is at \url{https://github.com/pkR-pkR/NNbenchmark}, with 
 template repository at \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}, and
-outputs per package at \url{https://akshajverma.com/NNbenchmarkWeb}. 
+outputs per package at 
+<!-- Ref 2 - Major comment 7-->
+\textcolor{blue}{\url{https://theairbend3r.github.io/NNbenchmarkWeb/index.html}.}
 An example of a call to \code{trainPredict\_1pkg} is given in Appendix C.
 
 
@@ -438,10 +504,10 @@ to rate the clarity of the R call to fit a given neural network.
 
 Our ratings are as follows.
 
-
+<!-- Ref 1 - Major comment 1-->
 1. Utilities in R to deal with NN
     a. a predict function exists  = 1 star
-    b. scaling capabilities exist = 1 star
+    b. \textcolor{red}{scaling capabilities exist in the package = 1 star}
 2. Sufficient and reliable documentation 
     a. the existence of useful and relevant example(s)/vignette(s) 
         - clear, with regression = 2 stars
@@ -455,9 +521,18 @@ Our ratings are as follows.
 3. User-friendly call to fit a NN 
     a. simple one-line call or a single function = 2 stars
     b. multiple-lines call to a single function = 1 star
-    c. multiple-lines call to many functions = 0 stars
+    c. multiple-lines call to many functions = 0 star
 
-Hence, to inform users about the usability of packages, the documentation measure 
+<!-- Ref 1 - Major comment 1-->
+\textcolor{red}{
+Hence, the utility rating gives an indication to users if the package
+includes a predict function and/or a scaling argument. 
+It is worth mentioning many R packages provide scaling, standardizing
+functions. Indeed, \CRANpkg{bdpar}, \CRANpkg{binst}, \CRANpkg{dataprep},
+\CRANpkg{discretization}, \CRANpkg{helda}, \CRANpkg{PreProcessing}, 
+\CRANpkg{preputils}, \CRANpkg{recipes} offer general data pre-processing
+functions, there are many more packages providing topic specific pre-processing.}
+Furthermore, to inform users about the usability of packages, the documentation measure 
 ranges from 0 to 4 stars, while the utility and the R call range from 0 to 2 stars. 
 
  
@@ -682,7 +757,9 @@ Of all the packages, only \pkg{monmlp} \citep{R-monmlp} calls \pkg{optimx}. Sinc
 \pkg{optimx}. However, the author, Alex J. Cannon who is also the author of \pkg{CaDENCE}, has created a package meant to fill a certain niche, namely for multi-layer perceptrons with optional partial monotonicity constraints.
 GAM-style effect plots are also an interesting feature.
 Another package by Cannon is \pkg{qrnn} \citep{R-qrnn} which uses yet another algorithm: \code{nlm},  a "Newton-type" algorithm, from \pkg{stats}. 
-Although it's performance is at the bottom of second-order algorithms, sometimes even being beaten by first-order algorithms, this could also be because of the intended use of the package compared to the tests here. 
+Although 
+<!-- Ref 3 - Comment 1 -->
+\textcolor{blue}{it is} performance is at the bottom of second-order algorithms, sometimes even being beaten by first-order algorithms, this could also be because of the intended use of the package compared to the tests here. 
 \pkg{qrnn} is designed for quantile regression neural networks, with several options. 
 Cannon has included automatic scaling for all 3 of his packages, as is clearly documented.
 
@@ -726,7 +803,9 @@ In certain circumstances -- especially with an almost singular Jacobian matrix a
 
 The only second-order algorithm which we are unable to recommended from the results of our research is \CRANpkg{snnR} \citep{R-snnR}. 
 It ranked among the 10 worst algorithms for minimum RMSE out of all 60 algorithms,
-but this package, focusing on Sparse Neural Networks for Genomic Selection in Animal Breeding, might prove useful in that perspective.
+but this package, focusing on Sparse 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{neural networks} for Genomic Selection in Animal Breeding, might prove useful in that perspective.
 
  
 
@@ -800,7 +879,9 @@ As \pkg{keras} also has many options available, including a convolutional layer 
 On the other hand, just deciding the learning rate (the default was not appropriate for our datasets) can be a challenge.
 
 The default learning rates in \CRANpkg{RSNNS} \citep{R-RSNNS} were more appropriate to use directly.
-\pkg{RSNNS}  is an example of a package that directly wraps around an external library, the Stuttgart Neural Network
+\pkg{RSNNS}  is an example of a package that directly wraps around an external library, the Stuttgart 
+<!-- Ref 2 - Comment 13 -->
+\textcolor{blue}{neural network}
 Simulator (SNNS), to provide an easy-to-use interface. 
 This library is rather large with many implementations of neural networks.
 It contains the biggest number of algorithms tested at a total of 8.
@@ -840,7 +921,8 @@ The novelty of this package is apparently in the \code{deeptree} and \code{deepf
 
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
 first-order algorithms back-propagation, ranking at 18 for minimum RMSE. 
-It's also relatively fast, ranking at 23 for speed.
+<!-- Ref 3 - Comment 1 -->
+\textcolor{blue}{It is} relatively fast, ranking at 23 for speed.
 
 
 \CRANpkg{neuralnet} \citep{R-neuralnet}: Considering that this is the only package that uses 100000 iterations as its maxit parameter (excluding BNN which is not included in the official ranks), it can be considered as not recommended. 
@@ -883,8 +965,13 @@ and \pkg{validann} are a little ahead of the others.
 The metrics median RMSE and RMSE D51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
 However, regarding computation time \pkg{rminer} is the 3rd slowest with \pkg{nlsr} being the 2nd slowest and \pkg{validann} being the slowest of all.
 The best two in terms of speed in this class are \pkg{nnet} and \pkg{MachineShop}.
-Nevertheless, these TOP-5 packages performs significantly better than other packages, see Section 2.1 of
-the supplementary materials, \citep{suppl:material:paper}.
+Nevertheless, these TOP-5 packages performs generally better than other packages, 
+see Section 2.1 of the supplementary materials, \citep{suppl:material:paper}.
+<!-- Ref 2 - Major comment 4-->
+\textcolor{blue}{In Section 2.1 of the supplementary materials, we observe that only 
+2 packages have a RMSE minimum close to the RMSE of TOP5 packages: \code{CaDENCE}
+and \code{traineR}.}
+
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
@@ -971,9 +1058,17 @@ and their data formats (classifier neural networks, recurrent neural networks, a
 rating schemes and different parameters for package functions can also be tried out.
 
 
-Our work is available online through \url{https://akshajverma.com/NNbenchmarkWeb/} and
+Our work is available online through 
+<!-- Ref 2 - Major comment 7-->
+\textcolor{blue}{\url{https://theairbend3r.github.io/NNbenchmarkWeb/index.html}} and
 is entirely reproducible thanks to \pkg{NNbenchmark}.
 We hope users and package maintainers find our work useful and will provide any necessary feedback.
+<!-- Ref 2 - Major comment 4-->
+\textcolor{blue}{In the future, we plan to use a larger list of benchmark
+datasets, such as the OpenML-CC18 database from \url{https://www.openml.org/}
+available in \soft{R} thanks to the \CRANpkg{OpenML} package.
+Ideally, we hope to generate such a benchmark on a regular basis as packages
+get updated.}
 
 
 
