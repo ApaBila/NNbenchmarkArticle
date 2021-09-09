@@ -1,11 +1,10 @@
 \documentclass[12pt]{article}
 
-
- \usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
+ 
 \usepackage[english]{babel}
 
-\usepackage{graphicx, subcaption, color}
-
+\usepackage{graphicx, subcaption, xcolor}
 
 \usepackage[top=3cm, bottom=3cm, left=2cm, right=2cm]{geometry}
 
@@ -14,12 +13,23 @@
 
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 
+\usepackage{enumitem}
+
 \renewcommand{\vec}{\bm}
 \newcommand{\R}{\mathbb R}
 \newcommand{\calL}{\mathcal L}
+
+
+%text style
+\newcommand{\pkg}{\textbf}
+\newcommand{\sigle}{\textsc}
 \newcommand{\code}{\texttt}
+\newcommand{\soft}{\textsf}
+\newcommand{\expo}{\textsuperscript}
+\newcommand{\boldit}[1]{ \textbf{\textit{#1}} }
 
 
+\newcommand{\orange}[1]{{\color{orange}#1}}
 \newcommand{\cyan}[1]{{\color{cyan}#1}}
 \newcommand{\red}[1]{{\color{red}#1}}
 \newcommand{\blue}[1]{{\color{blue}#1}}
@@ -40,12 +50,12 @@ Dear Editor-in-Chief,\\
 We are grateful for the interesting and relevant comments of the referees.
 
 \medskip
-Below, we detail our responses to points raised by referee \#1 in Section \ref{referee1},
-by referee \#2 in Section \ref{referee2} and by referee \#3 in Section \ref{referee3}.
+Below, we detail our responses to points raised by Referee \#1 in Section \ref{referee1},
+by Referee \#2 in Section \ref{referee2} and by Referee \#3 in Section \ref{referee3}.
 \medskip
 
-In the pdf, changes for referee  \#1 are put in red, for referee \#2 in blue and
-for referee  \#3 in green.  
+In the pdf, changes for Referee  \#1 are put in \red{red}, for Referee \#2 in \blue{blue} and
+for Referee  \#3 in \orange{orange}.  Other changes are in \cyan{cyan}.
 
 Yours sincerely
 \bigskip
@@ -58,6 +68,7 @@ the corresponding author
 \newpage
 \section{Referee \#1}\label{referee1}
 
+In the pdf, changes for Referee  \#1 are put in \red{red}.  
 
 \begin{enumerate}
 
@@ -65,22 +76,45 @@ the corresponding author
 \item \textit{Comments on Rubric 1: Utilities in R to deal with NN; 
 a. predict function exists = 1 star;
  b. scaling capabilities exist = 1 star}
-\textit{
-Some packages tested received 0 star for scaling, but do support scaling through integration with other packages, like recipes, that provide frameworks for data preprocessing.  In general, recipes could be used for scaling with any of the packages, and the packages do not necessarily deserve credit for the existence of recipes.  However, some are specifically designed to integrate with recipes (or other preprocessing packages) by supporting model fitting calls of the following general form.
+ 
+\textit{Some packages tested received 0 star for scaling, but do support scaling through integration with other packages, like recipes, that provide frameworks for data preprocessing.  In general, recipes could be used for scaling with any of the packages, and the packages do not necessarily deserve credit for the existence of recipes.  However, some are specifically designed to integrate with recipes (or other preprocessing packages) by supporting model fitting calls of the following general form.
 }
 \begin{verbatim}
 library(recipes)
 rec <- recipe(formula, data) %>% step_normalize(all_predictors())
 fit(rec, ...)
 \end{verbatim}
-\textit{
-In essence, recipes is a part of their interfaces.  Recipes integration may require a bit more coding than built-in scaling, but does enable scaling and has the added advantage of enabling other types of preprocessing steps.  A case could be made that capabilities are greater with the latter.  Thus, integration with other data preprocessing packages warrants credit in the rating.  To ensure that scaling capabilities are accurately characterized in the ratings, consider contacting the package maintainers to ask about their software is support for scaling.
+\textit{In essence, recipes is a part of their interfaces.  Recipes integration may require a bit more coding than built-in scaling, but does enable scaling and has the added advantage of enabling other types of preprocessing steps.  A case could be made that capabilities are greater with the latter.  Thus, integration with other data preprocessing packages warrants credit in the rating.  To ensure that scaling capabilities are accurately characterized in the ratings, consider contacting the package maintainers to ask about their software is support for scaling.
 }
 
-\textbf{Reconsider Utility rating but won't contact package maintainers. 
-Should rewrite the rating methodology accordingly.}
-\red{Christophe}
-
+\textbf{We update the text to explain exactly how the utility rating was computed and also explain
+that many \soft{R} packages provide preprocessing functions which can be used before the neural network
+fitting process.
+The \code{RWsearch} package lists 67 packages on CRAN to perform data preprocessing.}
+\begin{verbatim}
+> library(RWsearch)
+> crandb_down()
+> s_crandb("preprocessing", "data",
++          select="TD", mode="and")
+ [1] "bdpar"                "benthos"              "biclust"             
+ [4] "binst"                "bulletcp"             "ChIPtest"            
+ [7] "CITAN"                "clickR"               "cobalt"              
+[10] "dataprep"             "discretization"       "ebal"                
+...    
+[49] "rdwplus"              "recipes"              "RespirAnalyzer"      
+[52] "RGCxGC"               "rminer"               "RobLoxBioC"          
+[55] "shinyrecipes"         "sstModel"             "TDMR"                
+[58] "torchaudio"           "torchvision"          "tosca"               
+[61] "TSrepr"               "tsrobprep"            "vimpclust"           
+[64] "VWPre"                "waves"                "wiseR"               
+[67] "wvtool"  
+\end{verbatim}
+\textbf{In the utility rating, we could have give stars for packages providing generic functions such as \code{print},
+\code{plot}, \code{summary}, as it is supposed the use of S3 objects. 
+We do not contact the 25 package maintainers providing the 60 algorithms, as the description, the documentation 
+(manual, vignettes,\dots) should be sufficiently clear and precise so that users find the \code{predict} function
+or the \code{scale} function without contacting the maintainer.
+}
 
 \item \textit{
 Comments on Rubric 3: User-friendly call to fit a NN\\
@@ -91,8 +125,8 @@ Comments on Rubric 3: User-friendly call to fit a NN\\
        
  \textit{A 2 star rating for \code{nlsr} seems unwarranted because its usage is more involved than other packages, like \code{nnet}, given the same ranking.  In order to fit a NN with the \code{nlsr::nlxb} function, the mathematical form of the NN equation must be supplied as a formula.  This requires more complete knowledge of the underlying NN than, say, \code{nnet} which requires specification of a formula only in terms of the response and a linear combination of the predictor variables.  The operators (and functions) that appear in formulas are analogous to function calls.  Accordingly, the formula in \code{nlsr} consists of more calls than the formula in \code{nnet}.  Additionally, the testing code call to \code{nlsr::nlxb} is two lines and includes a call to the list function.  Therefore, \code{nlxb} calls appear to be multiple-lines call to many function, which is more in line with 0 stars than the 2 star rating given.}
 
-\textbf{Reconsider Call rating. Should rewrite the rating methodology accordingly.}
-\red{Bila?}
+\textbf{Indeed there are some inconsistencies with this rating and \code{nlsr} should have less stars.}
+
 
 \item \textit{Rating packages on their ease-of-use is a worthwhile endeavor.  However, some of the subjective components of the current rubric and its application detract from the ratings as a measure of ease-of-use.  Consider the four examples below intended to illustrate how model fitting syntaxes might vary across different packages or users.
 }
@@ -109,8 +143,7 @@ fit(formula, data, model = model_name(param1 = value1, param2 = value2))
 fit(formula, data, params = list(param1 = value1, param2 = value2))
 \end{verbatim}
 
-\textit{
-Syntax 1 is similar to that used in \code{caret (fit = train, model = method)}, Syntaxes 2 and 3 to \code{MachineShop}, and Syntax 4 to \code{nlsr (fit = nlxb, params = control)}.  
+\textit{Syntax 1 is similar to that used in \code{caret (fit = train, model = method)}, Syntaxes 2 and 3 to \code{MachineShop}, and Syntax 4 to \code{nlsr (fit = nlxb, params = control)}.  
 The number of stars awarded seems to differ across these types of syntaxes, and the reason for the differences is unclear for a number of reasons.  
 First, according to the current rubric, Syntax 3 might be considered less user-friendly than Syntax 1 because \code{model\_name} 
 appears as a second function call instead of as a character value.  
@@ -144,6 +177,8 @@ More thought should be given to the awarding of stars based on number of lines o
 \newpage
 \section{Referee \#2}\label{referee2}
 
+In the pdf, changes for Referee \#2 are in \blue{blue}.  
+
 \subsection*{Major issues}
 
 \begin{enumerate}
@@ -161,15 +196,24 @@ as new references to recent books added in Section 2.
 
 \item \textit{The description of neural networks on pages 2-3 is not up to date. For example, it is very common to use activation functions such as ReLU, which is not differentiable at 0 and not bounded.}
 
-\textbf{Comment and modify}
-\red{Patrice?}
+\textbf{We add a comment}
+\red{Patrice : could you validate?}
 
 
 \item \textit{For a benchmark paper, the number of included datasets is quite low, and the chosen datasets are very simple. Given that collections such as OpenML100 are readily available, a benchmark should be based on more and more complex data.}
 
-\textbf{Comment, justify and in conclusion propose to make such review in the future. Yet we can use bWoodN1 for non TOP5 packages?}
+\textbf{We thank the referee for pointing out the OpenML100 database, now replaced by OpenML-CC18 database. 
+There are 3433 datasets of which 1589 are for regression purposes.
+We do not have time to perform an entirely new benchmark and mention it for future work in the conclusion.
+However in the supplementary materials, we provide the results on the larger dataset 
+\code{bWoodN1} of other TOP10 packages, which are not in the paper.
+We observe that only 2 packages (\code{CaDENCE} and \code{traineR}) 
+have a RMSE minimum close to the RMSE of TOP5 packages.
+Therefore, we add a new comment in the paper.}
 
-\red{Christophe?}
+
+
+\red{Do you think we need to run bWoodN1 for all packages ? to avoid a new revision?}
 
 \item \textit{It is unclear how hyperparameters such as the learning rate were tuned. In a benchmark paper, hyperparameter tuning is essential to draw valid conclusions beyond the defaults.}
 
@@ -191,8 +235,9 @@ as new references to recent books added in Section 2.
 
 \item \textit{Despite a very nicely designed and organized website (NNbenchmarkWeb), the documentation on GitHub is quite messy and without clear guidance on how to use the package.}
 
-\textbf{An update is needed indeed.}
-\red{Akshaj?}
+\textbf{An update of the project website has been carried out to reorganized notebooks, results.
+The website is now hosted at \url{https://theairbend3r.github.io/NNbenchmarkWeb/index.html}.}
+
 
 
 \item \textit{Comparing the performance only on the training data is rather unrelated to common applications and does not indicate how well the network generalizes.}
@@ -204,27 +249,29 @@ as new references to recent books added in Section 2.
 
 \subsection*{Text-specific issues}
 
-\begin{enumerate}
+\begin{enumerate}[resume]
 \item \textit{Figure 1: The figure caption does not describe the figure sufficiently well.}
 
-\textbf{Clarify this point}
-\red{Patrice?}
+\textbf{We clarify the NN $a$-$b$-$c$ notation and also add words in the captions}
+
+\red{Patrice, do you validate?}
 
 \item \textit{p. 2: It is unclear how Figure 1c relates to normalized inputs.}
 
-\textbf{Clarify figure.}
-\red{Patrice?}
+\textbf{We clarify this point in the text}
+\red{Patrice : could you explain (mathematically) in what this normalization consists? Does it mean to use the distribution
+function and the quantile function of a Gaussian distribution $\mathcal N(0,0.1)$. We need to state in full mathematic
+terms what happen to the equation.}
 
 \item \textit{p. 2: Do not write large math equations inline. Use the display mode instead.}
 
-\textbf{TODO}
-\red{Christophe}
+\textbf{Done}
 
 \end{enumerate}
 
 \subsection*{Minor issues}
 
-\begin{enumerate}
+\begin{enumerate}[resume]
 \item \textit{p. 1: "For regression and classification, the term multilayer perceptron is used interchangeably." - Multilayer perceptrons are a particular type of neural networks based on feedforward neural networks.}
 
 \textbf{TODO}
@@ -232,8 +279,8 @@ as new references to recent books added in Section 2.
 
 \item \textit{The term "Neural networks" is spelled in different ways: "Neural Network", "neural network", "neural-network", etc.}
 
-\textbf{TODO}
-\red{Christophe}
+\textbf{Done}
+
  
 \item \textit{Sometimes quite drastic or fuzzy wording: p. 1 "[…] poor packages are implemented on CRAN.", p. 2 "[…] perform better than [...]" or p. 2 "[…] we believe it is helpful to have relatively large gradients […]"}
 
@@ -244,7 +291,7 @@ as new references to recent books added in Section 2.
 
 \subsection*{Other remarks}
 
-\begin{enumerate}
+\begin{enumerate}[resume]
 \item \textit{Regardless of the major issues in this paper mentioned above, the basic idea of reviewing existing R neural network packages is highly relevant in current research and should be pursued further.
 }
 \textbf{We are grateful to the referee for this comment.}
@@ -255,12 +302,14 @@ as new references to recent books added in Section 2.
 %\newpage
 \section{Referee \#3}\label{referee3}
 
+In the pdf, changes for Referee  \#3 are in \orange{orange}.  
+
 The minor changes are suggestions of aspects that can improve the manuscript:
 \begin{enumerate}
 \item \textit{the writing could be improved in several cases, such as: removal of "oral" language: "there’s" $->$ "there is";}
 
-\textbf{TODO}
-\red{John}
+\textbf{I Ctrl+Find 's in the paper.}
+\red{John, could you validate?}
 
 \item \textit{change of title "Neural Networks: The Perceptron" $->$ "Multilayer Perceptron with a Single Hidden Layer";\\
  in Table 1 "nb." $->$ size.}
@@ -271,13 +320,13 @@ The minor changes are suggestions of aspects that can improve the manuscript:
 \item \textit{the NN acronym in Fig.1 is not detailed, nor the notation 1-3-1 is explained.\\ 
 Fig1 c) is not a single hidden layer networks.}
 
-\textbf{TODO}
-\red{Patrice}
+\textbf{We formally introduce the NN $a$-$b$-$c$ notation.}
+\red{Patrice : could you check?}
 
 \item \textit{the examples in page 2 assume the tanh and atan activation functions, why not use $f()$, where f is the activation function, which can include the logistic function?}
 
-\textbf{Yes generalized this equation}
-\red{Christophe}
+\textbf{Yes, we generalize the NN formulation in order to have a single equation.}
+
 
 \item \textit{in Phase 2, it could be explained how the NNbenchmark was used, with one example (and its characteristics).}
 
