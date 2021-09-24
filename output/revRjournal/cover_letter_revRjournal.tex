@@ -125,7 +125,23 @@ Comments on Rubric 3: User-friendly call to fit a NN\\
        
  \textit{A 2 star rating for \code{nlsr} seems unwarranted because its usage is more involved than other packages, like \code{nnet}, given the same ranking.  In order to fit a NN with the \code{nlsr::nlxb} function, the mathematical form of the NN equation must be supplied as a formula.  This requires more complete knowledge of the underlying NN than, say, \code{nnet} which requires specification of a formula only in terms of the response and a linear combination of the predictor variables.  The operators (and functions) that appear in formulas are analogous to function calls.  Accordingly, the formula in \code{nlsr} consists of more calls than the formula in \code{nnet}.  Additionally, the testing code call to \code{nlsr::nlxb} is two lines and includes a call to the list function.  Therefore, \code{nlxb} calls appear to be multiple-lines call to many function, which is more in line with 0 stars than the 2 star rating given.}
 
-\textbf{Indeed there are some inconsistencies with this rating and \code{nlsr} should have less stars.}
+\textbf{Christophe's proposal: 
+Indeed there are some inconsistencies with this rating and \code{nlsr} should have less stars.}
+
+\pkg{Patrice's proposal: 
+\pkg{nlsr} and \pkg{minpack.lm} packages stand apart in this study and in the ranking as they provide 
+the Levenberg-Marquardt algorithm which is as accurate, and sometimes slightly more accurate, than 
+the BFGS algorithm used by the well ranked packages through the \code{nnet::nnet()} or the 
+\code{stats::optim()} functions (\code{nnet()} calls \code{optim()} at the C level). 
+It is indeed unfortunate that many packages cited in this study use poor first-order algorithms and do not 
+use the reliable and performant Levenberg-Marquardt algorithm provided by these two packages. 
+We voluntary gave a higher score to the \code{nlsr::nlxb()} function to alert about its performance, 
+as we consider the accuracy and the reliability greater than the ease of use (but only in this specific case; this is our exception). 
+The \code{minpack.lm::nlsLM()} function, which closely mimics the \code{stats::nls()} function, is as easy 
+to use as the \code{stats::optim()} function. The \code{nlsr::nlxb()} function is slighly slower but handles 
+successfully very weird cases like a degenerated Jacobian matrix at the first iteration, something that 
+no other algorithm accepts. From this perspective, it deserves full credit. 
+}
 
 
 \item \textit{Rating packages on their ease-of-use is a worthwhile endeavor.  However, some of the subjective components of the current rubric and its application detract from the ratings as a measure of ease-of-use.  Consider the four examples below intended to illustrate how model fitting syntaxes might vary across different packages or users.
@@ -174,7 +190,7 @@ More thought should be given to the awarding of stars based on number of lines o
 
 \end{enumerate}
 
-\newpage
+%\newpage
 \section{Referee \#2}\label{referee2}
 
 In the pdf, changes for Referee \#2 are in \blue{blue}.  
@@ -282,8 +298,8 @@ terms what happen to the equation.}
  
 \item \textit{Sometimes quite drastic or fuzzy wording: p. 1 "[…] poor packages are implemented on CRAN.", p. 2 "[…] perform better than [...]" or p. 2 "[…] we believe it is helpful to have relatively large gradients […]"}
 
-\textbf{TODO}
-\red{John}
+\textbf{Done}
+\red{John, could you validate?}
 
 \end{enumerate}
 
