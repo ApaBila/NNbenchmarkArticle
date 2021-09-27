@@ -125,24 +125,7 @@ Comments on Rubric 3: User-friendly call to fit a NN\\
        
  \textit{A 2 star rating for \code{nlsr} seems unwarranted because its usage is more involved than other packages, like \code{nnet}, given the same ranking.  In order to fit a NN with the \code{nlsr::nlxb} function, the mathematical form of the NN equation must be supplied as a formula.  This requires more complete knowledge of the underlying NN than, say, \code{nnet} which requires specification of a formula only in terms of the response and a linear combination of the predictor variables.  The operators (and functions) that appear in formulas are analogous to function calls.  Accordingly, the formula in \code{nlsr} consists of more calls than the formula in \code{nnet}.  Additionally, the testing code call to \code{nlsr::nlxb} is two lines and includes a call to the list function.  Therefore, \code{nlxb} calls appear to be multiple-lines call to many function, which is more in line with 0 stars than the 2 star rating given.}
 
-\textbf{Christophe's proposal: 
-Indeed there are some inconsistencies with this rating and \code{nlsr} should have less stars.}
-
-\pkg{Patrice's proposal: 
-\pkg{nlsr} and \pkg{minpack.lm} packages stand apart in this study and in the ranking as they provide 
-the Levenberg-Marquardt algorithm which is as accurate, and sometimes slightly more accurate, than 
-the BFGS algorithm used by the well ranked packages through the \code{nnet::nnet()} or the 
-\code{stats::optim()} functions (\code{nnet()} calls \code{optim()} at the C level). 
-It is indeed unfortunate that many packages cited in this study use poor first-order algorithms and do not 
-use the reliable and performant Levenberg-Marquardt algorithm provided by these two packages. 
-We voluntary gave a higher score to the \code{nlsr::nlxb()} function to alert about its performance, 
-as we consider the accuracy and the reliability greater than the ease of use (but only in this specific case; this is our exception). 
-The \code{minpack.lm::nlsLM()} function, which closely mimics the \code{stats::nls()} function, is as easy 
-to use as the \code{stats::optim()} function. The \code{nlsr::nlxb()} function is slighly slower but handles 
-successfully very weird cases like a degenerated Jacobian matrix at the first iteration, something that 
-no other algorithm accepts. From this perspective, it deserves full credit. 
-}
-
+\textbf{Indeed there are some inconsistencies with this rating and in particular \code{nlsr} was badly rated.}
 
 \item \textit{Rating packages on their ease-of-use is a worthwhile endeavor.  However, some of the subjective components of the current rubric and its application detract from the ratings as a measure of ease-of-use.  Consider the four examples below intended to illustrate how model fitting syntaxes might vary across different packages or users.
 }
@@ -183,10 +166,13 @@ accept x and y data structures directly.
 More thought should be given to the awarding of stars based on number of lines or function calls.
 }
 
-\textbf{Should rewrite the rating methodology more precisely and more objectively.}
-
-\red{Bila?}
-
+\textbf{We rewrite the rating methodology more objectively as follows
+\begin{enumerate}
+    \item[a.] a single function with arguments passed as character, numeric, boolean or formula; and data as a data.frame or a matrix = 2 stars
+    \item[b.] a single function with model specification passed as a list or via a dedicated function; or data converted in a dedicated S3/S4 object = 1 star
+    \item[c.] multiple functions for initializing-converting-fitting = 0 star
+\end{enumerate}
+Hence the Call rating has been updated accordingly.}
 
 \end{enumerate}
 
@@ -231,14 +217,21 @@ Therefore, we add a new comment in the paper.}
 
 \item \textit{It is unclear how hyperparameters such as the learning rate were tuned. In a benchmark paper, hyperparameter tuning is essential to draw valid conclusions beyond the defaults.}
 
-\textbf{Two comments
-\begin{itemize}
-\item tuning you should be explained... maybe in supplementary materials?
-\item but most users use default parameters.
-\end{itemize}
- }
+\textbf{Due to the high number of package:algorithm, we did not fully attempt to train all the hyperparameters of all packages. 
+We justify this choice because of the tendency of users to use default hyperparameters. Moreover, not all packages offer the same hyperparameters. 
+Based on GSoc 2019, we considered \code{maxit} to be the most important parameters, as some packages performed rather differently despite 
+having the same algorithm, sometimes even the same code for the algorithm, because they had different \code{maxit} values. }
 
-\red{Bila and Christophe?}
+\textbf{It was harder to find a learning rate value to harmonize towards. 
+But even the algorithms that were supposedly the same, at least in name, seemed to need different learning rates for the same level of convergence. 
+We made a decision after a reasonably-time-consuming grid search between which \code{maxit} and what learning rate. }
+
+\textbf{As for the top 10 packages, especially the ones that basically stem form \code{nnet}'s BFGS, we tried to make sure all the other hyperparameters 
+were harmonized as well. 
+For those we didn't harmonize completely, such as \code{rminer} which had a difference of maximum allowable weights than the default \code{nnet}, 
+we mentioned them in the paper. 
+Most of the trial \& error was for first-order algorithms while the focus for second-order algorithms the \code{maxit} is uniquely set to 200. }
+\textbf{We add a comment on this in the paper.}
 
 
 \item \textit{The framing of this paper is not precise. The introduction states a still scientifically interesting hypothesis ("we hypothesize that these second-order algorithms would perform better than the first-order methods for datasets that fit in memory"), but according to the title, abstract, and evaluation criteria, they want to present a more general comparison of R packages.}
