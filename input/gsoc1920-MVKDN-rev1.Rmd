@@ -58,8 +58,13 @@ However, to our knowledge, there is no comprehensive study which tests the accur
 
 In this paper, we test a large number of packages against a common set of datasets with varying levels of complexity to benchmark and rank them with statistical metrics.
 
-We restrict our evaluation to single hidden-layer perceptrons that perform regression. We ignore packages for classification and other specialized purposes. This leaves us with approximately 60 \code{package:algorithm} pairs to test. 
-The criteria used in our benchmark were: (i) accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a fixed number of iterations; (ii) speed of the training algorithm; (iii) availability of helpful utilities; (iv) quality of the documentation.
+We restrict our evaluation to single hidden-layer perceptrons that perform regression. 
+We ignore packages for classification and other specialized purposes. 
+This leaves us with approximately 60 \code{package:algorithm} pairs to test. 
+The criteria used in our benchmark were: (i) accuracy, i.e. the ability to find 
+the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) 
+in a fixed number of iterations; (ii) speed of the training algorithm; (iii) 
+availability of helpful utilities; (iv) quality of the documentation.
 
 We have given a score for each evaluation criterion to compare all \code{package:algorithm} pairs in a global table. 
 Overall, 15 pairs are considered accurate and reliable and are recommended for daily usage. 
@@ -351,8 +356,13 @@ time is reached.
 Specifically, second-order algorithms are all set to a maximum of 200 iterations. 
 On the other hand, first-order algorithms were set to several values, depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
 The full list of the maximum iteration number per \code{package:algorithm} is given in Table 4 in Appendix D. 
-It can be seen that we were unable to completely harmonize the hyperparameters as an appropriate learning rate differed between packages, despite the algorithm being similarly named.
-
+It can be seen that we were unable to completely harmonize the hyperparameters 
+as an appropriate learning rate differed between packages, despite the algorithm 
+being similarly named.
+<!-- Ref 2 - Comment 5 -->
+\textcolor{blue}{Using a manual grid search, we did our best to find the best
+learning rate and \code{maxit} for each \code{package:algorithm}, especially for
+first-order algorithms where different \code{maxit} values was used.}
 
 
 ## Performance
@@ -583,9 +593,9 @@ Our ratings are as follows.
         - only one is clear = 1 star
         - both are not documented = 0 stars
 3. User-friendly call to fit a NN 
-    a. simple one-line call or a single function = 2 stars
-    b. multiple-lines call to a single function = 1 star
-    c. multiple-lines call to many functions = 0 star
+    a. \textcolor{red}{a single function with arguments passed as character, numeric, boolean or formula; and data as a data.frame or a matrix} = 2 stars
+    b. \textcolor{red}{a single function with model specification passed as a list or via a dedicated function; or data converted in a dedicated S3/S4 object} = 1 star
+    c. \textcolor{red}{multiple functions for initializing-converting-fitting} = 0 star
 
 <!-- Ref 1 - Major comment 1-->
 \textcolor{red}{
@@ -629,8 +639,8 @@ To rank the speed and quality of convergence, we have devised the following meth
     b.	For minimum RMSE values, ties are decided by duration mean, then the RMSE median;
     c.	For median RMSE values, ties are decided by the RMSE minimum, then the duration mean;
     d.	The RMSE D51 rank only depends on itself.
-4.	A global score for all datasets is found by a sum of the ranks (of duration, minimum RMSE, median RMSE, RMSE D51) of each \code{package:algorithm} for each dataset.
-\textcolor{red}{where it is?}
+4.	A global score <!-- Ref 2 - Comment 14 -->
+\textcolor{blue}{over all datasets is computed by summing} the ranks (of duration, minimum RMSE, median RMSE, RMSE D51) of each \code{package:algorithm} for each dataset.
 5.	The final table is the result of ranking by the global minimum RMSE scores for each \code{package:algorithm}.
 
 
@@ -669,9 +679,9 @@ Finally, we list the reasons for discarded packages.
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
-if(file.exists("./tables/Table1.csv")) {  
-  Table1 <- read.table("./tables/Table1-final.csv", sep = ";", dec=".",
-                       header=TRUE)
+if(file.exists("./tables/Table1-rev-Callrating.csv")) {  
+  Table1 <- read.table("./tables/Table1-rev-Callrating.csv", sep = ";", dec=".",
+                       header=TRUE)[, 1:7]
   Table1 <- Table1[Table1[,2] != "", ]
 }else 
    Table1 <- rbind(rep("missing",6))
@@ -831,10 +841,12 @@ Alex Cannon has included automatic scaling for all 3 of his packages, as is clea
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{Non-linear least square estimation can be performed via \code{nls} from \pkg{stats}},
 which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
-However, in its documentation, \code{nls} warns against "zero-residual" or even small residual problems. [@Nash-nlpor14, Section 6.4.1]
+However, in its documentation, \code{nls} warns against "zero-residual" or even small residual problems [@Nash-nlpor14, Section 6.4.1].
 This was one of the motivations for \CRANpkg{nslr} \citep{R-nlsr}. 
 \code{nlsr} uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain Gauss-Newton of \code{nls},
-and modifies the relative offset convergence criterion to avoid a zero divide when residuals are small.
+and modifies the relative offset convergence criterion to avoid a zero divide 
+when residuals are small \textcolor{cyan}{and can handle a degenerate Jacobian at the
+first iteration}.
 
 
 \pkg{minpack.lm} \citep{minpack.lm} offers another Marquardt approach. 
@@ -849,19 +861,31 @@ already available in \code{nls} that may be important for some uses.
 
 
 
-Despite the 2 packages ultimately performing well on all runs (capable of being in the top 3 for RMSE and not slow), there are some reasons why users might hesitate to choose them. 
+Despite the 2 packages ultimately performing well on all runs 
+(capable of being in the top 3 for RMSE 
+\textcolor{cyan}{as good as packages using BFGS} and not being slow), 
+there are some reasons why users might hesitate to choose them. 
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{Firstly, both \pkg{minpack.lm} and \pkg{nlsr}} require the full formula of the neural network including variables and parameters. 
 Secondly, they require good starting values to achieve the best convergence. 
 Notice that in Table 2, \code{minpack.lm} does not have a high rank. 
 This is because we removed the random Gaussian start values we had originally used; which means that the default start values of \code{minpack.lm} were not appropriate for our datasets. 
 
-We suspect \pkg{nlsr}'s performance on convergence would have similarly dropped if it was possible to use \pkg{nlsr} with no user-set starting values and the author's chosen default values were inadequate. 
+We suspect \pkg{nlsr}'s performance on convergence would have similarly dropped 
+if it was possible to use \pkg{nlsr} with no user-set starting values and the 
+author's chosen default values were inadequate. 
 \code{nls} deals with this by suggesting a companion function in \pkg{stats}, \code{selfStart}. 
-Finally, both packages were able to find better minima when the dataset was scaled. 
-With no starting values and no scaling, \code{minpack.lm:nlsLM} fails on \code{uNeuroOne} but performance is better on Friedman & Ishigami datasets.
-On the other hand, with no start values and no scaling, it fails on everything but \code{mFriedman}, \code{mIshigami}, \code{uDmod2}, and the Dreyfus datasets. Similarly, there is also a notable drop in performance for \pkg{nlsr} without scaling on the Gauss datasets and \code{mRef153}. 
-To conclude, both packages provide algorithms that are capable of doing well on our datasets, but may not be suitable for less experienced users. The vignettes for \pkg{nlsr} and earlier book \citep{Nash-nlpor14} may be useful.
+<!-- Ref 2 - Comment 14 -->
+\textcolor{blue}{Furthermore}, both packages were able to find better minima when the dataset was scaled. 
+With no starting values and no scaling, \code{minpack.lm:nlsLM} fails on 
+\code{uNeuroOne} but performance is better on Friedman & Ishigami datasets.
+On the other hand, with no start values and no scaling, it fails on everything 
+but \code{mFriedman}, \code{mIshigami}, \code{uDmod2}, and the Dreyfus datasets. 
+Similarly, there is also a notable drop in performance for \pkg{nlsr} without scaling on the Gauss datasets and \code{mRef153}. 
+To conclude, both packages provide algorithms that are capable of doing well on our
+datasets, but may not be suitable for less experienced users. 
+The vignettes for \pkg{nlsr} and earlier book \citep{Nash-nlpor14} may be useful.
+
 
 \pkg{brnn} \citep{R-brnn} is an implementation of the Gauss-Newton algorithm in \soft{R } that does not rely on \code{nls} or \code{nlm} from \pkg{stats}. Although it is well-documented and has good speed, \pkg{brnn}'s implementation of the Gauss-Newton algorithm still ranks below some of the previously mentioned BFGS and Levenberg-Marquardt tools in terms of its global minimum RMSE. 
 We found 2 reasons that we believe to be the cause of this. 
