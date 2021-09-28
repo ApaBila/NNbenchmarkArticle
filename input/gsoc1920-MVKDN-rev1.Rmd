@@ -32,6 +32,7 @@ preamble:
     \usepackage{multirow}
     \usepackage{subcaption}
     \usepackage{longtable}
+    \usepackage{colortbl,xcolor}
     \newcommand{\atan}{\text{atan}}
     \newcommand{\invlogit}{\text{invlogit}}
     \newcommand{\soft}{\textsf}
@@ -675,19 +676,20 @@ Finally, we list the reasons for discarded packages.
 
 <!--**Tables**-->
 
+<!-- Ref 1 - Major comment 2-->
 
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table1-rev-Callrating.csv")) {  
   Table1 <- read.table("./tables/Table1-rev-Callrating.csv", sep = ";", dec=".",
-                       header=TRUE)[, 1:7]
+                       header=TRUE)
   Table1 <- Table1[Table1[,2] != "", ]
 }else 
    Table1 <- rbind(rep("missing",6))
 
 colnames(Table1) <- c("Package", "Algorithm", "Time", "RMSE",
-                    "Util", "Doc", "Call")
+                    "Util", "Doc", "Call", "Comment")
 
 pkg.name <- Table1$Package[Table1$Package != ""]
 idx.pkg.name <- (1+0:NROW(Table1))[Table1$Package != ""]
@@ -699,41 +701,71 @@ Table1$Util <- rep(Table1$Util[!is.na(Table1$Util)], times=diff(idx.pkg.name))
 Table1$Doc <- rep(Table1$Doc[!is.na(Table1$Doc)], times=diff(idx.pkg.name))
 Table1$Call <- rep(Table1$Call[!is.na(Table1$Call)], times=diff(idx.pkg.name))
 
-#convert to stars
-cvt2star <- function(j)
-{
-  switch(as.character(j), "0" = " ", "1"="*", "2"="**", "3"="***", "4"="****")
-}
-Table1$Doc <- unlist(sapply(Table1$Doc, cvt2star))
-Table1$Util <- unlist(sapply(Table1$Util, cvt2star))
-Table1$Call <- unlist(sapply(Table1$Call, cvt2star))
 
 #reorder columns
-Table1 <- Table1[, c(1, 5:7, 2:4)]
+TableScore <- Table1[, c(1,2:4)]
 #get the min RMSE by pkg
-pkgRkbyRMSE <- sort(tapply(Table1$RMSE, Table1$Package, min))
+pkgRkbyRMSE <- sort(tapply(TableScore$RMSE, TableScore$Package, min))
 #create new index
-n <- NROW(Table1)
+n <- NROW(TableScore)
 getorderbypkg <- function(p)
 {
-  idx <- (1:n)[Table1$Package == p]
+  idx <- (1:n)[TableScore$Package == p]
   if(length(idx) > 1)
     return(idx[order(Table1[idx, "RMSE"])])
   else
     return(idx)
 }
 idxRk <- unlist(sapply(names(pkgRkbyRMSE), getorderbypkg))
-Table1rk <- Table1[idxRk, ]
-rownames(Table1rk) <- 1:n
+TableScorerk <- TableScore[idxRk, ]
+rownames(TableScorerk) <- 1:n
+m <- n/2
+TableScorerk2col <- cbind(head(TableScorerk, m), tail(TableScorerk, m))
 
-kableExtra::kable(Table1rk, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, align="lccclcc",
-                  caption="Result from Tested Packages") %>%
-  add_header_above(c(" "=1, "Individual rating"=3, " "=1,  "Global score"=2)) %>%
-  column_spec(c(1, 7), bold = TRUE) %>%
-  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+kableExtra::kable(TableScorerk2col, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="llccllcc",
+                  caption="Results of Tested Packages (sorted by best RMSE score per package)") %>%
+  add_header_above(c(" "=2, "Global score"=2," "=2, "Global score"=2)) %>%
+  column_spec(c(1, 5), bold = TRUE) %>%
+  column_spec(4, border_right = TRUE) %>%
+  collapse_rows(columns = c(1,5), latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7) %>%
   footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE}
+options(knitr.kable.NA = '')
+
+if(file.exists("./tables/TableEaseOfUse.csv")) {  
+  TableEaseOfUse <- read.table("./tables/TableEaseOfUse.csv", sep = ";", dec=".",
+                       header=TRUE)
+  TableEaseOfUse <- TableEaseOfUse[!is.na(TableEaseOfUse[,5]), ]
+  rownames(TableEaseOfUse) <- 1:NROW(TableEaseOfUse)
+}else 
+   TableEaseOfUse <- rbind(rep("missing",10))
+colnames(TableEaseOfUse) <-  c("Package", "Algorithm", "Num", "Input",
+                    "Util", "Doc", "Call", "Comments","Formula","X Y")
+TableEaseOfUse$Doc <- floor(TableEaseOfUse$Doc)
+
+#convert to stars
+cvt2star <- function(j)
+{
+  switch(as.character(j), "0" = " ", "1"="*", "2"="**", "3"="***", "4"="****")
+}
+TableEaseOfUse$Doc <- unlist(sapply(TableEaseOfUse$Doc, cvt2star))
+TableEaseOfUse$Util <- unlist(sapply(TableEaseOfUse$Util, cvt2star))
+TableEaseOfUse$Call <- unlist(sapply(TableEaseOfUse$Call, cvt2star))
+TableEaseOfUse <- TableEaseOfUse[, c("Package", "Util", "Doc", "Call", 
+                                     "Formula", "X Y", "Comments")]
+
+kableExtra::kable(TableEaseOfUse, format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="lcccccl",
+                  caption="Ease of use of Tested Packages") %>%
+  add_header_above(c(" "=1, "Individual score"=3,"Input allowed"=2, " "=1)) %>%
+  column_spec(1, bold = TRUE) %>%
+  column_spec(7, width = "30em") %>% 
+  kable_styling(font_size=7, latex_options = "striped")
 ```
 
 
@@ -1088,8 +1120,8 @@ if(file.exists("./tables/Table3.csv")) {
 colnames(Table3) <- c("Package::algorithm", "RMSE min", "RMSE median", "RMSE D51", 
                       "MAE median", "WAE median", "Time median")
 
-TOP5algo <- subset(Table1rk, RMSE %in% 1:5)[, c("Package", "Algorithm")]
-rownames(TOP5algo)  <- subset(Table1rk, RMSE %in% 1:5)[, "Package"]
+TOP5algo <- subset(TableScorerk, RMSE %in% 1:5)[, c("Package", "Algorithm")]
+rownames(TOP5algo)  <- subset(TableScorerk, RMSE %in% 1:5)[, "Package"]
 
 Table3$Package <- sapply(strsplit(Table3[, "Package::algorithm"], "::"), head, n=1)
 Table3$Algorithm <- TOP5algo[Table3$Package, "Algorithm"]
@@ -1282,15 +1314,15 @@ Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
 Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
                     "D51", "MAE", "WAE")]
 
-#use idxRk as for Table1rk
+#use idxRk as for TableScorerk
 if(all(Table1SupplApp[, "Algorithm"] == Table1$Algorithm))
 {
   Table1SupplApp <- Table1SupplApp[idxRk, ]
   rownames(Table1SupplApp) <- 1:NROW(Table1SupplApp)
 }
 
-TOP5pkg <- head(unique(Table1rk$Package), 5)
-TOP5algo <- head(Table1rk$Algorithm[order(Table1rk$RMSE)], 5)
+TOP5pkg <- head(unique(TableScorerk$Package), 5)
+TOP5algo <- head(TableScorerk$Algorithm[order(TableScorerk$RMSE)], 5)
 TOP5algo <- substr(TOP5algo, 5, nchar(TOP5algo))
 TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), collapse=", "), ".")      
 

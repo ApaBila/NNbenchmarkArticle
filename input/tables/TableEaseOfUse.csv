@@ -1,0 +1,61 @@
+package;algorithm;No;input;UT;Docs;Call;CallComments;Formula input;XY input
+AMORE;1. ADAPTgd;1;x & y;1;3;1;train() needs newff() call for model spec;no;yes
+;2. ADAPTgdwm;2;x & y;;;;;;
+;3. BATCHgd;3;x & y;;;;;;
+;4. BATCHgdwm;4;x & y;;;;;;
+ANN2;5. adam;5;x & y;2;3;2;neuralnetwork() needs only character, numeric, boolean but train() needs neuralnetwork();no;yes
+;6. rmsprop;6;x & y;;;;;;
+;7. sgd;7;x & y;;;;;;
+automl;8. trainwgrad_adam;8;x & y;1;3;1;automl_train_manual() needs a list for model spec;no;yes
+;9. trainwgrad_RMSprop;9;x & y;;;;;;
+;10. trainwpso;10;x & y;;;;;;
+brnn;11. Gauss-Newton;11;x & y;2;4;2;brnn() needs only character, numeric, boolean or a formula;yes;yes
+CaDENCE;12. optim(BFGS);12;x & y;2;3;1;cadence.fit() needs a list, numeric, boolean;no;yes
+;13. pso_psoptim;13;x & y;;;;;;
+;14. Rprop;14;x & y;;;;;;
+caret;15. avNNet_nnet_optim(BFGS);15;x & y;2;3;2;avNNet() needs only character, numeric, boolean or a formula;yes;yes
+deepdive;16. adam;16;x & y;2;3;2;deepnet() needs only character, numeric, boolean;no;yes
+;17. gradientDescent;17;x & y;;;;;;
+;18. momentum;18;x & y;;;;;;
+;19. rmsProp;19;x & y;;;;;;
+deepnet;20. BP;20;x & y;1;3;2;nn.train() needs only character, numeric, boolean;no;yes
+elmNNRcpp;21. ELM;21;x & y;2;3;2;elm_train() needs only character, numeric, boolean;no;yes
+ELMR;22. ELM;22;fmla & data;2;3;2;OSelm_train.formula() needs a formula, data.frame, but Oselm_training() needs matrix, numeric;yes;yes
+EnsembleBase;23. nnet_optim(BFGS);23;x & y;1;1;1;Regression.Batch.Fit() needs a function for model spec and a formula;yes;no
+h2o;24. first-order;24;"""y"" & data";2;2;1;h2o.deeplearning() needs character, boolean, numeric and a dedicated function to convert data in S3;no;yes
+keras;25. adadelta;25;x & y;2;1;0;fit() needs multiple function for model spec keras_model() and initiate model compile();no;yes
+;26. adagrad;26;x & y;;;;;;
+;27. adam;27;x & y;;;;;;
+;28. adamax;28;x & y;;;;;;
+;29. nadam;29;x & y;;;;;;
+;30. rmsprop;30;x & y;;;;;;
+;31. sgd;31;x & y;;;;;;
+MachineShop;32. nnet_optim(BFGS);32;fmla & data;1;3;1;fit() needs NnetModel() for model spec and formula / data.frame / recipe...;yes;yes
+minpack.lm;33. Levenberg-Marquardt;33;full fmla & data;1;3.5;1;nlsLM() needs a formula, data.frame and list for control parameters;yes;no
+monmlp;34. optimx(BFGS);34;x & y;2;3.5;2;monmlp.fit() needs only character, numeric, boolean;no;yes
+;35. optimx(Nelder-Mead);35;x & y;;;;;;
+neuralnet;36. backprop;36;fmla & data;1;3;2;neuralnet() needs formula, data.frame, boolean, character;yes;no
+;37. rprop-;37;fmla & data;;;;;;
+;38. rprop+;38;fmla & data;;;;;;
+;39. sag;39;fmla & data;;;;;;
+;40. slr;40;fmla & data;;;;;;
+nlsr;41. NashLM;41;full fmla & data;1;4;1;nlxb() needs a formula, data.frame and list for control parameters;yes;no
+nnet;42. optim (BFGS);42;x & y;1;3;2;nnet() needs only character, numeric, boolean or a formula;yes;yes
+qrnn;43. nlm();43;x & y;2;3;2;qrnn.fit() needs only character, numeric, boolean;no;yes
+radiant.model;44. nnet_optim(BFGS);44;"""y"" & data";2;2;2;nn() needs only character, numeric, matrix;no;yes
+rminer;45. nnet_optim(BFGS);45;fmla & data;2;3.5;2;fit() needs a formula, data.frame, character and numeric;no;yes
+RSNNS;46. BackpropBatch;46;x & y;2;3;2;mlp() needs only character, numeric, boolean;no;yes
+;47. BackpropChunk;47;x & y;;;;;;
+;48. BackpropMomentum;48;x & y;;;;;;
+;49. BackpropWeightDecay;49;x & y;;;;;;
+;50. Quickprop;50;x & y;;;;;;
+;51. Rprop;51;x & y;;;;;;
+;52. SCG;52;x & y;;;;;;
+;53. Std_Backpropagation;53;x & y;;;;;;
+snnR;54. SemiSmoothNewton;54;x & y;2;2;2;snnR() needs only character, numeric. Package archived.;no;yes
+traineR;55. nnet_optim(BFGS);55;fmla & data;1;2.5;2;train.nnet() needs a formula, data.frame, numeric, boolean;yes;no
+validann;56. optim(BFGS);56;x & y;1;4;2;ann() needs only character, numeric;no;yes
+;57. optim(CG);57;x & y;;;;;;
+;58. optim(L-BFGS-B);58;x & y;;;;;;
+;59. optim(Nelder-Mead);59;x & y;;;;;;
+;60. optim(SANN);60;x & y;;;;;;
