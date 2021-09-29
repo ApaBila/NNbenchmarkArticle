@@ -1,0 +1,64 @@
+,Package,Category,Reason to Discard (Where)
+1,appnn,AP,Provide a feed forward neural network to predict the amyloidogenicity propensity of polypeptide sequences (DESCRIPTION file).
+2,autoencoder,AP,"Provide a sparse autoencoder, an unsupervised algorithm that learns useful features from the data its given (::autoencode)."
+3,BNN,RE*,"Use a feed forward neural network to perform regression. It is unclear whether it fits the form of perceptron in the scope. It states that it is intended for variable selection, although how exactly the package would be used to do so is missing. Also the source code is written in C that users of R might not understand. Performance is slow : need 100.000 iterations. (::BNNsel-examples & abstract of paper)."
+4,Buddle,CL,"Did not include regression in 2019. Unfortunately, the version we tested in 2020 could not be used properly for regression either. See the examples (::TrainBuddle)."
+5,cld2,XX,"Provide bindings to Google's C++ library CLD2, which detects languages using a Naïve Bayesian classifier. CLD3, which does use neural networks, is mentioned in the description (DESCRIPTION file & link to github)."
+6,cld3,AP,"Bindings to Google's C++ library CLD3, which detects languages using a neural network with an experimental algorithm (DESCRIPTION file)."
+7,condmixt,AP,Use neural networks to predict parameters of mixture models (DESCRIPTION file).
+8,DamiaNN,RE,"Was designed specificly for training datasets from Numerai, <https://numer.ai/>. We were unable to adapt it to our datasets even after exporting functions from the interactive interface (DESCRIPTION file, help pages)."
+9,deep,CL,Seem to implement a perceptron to classify data (implicitly known from choice of iris as example and in source code).
+10,deepNN,RE,Another implementation of deep learning. Its input format of lists of vectors is not standard require users to understand how to use lapply or other functions to convert the format of their data. Univariate datasets can't be used with the functions and we could not manage to adapt it to 2020 code (::train).
+11,DNMF,XX,Help extract features that enforce spatial locality with separability between classes in a discriminant manner (DESCRIPTION file).
+12,evclass,CL,Provide an evidential neural network that outputs Dempster-Shafer mass functions (DESCRIPTION file).
+13,gamlss.add,UT,Allow users to use nnet with a variety of Generalized Additive Models for Location Scale and Shape (::nn). It is not particularly appropriate for all our datasets.
+14,gcForest,XX,"Based on an article with ""Towards an Alternative to Deep Neural Networks"" in its title (DESCRIPTION file)."
+15,GMDH,TS,Provide GMDH type neural network algorithms for short term forecasting on a univariate time series (DESCRIPTION file).
+16,GMDH2,CL,Provide GMDH type neural network algorithms for performing binary classification (DESCRIPTION file).
+17,GMDHreg,RE*,"Regression using GMDH algorithms. We only managed to tested the COMBI algorithm (the most basic and first in the vignette) on the multivariate datasets. It is strangely slow on the ""easy"" datasets, mFriedman and mRef153. The convergence is relatively not good considering the ammount of layers (Title in DESCRIPTION file)."
+18,gnn,AP,Out of scope: Generative moment matching networks (GMMNs) are introduced for generating quasi-random samples from multivariate models (article abstract).
+19,grnn,RE,"Provide an implementation of Specht's General Regression Neural Network in 1991 (DESCRIPTION file). We could not manage to make the functions work on the multivariate datasets. ::guess, the function for predicting, only allows for 1 data at a time. Performance of General Regression Neural Networks can be seen from package yager instead."
+20,hybridEnsemble,RE,Hybrid ensemble of eight different sub-ensembles (DESCRIPTION file).
+21,image.libfacedetection,AP,Face detection with CNNs (DESCRIPTION file).
+22,isingLenzMC,AP,Out of scope: This package provides utilities to simulate one dimensional Ising Model with Metropolis and Glauber Monte Carlo (DESCRIPTION file).
+23,kerasR,RE,See section on keras.
+24,leabRa,RE,"Provide the local error driven and associative biologically realistic algorithm (Leabra) from O'Reilly 1996. It combines supervised and unsupervised learning, so out of scope (DESCRIPTION file)."
+25,learNN,CL,"Implement some basic neural networks from \url{http://qua.st/} (DESCRIPTION file). Examples seem to focus on binary classification (::learn_gd, ::learn_bp)."
+26,LilRhino,AP,"Provide binary neural networks meant for reducing data (DESCRIPTION file), a random forest style collection of neural networks for classification (::Random_Brains), and code for even more purposes. Documentation is satisfyingly clear for a package for applications: a 3 layer network with an adam optimizer, with an explanation of its activation functions (::Binary_Network)."
+27,neural,CL,"An implementation of ""a simple MLP neural network that is suitable for classification tasks"" (::mlptrain)."
+28,NeuralNetTools,UT,"Out of scope: Functions are available for plotting, quantifying variable importance, conducting a sensitivity analysis, and obtaining a simple list of model weights (DESCRIPTION file and Help Pages titles)."
+29,NeuralSens,UT,"A greater focus on sensitivity, with additional functions (DESCRIPTION file)."
+30,NlinTS,TS,A non-linear version of a causality test with feed forward neural networks and a Vector Auto-Regressive Neural Network (VARNN) for non-linear time series analysis models (DESCRIPTION file).
+31,nnetpredint,UT,Out of scope: Computing prediction intervals of neural network models at certain confidence level (DESCRIPTION file).
+32,nnfor,TS,Automatic to fully manual time series modelling with neural networks (DESCRIPTION file).
+33,nnlib2Rcpp,CL,"Provide a collection of neural networks, but examples seem to indicate classification and testing our code with the functions provided led to error. Using the RcppClass might be confusing for less experienced R users (::NN-class)."
+34,nntrf,AP,"Provide useful pre-processing for Machine Learning tasks through data transformation in a non-linear, supervised way with a perceptron (DESCRIPTION file)."
+35,onnx,UT,"Aims to provide an open source format for neural networks, with definitions of an extensible computation graph model, built-in operators, and standard data types (DESCRIPTION file)."
+36,OptimClassifier,UT,"Search for the best amount of neurons for binary classifcation neural networks, among other types of binary classifiers (based on how Optim.NN works & DESCRIPTION file)."
+37,OSTSC,UT,A tool to solve imbalanced data for univariate time series classification with oversampling using integrated ESPO and ADASYN methods (DESCRIPTION file) thus improving the performance of RNN classifiers (vignette).
+38,passt,AP,"This package provides implementation of the Probability Associator Time (PASS-T) model, a memory model based on a simple competitive artificial neural network which imitates human judgment of frequency and duration (DESCRIPTION file)."
+39,pnn,CL,"This package provides implementation of the Specht algorithm, 1990, for classification with four functions: learn, smooth, perf, and guess (DESCRIPTION file)."
+40,polyreg,XX,Polyregression as alternative to NN (DESCRIPTION file).
+41,predictoR,RE,"A shiny interface for supervised learning with very minimal documentation. Users may be additionally confused when opening the application only to find that it's default language is Espanol, although this can be changed in the Idioma section. (DESCRIPTION file & ::init_predictor)."
+42,ProcData,AP,"Provide tools for exploratory process data analysis via functions: reading, process manipulation, action sequence generators, feature extraction and prediction (link + DESCRIPTION file)."
+43,quarrint,AP,"Out of scope: provide two indexes for interaction prediction between groundwater and quarry extension, one of which is an artificial neural network ; specified classifier for quarry data (help page - quarrint-package and DESCRIPTION file)."
+44,rasclass,CL,Provide neural networks as one of the five supervised classification algorithms for raster images with a design meant to facilitate land-cover analysis (DESCRIPTION file).
+45,rcane,RE,"Provide parameter estimation for linear regression, which was not appropriate for the relationships in our data. (DESCRIPTION file)."
+46,regressoR,RE,A manual rich version of predictoR.
+47,rnn,AP,"Implementations of the vanilla Recurrent Neural Network, Long Short-Term Memory (LSTM), and Gated Recurrent Unit (GRU) in native R (DESCRIPTION file)."
+48,RTextTools,AP,Out of scope: A machine learning package for automatic text classification (DESCRIPTION file).
+49,ruta,AP,unsupervised neural networks (DESCRIPTION file).
+50,simpleNeural,CL,Neural networks for multi-class or binary classification (DESCRIPTION file).
+51,softmaxreg,CL,Out of scope: Implementation of 'softmax' regression and classification models with multiple layer neural network (DESCRIPTION file).
+52,Sojourn.Data,AP,Stores some neural networks used for Sojourn Accelerometer methods (DESCRIPTION file).
+53,spnn,CL,Out of scope : Scale invariant version of the original PNN with the added functionality of allowing for smoothing along multiple dimensions while accounting for covariances within the data set (DESCRIPTION file).
+54,studyStrap,AP,"Implements multi-study learning algorithms such as merging, the study-specific ensemble the study strap, the covariate-matched study strap, covariate-profile similarity weighting, and stacking weights with single-study learners from caret (DESCRIPTION file)."
+55,TeachNet,CL,"Provide neural networks with up to 2 hidden layers, 2 different error functions, and a weight decay for 2 class classification : it is slow. (DESCRIPTION file & ::TeachNet)."
+56,tensorflow,RE,See section on keras.
+57,tfestimators,RE,See section on keras.
+58,trackdem,AP,An artificial neural network can be trained for filtering false positives present in video materials or image sequences (DESCRIPTION file).
+59,TrafficBDE,RE*,"Use caret for a grid of parameters for 3 layers combined with neuralnet. Is very slow. Out of scope to test one layer perceptrons. We recommend the author to use other packages and lessen the number of layers. Datasets in Traffic Status Prediction and Urban Places are similar in nature to ours (TrainCR.R, DESCRIPTION file)."
+60,tsfgrnn,TS,Out of scope: A general regression neural network (GRNN) is a variant of a Radial Basis Function Network. Allow you to forecast time series using an autoregressive GRNN model (DESCRIPTION file).
+61,yager,RE*,"This package provides a neural network that behaves differently from a perceptron. Results indicate that predictions are quite close to the real values, however this comes at the cost of a large number of weights. With less weights or insufficient training data, the performance isn't as great. (::grnn.fit)."
+62,yap,CL,"Yet another PNN, with a N-level response, where N > 2 (DESCRIPTION file)."
+63,zFactor,AP,Computational algorithms to solve equations and find the 'compressibility' factor `z` of hydrocarbon gases (DESCRIPTION file).

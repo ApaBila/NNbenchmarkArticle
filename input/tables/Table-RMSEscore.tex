@@ -1,0 +1,141 @@
+\begin{table}
+
+\caption{\label{tab:RMSEscore}Results of Tested Packages (sorted by best RMSE score per package)}
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{>{}llcc}
+\toprule
+\multicolumn{2}{c}{ } & \multicolumn{2}{c}{Global score} \\
+\cmidrule(l{3pt}r{3pt}){3-4}
+Package & Algorithm & Time & RMSE\\
+\midrule
+\textbf{nlsr} & 41. NashLM & 18 & 1\\
+\cmidrule{1-4}
+\textbf{rminer} & 45. nnet\_optim(BFGS) & 12 & 2\\
+\cmidrule{1-4}
+\textbf{nnet} & 42. optim (BFGS) & 3 & 3\\
+\cmidrule{1-4}
+ & 56. optim(BFGS) & 35 & 4\\
+
+ & 57. optim(CG) & 60 & 8\\
+
+ & 58. optim(L-BFGS-B) & 36 & 15\\
+
+ & 59. optim(Nelder-Mead) & 55 & 45\\
+
+\multirow{-5}{*}{\raggedright\arraybackslash \textbf{validann}} & 60. optim(SANN) & 20 & 55\\
+\cmidrule{1-4}
+\textbf{MachineShop} & 32. nnet\_optim(BFGS) & 6 & 5\\
+\cmidrule{1-4}
+\textbf{traineR} & 55. nnet\_optim(BFGS) & 4 & 6\\
+\cmidrule{1-4}
+\textbf{radiant.model} & 44. nnet\_optim(BFGS) & 10 & 7\\
+\cmidrule{1-4}
+ & 34. optimx(BFGS) & 26 & 9\\
+
+\multirow{-2}{*}{\raggedright\arraybackslash \textbf{monmlp}} & 35. optimx(Nelder-Mead) & 32 & 47\\
+\cmidrule{1-4}
+ & 12. optim(BFGS) & 46 & 10\\
+
+ & 14. Rprop & 56 & 51\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash \textbf{CaDENCE}} & 13. pso\_psoptim & 54 & 54\\
+\cmidrule{1-4}
+\textbf{h2o} & 24. first-order & 51 & 11\\
+\cmidrule{1-4}
+\textbf{EnsembleBase} & 23. nnet\_optim(BFGS) & 5 & 12\\
+\cmidrule{1-4}
+\textbf{caret} & 15. avNNet\_nnet\_optim(BFGS) & 17 & 13\\
+\cmidrule{1-4}
+\textbf{brnn} & 11. Gauss-Newton & 8 & 14\\
+\cmidrule{1-4}
+\textbf{qrnn} & 43. nlm() & 28 & 16\\
+\cmidrule{1-4}
+ & 51. Rprop & 24 & 17\\
+
+ & 52. SCG & 30 & 18\\
+
+ & 53. Std\_Backpropagation & 22 & 27\\
+
+ & 47. BackpropChunk & 26 & 29\\
+
+ & 48. BackpropMomentum & 25 & 30\\
+
+ & 49. BackpropWeightDecay & 29 & 31\\
+
+ & 46. BackpropBatch & 43 & 49\\
+
+\multirow{-8}{*}{\raggedright\arraybackslash \textbf{RSNNS}} & 50. Quickprop & 45 & 57\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}\textit{Note: } Statistics over 10 runs.}\\
+\end{tabular}
+\begin{tabular}[t]{>{}llcc}
+\toprule
+\multicolumn{2}{c}{ } & \multicolumn{2}{c}{Global score} \\
+\cmidrule(l{3pt}r{3pt}){3-4}
+Package & Algorithm & Time & RMSE\\
+\midrule
+ & 8. trainwgrad\_adam & 50 & 18\\
+
+ & 9. trainwgrad\_RMSprop & 47 & 26\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash \textbf{automl}} & 10. trainwpso & 57 & 43\\
+\cmidrule{1-4}
+\textbf{deepnet} & 20. BP & 23 & 18\\
+\cmidrule{1-4}
+ & 38. rprop+ & 19 & 21\\
+
+ & 37. rprop- & 21 & 22\\
+
+ & 40. slr & 31 & 31\\
+
+ & 39. sag & 41 & 38\\
+
+\multirow{-5}{*}{\raggedright\arraybackslash \textbf{neuralnet}} & 36. backprop & 37 & 50\\
+\cmidrule{1-4}
+ & 28. adamax & 48 & 23\\
+
+ & 27. adam & 42 & 34\\
+
+ & 29. nadam & 44 & 36\\
+
+ & 26. adagrad & 58 & 37\\
+
+ & 25. adadelta & 59 & 40\\
+
+ & 31. sgd & 48 & 44\\
+
+\multirow{-7}{*}{\raggedright\arraybackslash \textbf{keras}} & 30. rmsprop & 37 & 52\\
+\cmidrule{1-4}
+ & 2. ADAPTgdwm & 16 & 24\\
+
+ & 1. ADAPTgd & 9 & 35\\
+
+ & 4. BATCHgdwm & 40 & 39\\
+
+\multirow{-4}{*}{\raggedright\arraybackslash \textbf{AMORE}} & 3. BATCHgd & 39 & 41\\
+\cmidrule{1-4}
+\textbf{minpack.lm} & 33. Levenberg-Marquardt & 15 & 24\\
+\cmidrule{1-4}
+ & 6. rmsprop & 14 & 28\\
+
+ & 5. adam & 13 & 33\\
+
+\multirow{-3}{*}{\raggedright\arraybackslash \textbf{ANN2}} & 7. sgd & 11 & 42\\
+\cmidrule{1-4}
+ & 16. adam & 32 & 46\\
+
+ & 19. rmsProp & 34 & 53\\
+
+ & 18. momentum & 53 & 56\\
+
+\multirow{-4}{*}{\raggedright\arraybackslash \textbf{deepdive}} & 17. gradientDescent & 52 & 58\\
+\cmidrule{1-4}
+\textbf{snnR} & 54. SemiSmoothNewton & 7 & 48\\
+\cmidrule{1-4}
+\textbf{elmNNRcpp} & 21. ELM & 1 & 59\\
+\cmidrule{1-4}
+\textbf{ELMR} & 22. ELM & 2 & 60\\
+\bottomrule
+\multicolumn{4}{l}{\rule{0pt}{1em}\textit{Note: } Statistics over 10 runs.}\\
+\end{tabular}
+\end{table}
