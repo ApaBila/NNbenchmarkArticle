@@ -28,14 +28,14 @@ author:
     email: nashjc@uottawa.ca
 preamble: 
   includes: 
-    \usepackage{float}
-    \usepackage{multirow}
-    \usepackage{subcaption}
-    \usepackage{longtable}
-    \usepackage{colortbl,xcolor}
-    \newcommand{\atan}{\text{atan}}
-    \newcommand{\invlogit}{\text{invlogit}}
-    \newcommand{\soft}{\textsf}
+    \usepackage{float} 
+    \usepackage{multirow} 
+    \usepackage{subcaption} 
+    \usepackage{longtable} 
+    \usepackage{colortbl,xcolor} 
+    \newcommand{\atan}{\text{atan}} 
+    \newcommand{\invlogit}{\text{invlogit}} 
+    \newcommand{\soft}{\textsf} 
 output: rticles::rjournal_article
 ---
 
@@ -131,18 +131,16 @@ it on a selected set of applications from the TensorFlow Model Zoo.
 }
 
 <!-- Ref 2 - Major comment 1-->
-\textcolor{blue}{
-Furthermore, there are also benchmarks with a specific type of application,
+\textcolor{blue}{Furthermore, there are also benchmarks 
+with a specific type of application,
 e.g., \citep{bianco2018benchmark} for image recognition,
 \citep{WANG2020105120} for crime forecasting,
 \citep{witczak2006gmdh} for fault diagnosis.
 }
 
-<!-- Ref 2 - Major comment 1-->
-\textcolor{blue}{
-None of these benchmarks deals with NN 
-<!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{implemented in} \soft{R} packages which
+<!-- Ref 2 - Major comment 1, comment 14 -->
+\textcolor{blue}{None of these benchmarks deals with NN 
+implemented in \soft{R} packages which
 is the aim of this paper. 
 We follow the general principles of \citep{prechelt1994set}
 to conduct our benchmark: validity, reproducibility and
@@ -157,7 +155,12 @@ NN naming convention, NN random initialization.
 
 A neural network algorithm requires complicated calculations to improve the model control parameters. 
 As with other optimization problems, the gradient of the chosen cost function indicates the model's lack of suitability.
-Optimization methods improve the current iterate by changing the parameters in the opposite of the gradient direction generally with an adaptive step.
+Optimization methods improve the current iterate by changing the
+parameters in the opposite of the gradient direction generally with an 
+adaptive step. 
+<!-- Ref 3 - comment 7 -->
+\textcolor{orange}{This yields to the so-called first-order methods 
+using both the function to be optimized and its gradient.}
 Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
 Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
 
@@ -169,7 +172,10 @@ Modern software allows much of this work, including approximation of the gradien
 
 
 
-The training process can generally be made more efficient if we can also approximate second derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
+The training process can generally be made more efficient if we can also approximate second-order derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
+<!-- Ref 3 - comment 7 -->
+\textcolor{orange}{This yields to the so-called second-order methods 
+using the function, its gradient and its Hessian matrix.}
 There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. 
 Within this group, methods based on the Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the (inverse) Hessian approximation provide several well-known examples. 
 In conducting this study, we hypothesize that these second-order algorithms would perform better 
@@ -188,6 +194,14 @@ of one input layer, one normalized layer, one hidden layer with a non-linear
 activation function 
 <!-- Ref 2 - Comment 14 which is usually the hyperbolic tangent $\tanh()$ -->
 and one output layer. 
+
+<!-- Ref 2 - Major comment 6-->
+\textcolor{blue}{A second aim of this paper is to
+provide ease-of-use scores to help users find the
+appropriate package according to their needs. 
+Examples of usage for each package are also provided
+on-line at \url{https://theairbend3r.github.io/NNbenchmarkWeb/index.html}
+via html templates.}
  
 Specifically, we focus only on regression-based algorithms.
 The criteria used in our benchmark were: (i) accuracy, i.e. the ability to find the global minima on 13 datasets, measured by the Root Mean Square Error (RMSE) in a fixed number of iterations; (ii) speed of the training algorithm; (iii) availability of helpful utilities; (iv) quality of the documentation.
@@ -207,9 +221,9 @@ We refer to \citep[Chapter 11]{friedman2001elements},
 \citep{ripley2007pattern} for a general introduction 
 of neural networks.}
 
-Using the graph description
+Using the graph description,
 <!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{e.g. Fig 1}, 
+\textcolor{blue}{e.g. Fig. \ref{fig:NNexamples}}, 
 a single-hidden layer neural network is made up of 3 parts:
 (i) layer of the input(s), (ii) hidden layer which consists of independent neurons, 
 each of them performing two operations: a linear combination of the inputs plus an 
@@ -235,9 +249,9 @@ y = a_1 + \sum_{j=1}^d a_{j,1} \times f(a_{j,2}+\sum_{l=1}^p a_{j,2+l}\times x_l
 $$
 with $p$ inputs, $d$ hidden neurons and $f$ as the activation function.
 The total number of parameters to be estimated is $1+d(2+p)$
-The neural network depicted Fig. 1a corresponds to $p=1$, $d=3$ and $f=\tanh$
+The neural network depicted Fig. \ref{fig:N131} corresponds to $p=1$, $d=3$ and $f=\tanh$
 for a total of 10 parameters,
-whereas the neural network depicted Fig. 1b corresponds to $p=5$, $d=3$ and $f=\atan$
+whereas the neural network depicted Fig. \ref{fig:N531} corresponds to $p=5$, $d=3$ and $f=\atan$
 for a total of 22 parameters.}
 
 <!-- Ref 2 - Comment 3 -->
@@ -259,7 +273,7 @@ While the final gradient should be small, we believe it is helpful to have
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{gradients with large values}
 at the first steps of the training algorithm, 
-so the following is recommended: (i) normalized inputs and outputs (Fig. 1c 
+so the following is recommended: (i) normalized inputs and outputs (Fig. \ref{fig:N55311}
 <!-- Ref 2 - Comment 10 -->
 \textcolor{blue}{contains \code{Nx} nodes after inputs and before outputs}), 
 (ii) odd functions like the hyperbolic tangent function or the arctangent function, 
@@ -295,6 +309,7 @@ These practices help us find good local-minima and possibly the global-minima.
         \label{fig:N55311}
     \end{subfigure}
     \caption{Three neural networks using the NN $a$-$b$-$c$ notation}
+    \label{fig:NNexamples}
 \end{figure}
 
 
@@ -356,7 +371,7 @@ time is reached.
 
 Specifically, second-order algorithms are all set to a maximum of 200 iterations. 
 On the other hand, first-order algorithms were set to several values, depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
-The full list of the maximum iteration number per \code{package:algorithm} is given in Table 4 in Appendix D. 
+The full list of the maximum iteration number per \code{package:algorithm} is given in Table \ref{tab:allscore} in Appendix D. 
 It can be seen that we were unable to completely harmonize the hyperparameters 
 as an appropriate learning rate differed between packages, despite the algorithm 
 being similarly named.
@@ -443,7 +458,7 @@ medium difficulty respectively.
 
 The last univariate dataset, \code{uNeuroOne},  was also used to teach the same course 
 and is now available in the proprietary software NeuroOne at \url{http://www.inmodelia.com/software.html}.
-In Table 1, we list some information on each dataset used in the first round of
+In Table \ref{tab:NNdatasets}, we list some information on each dataset used in the first round of
 our analysis: the number of neurons and the induced parameter number are available
 in the last two columns.
 
@@ -452,8 +467,9 @@ in the last two columns.
 dimNNdata <- t(sapply(NNdatasets, function(x) dim(x$Z)))
 sumNNdata <- NNbenchmark::NNdataSummary(NNbenchmark::NNdatasets)
 colnames(sumNNdata) <- c("Dataset", "Row nb.", "Input nb.", "Neuron nb.", "Param. nb.")
-kableExtra::kable(sumNNdata, 
-                  format = "latex", booktabs = TRUE, centering = TRUE, align="lcccc",
+kableExtra::kable(sumNNdata, label="NNdatasets",
+                  format = "latex", booktabs = TRUE, 
+                  centering = TRUE, align="lcccc",
                   caption="Datasets' summary") %>%
   pack_rows("Multivariate", 1, 4) %>% 
   pack_rows("Univariate", 5, 12) %>%
@@ -512,7 +528,7 @@ for instance
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{an \soft{R} package allows }to predict the amyloidogenicity propensity of polypeptide sequences.
 Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error.
-\textcolor{cyan}{We refer to Table 5 in Appendix D for the full list of discarded packages.}
+\textcolor{cyan}{We refer to Table \ref{tab:Discard:Pkg} in Appendix D for the full list of discarded packages.}
 
 
 **2. Templates for testing accuracy and speed**
@@ -649,16 +665,18 @@ To rank the speed and quality of convergence, we have devised the following meth
 
 # Results, discussion and recommendations
 
-Table 2 gives the RMSE and time score per package and per algorithm. 
-The full list of scores is given in Table 4 in Appendix D.
-Figure 2 shows the minimum RMSE value per \code{package:algorithm}
+Table \ref{tab:RMSEscore} gives the RMSE and time score per package and per algorithm,
+whereas Table \ref{tab:EaseOfUse} gives Utility, Documentation and Call
+scores per package.
+The full list of scores is given in Table \ref{tab:allscore} in Appendix D.
+Figure \ref{fig:Allpkg:RMSEmin} shows the minimum RMSE value per \code{package:algorithm}
 for two particular datasets \code{mIshigami} and \code{uDreyfus1},
-whereas Figure 3 displays the average computation time.
+whereas Figure \ref{fig:Allpkg:timemean} displays the average computation time.
 The number on the x-level refers to the RMSE overall score of the 
-\code{package:algorithm} given in Table 2 (last column), e.g., 8 refers to 
+\code{package:algorithm} given in Table \ref{tab:RMSEscore} (last column), e.g., 8 refers to 
 \code{validann:optim(CG)} which is a very slow algorithm as
 <!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{depicted in Fig. 3}.
+\textcolor{blue}{depicted in Fig. \ref{fig:Allpkg:timemean}}.
 
 Both figures show that a good overall score does not necessarily imply 
 a good performance on the two datasets under consideration. 
@@ -682,28 +700,28 @@ Finally, we list the reasons for discarded packages.
 options(knitr.kable.NA = '')
 
 if(file.exists("./tables/Table1-rev-Callrating.csv")) {  
-  Table1 <- read.table("./tables/Table1-rev-Callrating.csv", sep = ";", dec=".",
+  TablePkgRMSEscore <- read.table("./tables/Table1-rev-Callrating.csv", sep = ";", dec=".",
                        header=TRUE)
-  Table1 <- Table1[Table1[,2] != "", ]
+  TablePkgRMSEscore <- TablePkgRMSEscore[TablePkgRMSEscore[,2] != "", ]
 }else 
-   Table1 <- rbind(rep("missing",6))
+   TablePkgRMSEscore <- rbind(rep("missing",6))
 
-colnames(Table1) <- c("Package", "Algorithm", "Time", "RMSE",
+colnames(TablePkgRMSEscore) <- c("Package", "Algorithm", "Time", "RMSE",
                     "Util", "Doc", "Call", "Comment")
 
-pkg.name <- Table1$Package[Table1$Package != ""]
-idx.pkg.name <- (1+0:NROW(Table1))[Table1$Package != ""]
-Table1$Doc <- floor(Table1$Doc)
+pkg.name <- TablePkgRMSEscore$Package[TablePkgRMSEscore$Package != ""]
+idx.pkg.name <- (1+0:NROW(TablePkgRMSEscore))[TablePkgRMSEscore$Package != ""]
+TablePkgRMSEscore$Doc <- floor(TablePkgRMSEscore$Doc)
 
 #repeat value
-Table1$Package <- rep(pkg.name, times=diff(idx.pkg.name))
-Table1$Util <- rep(Table1$Util[!is.na(Table1$Util)], times=diff(idx.pkg.name))
-Table1$Doc <- rep(Table1$Doc[!is.na(Table1$Doc)], times=diff(idx.pkg.name))
-Table1$Call <- rep(Table1$Call[!is.na(Table1$Call)], times=diff(idx.pkg.name))
+TablePkgRMSEscore$Package <- rep(pkg.name, times=diff(idx.pkg.name))
+TablePkgRMSEscore$Util <- rep(TablePkgRMSEscore$Util[!is.na(TablePkgRMSEscore$Util)], times=diff(idx.pkg.name))
+TablePkgRMSEscore$Doc <- rep(TablePkgRMSEscore$Doc[!is.na(TablePkgRMSEscore$Doc)], times=diff(idx.pkg.name))
+TablePkgRMSEscore$Call <- rep(TablePkgRMSEscore$Call[!is.na(TablePkgRMSEscore$Call)], times=diff(idx.pkg.name))
 
 
 #reorder columns
-TableScore <- Table1[, c(1,2:4)]
+TableScore <- TablePkgRMSEscore[, c(1,2:4)]
 #get the min RMSE by pkg
 pkgRkbyRMSE <- sort(tapply(TableScore$RMSE, TableScore$Package, min))
 #create new index
@@ -712,26 +730,56 @@ getorderbypkg <- function(p)
 {
   idx <- (1:n)[TableScore$Package == p]
   if(length(idx) > 1)
-    return(idx[order(Table1[idx, "RMSE"])])
+    return(idx[order(TablePkgRMSEscore[idx, "RMSE"])])
   else
     return(idx)
 }
 idxRk <- unlist(sapply(names(pkgRkbyRMSE), getorderbypkg))
 TableScorerk <- TableScore[idxRk, ]
 rownames(TableScorerk) <- 1:n
-m <- n/2
-TableScorerk2col <- cbind(head(TableScorerk, m), tail(TableScorerk, m))
+# m <- n/2
+# TableScorerk2col <- cbind(head(TableScorerk, m), tail(TableScorerk, m))
+# 
+# kableExtra::kable(TableScorerk2col, format = "latex", booktabs = TRUE, 
+#                   centering = TRUE, align="llccllcc",
+#                   caption="Results of Tested Packages (sorted by best RMSE score per package)") %>%
+#   add_header_above(c(" "=2, "Global score"=2," "=2, "Global score"=2)) %>%
+#   column_spec(c(1, 5), bold = TRUE) %>%
+#   column_spec(4, border_right = TRUE) %>%
+#   collapse_rows(columns = c(1,5), latex_hline = "major", valign ="middle") %>%
+#   kable_styling(font_size=7) %>%
+#   footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
 
-kableExtra::kable(TableScorerk2col, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, align="llccllcc",
+m <- 29
+TableScoreList <- list(TableScorerk[1:m,], TableScorerk[-(1:m),])
+rownames(TableScoreList[[2]]) <- 1:NROW(TableScoreList[[2]])
+
+TScore1 <- capture.output(kableExtra::kable(TableScoreList[[1]], 
+                  format = "latex", booktabs = TRUE, 
+                  centering = FALSE, align="llcc",
+                  label="RMSEscore",
                   caption="Results of Tested Packages (sorted by best RMSE score per package)") %>%
-  add_header_above(c(" "=2, "Global score"=2," "=2, "Global score"=2)) %>%
-  column_spec(c(1, 5), bold = TRUE) %>%
-  column_spec(4, border_right = TRUE) %>%
-  collapse_rows(columns = c(1,5), latex_hline = "major", valign ="middle") %>%
-  kable_styling(font_size=7) %>%
-  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE)
+  add_header_above(c(" "=2, "Global score"=2)) %>%
+  column_spec(1, bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7, full_width = FALSE) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE))
+
+TScore2 <- capture.output(kableExtra::kable(TableScoreList[[2]], 
+                  format = "latex", booktabs = TRUE, 
+                  centering = FALSE, align="llcc",
+                  caption="Results of Tested Packages (sorted by best RMSE score per package)") %>%
+  add_header_above(c(" "=2, "Global score"=2)) %>%
+  column_spec(1, bold = TRUE) %>%
+  collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
+  kable_styling(font_size=7, full_width = FALSE) %>%
+  footnote(general="Statistics over 10 runs.", footnote_as_chunk=TRUE))
+
+TScore12 <- c(head(TScore1, -1), tail(TScore2, -4))
+cat(TScore12, file = "./tables/Table-RMSEscore.tex", sep="\n")
 ```
+
+\input{"./tables/Table-RMSEscore.tex"}
 
 
 ```{r echo=FALSE, message=FALSE}
@@ -760,8 +808,9 @@ TableEaseOfUse <- TableEaseOfUse[, c("Package", "Util", "Doc", "Call",
                                      "Formula", "X Y", "Comments")]
 
 kableExtra::kable(TableEaseOfUse, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, align="lcccccl",
-                  caption="Ease of use of Tested Packages") %>%
+                  centering = TRUE, align="lcccccl", linesep="",
+                  label="EaseOfUse",
+                  caption="Ease of Use Scores of Tested Packages") %>%
   add_header_above(c(" "=1, "Individual score"=3,"Input allowed"=2, " "=1)) %>%
   column_spec(1, bold = TRUE) %>%
   column_spec(7, width = "30em") %>% 
@@ -779,18 +828,18 @@ kableExtra::kable(TableEaseOfUse, format = "latex", booktabs = TRUE,
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-RMSEmin.png}
-        \label{fig:Allpkg:RMSEmin}
         \caption{RMSE minimum value per package for \code{mIshigami}
         and \code{uDreyfus1} datasets}
+        \label{fig:Allpkg:RMSEmin}
 \end{figure}
 
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-timmean.png}
-        \label{fig:Allpkg:timemean}
         \caption{Average time value per package for \code{mIshigami}
         and \code{uDreyfus1} datasets}
+        \label{fig:Allpkg:timemean}
 \end{figure}
 
 
@@ -900,7 +949,7 @@ there are some reasons why users might hesitate to choose them.
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{Firstly, both \pkg{minpack.lm} and \pkg{nlsr}} require the full formula of the neural network including variables and parameters. 
 Secondly, they require good starting values to achieve the best convergence. 
-Notice that in Table 2, \code{minpack.lm} does not have a high rank. 
+Notice that in Table \ref{tab:RMSEscore}, \code{minpack.lm} does not have a high rank. 
 This is because we removed the random Gaussian start values we had originally used; which means that the default start values of \code{minpack.lm} were not appropriate for our datasets. 
 
 We suspect \pkg{nlsr}'s performance on convergence would have similarly dropped 
@@ -949,7 +998,7 @@ Only 2 packages include both second-order algorithms and a lower-order algorithm
 \pkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
 Both implementations of Nelder-Mead do not rank well in minimum RMSE, around 40 out of 60, with similar ranks for the other criteria.
 We would also caution users to avoid the other methods in \pkg{validann} from \code{optim}.
-From Table 2 it may appear that \pkg{validann}'s implementation of the Conjugate
+From Table \ref{tab:RMSEscore} it may appear that \pkg{validann}'s implementation of the Conjugate
 Gradient (CG) algorithm finds reasonable minima and 
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{is thus} a good option.
@@ -1072,14 +1121,14 @@ for other packages that wish to be more certain of the results. For simple datas
 
 A certain number of packages have been discarded from this study for at least one of the following reasons:
 
-1. For regression but unsuitable for the scope of our research, coded RE in Table 5.
-2. For time series, coded TS in Table 5.
-3. For classification, coded CL in Table 5. 
-4. For specific application purpose, coded AP in Table 5.
-5. For tools to complement NN's by other packages, coded UT in Table 5.
-6. Not actually neural networks and other reasons, coded XX in Table 5.
+1. For regression but unsuitable for the scope of our research, coded RE in Table \ref{tab:Discard:Pkg}.
+2. For time series, coded TS in Table \ref{tab:Discard:Pkg}.
+3. For classification, coded CL in Table \ref{tab:Discard:Pkg}. 
+4. For specific application purpose, coded AP in Table \ref{tab:Discard:Pkg}.
+5. For tools to complement NN's by other packages, coded UT in Table \ref{tab:Discard:Pkg}.
+6. Not actually neural networks and other reasons, coded XX in Table \ref{tab:Discard:Pkg}.
 
-The full list of untested packages is given in Table 5 in Appendix D.
+The full list of untested packages is given in Table \ref{tab:Discard:Pkg} in Appendix D.
 
 
 
@@ -1088,13 +1137,13 @@ The full list of untested packages is given in Table 5 in Appendix D.
 ## Further analysis of TOP-5 packages
 
 We perform a second round of analysis with a larger dataset
-and a focus on the TOP-5 packages given in Table 2.
+and a focus on the TOP-5 packages given in Table \ref{tab:RMSEscore}.
 That is, we consider packages \pkg{nlsr}, \pkg{rminer}, \pkg{nnet}, \pkg{validann} with algorithm BFGS and \pkg{MachineShop}.
 We fit the NN packages on Simon Wood's Gaussian dataset, see \code{bWoodN1} in dataset description, which contains
 20,000 rows with 6 inputs valued in [0,1] for a (single) numeric output.
 Due to the non-linear functions considered, see Appendix B, the link between the output and each
 explanatory variable is highly non-linear which greatly affects the fitting time.
-Table 3 gives the metric performance over 20 runs of these TOP-5 five packages on \code{bWoodN1}.
+Table \ref{tab:TOP10:bWoodN1} gives the metric performance over 20 runs of these TOP-5 five packages on \code{bWoodN1}.
 
 We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \pkg{rminer}
 and \pkg{validann} are a little ahead of the others.
@@ -1113,29 +1162,29 @@ on the \code{bWoodN1} dataset.}
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
-if(file.exists("./tables/Table3.csv")) {  
-  Table3 <- read.csv("./tables/Table3.csv")
+if(file.exists("./tables/TableTOP10.csv")) {  
+  TableTOP10 <- read.csv("./tables/TableTOP10.csv")
 }else
- Table3 <- rep("missing", 7)
-colnames(Table3) <- c("Package::algorithm", "RMSE min", "RMSE median", "RMSE D51", 
+ TableTOP10 <- rep("missing", 7)
+colnames(TableTOP10) <- c("Package::algorithm", "RMSE min", "RMSE median", "RMSE D51", 
                       "MAE median", "WAE median", "Time median")
 
 TOP5algo <- subset(TableScorerk, RMSE %in% 1:5)[, c("Package", "Algorithm")]
 rownames(TOP5algo)  <- subset(TableScorerk, RMSE %in% 1:5)[, "Package"]
 
-Table3$Package <- sapply(strsplit(Table3[, "Package::algorithm"], "::"), head, n=1)
-Table3$Algorithm <- TOP5algo[Table3$Package, "Algorithm"]
-idx2shorten <- grep("(BFGS)", Table3$Algorithm)
-Table3$Algorithm[idx2shorten] <- substr(Table3$Algorithm[idx2shorten], 1, nchar(Table3$Algorithm[idx2shorten])-6)
-Table3 <- Table3[, c("Package", "Algorithm", "RMSE min", "RMSE median", 
+TableTOP10$Package <- sapply(strsplit(TableTOP10[, "Package::algorithm"], "::"), head, n=1)
+TableTOP10$Algorithm <- TOP5algo[TableTOP10$Package, "Algorithm"]
+idx2shorten <- grep("(BFGS)", TableTOP10$Algorithm)
+TableTOP10$Algorithm[idx2shorten] <- substr(TableTOP10$Algorithm[idx2shorten], 1, nchar(TableTOP10$Algorithm[idx2shorten])-6)
+TableTOP10 <- TableTOP10[, c("Package", "Algorithm", "RMSE min", "RMSE median", 
                      "RMSE D51", "MAE median", "WAE median", "Time median")]
-Table3[, c("RMSE min", "RMSE median", "RMSE D51", "MAE median", "WAE median", "Time median")] <- apply(Table3[, c("RMSE min", "RMSE median", 
+TableTOP10[, c("RMSE min", "RMSE median", "RMSE D51", "MAE median", "WAE median", "Time median")] <- apply(TableTOP10[, c("RMSE min", "RMSE median", 
                      "RMSE D51", "MAE median", "WAE median", "Time median")],
       2, signif, digits=4)
 
-kableExtra::kable(Table3, booktabs = TRUE, centering = TRUE, 
+kableExtra::kable(TableTOP10, booktabs = TRUE, centering = TRUE, 
                   caption="Performance on bWoodN1 dataset",
-                  align="llcccccc") %>%
+                  align="llcccccc", label="TOP10:bWoodN1") %>%
   kable_styling(font_size=7) %>%
   column_spec(c(1, 8), bold = TRUE) %>%
   footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
@@ -1297,25 +1346,31 @@ res <- trainPredict_1pkg(5, pkgname = "nnet", pkgfun = "nnet", nnet.method,
 ## Appendix D
 
 ```{r echo=FALSE, message=FALSE}
-if(file.exists("./tables/TableAppendixC.csv")) {  
-  Table1SupplApp <- read.csv("./tables/TableAppendixC.csv", sep = ";") 
+if(file.exists("./tables/TableAllScoreInput.csv")) {  
+  Table1SupplApp <- read.csv("./tables/TableAllScoreInput.csv", sep = ";") 
 }else 
   Table1SupplApp <- rep("missing",8)
-colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", "Learn. rate", "median",
-                    "D51", "MAE", "WAE")
-#Table1SupplApp[, "Package:Algorithm"] <- paste0(Table1[Table1SupplApp$Num, "Package"], ":",
-#                        substr(Table1[Table1SupplApp$Num, "Algorithm"], 4, nchar(Table1[Table1SupplApp$Num, "Algorithm"])))
-#Table1SupplApp <- Table1SupplApp[, c("Num", "Package:Algorithm", "Input format", "Maxit", "Learn. rate", "median",
-#                    "D51", "MAE", "WAE")]
+colnames(Table1SupplApp) <- c("Num", "Input format", "Maxit", 
+                    "Learn. rate", "min", "median", "D51", "MAE", 
+                    "WAE", "Package", "Algorithm", "time")
 
-Table1SupplApp[, "Package"] <- Table1[Table1SupplApp$Num, "Package"]
-Table1SupplApp[, "Algorithm"] <- Table1[Table1SupplApp$Num, "Algorithm"]
+#repeat value
+pkg.name <- Table1SupplApp$Package[Table1SupplApp$Package != ""]
+idx.pkg.name <- (1+0:NROW(Table1SupplApp))[Table1SupplApp$Package != ""]
+Table1SupplApp$Package <- rep(pkg.name, times=diff(idx.pkg.name))
 
-Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate", "median",
+Table1SupplApp <- Table1SupplApp[, c("Package","Algorithm", "Input format", "Maxit", "Learn. rate",  "min", "median",
                     "D51", "MAE", "WAE")]
+num2char <- function(x)
+  if(x == 0)
+  { return(" ")
+  }else return(as.character(x))
+
+Table1SupplApp$Maxit <- sapply(Table1SupplApp$Maxit, num2char)
+Table1SupplApp$"Learn. rate" <- sapply(Table1SupplApp$"Learn. rate", num2char)
 
 #use idxRk as for TableScorerk
-if(all(Table1SupplApp[, "Algorithm"] == Table1$Algorithm))
+if(all(Table1SupplApp[, "Algorithm"] == TablePkgRMSEscore$Algorithm))
 {
   Table1SupplApp <- Table1SupplApp[idxRk, ]
   rownames(Table1SupplApp) <- 1:NROW(Table1SupplApp)
@@ -1327,9 +1382,9 @@ TOP5algo <- substr(TOP5algo, 5, nchar(TOP5algo))
 TOP5sentence <- paste0("TOP5 are ", paste(paste(TOP5pkg, TOP5algo, sep=":"), collapse=", "), ".")      
 
 kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE, 
-                  centering = TRUE, align="llcllcccc",
+                  centering = TRUE, align="lllllccccc", label="allscore",
                   caption="All convergence scores per package:algorithm sorted by minimum RMSE") %>%
-  add_header_above(c(" "=2, "Input parameter"=3, "RMSE Score"=2, "Other score"=2)) %>%
+  add_header_above(c(" "=2, "Input parameter"=3, "RMSE score"=3, "Other score"=2)) %>%
   column_spec(1, bold = TRUE) %>%
   collapse_rows(columns = 1, latex_hline = "major", valign ="middle") %>%
   kable_styling(font_size=7, latex_options =c("hold_position")) %>%
@@ -1341,18 +1396,18 @@ kableExtra::kable(Table1SupplApp, format = "latex", booktabs = TRUE,
 ```{r echo=FALSE, message=FALSE}
 options(knitr.kable.NA = '')
 
-if(file.exists("./tables/Table2-UTF8-cleaned.csv")) {  
-#  Table2 <- read.csv("./tables/Table2.csv", sep = ";", encoding="latin1")
-  Table2 <- read.csv("./tables/Table2-UTF8-cleaned.csv")
-  Table2 <- Table2[Table2[,3] != "", ]
-  Table2 <- Table2[,c("Package", "Category", "Reason.to.Discard..Where.")]
+if(file.exists("./tables/TableDiscardedPkg.csv")) {  
+  TableDiscard <- read.csv("./tables/TableDiscardedPkg.csv")
+  TableDiscard <- TableDiscard[TableDiscard[,3] != "", ]
+  TableDiscard <- TableDiscard[,c("Package", "Category", "Reason.to.Discard..Where.")]
 }else
- Table2 <- rep("missing", 3)
-colnames(Table2) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
+ TableDiscard <- rep("missing", 3)
+colnames(TableDiscard) <- c("Package", "Category", "Reason to Discard (File(s) and/or function(s))")
 
 
 
-kableExtra::kable(Table2, booktabs = TRUE, centering = TRUE, longtable = TRUE,
+kableExtra::kable(TableDiscard, booktabs = TRUE, centering = TRUE,
+                  longtable = TRUE, label="Discard:Pkg",
                   caption="Review of Discarded Packages") %>%
   kable_styling(font_size=7, latex_options = c("repeat_header", "hold_position")) %>%
   column_spec(3, width = "10cm") %>%
