@@ -56,6 +56,7 @@ by Referee \#2 in Section \ref{referee2} and by Referee \#3 in Section \ref{refe
 
 In the pdf, changes for Referee  \#1 are put in \red{red}, for Referee \#2 in \blue{blue} and
 for Referee  \#3 in \orange{orange}.  Other changes are in \cyan{cyan}.
+Hypertext references are now used for tables and figures to ease the reading of the paper in pdf.
 
 Yours sincerely
 \bigskip
@@ -125,7 +126,7 @@ Comments on Rubric 3: User-friendly call to fit a NN\\
        
  \textit{A 2 star rating for \code{nlsr} seems unwarranted because its usage is more involved than other packages, like \code{nnet}, given the same ranking.  In order to fit a NN with the \code{nlsr::nlxb} function, the mathematical form of the NN equation must be supplied as a formula.  This requires more complete knowledge of the underlying NN than, say, \code{nnet} which requires specification of a formula only in terms of the response and a linear combination of the predictor variables.  The operators (and functions) that appear in formulas are analogous to function calls.  Accordingly, the formula in \code{nlsr} consists of more calls than the formula in \code{nnet}.  Additionally, the testing code call to \code{nlsr::nlxb} is two lines and includes a call to the list function.  Therefore, \code{nlxb} calls appear to be multiple-lines call to many function, which is more in line with 0 stars than the 2 star rating given.}
 
-\textbf{Indeed there are some inconsistencies with this rating and in particular \code{nlsr} was badly rated.}
+\textbf{Indeed, there are some inconsistencies with this rating and in particular \code{nlsr} was badly rated.}
 
 \item \textit{Rating packages on their ease-of-use is a worthwhile endeavor.  However, some of the subjective components of the current rubric and its application detract from the ratings as a measure of ease-of-use.  Consider the four examples below intended to illustrate how model fitting syntaxes might vary across different packages or users.
 }
@@ -172,11 +173,14 @@ More thought should be given to the awarding of stars based on number of lines o
     \item[b.] a single function with model specification passed as a list or via a dedicated function; or data converted in a dedicated S3/S4 object = 1 star
     \item[c.] multiple functions for initializing-converting-fitting = 0 star
 \end{enumerate}
-Hence the Call rating has been updated accordingly.}
+Hence the Call rating has been updated accordingly.
+We also split Table 2 into two different tables : the new Table 2 contains only the RMSE score and the time per \code{package:algorithm}
+while the new Table 3 contains ease of use scores per package where additional columns have been added to clarify how the fitting function can
+be called.}
 
 \end{enumerate}
 
-%\newpage
+\newpage
 \section{Referee \#2}\label{referee2}
 
 In the pdf, changes for Referee \#2 are in \blue{blue}.  
@@ -202,18 +206,19 @@ as new references to recent books added in Section 2.
 
 \item \textit{For a benchmark paper, the number of included datasets is quite low, and the chosen datasets are very simple. Given that collections such as OpenML100 are readily available, a benchmark should be based on more and more complex data.}
 
-\textbf{We thank the referee for pointing out the OpenML100 database, now replaced by OpenML-CC18 database. 
-There are 3433 datasets of which 1589 are for regression purposes.
-We do not have time to perform an entirely new benchmark and mention it for future work in the conclusion.
-However in the supplementary materials, we provide the results on the larger dataset 
-\code{bWoodN1} of other TOP10 packages, which are not in the paper.
+\textbf{We thank the referee for pointing out the OpenML100 database, now replaced by OpenML-CC18 database, 
+which propose many datasets (3433) of which 1589 are for regression purposes.
+But we do not need as many packages because our 12 datasets identify a large variety of situations where 
+numerical difficulties occur for any training algorithm, such as nearly singular Jacobian, zero residual or divide by zero
+situations.
+Furthermore, the larger dataset \code{bWoodN1} has been tested on TOP10 packages (not only TOP5)
 We observe that only 2 packages (\code{CaDENCE} and \code{traineR}) 
-have a RMSE minimum close to the RMSE of TOP5 packages.
-Therefore, we add a new comment in the paper.}
+have a RMSE minimum close to the RMSE of TOP5 packages. This suggests packages outside TOP10
+will have a bad performance on \code{bWoodN1}. 
+Finally, it will be a tremendous task to perform an entirely new benchmark over 1589 datasets
+but we mention it for future work in the conclusion.}
 
 
-
-\red{Do you think we need to run bWoodN1 for all packages ? to avoid a new revision?}
 
 \item \textit{It is unclear how hyperparameters such as the learning rate were tuned. In a benchmark paper, hyperparameter tuning is essential to draw valid conclusions beyond the defaults.}
 
@@ -236,8 +241,8 @@ Most of the trial \& error was for first-order algorithms while the focus for se
 
 \item \textit{The framing of this paper is not precise. The introduction states a still scientifically interesting hypothesis ("we hypothesize that these second-order algorithms would perform better than the first-order methods for datasets that fit in memory"), but according to the title, abstract, and evaluation criteria, they want to present a more general comparison of R packages.}
 
-\textbf{Clarify this point}
-\red{Patrice?}
+\textbf{We clarify this point by adding a paragraph in the introduction.}
+
 
 
 \item \textit{Despite a very nicely designed and organized website (NNbenchmarkWeb), the documentation on GitHub is quite messy and without clear guidance on how to use the package.}
@@ -249,8 +254,9 @@ The website is now hosted at \url{https://theairbend3r.github.io/NNbenchmarkWeb/
 
 \item \textit{Comparing the performance only on the training data is rather unrelated to common applications and does not indicate how well the network generalizes.}
 
-\textbf{Comment and justify}
-\red{Patrice?}
+\textbf{We only use a training set because the purpose of our study is to verify the ability to reach good minima, i.e., rating optimization
+methods used in NN packages. This requirement is satisfied by using only a train set.}
+
 
 \end{enumerate}
 
@@ -260,8 +266,6 @@ The website is now hosted at \url{https://theairbend3r.github.io/NNbenchmarkWeb/
 \item \textit{Figure 1: The figure caption does not describe the figure sufficiently well.}
 
 \textbf{We clarify the NN $a$-$b$-$c$ notation and also add words in the captions}
-
-\red{Patrice, do you validate?}
 
 \item \textit{p. 2: It is unclear how Figure 1c relates to normalized inputs.}
 
@@ -328,7 +332,7 @@ The minor changes are suggestions of aspects that can improve the manuscript:
 Fig1 c) is not a single hidden layer networks.}
 
 \textbf{We formally introduce the NN $a$-$b$-$c$ notation.}
-\red{Patrice : could you check?}
+
 
 \item \textit{the examples in page 2 assume the tanh and atan activation functions, why not use $f()$, where f is the activation function, which can include the logistic function?}
 
@@ -347,8 +351,8 @@ Fig1 c) is not a single hidden layer networks.}
 
 \item \textit{it should be explained what is a first order and second order algorithm.}
 
-\textbf{TODO}
-\red{Patrice}
+\textbf{Done, we add two sentences in the introduction.}
+
 
 \end{enumerate}
 
