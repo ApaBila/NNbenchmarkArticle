@@ -111,9 +111,12 @@ The \code{RWsearch} package lists 67 packages on CRAN to perform data preprocess
 [64] "VWPre"                "waves"                "wiseR"               
 [67] "wvtool"  
 \end{verbatim}
-\textbf{In the utility rating, we could have give stars for packages providing generic functions such as \code{print},
-\code{plot}, \code{summary}, as it is supposed the use of S3 objects. 
-We do not contact the 25 package maintainers providing the 60 algorithms, as the description, the documentation 
+% give --> given
+\textbf{In the utility rating, we could have given stars for packages providing generic functions such as \code{print},
+% delete "the use of", add "are used"
+\code{plot}, \code{summary}, as it is supposed S3 objects are used. 
+% do -> did
+We did not contact the 25 package maintainers providing the 60 algorithms, as the description, the documentation 
 (manual, vignettes,\dots) should be sufficiently clear and precise so that users find the \code{predict} function
 or the \code{scale} function without contacting the maintainer.
 }
@@ -168,7 +171,8 @@ accept x and y data structures directly.
 More thought should be given to the awarding of stars based on number of lines or function calls.
 }
 
-\textbf{We rewrite the rating methodology more objectively as follows
+% rewrite -> rewrote, delete "more objectively"
+\textbf{We rewrote the rating methodology as follows
 \begin{enumerate}
     \item[a.] a single function with arguments passed as character, numeric, boolean or formula; and data as a data.frame or a matrix = 2 stars
     \item[b.] a single function with model specification passed as a list or via a dedicated function; or data converted in a dedicated S3/S4 object = 1 star
@@ -198,7 +202,8 @@ as new references to recent books added in Section 2.
 
 \item \textit{The restriction on single hidden-layer regression networks with tanh() activation does not reflect state-of-the-art neural networks used in practice. Although such a restriction is understandable from the author’s practical perspective, it renders the comparison to be not very useful for applications of neural networks.}
 
-\textbf{We update the formal description of a neural network with a general activation function $f$.}
+% update -> updated
+\textbf{We updated the formal description of a neural network with a general activation function $f$.}
 
 \item \textit{The description of neural networks on pages 2-3 is not up to date. For example, it is very common to use activation functions such as ReLU, which is not differentiable at 0 and not bounded.}
 
@@ -207,37 +212,68 @@ as new references to recent books added in Section 2.
 
 \item \textit{For a benchmark paper, the number of included datasets is quite low, and the chosen datasets are very simple. Given that collections such as OpenML100 are readily available, a benchmark should be based on more and more complex data.}
 
-\textbf{We thank the referee for pointing out the OpenML100 database, now replaced by OpenML-CC18 database, 
+\textbf{We thank the referee for pointing out the OpenML100 database, now 
+replaced by OpenML-CC18 database, 
 which propose many datasets (3433) of which 1589 are for regression purposes.
-But we do not need as many packages because our 12 datasets identify a large variety of situations where 
-numerical difficulties occur for any training algorithm, such as nearly singular Jacobian, zero residual or divide by zero
+% rewritten from 
+%% But we do not need as many packages because our 12 datasets identify a large variety of situations where 
+%% numerical difficulties occur for any training algorithm, such as nearly singular Jacobian, zero residual or divide by zero
+%% situations.
+However, for our test purposes, we do not need such a large number of 
+packages because our 12 datasets identify a large variety of situations where 
+numerical difficulties occur for any training algorithm, such as nearly singular 
+Jacobian, zero residual or divide by zero
 situations.
 Furthermore, the larger dataset \code{bWoodN1} has been tested on TOP10 packages (not only TOP5)
 We observe that only 2 packages (\code{CaDENCE} and \code{traineR}) 
 have a RMSE minimum close to the RMSE of TOP5 packages. This suggests packages outside TOP10
 will have a bad performance on \code{bWoodN1}. 
-Finally, it will be a tremendous task to perform an entirely new benchmark over 1589 datasets
-but we mention it for future work in the conclusion.}
+% rewritten from 
+%% Finally, it will be a tremendous task to perform an entirely new benchmark over 1589 datasets
+%% but we mention it for future work in the conclusion.}
+Finally, it would be an excessive task to perform an entirely new benchmark over 1589 datasets
+given our present computational and human resources, though we mention this possibility 
+for future work in the conclusion.
+%% ?? IS THIS WORTH ADDING?
+The Google Summer of Code has generously provided support to our two junior researchers
+(one for two parts of the project), but all other support has been from the authors' own
+resources.}
 
 
 
 \item \textit{It is unclear how hyperparameters such as the learning rate were tuned. In a benchmark paper, hyperparameter tuning is essential to draw valid conclusions beyond the defaults.}
 
-\textbf{Due to the high number of package:algorithm, we did not fully attempt to train all the hyperparameters of all packages. 
+% add "pairs"
+\textbf{Due to the high number of package:algorithm pairs, we did not fully attempt to train all the hyperparameters of all packages. 
 We justify this choice because of the tendency of users to use default hyperparameters. Moreover, not all packages offer the same hyperparameters. 
-Based on GSoc 2019, we considered \code{maxit} to be the most important parameters, as some packages performed rather differently despite 
+% add "our" and "project", parameters -> parameter
+Based on our GSoc 2019 project, we considered \code{maxit} to be the most important parameter, as some packages performed rather differently despite 
 having the same algorithm, sometimes even the same code for the algorithm, because they had different \code{maxit} values. }
 
-\textbf{It was harder to find a learning rate value to harmonize towards. 
-But even the algorithms that were supposedly the same, at least in name, seemed to need different learning rates for the same level of convergence. 
-We made a decision after a reasonably-time-consuming grid search between which \code{maxit} and what learning rate. }
+% suggested rewording
+%% \textbf{It was harder to find a learning rate value to harmonize towards. 
+\textbf{It was harder to find a harmonized value of the learning rate value. 
+%% rewording
+%% But even the algorithms that were supposedly the same, at least in name, seemed to need different learning rates for the same level of convergence. 
+Even for algorithms that were supposedly the same, at least in name, we seemed to need
+different learning rates for the same level of convergence. 
+%% ?? REWORDING -- Is it OK?
+After a time-consuming grid search we chose a compromise between \code{maxit} and learning rate.}
 
-\textbf{As for the top 10 packages, especially the ones that basically stem form \code{nnet}'s BFGS, we tried to make sure all the other hyperparameters 
+% form -> from
+\textbf{As for the top 10 packages, especially the ones that basically stem from \code{nnet}'s BFGS, we tried to make sure all the other hyperparameters 
 were harmonized as well. 
-For those we didn't harmonize completely, such as \code{rminer} which had a difference of maximum allowable weights than the default \code{nnet}, 
-we mentioned them in the paper. 
-Most of the trial \& error was for first-order algorithms while the focus for second-order algorithms the \code{maxit} is uniquely set to 200. }
-\textbf{We add a comment on this in the paper.}
+For those we didn't harmonize completely, such as \code{rminer} which had a difference of
+% than -> from
+% maximum allowable weights than the default \code{nnet}, 
+maximum allowable weights from the default \code{nnet}, 
+% REWORD
+%% we mentioned them in the paper. 
+we have included notes in the paper. 
+% removed "the focus"  and "the" in next line
+Most of the trial \& error was for first-order algorithms while for second-order algorithms \code{maxit} is uniquely set to 200. }
+%% add -> added
+\textbf{We added a comment on this in the paper.}
 
 
 \item \textit{The framing of this paper is not precise. The introduction states a still scientifically interesting hypothesis ("we hypothesize that these second-order algorithms would perform better than the first-order methods for datasets that fit in memory"), but according to the title, abstract, and evaluation criteria, they want to present a more general comparison of R packages.}
@@ -256,7 +292,8 @@ The website is now hosted at \url{https://theairbend3r.github.io/NNbenchmarkWeb/
 \item \textit{Comparing the performance only on the training data is rather unrelated to common applications and does not indicate how well the network generalizes.}
 
 \textbf{We only use a training set because the purpose of our study is to verify the ability to reach good minima, i.e., rating optimization
-methods used in NN packages. This requirement is satisfied by using only a train set.}
+% train -> training
+methods used in NN packages. This requirement is satisfied by using only a training set.}
 
 
 \end{enumerate}
