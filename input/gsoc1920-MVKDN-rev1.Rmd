@@ -84,16 +84,21 @@ as well as  outputs per package/dataset at
 
 The \soft{R} Project for Statistical Computing, as any open-source platform, relies on its contributors to keep it up to date. 
 <!-- Ref 2 - Comment 13 -->
-\textcolor{blue}{Neural network},
+\textcolor{blue}{Neural networks},
+<!-- made plural JN -->
 inspired by the brain itself, are a class of models in the growing field of machine learning for which \soft{R} has a number of 
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{packages}.
 <!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{Before 2010}, neural networks were often considered theoretically instead of pragmatically, partly because the algorithms used were computationally expensive. 
+<!-- removed colour from Before 2010 JN -->
+Before 2010, neural networks were often considered theoretically instead of pragmatically, partly because the algorithms used were computationally expensive. 
 
 The term 
 <!-- Ref 2 - Comment 13 -->
-\textcolor{blue}{"neural network"} is colloquially used for different model structures and applications. For regression and classification, the term multilayer perceptron is used interchangeably. The term 
+\textcolor{blue}{"neural network"} is colloquially used for different model structures and applications.
+<!-- reword from -->
+<!-- For regression and classification, the term multilayer perceptron is used interchangeably. -->
+For regression and classification, it is used interchangeably with the term multilayer perceptron. The term 
 <!-- Ref 2 - Comment 13 -->
 \textcolor{blue}{"recurrent neural network"} is mainly used in the context of autoregressive time-series while the term 
 <!-- Ref 2 - Comment 13 -->
@@ -101,32 +106,36 @@ The term
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{appropriate} for dimension reduction and pattern recognition (images/audio/text).
 Most of the above types of neural networks (NN) can be found in \soft{R} packages hosted on CRAN but without any study about the accuracy or the speed of computation.
-This is an issue as many slow or poor algorithms 
+<!-- issue or concern? JN -->
+This is a concern as many slow or poor algorithms 
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{to fit NN} are available in the literature and hence 
-<!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{bad} packages are implemented on CRAN.
+<!-- Ref 2 - Comment 14 JN: changed bad to weak -->
+\textcolor{blue}{weak} packages are implemented on CRAN.
 
  
 
 <!-- Ref 2 - Major comment 1-->
+<!-- plural benchmarks, singular "workload", "consist"; reword slightly near "scenarios" -->
+<!-- JN??: I don't find the wording of the paragraph appealing. Can we discuss? -->
+<!-- illustrate for exemplify -->
 \textcolor{blue}{In the NN literature, a certain number
-of benchmark of neural networks have been conducted.
-\citep{adolf2016fathom} propose a reference workloads
+of benchmarks of neural networks have been conducted.
+\citep{adolf2016fathom} propose a reference workload
 for modern deep learning methods with a large variety
 of benchmark tasks and NN types. 
 They analyze the breakdown of execution time by operation 
 type for each workload in order to identify where time
 is spent.
 \citep{tao2018benchip} propose a benchmark suite for 
-intelligence processors, which consists of two levels 
+intelligence processors, which consist of two levels 
 of benchmarks: microbenchmarks of single-layer networks 
 and macrobenchmarks of state-of-the-art industrial networks.
 However \citep{tao2018benchip} focus only various hardware
 platforms, including CPUs, GPUs, and scenarios are limited
-to classification/recognition scenario.
+to classification or recognition.
 \citep{xie2020nnbench} propose another benchmark methodology
-to evaluate software/hardware co-designs and exemplify
+to evaluate software/hardware co-designs and illustrate
 it on a selected set of applications from the TensorFlow Model Zoo. 
 }
 
@@ -139,15 +148,16 @@ e.g., \citep{bianco2018benchmark} for image recognition,
 }
 
 <!-- Ref 2 - Major comment 1, comment 14 -->
+<!-- leave out "when designing our benchmark" -->
 \textcolor{blue}{None of these benchmarks deals with NN 
-implemented in \soft{R} packages which
+implemented in \soft{R} packages, which
 is the aim of this paper. 
 We follow the general principles of \citep{prechelt1994set}
 to conduct our benchmark: validity, reproducibility and
-comparability when designing our benchmark. 
+comparability.
 Furthermore,  we also use from \citep{prechelt1994set} 
 other rules such as input scaling, error measure, 
-NN naming convention, NN random initialization.
+NN naming convention, and NN random initialization.
 }
 
 
@@ -159,33 +169,26 @@ Optimization methods improve the current iterate by changing the
 parameters in the opposite of the gradient direction generally with an 
 adaptive step. 
 <!-- Ref 3 - comment 7 -->
-\textcolor{orange}{This yields to the so-called first-order methods 
-using both the function to be optimized and its gradient.}
-Parameters for the model are generally obtained by using part of the available data (a training set) and tested on the remaining data. 
-Modern software allows much of this work, including approximation of the gradient, to be carried out without a large effort by the user. 
-
- 
-
-
-
-
-
-
+\textcolor{orange}{This yields so-called first-order methods 
+where both the function to be optimized and its gradient.}
+Parameters for the model are generally obtained by using part 
+of the available data (a training set) and tested on the remaining data. 
+Modern software allows much of this work, including approximation of the gradient, 
+to be carried out without a large effort by the user. 
 
 The training process can generally be made more efficient if we can also approximate second-order derivatives of the cost function, allowing us to use its curvature via the Hessian matrix. 
 <!-- Ref 3 - comment 7 -->
-\textcolor{orange}{This yields to the so-called second-order methods 
+\textcolor{orange}{This yields so-called second-order methods 
 using the function, its gradient and its Hessian matrix.}
 There are a large number of approaches, of which quasi-Newton algorithms are perhaps the most common and useful. 
 Within this group, methods based on the Broyden-Fletcher-Goldfarb-Shanno (BFGS) algorithm for updating the (inverse) Hessian approximation provide several well-known examples. 
-In conducting this study, we hypothesize that these second-order algorithms would perform better 
-than the first-order methods for datasets that fit in memory. 
-
+In conducting this study, we hypothesize that these second-order algorithms should perform better 
+than first-order methods for datasets that fit in memory. 
 
 To test our hypothesis, we conduct a thorough examination of these training algorithms in \soft{R}. 
 There are many packages, but 
 <!-- Ref 3 - Comment 1 -->
-\textcolor{blue}{there is} a dearth of information that would allow the users to make an informed decision. 
+\textcolor{blue}{there is} a dearth of information that would allow users to make an informed decision. 
 Our work aims to provide a framework for benchmarking 
 <!-- Ref 2 - Comment 13 -->
 \textcolor{blue}{neural network} packages. 
@@ -209,9 +212,10 @@ The criteria used in our benchmark were: (i) accuracy, i.e. the ability to find 
 <!-- Ref 3 - Comment 2 -->
 # \textcolor{blue}{Multilayer perceptron with a single hidden layer}
 
-
 In this section, we briefly describe the single hidden-layer
-perceptron. As the "layer" term suggests - some terms come 
+perceptron. 
+<!-- JN??: I find this clumsy. Can we discuss? -->
+As the "layer" term suggests - some terms come 
 from graphs representations while others come from the 
 traditional literature on non-linear models. 
 <!-- Ref 2 - Major comment 1-->
@@ -257,7 +261,8 @@ for a total of 22 parameters.}
 <!-- Ref 2 - Comment 3 -->
 \textcolor{blue}{In practice, modelers also use piecewise differentiable functions
 with bounded left/right derivatives, such as the 
-Rectified Linear Unit function (called ReLU in softwares).
+<!-- JN: software (singular) -->
+Rectified Linear Unit function (called ReLU in software).
 The ReLU activation function is in particular useful for classification problems
 which are not investigated here.}
 
@@ -268,6 +273,8 @@ The model $y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + 
 
 The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural network (Fig. 1b) with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
 -->
+
+<!-- JN??: do we have a good reason for this?  -->
 
 While the final gradient should be small, we believe it is helpful to have 
 <!-- Ref 2 - Comment 14 -->
@@ -315,10 +322,10 @@ These practices help us find good local-minima and possibly the global-minima.
 
 
 
-The dataset used for the training is assumed to have the number of rows much larger than the number of parameters. While "much larger" is subjective, values of 3 to 5 are generally accepted (in experimental design, some iterative strategies start with a dataset having a number of distinct experiments equal to 1.8 times the number of parameters and then increase the number of experiments to fine tune the model).
+The dataset used for training is assumed to have the number of rows much larger than the number of parameters. While "much larger" is subjective, values of 3 to 5 are generally accepted (in experimental design, some iterative strategies start with a dataset having a number of distinct experiments equal to 1.8 times the number of parameters and then increase the number of experiments to fine-tune the model).
  
 
-It is rather clear from the mathematical formula above that neural networks of
+It is clear from the mathematical formula above that neural networks of
 perceptron type are non-linear models which require training algorithms that can handle
 (highly) non-linear models for their parameter estimation. Indeed, the intrinsic and
 parametric curvatures of such models are usually very high and with so many parameters,
@@ -331,14 +338,13 @@ the Gauss-Newton search direction at every iteration, e.g.
 \textcolor{cyan}{\citep{clemarechal,nocedal06}}.
  
 
- 
+<!-- JN??: "didactic" rather than "educative". Is that better?  -->
 
-Unfortunately, due to certain educative tools on the backpropagation and recent
+Unfortunately, due to certain didactic tools on backpropagation and recent
 popularity of "deep neural networks" that manipulate ultra-large models (sometimes 
 more parameters than examples in the datasets), many papers emphasize the use of
-first-order gradient algorithms.
-
-Therefore, many \soft{R} packages have implemented such algorithms. In the case of 
+first-order gradient algorithms, with the consequence that some \soft{R} packages 
+have implemented such algorithms. In the case of 
 the perceptron, we contend this is an oversight, and provide evidence to that 
 effect in this paper.
 We refer interested readers to \citep{tan2019review} for a review of second-order
@@ -357,7 +363,9 @@ Most of  \code{package:algorithm} pairs try to minimize the Root Mean Squared Er
 <!-- Ref 2 - Comment 13 -->
 \textcolor{blue}{neural network}), and the \CRANpkg{qrnn} package which performs quantile regression. 
 For all packages, the datasets were learnt as a whole and without any weighting scheme to favor a single part of a dataset. 
-We don't use a validation/test set because the purpose of our study is to verify the ability to reach good minima. This requirement is satisfied by using only a train set.
+We do not use a validation/test set because the purpose of our study is to verify the ability to reach good minima. This requirement is satisfied by using only a training set.
+
+========= JN: Copy edit so far to here ==============
 
 When training neural networks, we attempt to tune a set of hyperparameters so that the root to minimize the RMSE.
 When our method for such adjustment can no longer reduce the RMSE, we say that the given algorithm **terminated**.
