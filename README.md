@@ -1,7 +1,7 @@
 # NNbenchmarkArticle
 
 This repo was made to contain the code for the R Journal article 
-we plan to submit about the work we did during Google Summer of Code 2019 / 2020.
+based on the work we did during Google Summer of Codes 2019 and 2020.
 
 **IMPORTANT LINKS**  
 Call for students                                 : https://www.inmodelia.com/gsoc2019.html   
