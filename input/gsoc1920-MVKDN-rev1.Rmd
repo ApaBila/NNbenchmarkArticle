@@ -365,28 +365,33 @@ Most of  \code{package:algorithm} pairs try to minimize the Root Mean Squared Er
 For all packages, the datasets were learnt as a whole and without any weighting scheme to favor a single part of a dataset. 
 We do not use a validation/test set because the purpose of our study is to verify the ability to reach good minima. This requirement is satisfied by using only a training set.
 
-========= JN: Copy edit so far to here ==============
+<!-- ========= JN: Copy edit so far to here 2021-10-17 ============== -->
 
-When training neural networks, we attempt to tune a set of hyperparameters so that the root to minimize the RMSE.
+<!-- JN: removed extra words in next line -->
+When training neural networks, we attempt to tune a set of hyperparameters to minimize the RMSE.
 When our method for such adjustment can no longer reduce the RMSE, we say that the given algorithm **terminated**.
 We consider the method to have **converged** when termination is not due to some exceptional situation 
 and the final RMSE value is 
 relatively small^[We do not choose the mean absolute error (MAE) for overall ranking nor for convergence testing as there is
-a lack of consensus in the literature,  see e.g. \citep{willmott2005advantages,chai2014root}.].
+<!-- JN citep -> cite -->
+a lack of consensus in the literature,  see e.g. \cite{willmott2005advantages,chai2014root}.].
 In practice, some algorithms require that we stop the optimization process in 
 exceptional situations (e.g., a divide by zero), or a pre-set limit on the number of steps or a maximum elapsed
 time is reached.
 
 Specifically, second-order algorithms are all set to a maximum of 200 iterations. 
-On the other hand, first-order algorithms were set to several values, depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
-The full list of the maximum iteration number per \code{package:algorithm} is given in Table \ref{tab:allscore} in Appendix D. 
+<!-- JN: rewording -->
+On the other hand, first-order algorithms used several iteration limits depending on how well and how fast they converged: `maxit1storderA=1000` iterations, `maxit1storderB=10000` iterations, and `maxit1storderC=100000` iterations.
+<!-- JN: per -> by -->
+The full list of the maximum iteration number by \code{package:algorithm} is given in Table \ref{tab:allscore} in Appendix D. 
 It can be seen that we were unable to completely harmonize the hyperparameters 
-as an appropriate learning rate differed between packages, despite the algorithm 
+<!-- JN: an -> the; algorithm -> algorithms -->
+as the appropriate learning rate differed between packages, despite the algorithms 
 being similarly named.
-<!-- Ref 2 - Comment 5 -->
+<!-- Ref 2 - Comment 5; JN: was -> were -->
 \textcolor{blue}{Using a manual grid search, we did our best to find the best
 learning rate and \code{maxit} for each \code{package:algorithm}, especially for
-first-order algorithms where different \code{maxit} values was used.}
+first-order algorithms where different \code{maxit} values were used.}
 
 
 ## Performance
@@ -460,14 +465,18 @@ patterns and prove to be very challenging datasets. The parameters are highly co
 Three of the univariate datasets were taken from the US National Institute
 for Standards and Technology (NIST) website:
 \url{https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml}. 
-Namely \code{uGauss1}, \code{uGauss2} and \code{uGauss3} published in \citep[resp.]{rustnist96:Gauss1,rustnist96:Gauss2,rustnist96:Gauss3} 
-created by NIST to assess non-linear least squares regressions are of low, low and 
+<!-- JN: Namely -> These are; added "and were" -->
+These are \code{uGauss1}, \code{uGauss2} and \code{uGauss3} published in \citep[resp.]{rustnist96:Gauss1,rustnist96:Gauss2,rustnist96:Gauss3}
+and were 
+<!-- JN: remove "are" -->
+created by NIST to assess non-linear least squares regressions of low, low and 
 medium difficulty respectively.
 
 The last univariate dataset, \code{uNeuroOne},  was also used to teach the same course 
 and is now available in the proprietary software NeuroOne at \url{http://www.inmodelia.com/software.html}.
 In Table \ref{tab:NNdatasets}, we list some information on each dataset used in the first round of
-our analysis: the number of neurons and the induced parameter number are available
+<!-- JN: parameter number -> number of parameters -->
+our analysis: the number of neurons and the induced number of parameters are available
 in the last two columns.
 
 ```{r, echo=FALSE}
@@ -485,9 +494,13 @@ kableExtra::kable(sumNNdata, label="NNdatasets",
 ```
 
 Finally, we consider a Simon Wood test dataset, named \code{bWoodN1}, used in 
-\citep{wood2011fast} for benchmarking generalized additive models. 
-Precisely, we consider a generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ 
+\citep{wood2011fast} for benchmarking generalized additive models.
+<!-- JN: a -> the -->
+Precisely, we consider the generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ 
 with the mean $\mu_i$ defined as
+
+=====JN?? Is the last term still f_0 ?? ====
+
 $$
 \mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
 +f_4(x_{i,4})+f_0(x_{i,5})
@@ -496,6 +509,8 @@ and standard deviation $\sigma=1/4$ where $f_j$ are Simon Wood's smooth
 functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
 \code{bWoodN1} will only be used in the second round of our analysis when the TOP-5 packages
 will be further analyzed with 5 neurons resulting in 41 parameters.
+
+<!-- JN?? above paragraph seems quite opaque for a general reader. Can we discuss? -->
 
 To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
 Note that the 2020 GSoC results are available in Section 1 of the supplementary materials, \citep{suppl:material:paper21}.
@@ -510,16 +525,13 @@ Using \CRANpkg{RWsearch} \citep{R-RWsearch}, we sought to automate the process o
 All packages that have "neural network" as a keyword in the package title or in the package description were included. 
 
 As of May 2020, around 80 packages fall into this category.
-Packages \CRANpkg{nlsr}, \CRANpkg{minpack.lm}, \CRANpkg{caret} were added because the former two are important implementations of second-order algorithms while the latter is the first cited meta package in 
+Packages \CRANpkg{nlsr}, \CRANpkg{minpack.lm}, \CRANpkg{caret} were added because the former two are
+<!-- JN: latter -> last -->
+important implementations of second-order algorithms while the last is the first cited meta package in 
+<!-- JN??: the output has a link -- should this display in the pdf rather than be a link? -->
 the CRAN task view for machine learning, 	\ctv{MachineLearning}. It is also a dependency for some of the other packages tested. 
-Restricting to regression analysis left us with 49 \code{package:algorithm} pairs in 2019 and 60 \code{package:algorithm} pairs in 2020.
-
-
-
-
-
-
-
+<!-- JN: minor rewording -->
+A restriction to regression analysis left us with 49 \code{package:algorithm} pairs in 2019 and 60 \code{package:algorithm} pairs in 2020.
 
 
 ## Phase 2 - Review of packages and development of a benchmarking template
@@ -533,9 +545,11 @@ search fit the scope of our research.
 Some have no function to generate neural networks while others were not regression
 neural networks of the perceptron type or were only intended for very specific purposes:
 for instance
-<!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{an \soft{R} package allows }to predict the amyloidogenicity propensity of polypeptide sequences.
-Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error.
+<!-- Ref 2 - Comment 14; JN?? changed "an" to "one"; to predict -> the prediction of -->
+\textcolor{blue}{one \soft{R} package allows }the prediction of the amyloidogenicity propensity of polypeptide sequences.
+<!-- JN??: I'm not sure I get the meaning. Discussion? -->
+<!-- Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error. -->
+Our decision could sometimes be made from the \code{DESCRIPTION} file; for others we needed trial and error.
 \textcolor{cyan}{We refer to Table \ref{tab:Discard:Pkg} in Appendix D for the full list of discarded packages.}
 
 
@@ -554,7 +568,9 @@ The final structure of this template (for each package) is as follows:
       e. plot each training over one initial graph, then plot the best result, 
       f. add results to the appropriate existing record (*.csv file) and 
       g. clear the environment for next loop.
-4. Clearing up the environment for the next package.
+<!-- JN: Clearing -> Clear; reword about warnings -->
+4. Clear up the environment for the next package.
+<!-- JN??: Is this with #4 or should it be on a new line?? -->
 It is optional to print warnings.
 
 To simplify this process, we developed the \pkg{NNbenchmark} package, 
@@ -565,13 +581,15 @@ In GSoC'20, 3 new functions encapsulating the template were added that have been
 made generic with the extensive use of the \code{do.call} function from the \pkg{base} package:
 
 1.    In \code{trainPredict\_1mth1data} a neural network is trained on one dataset and then used for predictions, with several utilities. Then the performance of the neural network is exported, plotted and/or summarized.
+<!-- JN??: have we got the right names in 2. and 3.?? -->
 2.    \code{trainPredict\_1data} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple methods.
 3.    \code{trainPredict\_1pkg} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple datasets.
 
 <!-- Ref 3 - Comment 5 -->
 \textcolor{orange}{For this paper, the training process (3.b to 3.g) is
 carried out with \pkg{NNbenchmark}'s \code{trainPredict\_1pkg} using 
-the \code{NNsummary} function computing convergence metrics and speed.}
+<!-- JN: computing -> to report -->
+the \code{NNsummary} function to report convergence metrics and speed.}
 The package repository is at \url{https://github.com/pkR-pkR/NNbenchmark}, with 
 template repository at \url{https://github.com/pkR-pkR/NNbenchmarkTemplates}, and
 outputs per package at 
@@ -589,9 +607,9 @@ while \code{NNclose.nnet()} terminates the call.
 Finally, \code{trainPredict\_1pkg} is called using these 5 
 dedicated functions and a list of input parameters.
 }
+<!-- JN: suggest "Scoring ease of use" -->
 
-
-**3. Ease of use scoring**
+**3. Scoring ease of use**
 
 
 
@@ -623,23 +641,23 @@ Our ratings are as follows.
     c. \textcolor{red}{multiple functions for initializing-converting-fitting} = 0 star
 
 <!-- Ref 1 - Major comment 1-->
+<!-- JN??: is it standardizing a modifier of scaling?? -->
+<!-- JN: added "and"  in list of packages-->
 \textcolor{red}{
 Hence, the utility rating gives an indication to users if the package
 includes a predict function and/or a scaling argument. 
 It is worth mentioning many \soft{R} packages provide scaling, standardizing
 functions. Indeed, \CRANpkg{bdpar}, \CRANpkg{binst}, \CRANpkg{dataprep},
 \CRANpkg{discretization}, \CRANpkg{helda}, \CRANpkg{PreProcessing}, 
-\CRANpkg{preputils}, \CRANpkg{recipes} offer general data pre-processing
-functions, there are many more packages providing topic specific pre-processing.
+\CRANpkg{preputils}, and \CRANpkg{recipes} offer general data pre-processing
+functions, and there are many more packages providing topic specific pre-processing.
 We do not consider in this paper any of these packages and only rate
-pre-processing functions in the package.}
+pre-processing functions within a package.}
+<!-- JN: above had minor rewording -->
 Furthermore, to inform users about the usability of packages, the documentation measure 
 ranges from 0 to 4 stars, while the utility and the \soft{R} call range from 0 to 2 stars. 
 
  
-
-
-
 
 ## Phase 3 - Collection of and analysis of results
 
@@ -681,6 +699,7 @@ Figure \ref{fig:Allpkg:RMSEmin} shows the minimum RMSE value per \code{package:a
 for two particular datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure \ref{fig:Allpkg:timemean} displays the average computation time.
 The number on the x-level refers to the RMSE overall score of the 
+<!-- JN??: I find this very heavy reading and am not sure I follow. We should discuss so I can improve?? -->
 \code{package:algorithm} given in Table \ref{tab:RMSEscore} (last column), e.g., 8 refers to 
 \code{validann:optim(CG)} which is a very slow algorithm as
 <!-- Ref 2 - Comment 14 -->
@@ -691,9 +710,11 @@ a good performance on the two datasets under consideration.
 Furthermore, there is a break between the
 TOP-10 \code{package:algorithm} and others in terms of RMSE value.
 In Section 1.13 of the supplementary materials, \citep{suppl:material:paper21}, the score probabilities
-per \code{package:algorithm} also gives some insights how robust is the overall score. 
+<!-- JN: reworded -->
+per \code{package:algorithm} also provides some insight into the robustness of the overall score. 
 
-Regarding computation time, we observe that some \code{package:algorithm} are
+<!-- JN: added pairs -->
+Regarding computation time, we observe that some \code{package:algorithm} pairs are
 very slow and have poor RMSE, e.g. 41 corresponding to \code{AMORE:BATCHgd}.
 In the following, 
 we divide our analysis in two groups: packages implementing second-order algorithms
@@ -860,7 +881,8 @@ kableExtra::kable(TableEaseOfUse, format = "latex", booktabs = TRUE,
 Of all approaches, the following second-order algorithms generally performed better in terms of convergence 
 despite being limited to $1/5^{th}$ or fewer iterations than the first-order algorithms. 
 
-We note that 11 out of 15 of these \code{package:algorithms} use \code{optim} from \pkg{stats}. 2 of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, make the call directly.
+<!-- JN: 2 -> Two -->
+We note that 11 out of 15 of these \code{package:algorithms} use \code{optim} from \pkg{stats}. Two of them, \CRANpkg{CaDENCE}'s BFGS \citep{R-CaDENCE} and \CRANpkg{validann}'s BFGS and L-BFGS-B \citep{R-validann}, make the call directly.
 However, it is not clearly stated in \pkg{CaDENCE}'s documentation that \code{optim}'s BFGS method has been chosen rather
 than one of the other four methods. 
 Furthermore, the mention of Nelder-Mead in the documentation suggests that \code{optim}'s Nelder-Mead method is used. 
@@ -881,6 +903,7 @@ In spite of these results, the real reason most authors or users are likely to c
 included in the distributed base \soft{R} and is even mentioned as the very first package in CRAN's task view for machine learning (\ctv{MachineLearning}).
 
 Our analysis found that 6 out of 11 packages tested that use \code{optim} do so through \pkg{nnet}. 
+<!-- JN??: "approximately 8" seems sloppy. Can we discuss? -->
 Moreover, approximately 8 packages for neural networks, though not tested, use \pkg{nnet}.
 
 
@@ -900,7 +923,7 @@ It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE,
 <!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted-->
 
 
-
+<!-- JN??: What difference are we talking about?? Discussion? -->
 The difference is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
@@ -931,9 +954,11 @@ Alex Cannon has included automatic scaling for all 3 of his packages, as is clea
 \textcolor{blue}{Non-linear least square estimation can be performed via \code{nls} from \pkg{stats}},
 which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
 However, in its documentation, \code{nls} warns against "zero-residual" or even small residual problems [@Nash-nlpor14, Section 6.4.1].
+<!-- JN??: I submitted a fix for this, and nls() now can handle zero-residual problems if the user -->
+<!-- provides an extra control parameter to modify the offset criterion. ?? How to mention? -->
 This was one of the motivations for \CRANpkg{nslr} \citep{R-nlsr}. 
 \code{nlsr} uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain Gauss-Newton of \code{nls},
-and modifies the relative offset convergence criterion to avoid a zero divide 
+modifies the relative offset convergence criterion to avoid a zero divide 
 when residuals are small \textcolor{cyan}{and can handle a degenerate Jacobian at the
 first iteration}.
 
@@ -954,11 +979,12 @@ Despite the 2 packages ultimately performing well on all runs
 (capable of being in the top 3 for RMSE 
 \textcolor{cyan}{as good as packages using BFGS} and not being slow), 
 there are some reasons why users might hesitate to choose them. 
-<!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{Firstly, both \pkg{minpack.lm} and \pkg{nlsr}} require the full formula of the neural network including variables and parameters. 
-Secondly, they require good starting values to achieve the best convergence. 
+<!-- Ref 2 - Comment 14; JN: Firstly -> First, Secondly -> Second -->
+\textcolor{blue}{First, both \pkg{minpack.lm} and \pkg{nlsr}} require the full formula of the neural network including variables and parameters. 
+Second, they require good starting values to achieve the best convergence. 
 Notice that in Table \ref{tab:RMSEscore}, \code{minpack.lm} does not have a high rank. 
-This is because we removed the random Gaussian start values we had originally used; which means that the default start values of \code{minpack.lm} were not appropriate for our datasets. 
+<!-- JN: which means -> this suggests -->
+This is because we removed the random Gaussian start values we had originally used; this suggests that the default start values of \code{minpack.lm} were not appropriate for our datasets. 
 
 We suspect \pkg{nlsr}'s performance on convergence would have similarly dropped 
 if it was possible to use \pkg{nlsr} with no user-set starting values and the 
@@ -1001,21 +1027,29 @@ Packages with first-order algorithms can be broadly categorized into 2 types: (a
 
 The first category is comprised of either packages that also include second-order algorithms previously discussed or packages that use the Extreme Learning Machine algorithm. 
 Only 2 packages include both second-order algorithms and a lower-order algorithm, that is, \CRANpkg{monmlp} and \pkg{validann}. 
+
+ ==== JN??: Nelder-Mead called from optimx? It is called via optim from optimx. Or nmkb -- different code?? Discussion? ======
 \pkg{monmlp} has one algorithm besides BFGS, that is, \pkg{optimx}'s Nelder-Mead. 
 \pkg{validann} provides the same algorithm but from \code{optim}.
 \pkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
 Both implementations of Nelder-Mead do not rank well in minimum RMSE, around 40 out of 60, with similar ranks for the other criteria.
-We would also caution users to avoid the other methods in \pkg{validann} from \code{optim}.
+<!-- JN: reworded -->
+We would also caution users to avoid methods that do not call \code{optim} in \pkg{validann}.
 From Table \ref{tab:RMSEscore} it may appear that \pkg{validann}'s implementation of the Conjugate
 Gradient (CG) algorithm finds reasonable minima and 
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{is thus} a good option.
 It consistently ranked in the top 15 with minimum RMSE. 
 However, it is the slowest algorithm of all 60 algorithms tested.
-Note, this includes algorithms from packages that call external libraries outside \soft{R} 
-in \soft{Python} or \soft{Java} and packages that use as much as 100,000 iterations. 
+Note, this includes algorithms from packages that call external libraries outside \soft{R}
+<!-- JN: much -> many -->
+in \soft{Python} or \soft{Java} and packages that use as many as 100,000 iterations. 
 
 On the other hand, \pkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
+
+<!-- JN??: Do we need to mention that optim::SANN has NO CONVERGENCE TEST. It ALWAYS runs 10000 cycles, -->
+<!-- and then stops regardless of state. Worse, there is NO MEASURE OF SUCCESS, but the convergence flag -->
+<!-- is always set. Discussion please?? -->
 
 
 
@@ -1039,6 +1073,8 @@ We recommend choosing better algorithms over more layers for datasets similar to
 Choosing more layers often comes at the expense of speed. 
 An example of this is the implementation of the first-order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
 With the same numbers of neurons it already is quite slow - coming in at 51 out of the 60 algorithms. 
+<!-- JN??: What do we mean by "same numbers of neurons? Discussion?? -->
+
 
 With a default hidden layer size of 2, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \pkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
@@ -1047,9 +1083,12 @@ than a second with fewer neurons and only one layer
 \textcolor{blue}{with 3 neurons}.
 Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \pkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
+<!-- JN??: Next line I don't know how to reword?? -->
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
-Some users also might not want to setup \soft{Java}, which is needed, although it is not as painful to setup as some external libraries.
+Some users may also wish to avoid having to set up \soft{Java}, which is needed for this package.
+<!--JN changed from: Some users also might not want to setup \soft{Java}, which is needed, although it is not as painful to setup as some external libraries. -->
 
+JN??: We need to reword the following2 paras. Discussion??
 
 By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives.
 In the  summer of 2019, it took quite some time to figure out how things worked.
@@ -1077,8 +1116,9 @@ The default learning rates in \CRANpkg{RSNNS} \citep{R-RSNNS} were more appropri
 \textcolor{blue}{neural network}
 Simulator (SNNS), to provide an easy-to-use interface. 
 This library is rather large with many implementations of neural networks.
-It contains the biggest number of algorithms tested at a total of 8.
-Algorithms \code{Rprop} and \code{SCG}, the best for minimum RMSE, rank at 16 and 17 respectively which is pretty good for a first-order algorithm. 
+<!-- JN: biggest -> largest -->
+It contains the largest number of algorithms tested at a total of 8.
+Algorithms \code{Rprop} and \code{SCG}, the best for minimum RMSE, rank at 16 and 17 respectively which is good for a first-order algorithm. 
 Speed for \code{Rprop} is better but \code{SCG}'s results vary less. 
 
 
@@ -1086,21 +1126,25 @@ Speed for \code{Rprop} is better but \code{SCG}'s results vary less.
 **Other packages **
 
 \CRANpkg{AMORE} \citep{R-AMORE}: Unfortunately, the focus of the paper behind this package, its 
-unique point, is not explained or documented well enough. 
-
+<!-- JN: remove "enough" -->
+unique point, is not explained or documented well. 
 An addition of some examples using the TAO option as the error criterion would be helpful for 
 using the TAO-robust learning algorithm, since this type of error measure is most useful for data with outliers. 
 The function for creating a dot file to use with \url{http://www.graphviz.org} is also interesting. ADAPT algorithms appear to perform better than the BATCH algorithms with the parameters used in this research.
 
-\CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or rmsprop consistently ranked in the top half for minimum RMSE which is not bad for a first-order algorithm. 
+\CRANpkg{ANN2} \citep{R-ANN2}: This package's implementation of adam or rmsprop consistently ranked in the
+<!-- JN: not bad -> good -->
+top half for minimum RMSE which is good for a first-order algorithm. 
 It is not as accurate as second-order algorithms but all its algorithms are quite fast. 
 C++ code was used to enhance the speed. 
 Functions for autoencoding are included with anomaly detection in mind.
 
 
 \CRANpkg{automl} \citep{R-automl}: It would be easier to use the algorithms in this package if they 
+<!-- JN??: Does this mean internal rather than user parameters?? Discussion?? -->
 did not rely on the beta parameters and instead had an argument of their own. 
-However, it is nice that there are notes on what parameters have a higher tuning priority. 
+<!-- JN: reworded -->
+However, there are useful notes on what parameters have a higher tuning priority. 
 The package is rather slow (highest ranking algorithm for speed is \code{RMSprop} at 47) with good enough convergence 
 (highest ranking is \code{adam} at 18).
 
@@ -1111,7 +1155,7 @@ There are few exported functions.
 The novelty of this package is apparently in the \code{deeptree} and \code{deepforest} functions it provides. 
 
 
-
+<!-- JN??: meaning?? Can we discuss? -->
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
 first-order algorithms back-propagation, ranking at 18 for minimum RMSE. 
 <!-- Ref 3 - Comment 1 -->
@@ -1121,13 +1165,17 @@ first-order algorithms back-propagation, ranking at 18 for minimum RMSE.
 \CRANpkg{neuralnet} \citep{R-neuralnet}: Considering that this is the only package that uses 100000 iterations as its maxit parameter (excluding BNN which is not included in the official ranks), it can be considered as not recommended. 
 Nonetheless, the default algorithm, \code{rprop+} and the similar \code{rprop-}, managed to rank 20 and 21 respectively, out of 60 algorithms for minimum RMSE. 
 These two also do not do badly in terms of speed. Following, 
-in order, are \code{slr}, \code{sag}, and traditional \code{backprop} as the worst at rank 48 out of 60 for minimum RMSE. Notes on 
-documentation show that is rather difficult to configure this package, and it should probably not be a dependency 
-for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue.
+in order, are \code{slr}, \code{sag}, and traditional \code{backprop} as the worst at rank 48 out of 60 for minimum RMSE. 
+We found this package difficult to configure. Furthermore, it is a dependency for some other
+packages, so those should be avoided if a user wishes to be confident in results. 
+<!-- Notes on  -->
+<!-- documentation show that is rather difficult to configure this package, and it should probably not be a dependency  -->
+<!-- for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue. -->
 
 ## Untested packages 
 
-A certain number of packages have been discarded from this study for at least one of the following reasons:
+<!-- JN: remove "certain -->
+A number of packages have been discarded from this study for at least one of the following reasons:
 
 1. For regression but unsuitable for the scope of our research, coded RE in Table \ref{tab:Discard:Pkg}.
 2. For time series, coded TS in Table \ref{tab:Discard:Pkg}.
@@ -1144,21 +1192,24 @@ The full list of untested packages is given in Table \ref{tab:Discard:Pkg} in Ap
 
 ## Further analysis of TOP-5 packages
 
-We perform a second round of analysis with a larger dataset
+<!-- JN: perform -> performed -->
+We performed a second round of analysis with a larger dataset
 and a focus on the TOP-5 packages given in Table \ref{tab:RMSEscore}.
 That is, we consider packages \pkg{nlsr}, \pkg{rminer}, \pkg{nnet}, \pkg{validann} with algorithm BFGS and \pkg{MachineShop}.
-We fit the NN packages on Simon Wood's Gaussian dataset, see \code{bWoodN1} in dataset description, which contains
+We applied the NN packages to Simon Wood's Gaussian dataset, see \code{bWoodN1} in the dataset description, which contains
 20,000 rows with 6 inputs valued in [0,1] for a (single) numeric output.
 Due to the non-linear functions considered, see Appendix B, the link between the output and each
 explanatory variable is highly non-linear which greatly affects the fitting time.
-Table \ref{tab:TOP10:bWoodN1} gives the metric performance over 20 runs of these TOP-5 five packages on \code{bWoodN1}.
+Table \ref{tab:TOP10:bWoodN1} gives the performance metric over 20 runs of these TOP-5 five packages on \code{bWoodN1}.
 
-We observe that the minimum RMSE (over 20 runs) is very similar for all packages, yet \pkg{rminer}
-and \pkg{validann} are a little ahead of the others.
+<!-- JN: yet -> with -->
+We observe that the minimum RMSE (over 20 runs) is very similar for all packages, with \pkg{rminer}
+and \pkg{validann} a little ahead of the others.
 The metrics median RMSE and RMSE D51 reveal how consistent \pkg{rminer}'s results are in comparison to other packages. This is further proved by the other metric  norms: WAE and MAE.
 However, regarding computation time \pkg{rminer} is the 3rd slowest with \pkg{nlsr} being the 2nd slowest and \pkg{validann} being the slowest of all.
 The best two in terms of speed in this class are \pkg{nnet} and \pkg{MachineShop}.
-Nevertheless, these TOP-5 packages performs generally better than other packages, 
+<!-- JN:performs -> perform -->
+Nevertheless, these TOP-5 packages perform generally better than other packages, 
 see Section 2.1 of the supplementary materials, \citep{suppl:material:paper21}.
 <!-- Ref 2 - Major comment 4-->
 \textcolor{blue}{In Section 2.1 of the supplementary materials, we observe that only 
@@ -1198,8 +1249,9 @@ kableExtra::kable(TableTOP10, booktabs = TRUE, centering = TRUE,
   footnote(general="statistics taken over 20 runs; time in seconds.", footnote_as_chunk=TRUE)
 ```
 
+<!-- JN: minor rewording -->
 Figures in Section 2.2 of the supplementary materials, \citep{suppl:material:paper21},
-provides some insights where a package performs reasonably well 
+provide some insight into where a package performs reasonably well 
 with respect to one explanatory variable and where the fit misses the correct behavior of
 an explanatory variable.
 
@@ -1222,7 +1274,8 @@ an explanatory variable.
 # Conclusion and perspective
 
 This paper focuses on benchmarking neural network packages available on CRAN 
-to recommend or advise against some packages. 
+<!-- JN: reworded -->
+to recommend for or against their use. 
 Based on \pkg{RWsearch}'s outputs in 2019-2020, we selected 26 appropriate packages to analyze in-depth and discarded the other 63 packages.
 Using \pkg{NNbenchmark}, we ranked 60 \code{package:algorithm} pairs and are happy to 
 note that most of them converge well enough within a reasonable time.
@@ -1245,12 +1298,11 @@ documentation, notably \pkg{EnsembleBase} and \pkg{keras}.
 We often found it difficult to discover what default starting values were 
 used for model parameters and/or to understand how to change the hyper-parameters.
 
-
-As the field of neural networks continues to grow, there will always be more algorithms to validate. 
+<!-- JN: rewording -->
+As the field of neural networks evolves, there will be more algorithms to validate. 
 For current algorithms in R, our research should be extended to encompass more types of neural networks 
 and their data formats (classifier neural networks, recurrent neural networks, and so on). Different 
 rating schemes and different parameters for package functions can also be tried out.
-
 
 Our work is available online through 
 <!-- Ref 2 - Major comment 7-->
