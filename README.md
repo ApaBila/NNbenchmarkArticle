@@ -10,11 +10,12 @@ Akshaj's project page on Summer of Code website   : https://summerofcode.withgoo
 NNbenchmark package repo                          : https://github.com/pkR-pkR/NNbenchmark  
 Companion repo for templates of the packages      : https://github.com/pkR-pkR/NNbenchmarkTemplates  
 (my commits done under this username)  
-Akshaj's website repo                             : https://github.com/scarecrow21/NNbenchmarkWeb  
-Akshaj's website for NNbenchmark                  : https://akshajverma.com/NNbenchmarkWeb/index.html  
+Akshaj's website for NNbenchmark                  : https://theairbend3r.github.io/NNbenchmarkWeb/index.html 
 
 **CREDITS**  
-Fellow students: Akshaj Verma | Salsabila Mahdi
+Students: 
+Akshaj Verma | 
+Salsabila Mahdi
 Mentors:   
 Christophe Dutang |
 John Nash |

@@ -582,6 +582,7 @@ made generic with the extensive use of the \code{do.call} function from the \pkg
 
 1.    In \code{trainPredict\_1mth1data} a neural network is trained on one dataset and then used for predictions, with several utilities. Then the performance of the neural network is exported, plotted and/or summarized.
 <!-- JN??: have we got the right names in 2. and 3.?? -->
+<!-- B: yes but perhaps Christophe may agree that the original function names are a bit confusing? tP_1data => multiple algorithms of a package are trained against 1 dataset, tP_1pkg => a package is trained on multiple datasets -->
 2.    \code{trainPredict\_1data} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple methods.
 3.    \code{trainPredict\_1pkg} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple datasets.
 
@@ -904,6 +905,8 @@ included in the distributed base \soft{R} and is even mentioned as the very firs
 
 Our analysis found that 6 out of 11 packages tested that use \code{optim} do so through \pkg{nnet}. 
 <!-- JN??: "approximately 8" seems sloppy. Can we discuss? -->
+<!-- B: I believe these were the packages for neural networks at the time using nnet but not for regression. Suggestion: Moreover, 8 of the neural network packages outside the scope of this research were found to use nnet. 
+I didn't do a deep dig into the discarded pacakges so I'm not sure if there are more. This sentence is another that is meant to prove nnet's popularity. We can remove it?-->
 Moreover, approximately 8 packages for neural networks, though not tested, use \pkg{nnet}.
 
 
@@ -923,7 +926,8 @@ It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE,
 <!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted-->
 
 
-<!-- JN??: What difference are we talking about?? Discussion? -->
+<!-- JN??: What difference are we talking about?? Discussion? 
+B: minimum RMSE in above paragraph, other metrics as well -->
 The difference is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
