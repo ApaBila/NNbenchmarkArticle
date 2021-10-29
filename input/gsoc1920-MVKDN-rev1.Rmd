@@ -549,6 +549,7 @@ for instance
 \textcolor{blue}{one \soft{R} package allows }the prediction of the amyloidogenicity propensity of polypeptide sequences.
 <!-- JN??: I'm not sure I get the meaning. Discussion? -->
 <!-- Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error. -->
+<!-- B: what I originally wanted to explain here is the actual process of excluding/including packages - I'd usually go by the DESCRIPTION file/documentation first. Usually/I'd hope to find enough about the package there. Sometimes I'd have to dig deeper into the documentation, try out some functions, or dig into the inner code of the package itself-->
 Our decision could sometimes be made from the \code{DESCRIPTION} file; for others we needed trial and error.
 \textcolor{cyan}{We refer to Table \ref{tab:Discard:Pkg} in Appendix D for the full list of discarded packages.}
 
@@ -905,7 +906,7 @@ included in the distributed base \soft{R} and is even mentioned as the very firs
 
 Our analysis found that 6 out of 11 packages tested that use \code{optim} do so through \pkg{nnet}. 
 <!-- JN??: "approximately 8" seems sloppy. Can we discuss? -->
-<!-- B: I believe these were the packages for neural networks at the time using nnet but not for regression. Suggestion: Moreover, 8 of the neural network packages outside the scope of this research were found to use nnet. 
+<!-- B: I believe these were the packages for neural networks at the time using nnet but not for regression. Suggestion: Moreover, 8 of the neural network packages found by RWsearch outside the scope of this research were found to use nnet. 
 I didn't do a deep dig into the discarded pacakges so I'm not sure if there are more. This sentence is another that is meant to prove nnet's popularity. We can remove it?-->
 Moreover, approximately 8 packages for neural networks, though not tested, use \pkg{nnet}.
 
@@ -1033,6 +1034,7 @@ The first category is comprised of either packages that also include second-orde
 Only 2 packages include both second-order algorithms and a lower-order algorithm, that is, \CRANpkg{monmlp} and \pkg{validann}. 
 
  ==== JN??: Nelder-Mead called from optimx? It is called via optim from optimx. Or nmkb -- different code?? Discussion? ======
+ <!-- B: monmlp uses optimx, validann uses optim -->
 \pkg{monmlp} has one algorithm besides BFGS, that is, \pkg{optimx}'s Nelder-Mead. 
 \pkg{validann} provides the same algorithm but from \code{optim}.
 \pkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
@@ -1055,7 +1057,7 @@ On the other hand, \pkg{validann}'s SANN algorithm is relatively worse than othe
 <!-- and then stops regardless of state. Worse, there is NO MEASURE OF SUCCESS, but the convergence flag -->
 <!-- is always set. Discussion please?? -->
 
-
+<!-- B: I'm not fond of the algorithm either, perhaps Patrice can also mention something? Patrice did a lot of initial tests on validann's algorithms -->
 
 
 
@@ -1078,16 +1080,19 @@ Choosing more layers often comes at the expense of speed.
 An example of this is the implementation of the first-order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
 With the same numbers of neurons it already is quite slow - coming in at 51 out of the 60 algorithms. 
 <!-- JN??: What do we mean by "same numbers of neurons? Discussion?? -->
-
+<!-- B: we set the number of neurons according to the dataset. 3 for Dreyfus datasets, etc. What I meant here is that with the set number of neurons, h2o was already slow. But they have a high number of default neurons which is even slower with not much RMSE gain-->
 
 With a default hidden layer size of 2, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \pkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
 than a second with fewer neurons and only one layer
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{with 3 neurons}.
+<!-- B??: if we're still talking about mFriedman it should be 5 neurons. 
+Suggestion: in less than a second with only one layer of 5 neurons-->  
 Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \pkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 <!-- JN??: Next line I don't know how to reword?? -->
+<!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing-->
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
 Some users may also wish to avoid having to set up \soft{Java}, which is needed for this package.
 <!--JN changed from: Some users also might not want to setup \soft{Java}, which is needed, although it is not as painful to setup as some external libraries. -->
@@ -1146,6 +1151,18 @@ Functions for autoencoding are included with anomaly detection in mind.
 
 \CRANpkg{automl} \citep{R-automl}: It would be easier to use the algorithms in this package if they 
 <!-- JN??: Does this mean internal rather than user parameters?? Discussion?? -->
+<!-- B: similar to h2o, no specific argument for algorithms. Well some might argue that it's better like this so users might see the difference between algorithms... like, oh this algorithm uses this parameter. This might also be because of a coding choice? I'll leave a bit of it's documentation here for you to discuss
+
+beta1	
+see below
+
+beta2	
+‘Momentum’ if beta1 different from 0 and beta2 equal 0 )
+‘RMSprop’ if beta1 equal 0 and beta2 different from 0
+‘adam optimization’ if beta1 different from 0 and beta2 different from 0 (default)
+(default value beta1 equal 0.9 and beta2 equal 0.999)
+#tuning priority 2
+-->
 did not rely on the beta parameters and instead had an argument of their own. 
 <!-- JN: reworded -->
 However, there are useful notes on what parameters have a higher tuning priority. 
@@ -1160,8 +1177,9 @@ The novelty of this package is apparently in the \code{deeptree} and \code{deepf
 
 
 <!-- JN??: meaning?? Can we discuss? -->
+<!-- B: if this package is using vanilla BP, it has a better implementation of it than RSNNS's Std_Backpropagation (27 min RMSE) or neuralnet's backprop (50 min RMSE)-->
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
-first-order algorithms back-propagation, ranking at 18 for minimum RMSE. 
+first-order algorithm back-propagation, ranking at 18 for minimum RMSE. 
 <!-- Ref 3 - Comment 1 -->
 \textcolor{blue}{It is} relatively fast, ranking at 23 for speed.
 
