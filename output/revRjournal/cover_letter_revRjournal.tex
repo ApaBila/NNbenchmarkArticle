@@ -13,7 +13,7 @@
 
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 
-\usepackage{enumitem}
+\usepackage{enumitem,natbib}
 
 \renewcommand{\vec}{\bm}
 \newcommand{\R}{\mathbb R}
@@ -234,7 +234,6 @@ will have a bad performance on \code{bWoodN1}.
 Finally, it would be an excessive task to perform an entirely new benchmark over 1589 datasets
 given our present computational and human resources, though we mention this possibility 
 for future work in the conclusion.
-%% ?? IS THIS WORTH ADDING?
 The Google Summer of Code has generously provided support to our two junior researchers
 (one for two parts of the project), but all other support has been from the authors' own
 resources.}
@@ -257,7 +256,6 @@ having the same algorithm, sometimes even the same code for the algorithm, becau
 %% But even the algorithms that were supposedly the same, at least in name, seemed to need different learning rates for the same level of convergence. 
 Even for algorithms that were supposedly the same, at least in name, we seemed to need
 different learning rates for the same level of convergence. 
-%% ?? REWORDING -- Is it OK?
 After a time-consuming grid search we chose a compromise between \code{maxit} and learning rate.}
 
 % form -> from
@@ -293,7 +291,6 @@ The documentation of the package's GitHub repository has also been updated with 
 \item \textit{Comparing the performance only on the training data is rather unrelated to common applications and does not indicate how well the network generalizes.}
 
 \textbf{We only use a training set because the purpose of our study is to verify the ability to reach good minima, i.e., rating optimization
-% train -> training
 methods used in NN packages. This requirement is satisfied by using only a training set.}
 
 
@@ -321,8 +318,13 @@ methods used in NN packages. This requirement is satisfied by using only a train
 \begin{enumerate}[resume]
 \item \textit{p. 1: "For regression and classification, the term multilayer perceptron is used interchangeably." - Multilayer perceptrons are a particular type of neural networks based on feedforward neural networks.}
 
-\textbf{TODO}
-\red{Patrice?}
+\textbf{In both \cite{Bishop-NNPR95},\cite{ripley2007pattern} books,
+the term "multilayer perceptron" is used interchangeably for regression and classification.
+Later, the term "deep neural networks" has appeared but refers to a very different
+structure with many layers and other training algorithms.\\
+In this paper, we stick to the multilayer perceptron because it is still the most used
+NN structure and we focus on regression.}
+
 
 \item \textit{The term "Neural networks" is spelled in different ways: "Neural Network", "neural network", "neural-network", etc.}
 
@@ -332,7 +334,7 @@ methods used in NN packages. This requirement is satisfied by using only a train
 \item \textit{Sometimes quite drastic or fuzzy wording: p. 1 "[…] poor packages are implemented on CRAN.", p. 2 "[…] perform better than [...]" or p. 2 "[…] we believe it is helpful to have relatively large gradients […]"}
 
 \textbf{Done}
-\red{John, could you validate?}
+
 
 \end{enumerate}
 
@@ -355,14 +357,13 @@ The minor changes are suggestions of aspects that can improve the manuscript:
 \begin{enumerate}
 \item \textit{the writing could be improved in several cases, such as: removal of "oral" language: "there’s" $->$ "there is";}
 
-\textbf{I Ctrl+Find 's in the paper.}
-\red{John, could you validate?}
+\textbf{Done}
+
 
 \item \textit{change of title "Neural Networks: The Perceptron" $->$ "Multilayer Perceptron with a Single Hidden Layer";\\
  in Table 1 "nb." $->$ size.}
  
- \textbf{Done: I do not agree with Table 1 : parameter size is not correct to me}
-\red{John}
+ \textbf{Done}
 
 \item \textit{the NN acronym in Fig.1 is not detailed, nor the notation 1-3-1 is explained.\\ 
 Fig1 c) is not a single hidden layer networks.}
@@ -391,6 +392,12 @@ Fig1 c) is not a single hidden layer networks.}
 
 
 \end{enumerate}
+
+\bibliographystyle{agsm}  
+\phantomsection %add a phantom section for the hyperreference linkg
+\addcontentsline{toc}{section}{Bibliography} %add a chapter to the TOC
+\bibliography{../../input/gsoc1920-MVKDN-rev1}   %must have a file named Ref.bib
+
 
 
 \end{document}
