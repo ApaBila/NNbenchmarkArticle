@@ -77,7 +77,7 @@ We have open-sourced our code for reproducibility on a github repository \url{ht
 as well as  outputs per package/dataset at
 <!-- Ref 2 - Major comment 7-->
 \textcolor{blue}{\url{https://theairbend3r.github.io/NNbenchmarkWeb/index.html}.}
-<!-- Finally, we provide some hints and features to guide the development of an idealized neural network package for R. JN?? Not now included? -->
+
 
 
 ## Introduction
@@ -97,8 +97,11 @@ The term
 <!-- Ref 2 - Comment 13 -->
 \textcolor{blue}{"neural network"} is colloquially used for different model structures and applications.
 <!-- reword from -->
-<!-- For regression and classification, the term multilayer perceptron is used interchangeably. -->
-For regression and classification, it is used interchangeably with the term multilayer perceptron. The term 
+\textcolor{blue}{In both \cite{Bishop-NNPR95,ripley2007pattern} books,
+the term "multilayer perceptron" is used interchangeably for regression and classification.
+Later, the term "deep neural networks" has appeared but refers to a very different
+structure with many layers and other training algorithms.}
+The term 
 <!-- Ref 2 - Comment 13 -->
 \textcolor{blue}{"recurrent neural network"} is mainly used in the context of autoregressive time-series while the term 
 <!-- Ref 2 - Comment 13 -->
@@ -112,7 +115,9 @@ This is a concern as many slow or poor algorithms
 \textcolor{blue}{to fit NN} are available in the literature and hence 
 <!-- Ref 2 - Comment 14 JN: changed bad to weak -->
 \textcolor{blue}{weak} packages are implemented on CRAN.
-
+\textcolor{blue}{
+In this paper, we stick to the multilayer perceptron because it is still the most used
+NN structure and we focus on regression.}
  
 
 <!-- Ref 2 - Major comment 1-->
@@ -338,7 +343,6 @@ the Gauss-Newton search direction at every iteration, e.g.
 \textcolor{cyan}{\citep{clemarechal,nocedal06}}.
  
 
-<!-- JN??: "didactic" rather than "educative". Is that better?  -->
 
 Unfortunately, due to certain didactic tools on backpropagation and recent
 popularity of "deep neural networks" that manipulate ultra-large models (sometimes 
@@ -365,7 +369,6 @@ Most of  \code{package:algorithm} pairs try to minimize the Root Mean Squared Er
 For all packages, the datasets were learnt as a whole and without any weighting scheme to favor a single part of a dataset. 
 We do not use a validation/test set because the purpose of our study is to verify the ability to reach good minima. This requirement is satisfied by using only a training set.
 
-<!-- ========= JN: Copy edit so far to here 2021-10-17 ============== -->
 
 <!-- JN: removed extra words in next line -->
 When training neural networks, we attempt to tune a set of hyperparameters to minimize the RMSE.
@@ -498,15 +501,13 @@ Finally, we consider a Simon Wood test dataset, named \code{bWoodN1}, used in
 <!-- JN: a -> the -->
 Precisely, we consider the generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ 
 with the mean $\mu_i$ defined as
-
-=====JN?? Is the last term still f_0 ?? ====
-
 $$
 \mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
 +f_4(x_{i,4})+f_0(x_{i,5})
 $$
 and standard deviation $\sigma=1/4$ where $f_j$ are Simon Wood's smooth 
 functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
+<!-- CD?? add comment on f_0 twice -->
 \code{bWoodN1} will only be used in the second round of our analysis when the TOP-5 packages
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
@@ -528,7 +529,7 @@ As of May 2020, around 80 packages fall into this category.
 Packages \CRANpkg{nlsr}, \CRANpkg{minpack.lm}, \CRANpkg{caret} were added because the former two are
 <!-- JN: latter -> last -->
 important implementations of second-order algorithms while the last is the first cited meta package in 
-<!-- JN??: the output has a link -- should this display in the pdf rather than be a link? -->
+<!-- JN??: the output has a link -- should this display in the pdf rather than be a link? => TODO CD option of Rmd -->
 the CRAN task view for machine learning, 	\ctv{MachineLearning}. It is also a dependency for some of the other packages tested. 
 <!-- JN: minor rewording -->
 A restriction to regression analysis left us with 49 \code{package:algorithm} pairs in 2019 and 60 \code{package:algorithm} pairs in 2020.
@@ -543,13 +544,8 @@ All packages were tested 3 times. Each assessment is described in detail below.
 From documentation and example code, we learned that not all packages selected by the automated 
 search fit the scope of our research. 
 Some have no function to generate neural networks while others were not regression
-neural networks of the perceptron type or were only intended for very specific purposes:
-for instance
-<!-- Ref 2 - Comment 14; JN?? changed "an" to "one"; to predict -> the prediction of -->
-\textcolor{blue}{one \soft{R} package allows }the prediction of the amyloidogenicity propensity of polypeptide sequences.
-<!-- JN??: I'm not sure I get the meaning. Discussion? -->
-<!-- Depending on the package, this could be decided by looking at the \code{DESCRIPTION} file or by trial and error. -->
-<!-- B: what I originally wanted to explain here is the actual process of excluding/including packages - I'd usually go by the DESCRIPTION file/documentation first. Usually/I'd hope to find enough about the package there. Sometimes I'd have to dig deeper into the documentation, try out some functions, or dig into the inner code of the package itself-->
+neural networks of the perceptron type or were only intended for very specific purposes
+such as in biology or in astronomy.
 Our decision could sometimes be made from the \code{DESCRIPTION} file; for others we needed trial and error.
 \textcolor{cyan}{We refer to Table \ref{tab:Discard:Pkg} in Appendix D for the full list of discarded packages.}
 
@@ -571,8 +567,6 @@ The final structure of this template (for each package) is as follows:
       g. clear the environment for next loop.
 <!-- JN: Clearing -> Clear; reword about warnings -->
 4. Clear up the environment for the next package.
-<!-- JN??: Is this with #4 or should it be on a new line?? -->
-It is optional to print warnings.
 
 To simplify this process, we developed the \pkg{NNbenchmark} package, 
 of which the first version was created as part of GSoC'19, 
@@ -582,8 +576,7 @@ In GSoC'20, 3 new functions encapsulating the template were added that have been
 made generic with the extensive use of the \code{do.call} function from the \pkg{base} package:
 
 1.    In \code{trainPredict\_1mth1data} a neural network is trained on one dataset and then used for predictions, with several utilities. Then the performance of the neural network is exported, plotted and/or summarized.
-<!-- JN??: have we got the right names in 2. and 3.?? -->
-<!-- B: yes but perhaps Christophe may agree that the original function names are a bit confusing? tP_1data => multiple algorithms of a package are trained against 1 dataset, tP_1pkg => a package is trained on multiple datasets -->
+<!-- JN??: have we got the right names in 2. and 3.?? TODO CD : double check -->
 2.    \code{trainPredict\_1data} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple methods.
 3.    \code{trainPredict\_1pkg} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple datasets.
 
@@ -609,9 +602,9 @@ while \code{NNclose.nnet()} terminates the call.
 Finally, \code{trainPredict\_1pkg} is called using these 5 
 dedicated functions and a list of input parameters.
 }
-<!-- JN: suggest "Scoring ease of use" -->
 
-**3. Scoring ease of use**
+
+**3. Scoring the ease of use**
 
 
 
@@ -643,12 +636,10 @@ Our ratings are as follows.
     c. \textcolor{red}{multiple functions for initializing-converting-fitting} = 0 star
 
 <!-- Ref 1 - Major comment 1-->
-<!-- JN??: is it standardizing a modifier of scaling?? -->
-<!-- JN: added "and"  in list of packages-->
 \textcolor{red}{
 Hence, the utility rating gives an indication to users if the package
-includes a predict function and/or a scaling argument. 
-It is worth mentioning many \soft{R} packages provide scaling, standardizing
+includes a predict function and/or a standardizing argument. 
+It is worth mentioning many \soft{R} packages provide standardizing
 functions. Indeed, \CRANpkg{bdpar}, \CRANpkg{binst}, \CRANpkg{dataprep},
 \CRANpkg{discretization}, \CRANpkg{helda}, \CRANpkg{PreProcessing}, 
 \CRANpkg{preputils}, and \CRANpkg{recipes} offer general data pre-processing
@@ -701,7 +692,6 @@ Figure \ref{fig:Allpkg:RMSEmin} shows the minimum RMSE value per \code{package:a
 for two particular datasets \code{mIshigami} and \code{uDreyfus1},
 whereas Figure \ref{fig:Allpkg:timemean} displays the average computation time.
 The number on the x-level refers to the RMSE overall score of the 
-<!-- JN??: I find this very heavy reading and am not sure I follow. We should discuss so I can improve?? -->
 \code{package:algorithm} given in Table \ref{tab:RMSEscore} (last column), e.g., 8 refers to 
 \code{validann:optim(CG)} which is a very slow algorithm as
 <!-- Ref 2 - Comment 14 -->
@@ -860,7 +850,8 @@ kableExtra::kable(TableEaseOfUse, format = "latex", booktabs = TRUE,
   \centering
   \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-RMSEmin.png}
         \caption{RMSE minimum value per package for \code{mIshigami}
-        and \code{uDreyfus1} datasets}
+        and \code{uDreyfus1} datasets.
+        The left-bottom corner identifies better results.}
         \label{fig:Allpkg:RMSEmin}
 \end{figure}
 
@@ -869,7 +860,8 @@ kableExtra::kable(TableEaseOfUse, format = "latex", booktabs = TRUE,
   \centering
   \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-timmean.png}
         \caption{Average time value per package for \code{mIshigami}
-        and \code{uDreyfus1} datasets}
+        and \code{uDreyfus1} datasets. 
+        The left-bottom corner identifies better results.}
         \label{fig:Allpkg:timemean}
 \end{figure}
 
@@ -905,10 +897,8 @@ In spite of these results, the real reason most authors or users are likely to c
 included in the distributed base \soft{R} and is even mentioned as the very first package in CRAN's task view for machine learning (\ctv{MachineLearning}).
 
 Our analysis found that 6 out of 11 packages tested that use \code{optim} do so through \pkg{nnet}. 
-<!-- JN??: "approximately 8" seems sloppy. Can we discuss? -->
-<!-- B: I believe these were the packages for neural networks at the time using nnet but not for regression. Suggestion: Moreover, 8 of the neural network packages found by RWsearch outside the scope of this research were found to use nnet. 
-I didn't do a deep dig into the discarded pacakges so I'm not sure if there are more. This sentence is another that is meant to prove nnet's popularity. We can remove it?-->
-Moreover, approximately 8 packages for neural networks, though not tested, use \pkg{nnet}.
+Moreover, 8 packages for neural networks, though not tested, use \pkg{nnet}.
+
 
 
 The total number of \pkg{nnet} dependencies found through a search through the offline database of CRAN with \pkg{RWsearch} is 136 packages, although some might be using \pkg{nnet} for the multinomial log-linear models, not neural networks. 
@@ -958,9 +948,7 @@ Alex Cannon has included automatic scaling for all 3 of his packages, as is clea
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{Non-linear least square estimation can be performed via \code{nls} from \pkg{stats}},
 which defaults to an implementation of the second-order algorithm referred to as Gauss-Newton.
-However, in its documentation, \code{nls} warns against "zero-residual" or even small residual problems [@Nash-nlpor14, Section 6.4.1].
-<!-- JN??: I submitted a fix for this, and nls() now can handle zero-residual problems if the user -->
-<!-- provides an extra control parameter to modify the offset criterion. ?? How to mention? -->
+However, in its documentation, \code{nls} before version 4.1 warned against "zero-residual" or even small residual problems [@Nash-nlpor14, Section 6.4.1].
 This was one of the motivations for \CRANpkg{nslr} \citep{R-nlsr}. 
 \code{nlsr} uses a variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain Gauss-Newton of \code{nls},
 modifies the relative offset convergence criterion to avoid a zero divide 
@@ -1033,8 +1021,7 @@ Packages with first-order algorithms can be broadly categorized into 2 types: (a
 The first category is comprised of either packages that also include second-order algorithms previously discussed or packages that use the Extreme Learning Machine algorithm. 
 Only 2 packages include both second-order algorithms and a lower-order algorithm, that is, \CRANpkg{monmlp} and \pkg{validann}. 
 
- ==== JN??: Nelder-Mead called from optimx? It is called via optim from optimx. Or nmkb -- different code?? Discussion? ======
- <!-- B: monmlp uses optimx, validann uses optim -->
+
 \pkg{monmlp} has one algorithm besides BFGS, that is, \pkg{optimx}'s Nelder-Mead. 
 \pkg{validann} provides the same algorithm but from \code{optim}.
 \pkg{validann}'s implementation is slower, as before, but ranks slightly better for minimum RMSE.
@@ -1053,7 +1040,7 @@ in \soft{Python} or \soft{Java} and packages that use as many as 100,000 iterati
 
 On the other hand, \pkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
 
-<!-- JN??: Do we need to mention that optim::SANN has NO CONVERGENCE TEST. It ALWAYS runs 10000 cycles, -->
+<!-- TODO JN??: Do we need to mention that optim::SANN has NO CONVERGENCE TEST. It ALWAYS runs 10000 cycles, -->
 <!-- and then stops regardless of state. Worse, there is NO MEASURE OF SUCCESS, but the convergence flag -->
 <!-- is always set. Discussion please?? -->
 
@@ -1095,9 +1082,9 @@ Moreover, users might hesitate as it is not actually clear what algorithm is use
 <!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing-->
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
 Some users may also wish to avoid having to set up \soft{Java}, which is needed for this package.
-<!--JN changed from: Some users also might not want to setup \soft{Java}, which is needed, although it is not as painful to setup as some external libraries. -->
 
-JN??: We need to reword the following2 paras. Discussion??
+
+<!-- JN??: We need to reword the following2 paras. Discussion??-->
 
 By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives.
 In the  summer of 2019, it took quite some time to figure out how things worked.
@@ -1345,7 +1332,7 @@ This work was possible due to the support of the Google Summer of Code initiativ
 during years 2019 and 2020.
 Students Salsabila Mahdi (2019 and 2020) and Akshaj Verma (2019) are grateful to 
 Google for the financial support.
-We also thank the three anonymous referees for their relevant advices and comments.
+We also thank the three anonymous referees for their relevant advice and comments.
 
 
 

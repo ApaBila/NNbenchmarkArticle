@@ -57,10 +57,13 @@ pragmatically, partly because the algorithms used were computationally
 expensive.
 
 The term \textcolor{blue}{"neural network"} is colloquially used for
-different model structures and applications. For regression and
-classification, it is used interchangeably with the term multilayer
-perceptron. The term \textcolor{blue}{"recurrent neural network"} is
-mainly used in the context of autoregressive time-series while the term
+different model structures and applications.
+\textcolor{blue}{In both \cite{Bishop-NNPR95,ripley2007pattern} books,
+the term "multilayer perceptron" is used interchangeably for regression and classification.
+Later, the term "deep neural networks" has appeared but refers to a very different
+structure with many layers and other training algorithms.} The term
+\textcolor{blue}{"recurrent neural network"} is mainly used in the
+context of autoregressive time-series while the term
 \textcolor{blue}{"convolutional neural network"} is
 \textcolor{blue}{appropriate} for dimension reduction and pattern
 recognition (images/audio/text). Most of the above types of neural
@@ -68,7 +71,9 @@ networks (NN) can be found in \textsf{R} packages hosted on CRAN but
 without any study about the accuracy or the speed of computation. This
 is a concern as many slow or poor algorithms \textcolor{blue}{to fit NN}
 are available in the literature and hence \textcolor{blue}{weak}
-packages are implemented on CRAN.
+packages are implemented on CRAN. \textcolor{blue}{
+In this paper, we stick to the multilayer perceptron because it is still the most used
+NN structure and we focus on regression.}
 
 \textcolor{blue}{In the NN literature, a certain number
 of benchmarks of neural networks have been conducted.
@@ -440,11 +445,7 @@ Dataset & Row nb. & Input nb. & Neuron nb. & Param. nb.\\
 Finally, we consider a Simon Wood test dataset, named \code{bWoodN1},
 used in \citep{wood2011fast} for benchmarking generalized additive
 models. Precisely, we consider the generation of Gaussian random
-variates \(Y_i\), \(i=1,\dots,n\) with the mean \(\mu_i\) defined as
-
-=====JN?? Is the last term still f\_0 ?? ====
-
-\[
+variates \(Y_i\), \(i=1,\dots,n\) with the mean \(\mu_i\) defined as \[
 \mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
 +f_4(x_{i,4})+f_0(x_{i,5})
 \] and standard deviation \(\sigma=1/4\) where \(f_j\) are Simon Wood's
@@ -491,11 +492,9 @@ From documentation and example code, we learned that not all packages
 selected by the automated search fit the scope of our research. Some
 have no function to generate neural networks while others were not
 regression neural networks of the perceptron type or were only intended
-for very specific purposes: for instance
-\textcolor{blue}{one \textsf{R} package allows }the prediction of the
-amyloidogenicity propensity of polypeptide sequences. Our decision could
-sometimes be made from the \code{DESCRIPTION} file; for others we needed
-trial and error.
+for very specific purposes such as in biology or in astronomy. Our
+decision could sometimes be made from the \code{DESCRIPTION} file; for
+others we needed trial and error.
 \textcolor{cyan}{We refer to Table \ref{tab:Discard:Pkg} in Appendix D for the full list of discarded packages.}
 
 \textbf{2. Templates for testing accuracy and speed}
@@ -539,8 +538,7 @@ template (for each package) is as follows:
     clear the environment for next loop.
   \end{enumerate}
 \item
-  Clear up the environment for the next package. It is optional to print
-  warnings.
+  Clear up the environment for the next package.
 \end{enumerate}
 
 To simplify this process, we developed the \pkg{NNbenchmark} package, of
@@ -586,7 +584,7 @@ Finally, \code{trainPredict\_1pkg} is called using these 5
 dedicated functions and a list of input parameters.
 }
 
-\textbf{3. Scoring ease of use}
+\textbf{3. Scoring the ease of use}
 
 We define ease-of-use measures to rate NN packages on their
 user-friendliness. Based on our understanding of what a user may be
@@ -664,8 +662,8 @@ Our ratings are as follows.
 
 \textcolor{red}{
 Hence, the utility rating gives an indication to users if the package
-includes a predict function and/or a scaling argument. 
-It is worth mentioning many \textsf{R} packages provide scaling, standardizing
+includes a predict function and/or a standardizing argument. 
+It is worth mentioning many \textsf{R} packages provide standardizing
 functions. Indeed, \CRANpkg{bdpar}, \CRANpkg{binst}, \CRANpkg{dataprep},
 \CRANpkg{discretization}, \CRANpkg{helda}, \CRANpkg{PreProcessing}, 
 \CRANpkg{preputils}, and \CRANpkg{recipes} offer general data pre-processing
@@ -830,7 +828,8 @@ Package & Util & Doc & Call & Formula & X Y & Comments\\
   \centering
   \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-RMSEmin.png}
         \caption{RMSE minimum value per package for \code{mIshigami}
-        and \code{uDreyfus1} datasets}
+        and \code{uDreyfus1} datasets.
+        The left-bottom corner identifies better results.}
         \label{fig:Allpkg:RMSEmin}
 \end{figure}
 
@@ -838,7 +837,8 @@ Package & Util & Doc & Call & Formula & X Y & Comments\\
   \centering
   \includegraphics[width=\textwidth]{mIshigami-uDreyfus1-timmean.png}
         \caption{Average time value per package for \code{mIshigami}
-        and \code{uDreyfus1} datasets}
+        and \code{uDreyfus1} datasets. 
+        The left-bottom corner identifies better results.}
         \label{fig:Allpkg:timemean}
 \end{figure}
 
@@ -887,8 +887,8 @@ as the very first package in CRAN's task view for machine learning
 (\ctv{MachineLearning}).
 
 Our analysis found that 6 out of 11 packages tested that use
-\code{optim} do so through \pkg{nnet}. Moreover, approximately 8
-packages for neural networks, though not tested, use \pkg{nnet}.
+\code{optim} do so through \pkg{nnet}. Moreover, 8 packages for neural
+networks, though not tested, use \pkg{nnet}.
 
 The total number of \pkg{nnet} dependencies found through a search
 through the offline database of CRAN with \pkg{RWsearch} is 136
@@ -958,12 +958,12 @@ clearly documented.
 \textcolor{blue}{Non-linear least square estimation can be performed via \code{nls} from \pkg{stats}},
 which defaults to an implementation of the second-order algorithm
 referred to as Gauss-Newton. However, in its documentation, \code{nls}
-warns against ``zero-residual'' or even small residual problems
-\citep[Section 6.4.1]{Nash-nlpor14}. This was one of the motivations for
-\CRANpkg{nslr} \citep{R-nlsr}. \code{nlsr} uses a variant
-\citep{jn77ima} of the Levenberg-Marquardt algorithm versus the plain
-Gauss-Newton of \code{nls}, modifies the relative offset convergence
-criterion to avoid a zero divide when residuals are small
+before version 4.1 warned against ``zero-residual'' or even small
+residual problems \citep[Section 6.4.1]{Nash-nlpor14}. This was one of
+the motivations for \CRANpkg{nslr} \citep{R-nlsr}. \code{nlsr} uses a
+variant \citep{jn77ima} of the Levenberg-Marquardt algorithm versus the
+plain Gauss-Newton of \code{nls}, modifies the relative offset
+convergence criterion to avoid a zero divide when residuals are small
 \textcolor{cyan}{and can handle a degenerate Jacobian at the
 first iteration}.
 
@@ -1043,22 +1043,21 @@ Extreme Learning Machine algorithm. Only 2 packages include both
 second-order algorithms and a lower-order algorithm, that is,
 \CRANpkg{monmlp} and \pkg{validann}.
 
-==== JN??: Nelder-Mead called from optimx? It is called via optim from
-optimx. Or nmkb -- different code?? Discussion? ====== \pkg{monmlp} has
-one algorithm besides BFGS, that is, \pkg{optimx}'s Nelder-Mead.
-\pkg{validann} provides the same algorithm but from \code{optim}.
-\pkg{validann}'s implementation is slower, as before, but ranks slightly
-better for minimum RMSE. Both implementations of Nelder-Mead do not rank
-well in minimum RMSE, around 40 out of 60, with similar ranks for the
-other criteria. We would also caution users to avoid methods that do not
-call \code{optim} in \pkg{validann}. From Table \ref{tab:RMSEscore} it
-may appear that \pkg{validann}'s implementation of the Conjugate
-Gradient (CG) algorithm finds reasonable minima and
-\textcolor{blue}{is thus} a good option. It consistently ranked in the
-top 15 with minimum RMSE. However, it is the slowest algorithm of all 60
-algorithms tested. Note, this includes algorithms from packages that
-call external libraries outside \textsf{R} in \textsf{Python} or
-\textsf{Java} and packages that use as many as 100,000 iterations.
+\pkg{monmlp} has one algorithm besides BFGS, that is, \pkg{optimx}'s
+Nelder-Mead. \pkg{validann} provides the same algorithm but from
+\code{optim}. \pkg{validann}'s implementation is slower, as before, but
+ranks slightly better for minimum RMSE. Both implementations of
+Nelder-Mead do not rank well in minimum RMSE, around 40 out of 60, with
+similar ranks for the other criteria. We would also caution users to
+avoid methods that do not call \code{optim} in \pkg{validann}. From
+Table \ref{tab:RMSEscore} it may appear that \pkg{validann}'s
+implementation of the Conjugate Gradient (CG) algorithm finds reasonable
+minima and \textcolor{blue}{is thus} a good option. It consistently
+ranked in the top 15 with minimum RMSE. However, it is the slowest
+algorithm of all 60 algorithms tested. Note, this includes algorithms
+from packages that call external libraries outside \textsf{R} in
+\textsf{Python} or \textsf{Java} and packages that use as many as
+100,000 iterations.
 
 On the other hand, \pkg{validann}'s SANN algorithm is relatively worse
 than other packages as it ranks at number 55 for minimum RMSE although
@@ -1094,19 +1093,17 @@ With a default hidden layer size of 2, each with 200 neurons, it takes
 around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022. On
 the other hand, \pkg{nnet} can find a minima of the error function with
 a minimum RMSE of 0.0088 in less than a second with fewer neurons and
-only one layer \textcolor{blue}{with 3 neurons}. Thus, despite having a
-ranking of 11 in minimum RMSE in the final run, beating some of the
-second-order algorithms, users of \pkg{h2o} should be wary of the trade
-off between performance and speed. Moreover, users might hesitate as it
-is not actually clear what algorithm is used. The large number of
-options to choose from seem capable of changing the basic algorithm
-itself into what is considered a different algorithm by other packages
-(example: ``adaptive\_rate: Specify whether to enable the adaptive
-learning rate (ADADELTA). This option is enabled by default.'' in link,
-set to false in latest run). Some users may also wish to avoid having to
-set up \textsf{Java}, which is needed for this package.
-
-JN??: We need to reword the following2 paras. Discussion??
+only one layer \textcolor{blue}{with 3 neurons}. \\
+Thus, despite having a ranking of 11 in minimum RMSE in the final run,
+beating some of the second-order algorithms, users of \pkg{h2o} should
+be wary of the trade off between performance and speed. Moreover, users
+might hesitate as it is not actually clear what algorithm is used. The
+large number of options to choose from seem capable of changing the
+basic algorithm itself into what is considered a different algorithm by
+other packages (example: ``adaptive\_rate: Specify whether to enable the
+adaptive learning rate (ADADELTA). This option is enabled by default.''
+in link, set to false in latest run). Some users may also wish to avoid
+having to set up \textsf{Java}, which is needed for this package.
 
 By far, the hardest package to set up which called external libraries
 was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives. In
@@ -1183,7 +1180,7 @@ apparently in the \code{deeptree} and \code{deepforest} functions it
 provides.
 
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better
-performing implementations of the first-order algorithms
+performing implementations of the first-order algorithm
 back-propagation, ranking at 18 for minimum RMSE.
 \textcolor{blue}{It is} relatively fast, ranking at 23 for speed.
 
@@ -1342,7 +1339,7 @@ This work was possible due to the support of the Google Summer of Code
 initiative for R during years 2019 and 2020. Students Salsabila Mahdi
 (2019 and 2020) and Akshaj Verma (2019) are grateful to Google for the
 financial support. We also thank the three anonymous referees for their
-relevant advices and comments.
+relevant advice and comments.
 
 \bibliography{gsoc1920-MVKDN-rev1}
 
@@ -1668,8 +1665,8 @@ Universitas Syiah Kuala\\%
 JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia\\
 %
 %
-\textit{ORCiD: \href{https://orcid.org/0000-0002-2559-4154}{0000-0002-2559-4154}}\\%
-\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}%
+\\\textit{ORCiD: \href{https://orcid.org/0000-0002-2559-4154}{0000-0002-2559-4154}}%
+\\\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}
 }
 
 \address{%
@@ -1678,8 +1675,8 @@ Manipal Institute of Technology\\%
 Manipal, Karnataka, 576104, India\\
 %
 %
-\textit{ORCiD: \href{https://orcid.org/0000-0002-3936-0033}{0000-0002-3936-0033}}\\%
-\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}%
+\\\textit{ORCiD: \href{https://orcid.org/0000-0002-3936-0033}{0000-0002-3936-0033}}%
+\\\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}
 }
 
 \address{%
@@ -1688,8 +1685,8 @@ Université Paris-Dauphine, University PSL, CNRS, CEREMADE\\%
 Place du Maréchal de Lattre de Tassigny, 75016 Paris, France\\
 %
 %
-\textit{ORCiD: \href{https://orcid.org/0000-0001-6732-1501}{0000-0001-6732-1501}}\\%
-\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}%
+\\\textit{ORCiD: \href{https://orcid.org/0000-0001-6732-1501}{0000-0001-6732-1501}}%
+\\\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
 }
 
 \address{%
@@ -1698,8 +1695,8 @@ InModelia\\%
 5 rue Malebranche, 75005 Paris, France\\
 %
 %
-\textit{ORCiD: \href{https://orcid.org/0000-0002-0505-9920}{0000-0002-0505-9920}}\\%
-\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}%
+\\\textit{ORCiD: \href{https://orcid.org/0000-0002-0505-9920}{0000-0002-0505-9920}}%
+\\\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}
 }
 
 \address{%
@@ -1708,6 +1705,6 @@ Telfer School of Management, University of Ottawa\\%
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 %
 %
-\textit{ORCiD: \href{https://orcid.org/0000-0002-2762-8039}{0000-0002-2762-8039}}\\%
-\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}%
+\\\textit{ORCiD: \href{https://orcid.org/0000-0002-2762-8039}{0000-0002-2762-8039}}%
+\\\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
 }
