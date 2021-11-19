@@ -913,13 +913,13 @@ It has many pre-processing utilities available, as well as other tools.
 \CRANpkg{MachineShop} \citep{R-MachineShop} has 51 algorithms, with some additional information about the response variable types in the second vignette, functions for preprocessing and tuning, performance assessment, and presentation of results. 
 \CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the \code{maxit} parameter. 
 \CRANpkg{rminer} \citep{R-rminer} is the only package dependent on \pkg{nnet} that ranks above \pkg{nnet} at number 2 for minimum RMSE, and even number 1 in some runs. 
-It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of results that are consistent and do not vary (RMSE D51). 
-<!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted-->
+It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE). Furthermore it is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of accuracy that is consistent and does not vary (measured by RMSE D51). <!-- previously: It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of results that are consistent and do not vary (RMSE D51). -->
+<!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted. B: Edited -->
 
 
-<!-- JN??: What difference are we talking about?? Discussion? 
+<!-- JN??!: What difference are we talking about?? Discussion? B: Edited according to response below. Also see edits to 916 
 B: minimum RMSE in above paragraph, other metrics as well -->
-The difference is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
+The difference of rminer's rank in metrics is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
 It is worth noting is that \pkg{nnet} and \pkg{validann} do not have external normalization, which is especially recommended for \pkg{validann}. 
@@ -1065,26 +1065,26 @@ We recommend choosing better algorithms over more layers for datasets similar to
 
 Choosing more layers often comes at the expense of speed. 
 An example of this is the implementation of the first-order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
-With the same numbers of neurons it already is quite slow - coming in at 51 out of the 60 algorithms. 
-<!-- JN??: What do we mean by "same numbers of neurons? Discussion?? -->
+With the harmonized number of neurons, as used when benchmarking all the other algorithms, its algorithm is already relatively slow - coming in at 51 out of the 60 algorithms. 
+<!-- JN??!: What do we mean by "same numbers of neurons? Discussion?? B: Edited according to response below. See also further edits regarding 1077 -->
 <!-- B: we set the number of neurons according to the dataset. 3 for Dreyfus datasets, etc. What I meant here is that with the set number of neurons, h2o was already slow. But they have a high number of default neurons which is even slower with not much RMSE gain-->
 
-With a default hidden layer size of 2, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
+With h2o's default of 2 hidden layers, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \pkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
-than a second with fewer neurons and only one layer
-<!-- Ref 2 - Comment 14 -->
-\textcolor{blue}{with 3 neurons}.
-<!-- B??: if we're still talking about mFriedman it should be 5 neurons. 
-Suggestion: in less than a second with only one layer of 5 neurons-->  
+than a second with only one layer
+<!-- Ref 2 - Comment 14 --> <!-- B??: Christophe, is this referring to the right comment? -->
+\textcolor{blue}{of 5 neurons}. <!-- previously: with fewer neurons and only one layer with 3 neurons -->
+<!-- B??!: if we're still talking about mFriedman it should be 5 neurons. 
+Suggestion: in less than a second with only one layer of 5 neurons. B: Edited - used my suggestion of fixing the wrong data -->  
 Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \pkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 <!-- JN??: Next line I don't know how to reword?? -->
-<!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing-->
+<!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing. B??1: JN, how would you like to reword this with consideration of my explanation above? We could remove the (example: "adaptive_rate" ... in latest run) which is purely an example from the documentation and might not look that neat. -->
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
 Some users may also wish to avoid having to set up \soft{Java}, which is needed for this package.
 
 
-<!-- JN??: We need to reword the following2 paras. Discussion??-->
+<!-- JN??2: We need to reword the following2 paras. Discussion?? B: Not sure how you would prefer to approach the subject of tensorflow's technical difficulties which led to it not being tested-->
 
 By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives.
 In the  summer of 2019, it took quite some time to figure out how things worked.
@@ -1136,7 +1136,7 @@ C++ code was used to enhance the speed.
 Functions for autoencoding are included with anomaly detection in mind.
 
 
-\CRANpkg{automl} \citep{R-automl}: It would be easier to use the algorithms in this package if they 
+\CRANpkg{automl} \citep{R-automl}: There is no direct argument to choose an algorithm from this package. 
 <!-- JN??: Does this mean internal rather than user parameters?? Discussion?? -->
 <!-- B: similar to h2o, no specific argument for algorithms. Well some might argue that it's better like this so users might see the difference between algorithms... like, oh this algorithm uses this parameter. This might also be because of a coding choice? I'll leave a bit of it's documentation here for you to discuss
 
@@ -1148,9 +1148,9 @@ beta2
 ‘RMSprop’ if beta1 equal 0 and beta2 different from 0
 ‘adam optimization’ if beta1 different from 0 and beta2 different from 0 (default)
 (default value beta1 equal 0.9 and beta2 equal 0.999)
-#tuning priority 2
+#tuning priority 2. B??!: reworded based on above explanation. What do you think?
 -->
-did not rely on the beta parameters and instead had an argument of their own. 
+Instead users must input 2 values into 2 separate arguments (beta1 and beta2) that will then determine which algorithm is used. <!-- B: This might lead to confusion for new users? --> <!-- previously: It would be easier to use the algorithms in this package if they did not rely on the beta parameters and instead had an argument of their own. -->
 <!-- JN: reworded -->
 However, there are useful notes on what parameters have a higher tuning priority. 
 The package is rather slow (highest ranking algorithm for speed is \code{RMSprop} at 47) with good enough convergence 
@@ -1163,10 +1163,10 @@ There are few exported functions.
 The novelty of this package is apparently in the \code{deeptree} and \code{deepforest} functions it provides. 
 
 
-<!-- JN??: meaning?? Can we discuss? -->
+<!-- JN??!: meaning?? Can we discuss? -->
 <!-- B: if this package is using vanilla BP, it has a better implementation of it than RSNNS's Std_Backpropagation (27 min RMSE) or neuralnet's backprop (50 min RMSE)-->
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
-first-order algorithm back-propagation, ranking at 18 for minimum RMSE. 
+first-order algorithm back-propagation, in comparison to RSNNS's Std_Backpropagation or neuralnet's backprop, ranking at 18 for minimum RMSE. <!--  previously: This is one of the better performing implementations of the first-order algorithm back-propagation, ranking at 18 for minimum RMSE. -->
 <!-- Ref 3 - Comment 1 -->
 \textcolor{blue}{It is} relatively fast, ranking at 23 for speed.
 
