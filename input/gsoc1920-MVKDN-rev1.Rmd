@@ -917,8 +917,8 @@ It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE,
 <!-- JN?? I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted. B: Edited -->
 
 
-<!-- JN??!: What difference are we talking about?? Discussion? B: Edited according to response below. Also see edits to 916 
-B: minimum RMSE in above paragraph, other metrics as well -->
+<!-- JN: What difference are we talking about? Discussion? B: Edited according to response below. Also see edits to 916 
+B: minimum RMSE in above paragraph, other metrics as well  JN: OK -->
 The difference of rminer's rank in metrics is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
 \CRANpkg{traineR} \citep{R-traineR} claims to unify the different methods of creating models between several learning algorithms. 
 
@@ -1079,18 +1079,27 @@ Suggestion: in less than a second with only one layer of 5 neurons. B: Edited - 
 Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \pkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 <!-- JN??: Next line I don't know how to reword?? -->
-<!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing. B??1: JN, how would you like to reword this with consideration of my explanation above? We could remove the (example: "adaptive_rate" ... in latest run) which is purely an example from the documentation and might not look that neat. -->
-The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run). 
+<!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing. B??1: JN, how would you like to reword this with consideration of my explanation above? We could remove the (example: "adaptive_rate" ... in latest run) which is purely an example from the documentation and might not look that neat. 
+JN: I agree. Let's remove that.-->
+The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages.
+<!-- (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run).  JN??! removed-->
 Some users may also wish to avoid having to set up \soft{Java}, which is needed for this package.
 
 
-<!-- JN??2: We need to reword the following2 paras. Discussion?? B: Not sure how you would prefer to approach the subject of tensorflow's technical difficulties which led to it not being tested-->
+<!-- JN??!2: We need to reword the following2 paras. Discussion??! B: Not sure how you would prefer to approach the subject of tensorflow's technical difficulties which led to it not being tested-->
 
-By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives.
-In the  summer of 2019, it took quite some time to figure out how things worked.
-Then the latest TensorFlow 2.2.0 became available and we hoped to be able to use the Eager Execution provided to avoid the \soft{R} Session crashing in the summer of 2020.
-Unfortunately, this led to different problems with the translation between \soft{R} and
-\soft{Python} so we could not use the 2019 code.
+We had hoped to include \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives in our study.
+However, we discovered incompatibilities between our benchmarking code and the external libraries
+needed to run this package that led to \soft{R} Session crashes that we have yet to resolve,
+even in version 2.2.0 of the package that became available only late in our work.
+
+<!-- OLD WORDING -->
+<!-- By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives. -->
+<!-- In the  summer of 2019, it took quite some time to figure out how things worked. -->
+<!-- Then the latest TensorFlow 2.2.0 became available and we hoped to be able to use the Eager Execution provided to avoid the \soft{R} Session crashing in the summer of 2020. -->
+<!-- Unfortunately, this led to different problems with the translation between \soft{R} and -->
+<!-- \soft{Python} so we could not use the 2019 code. -->
+
 \CRANpkg{tfestimators} \citep{R-tfestimators} <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{had also} similar issues and is even less supported.
 \CRANpkg{kerasR} \citep{R-kerasR}, which provides a consistent interface to Keras, 
@@ -1138,6 +1147,7 @@ Functions for autoencoding are included with anomaly detection in mind.
 
 \CRANpkg{automl} \citep{R-automl}: There is no direct argument to choose an algorithm from this package. 
 <!-- JN??: Does this mean internal rather than user parameters?? Discussion?? -->
+<!-- I think new wording is acceptable. Others? -->
 <!-- B: similar to h2o, no specific argument for algorithms. Well some might argue that it's better like this so users might see the difference between algorithms... like, oh this algorithm uses this parameter. This might also be because of a coding choice? I'll leave a bit of it's documentation here for you to discuss
 
 beta1	
