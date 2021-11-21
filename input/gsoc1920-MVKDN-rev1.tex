@@ -75,7 +75,7 @@ packages are implemented on CRAN. \textcolor{blue}{
 In this paper, we stick to the multilayer perceptron because it is still the most used
 NN structure and we focus on regression.}
 
-\textcolor{blue}{In the NN literature, a certain number
+\textcolor{blue}{In the NN literature, a number
 of benchmarks of neural networks have been conducted.
 \citep{adolf2016fathom} propose a reference workload
 for modern deep learning methods with a large variety
@@ -88,7 +88,7 @@ intelligence processors, which consist of two levels
 of benchmarks: microbenchmarks of single-layer networks 
 and macrobenchmarks of state-of-the-art industrial networks.
 However \citep{tao2018benchip} focus only various hardware
-platforms, including CPUs, GPUs, and scenarios are limited
+platforms, including CPUs and GPUs; scenarios are limited
 to classification or recognition.
 \citep{xie2020nnbench} propose another benchmark methodology
 to evaluate software/hardware co-designs and illustrate
@@ -166,12 +166,12 @@ documentation.
 \section{\texorpdfstring{\textcolor{blue}{Multilayer perceptron with a single hidden layer}}{}}\label{section}}
 
 In this section, we briefly describe the single hidden-layer perceptron.
-As the ``layer'' term suggests - some terms come from graphs
-representations while others come from the traditional literature on
-non-linear models. \textcolor{blue}{
-We refer to \citep[Chapter 11]{friedman2001elements}, 
-\citep[Chapter 10]{izenman2008modern}
-\citep{ripley2007pattern} for a general introduction 
+While some of the jargon arising comes from graph representations of
+models, others derive from the traditional literature on non-linear
+models. \textcolor{blue}{
+We refer to \cite{friedman2001elements}[Chapter 11], 
+\cite{izenman2008modern}[Chapter 10] and
+\cite{ripley2007pattern} for a general introduction 
 of neural networks.}
 
 Using the graph description,
@@ -204,7 +204,6 @@ for a total of 22 parameters.}
 
 \textcolor{blue}{In practice, modelers also use piecewise differentiable functions
 with bounded left/right derivatives, such as the 
-<!-- JN: software (singular) -->
 Rectified Linear Unit function (called ReLU in software).
 The ReLU activation function is in particular useful for classification problems
 which are not investigated here.}
@@ -222,7 +221,7 @@ parameters. A common example of this is to use values extracted from a
 by $F_N(x_l)$ and output by $F_N^{-1}(y)$ where $F_N$ and $F_N^{-1}$
 stand respectively for the distribution function and the quantile function
 of a Gaussian distribution.} These practices help us find good
-local-minima and possibly the global-minima.
+local-minima and possibly a global-minimum.
 
 \begin{figure}
     \centering
@@ -566,7 +565,6 @@ from the \pkg{base} package:
 
 \textcolor{orange}{For this paper, the training process (3.b to 3.g) is
 carried out with \pkg{NNbenchmark}'s \code{trainPredict\_1pkg} using 
-<!-- JN: computing -> to report -->
 the \code{NNsummary} function to report convergence metrics and speed.}
 The package repository is at
 \url{https://github.com/pkR-pkR/NNbenchmark}, with template repository
@@ -914,15 +912,15 @@ changed this to harmonize the \code{maxit} parameter. \CRANpkg{rminer}
 \citep{R-rminer} is the only package dependent on \pkg{nnet} that ranks
 above \pkg{nnet} at number 2 for minimum RMSE, and even number 1 in some
 runs. It also ranks number 1 on the other accuracy measures (median
-RMSE, minimum MAE, minimum WAE) and is only behind \CRANpkg{deepdive}
-and \pkg{minpack.lm} in terms of results that are consistent and do not
-vary (RMSE D51).
+RMSE, minimum MAE, minimum WAE). Furthermore it is only behind
+\CRANpkg{deepdive} and \pkg{minpack.lm} in terms of accuracy that is
+consistent and does not vary (measured by RMSE D51).
 
-The difference is probably from the change of maximum allowable weights
-in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably
-the reason its fits are slower. \CRANpkg{traineR} \citep{R-traineR}
-claims to unify the different methods of creating models between several
-learning algorithms.
+The difference of rminer's rank in metrics is probably from the change
+of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in
+\pkg{nnet}, which is also probably the reason its fits are slower.
+\CRANpkg{traineR} \citep{R-traineR} claims to unify the different
+methods of creating models between several learning algorithms.
 
 It is worth noting is that \pkg{nnet} and \pkg{validann} do not have
 external normalization, which is especially recommended for
@@ -1062,6 +1060,8 @@ from packages that call external libraries outside \textsf{R} in
 On the other hand, \pkg{validann}'s SANN algorithm is relatively worse
 than other packages as it ranks at number 55 for minimum RMSE although
 it is in the top one third for speed (rank 20).
+\cite{Nash-nlpor14}{[}page 186{]} notes the lack of a proper convergence
+criteria for SANN.
 
 Packages that implement the ELMR algorithm are similar to SANN from
 \pkg{validann} in the sense that they are faster but do not converge as
@@ -1086,33 +1086,31 @@ ones we used.
 
 Choosing more layers often comes at the expense of speed. An example of
 this is the implementation of the first-order algorithm in \CRANpkg{h2o}
-\citep{R-h2o}. With the same numbers of neurons it already is quite slow
-- coming in at 51 out of the 60 algorithms.
+\citep{R-h2o}. With the harmonized number of neurons, as used when
+benchmarking all the other algorithms, its algorithm is already
+relatively slow - coming in at 51 out of the 60 algorithms.
 
-With a default hidden layer size of 2, each with 200 neurons, it takes
+With h2o's default of 2 hidden layers, each with 200 neurons, it takes
 around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022. On
 the other hand, \pkg{nnet} can find a minima of the error function with
-a minimum RMSE of 0.0088 in less than a second with fewer neurons and
-only one layer \textcolor{blue}{with 3 neurons}. \\
+a minimum RMSE of 0.0088 in less than a second with only one layer
+\textcolor{blue}{of 5 neurons}. \\
 Thus, despite having a ranking of 11 in minimum RMSE in the final run,
 beating some of the second-order algorithms, users of \pkg{h2o} should
 be wary of the trade off between performance and speed. Moreover, users
 might hesitate as it is not actually clear what algorithm is used. The
 large number of options to choose from seem capable of changing the
 basic algorithm itself into what is considered a different algorithm by
-other packages (example: ``adaptive\_rate: Specify whether to enable the
-adaptive learning rate (ADADELTA). This option is enabled by default.''
-in link, set to false in latest run). Some users may also wish to avoid
-having to set up \textsf{Java}, which is needed for this package.
+other packages. Some users may also wish to avoid having to set up
+\textsf{Java}, which is needed for this package.
 
-By far, the hardest package to set up which called external libraries
-was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives. In
-the summer of 2019, it took quite some time to figure out how things
-worked. Then the latest TensorFlow 2.2.0 became available and we hoped
-to be able to use the Eager Execution provided to avoid the \textsf{R}
-Session crashing in the summer of 2020. Unfortunately, this led to
-different problems with the translation between \textsf{R} and
-\textsf{Python} so we could not use the 2019 code.
+We had hoped to include \CRANpkg{tensorflow} \citep{R-tensorflow} and
+its derivatives in our study. However, we discovered incompatibilities
+between our benchmarking code and the external libraries needed to run
+this package that led to \textsf{R} Session crashes that we have yet to
+resolve, even in version 2.2.0 of the package that became available only
+late in our work.
+
 \CRANpkg{tfestimators} \citep{R-tfestimators} \textcolor{blue}{had also}
 similar issues and is even less supported. \CRANpkg{kerasR}
 \citep{R-kerasR}, which provides a consistent interface to Keras, a
@@ -1164,12 +1162,13 @@ algorithms but all its algorithms are quite fast. C++ code was used to
 enhance the speed. Functions for autoencoding are included with anomaly
 detection in mind.
 
-\CRANpkg{automl} \citep{R-automl}: It would be easier to use the
-algorithms in this package if they did not rely on the beta parameters
-and instead had an argument of their own. However, there are useful
-notes on what parameters have a higher tuning priority. The package is
-rather slow (highest ranking algorithm for speed is \code{RMSprop} at
-47) with good enough convergence (highest ranking is \code{adam} at 18).
+\CRANpkg{automl} \citep{R-automl}: There is no direct argument to choose
+an algorithm from this package. Instead users must input 2 values into 2
+separate arguments (beta1 and beta2) that will then determine which
+algorithm is used. However, there are useful notes on what parameters
+have a higher tuning priority. The package is rather slow (highest
+ranking algorithm for speed is \code{RMSprop} at 47) with good enough
+convergence (highest ranking is \code{adam} at 18).
 
 \pkg{deepdive} \citep{R-deepdive}: All algorithms are very good in terms
 of little variance between results (see its RMSE D51 score). However,
@@ -1181,7 +1180,8 @@ provides.
 
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better
 performing implementations of the first-order algorithm
-back-propagation, ranking at 18 for minimum RMSE.
+back-propagation, in comparison to RSNNS's Std\_Backpropagation or
+neuralnet's backprop, ranking at 18 for minimum RMSE.
 \textcolor{blue}{It is} relatively fast, ranking at 23 for speed.
 
 \CRANpkg{neuralnet} \citep{R-neuralnet}: Considering that this is the
@@ -1665,8 +1665,8 @@ Universitas Syiah Kuala\\%
 JL. Syech Abdurrauf No.3, Aceh 23111, Indonesia\\
 %
 %
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-2559-4154}{0000-0002-2559-4154}}%
-\\\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}
+\textit{ORCiD: \href{https://orcid.org/0000-0002-2559-4154}{0000-0002-2559-4154}}\\%
+\href{mailto:bila.mahdi@mhs.unsyiah.ac.id}{\nolinkurl{bila.mahdi@mhs.unsyiah.ac.id}}%
 }
 
 \address{%
@@ -1675,8 +1675,8 @@ Manipal Institute of Technology\\%
 Manipal, Karnataka, 576104, India\\
 %
 %
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-3936-0033}{0000-0002-3936-0033}}%
-\\\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}
+\textit{ORCiD: \href{https://orcid.org/0000-0002-3936-0033}{0000-0002-3936-0033}}\\%
+\href{mailto:akshajverma7@gmail.com}{\nolinkurl{akshajverma7@gmail.com}}%
 }
 
 \address{%
@@ -1685,8 +1685,8 @@ Université Paris-Dauphine, University PSL, CNRS, CEREMADE\\%
 Place du Maréchal de Lattre de Tassigny, 75016 Paris, France\\
 %
 %
-\\\textit{ORCiD: \href{https://orcid.org/0000-0001-6732-1501}{0000-0001-6732-1501}}%
-\\\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}
+\textit{ORCiD: \href{https://orcid.org/0000-0001-6732-1501}{0000-0001-6732-1501}}\\%
+\href{mailto:dutang@ceremade.dauphine.fr}{\nolinkurl{dutang@ceremade.dauphine.fr}}%
 }
 
 \address{%
@@ -1695,8 +1695,8 @@ InModelia\\%
 5 rue Malebranche, 75005 Paris, France\\
 %
 %
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-0505-9920}{0000-0002-0505-9920}}%
-\\\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}
+\textit{ORCiD: \href{https://orcid.org/0000-0002-0505-9920}{0000-0002-0505-9920}}\\%
+\href{mailto:patrice.kiener@inmodelia.com}{\nolinkurl{patrice.kiener@inmodelia.com}}%
 }
 
 \address{%
@@ -1705,6 +1705,6 @@ Telfer School of Management, University of Ottawa\\%
 55 Laurier Avenue East, Ottawa, Ontario K1N 6N5 Canada\\
 %
 %
-\\\textit{ORCiD: \href{https://orcid.org/0000-0002-2762-8039}{0000-0002-2762-8039}}%
-\\\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}
+\textit{ORCiD: \href{https://orcid.org/0000-0002-2762-8039}{0000-0002-2762-8039}}\\%
+\href{mailto:nashjc@uottawa.ca}{\nolinkurl{nashjc@uottawa.ca}}%
 }
