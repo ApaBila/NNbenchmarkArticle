@@ -1094,15 +1094,15 @@ With h2o's default of 2 hidden layers, each with 200 neurons, it takes
 around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022. On
 the other hand, \pkg{nnet} can find a minima of the error function with
 a minimum RMSE of 0.0088 in less than a second with only one layer
-\textcolor{blue}{of 5 neurons}. \\
-Thus, despite having a ranking of 11 in minimum RMSE in the final run,
-beating some of the second-order algorithms, users of \pkg{h2o} should
-be wary of the trade off between performance and speed. Moreover, users
-might hesitate as it is not actually clear what algorithm is used. The
-large number of options to choose from seem capable of changing the
-basic algorithm itself into what is considered a different algorithm by
-other packages. Some users may also wish to avoid having to set up
-\textsf{Java}, which is needed for this package.
+\textcolor{blue}{of 5 neurons}. Thus, despite having a ranking of 11 in
+minimum RMSE in the final run, beating some of the second-order
+algorithms, users of \pkg{h2o} should be wary of the trade off between
+performance and speed. Moreover, users might hesitate as it is not
+actually clear what algorithm is used. The large number of options to
+choose from seem capable of changing the basic algorithm itself into
+what is considered a different algorithm by other packages. Some users
+may also wish to avoid having to set up \textsf{Java}, which is needed
+for this package.
 
 We had hoped to include \CRANpkg{tensorflow} \citep{R-tensorflow} and
 its derivatives in our study. However, we discovered incompatibilities

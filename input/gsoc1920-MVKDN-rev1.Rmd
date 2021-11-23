@@ -215,7 +215,6 @@ The criteria used in our benchmark were: (i) accuracy, i.e. the ability to find 
 
 In this section, we briefly describe the single hidden-layer
 perceptron. 
-<!-- JN??!: I find this clumsy. Can we discuss? Reworded -->
 While some of the jargon arising comes
 from graph representations of models, others derive from the 
 traditional literature on non-linear models. 
@@ -225,7 +224,6 @@ We refer to \cite{friedman2001elements}[Chapter 11],
 \cite{izenman2008modern}[Chapter 10] and
 \cite{ripley2007pattern} for a general introduction 
 of neural networks.}
-<!-- JN??!: Note that I moved the chapters AFTER the ref, and used cite instead of citep -->
 
 Using the graph description,
 <!-- Ref 2 - Comment 14 -->
@@ -275,8 +273,6 @@ The model $y = a_1 + a_2\times \tanh(a_3 + a_4\times x) + a_5\times \tanh(a_6 + 
 The model $y = a_1 + a_2\times \atan(a_3 + a_4\times x_1 + a_5\times x_2 + a_6\times x_3 + a_7\times x_4 + a_8\times x_5) + a_9\times \atan(a_{10}  + a_{11}\times x_1 + a_{12}\times x_2 + a_{13}\times x_3 + a_{14}\times x_4 + a_{15}\times x_5) + a_{16}\atan(a_{17} + a_{18}\times x_1 + a_{19}\times x_2 + a_{20}\times x_3 + a_{21}\times x_4 + a_{22}\times x_5)$ describes a neural network (Fig. 1b) with five inputs, three hidden neurons, one output model where $x$ is the input, $\text{atan}()$ is the activation function, $y$ is the output and $a_1,\dots,a_{22}$ are the parameters. 
 -->
 
-<!-- JN??: do we have a good reason for this?  -->
-
 While the final gradient should be small, we believe it is helpful to have 
 <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{gradients with large values}
@@ -294,8 +290,6 @@ by $F_N(x_l)$ and output by $F_N^{-1}(y)$ where $F_N$ and $F_N^{-1}$
 stand respectively for the distribution function and the quantile function
 of a Gaussian distribution.}
 These practices help us find good local-minima and possibly a global-minimum.
-<!-- JN??!: "a global minimum" rather than "the global minima" -->
-
 
 
 \begin{figure}
@@ -894,7 +888,6 @@ It has many pre-processing utilities available, as well as other tools.
 \CRANpkg{radiant.model} \citep{R-radiant.model} has an unalterable \code{maxit} of 10000 in the original package. We changed this to harmonize the \code{maxit} parameter. 
 \CRANpkg{rminer} \citep{R-rminer} is the only package dependent on \pkg{nnet} that ranks above \pkg{nnet} at number 2 for minimum RMSE, and even number 1 in some runs. 
 It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE). Furthermore it is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of accuracy that is consistent and does not vary (measured by RMSE D51). <!-- previously: It also ranks number 1 on the other accuracy measures (median RMSE, minimum MAE, minimum WAE)  and is only behind \CRANpkg{deepdive} and \pkg{minpack.lm} in terms of results that are consistent and do not vary (RMSE D51). -->
-<!-- JN??! I would like to revisit this paragraph, as I find the expression clumsy. CD: this sentence should be splitted. B: Edited -->
 
 
 The difference of rminer's rank in metrics is probably from the change of maximum allowable weights in \pkg{rminer} to 10000 from 1000 in \pkg{nnet}, which is also probably the reason its fits are slower. 
@@ -1015,21 +1008,11 @@ in \soft{Python} or \soft{Java} and packages that use as many as 100,000 iterati
 
 On the other hand, \pkg{validann}'s SANN algorithm is relatively worse than other packages as it ranks at number 55 for minimum RMSE although it is in the top one third for speed (rank 20).
 \cite{Nash-nlpor14}[page 186] notes the lack of a proper convergence criteria for SANN.
-<!-- TODO JN??!: Do we need to mention that optim::SANN has NO CONVERGENCE TEST. It ALWAYS runs 10000 cycles, -->
-<!-- and then stops regardless of state. Worse, there is NO MEASURE OF SUCCESS, but the convergence flag -->
-<!-- is always set. JN2021-11-22: Note new line with ref added. -->
-
-<!-- B: I'm not fond of the algorithm either, perhaps Patrice can also mention something? Patrice did a lot of initial tests on validann's algorithms -->
-
-
-
 
 Packages that implement the ELMR algorithm are similar to SANN from \pkg{validann} in the sense that they are faster but do not converge as well as other package's algorithms. 
 The 2 packages that do so, \CRANpkg{elmNNRcpp} \citep{R-elmNNRcpp} and \CRANpkg{ELMR} \citep{R-ELMR} are, respectively, number 1 and number 2 in the ranks for time but 59 and 60 (bottom 2) for minimum RMSE.
 \pkg{ELMR} converges slightly worse on all datasets than \pkg{elmNNRcpp} but has noticeably worse performance on the Gauss datasets, especially \code{uGauss1}.
 Even increasing the number of neurons did not lead to better convergence for those particular datasets.
-
-
 
 **B. More than one hidden layer**
 
@@ -1041,39 +1024,21 @@ We recommend choosing better algorithms over more layers for datasets similar to
 Choosing more layers often comes at the expense of speed. 
 An example of this is the implementation of the first-order algorithm in \CRANpkg{h2o} \citep{R-h2o}. 
 With the harmonized number of neurons, as used when benchmarking all the other algorithms, its algorithm is already relatively slow - coming in at 51 out of the 60 algorithms. 
-<!-- JN??!: What do we mean by "same numbers of neurons? Discussion?? B: Edited according to response below. See also further edits regarding 1077 -->
-<!-- B: we set the number of neurons according to the dataset. 3 for Dreyfus datasets, etc. What I meant here is that with the set number of neurons, h2o was already slow. But they have a high number of default neurons which is even slower with not much RMSE gain-->
 
 With h2o's default of 2 hidden layers, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \pkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
 than a second with only one layer
 <!-- Ref 2 - Comment 14 --> <!-- B??: Christophe, is this referring to the right comment? -->
-\textcolor{blue}{of 5 neurons}. <!-- previously: with fewer neurons and only one layer with 3 neurons -->
-<!-- B??!: if we're still talking about mFriedman it should be 5 neurons. 
-Suggestion: in less than a second with only one layer of 5 neurons. B: Edited - used my suggestion of fixing the wrong data -->  
+\textcolor{blue}{of 5 neurons}.
 Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \pkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
-<!-- JN??: Next line I don't know how to reword?? -->
-<!-- B: it's unclear what algorithm h2o uses, other than it being 1st order. There's also many options to change algorithms that's not as explicit as other packages. Many packages with multiple algorithms have either an argument for choosing algorithms (like validann::ann's "method" argument) or externally setting up the optimizer like in keras. In h2o, changes to an argument like adaptive learning rate can mean the algorithm ADADELTA. I guess what I'm trying to point out is that for non-expert users, the lack of clarity might be misleading or confusing. B??1: JN, how would you like to reword this with consideration of my explanation above? We could remove the (example: "adaptive_rate" ... in latest run) which is purely an example from the documentation and might not look that neat. 
-JN: I agree. Let's remove that.-->
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages.
-<!-- (example: "adaptive_rate: Specify whether to enable the adaptive learning rate (ADADELTA). This option is enabled by default." in link, set to false in latest run).  JN??! removed-->
 Some users may also wish to avoid having to set up \soft{Java}, which is needed for this package.
-
-
-<!-- JN??!2: We need to reword the following2 paras. Discussion??! B: Not sure how you would prefer to approach the subject of tensorflow's technical difficulties which led to it not being tested-->
 
 We had hoped to include \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives in our study.
 However, we discovered incompatibilities between our benchmarking code and the external libraries
 needed to run this package that led to \soft{R} Session crashes that we have yet to resolve,
 even in version 2.2.0 of the package that became available only late in our work.
-
-<!-- OLD WORDING -->
-<!-- By far, the hardest package to set up which called external libraries was \CRANpkg{tensorflow} \citep{R-tensorflow} and its derivatives. -->
-<!-- In the  summer of 2019, it took quite some time to figure out how things worked. -->
-<!-- Then the latest TensorFlow 2.2.0 became available and we hoped to be able to use the Eager Execution provided to avoid the \soft{R} Session crashing in the summer of 2020. -->
-<!-- Unfortunately, this led to different problems with the translation between \soft{R} and -->
-<!-- \soft{Python} so we could not use the 2019 code. -->
 
 \CRANpkg{tfestimators} \citep{R-tfestimators} <!-- Ref 2 - Comment 14 -->
 \textcolor{blue}{had also} similar issues and is even less supported.
@@ -1118,36 +1083,17 @@ Functions for autoencoding are included with anomaly detection in mind.
 
 
 \CRANpkg{automl} \citep{R-automl}: There is no direct argument to choose an algorithm from this package. 
-<!-- JN??: Does this mean internal rather than user parameters?? Discussion?? -->
-<!-- I think new wording is acceptable. Others? -->
-<!-- B: similar to h2o, no specific argument for algorithms. Well some might argue that it's better like this so users might see the difference between algorithms... like, oh this algorithm uses this parameter. This might also be because of a coding choice? I'll leave a bit of it's documentation here for you to discuss
-
-beta1	
-see below
-
-beta2	
-‘Momentum’ if beta1 different from 0 and beta2 equal 0 )
-‘RMSprop’ if beta1 equal 0 and beta2 different from 0
-‘adam optimization’ if beta1 different from 0 and beta2 different from 0 (default)
-(default value beta1 equal 0.9 and beta2 equal 0.999)
-#tuning priority 2. B??!: reworded based on above explanation. What do you think?
--->
-Instead users must input 2 values into 2 separate arguments (beta1 and beta2) that will then determine which algorithm is used. <!-- B: This might lead to confusion for new users? --> <!-- previously: It would be easier to use the algorithms in this package if they did not rely on the beta parameters and instead had an argument of their own. -->
-However, there are useful notes on what parameters have a higher tuning priority. 
+Instead users must input 2 values into 2 separate arguments (beta1 and beta2) that will then determine which algorithm is used. However, there are useful notes on what parameters have a higher tuning priority. 
 The package is rather slow (highest ranking algorithm for speed is \code{RMSprop} at 47) with good enough convergence 
 (highest ranking is \code{adam} at 18).
-
 
 \pkg{deepdive} \citep{R-deepdive}: All algorithms are very good in terms of little variance between results (see its RMSE D51 score). 
 However, the results on convergence by minimum RMSE score are not as good with the worst being \code{gradientDescent} which ranks 3rd from the bottom. 
 There are few exported functions. 
 The novelty of this package is apparently in the \code{deeptree} and \code{deepforest} functions it provides. 
 
-
-<!-- JN??!: meaning?? Can we discuss? -->
-<!-- B: if this package is using vanilla BP, it has a better implementation of it than RSNNS's Std_Backpropagation (27 min RMSE) or neuralnet's backprop (50 min RMSE)-->
 \CRANpkg{deepnet} \citep{R-deepnet}: This is one of the better performing implementations of the 
-first-order algorithm back-propagation, in comparison to RSNNS's Std_Backpropagation or neuralnet's backprop, ranking at 18 for minimum RMSE. <!--  previously: This is one of the better performing implementations of the first-order algorithm back-propagation, ranking at 18 for minimum RMSE. -->
+first-order algorithm back-propagation, in comparison to RSNNS's Std_Backpropagation or neuralnet's backprop, ranking at 18 for minimum RMSE. 
 <!-- Ref 3 - Comment 1 -->
 \textcolor{blue}{It is} relatively fast, ranking at 23 for speed.
 
@@ -1158,9 +1104,6 @@ These two also do not do badly in terms of speed. Following,
 in order, are \code{slr}, \code{sag}, and traditional \code{backprop} as the worst at rank 48 out of 60 for minimum RMSE. 
 We found this package difficult to configure. Furthermore, it is a dependency for some other
 packages, so those should be avoided if a user wishes to be confident in results. 
-<!-- Notes on  -->
-<!-- documentation show that is rather difficult to configure this package, and it should probably not be a dependency  -->
-<!-- for other packages that wish to be more certain of the results. For simple datasets, it is less of an issue. -->
 
 ## Untested packages 
 
