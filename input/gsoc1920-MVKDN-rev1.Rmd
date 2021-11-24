@@ -119,7 +119,7 @@ NN structure and we focus on regression.}
 
 <!-- Ref 2 - Major comment 1-->
 <!-- plural benchmarks, singular "workload", "consist"; reword slightly near "scenarios" -->
-<!-- JN??!: reworded -->
+
 \textcolor{blue}{In the NN literature, a number
 of benchmarks of neural networks have been conducted.
 \citep{adolf2016fathom} propose a reference workload
