@@ -481,15 +481,17 @@ kableExtra::kable(sumNNdata, label="NNdatasets",
 
 Finally, we consider a Simon Wood test dataset, named \code{bWoodN1}, used in 
 \citep{wood2011fast} for benchmarking generalized additive models.
-Precisely, we consider the generation of Gaussian random variates $Y_i$, $i=1,\dots,n$ 
-with the mean $\mu_i$ defined as
+\textcolor{cyan}{As in \citep{wood2011fast}}, we consider the generation of 
+Gaussian random variates $Y_i$, $i=1,\dots,n$, with a mean $\mu_i$ 
+depending non-linearly on real covariates $x_{i,j}$ and 
+a standard deviation $\sigma=1/4$.
+\textcolor{cyan}{Precisely, the mean is computed as} 
 $$
 \mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
 +f_4(x_{i,4})+f_0(x_{i,5})
 $$
-and standard deviation $\sigma=1/4$ where $f_j$ are Simon Wood's smooth 
-functions defined in Appendix B, $x_{i,j}$ are uniform variates and $n=20,000$.
-<!-- CD?? add comment on f_0 twice -->
+where $f_j$ are Simon Wood's smooth non-linear functions defined in Appendix B, 
+$x_{i,j}$ are uniform variates and $n=20,000$.
 \code{bWoodN1} will only be used in the second round of our analysis when the TOP-5 packages
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
@@ -510,7 +512,6 @@ All packages that have "neural network" as a keyword in the package title or in 
 As of May 2020, around 80 packages fall into this category.
 Packages \CRANpkg{nlsr}, \CRANpkg{minpack.lm}, \CRANpkg{caret} were added because the former two are
 important implementations of second-order algorithms while the last is the first cited meta package in 
-<!-- JN??: the output has a link -- should this display in the pdf rather than be a link? => TODO CD option of Rmd -->
 the CRAN task view for machine learning, 	\ctv{MachineLearning}. It is also a dependency for some of the other packages tested. 
 A restriction to regression analysis left us with 49 \code{package:algorithm} pairs in 2019 and 60 \code{package:algorithm} pairs in 2020.
 
@@ -555,7 +556,6 @@ In GSoC'20, 3 new functions encapsulating the template were added that have been
 made generic with the extensive use of the \code{do.call} function from the \pkg{base} package:
 
 1.    In \code{trainPredict\_1mth1data} a neural network is trained on one dataset and then used for predictions, with several utilities. Then the performance of the neural network is exported, plotted and/or summarized.
-<!-- JN??: have we got the right names in 2. and 3.?? TODO CD : double check -->
 2.    \code{trainPredict\_1data} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple methods.
 3.    \code{trainPredict\_1pkg} serves as a wrapper function for \code{trainPredict\_1mth1data} for multiple datasets.
 
@@ -1028,8 +1028,7 @@ With the harmonized number of neurons, as used when benchmarking all the other a
 With h2o's default of 2 hidden layers, each with 200 neurons, it takes around 10 minutes on \code{mFriedman} with a minimum RMSE of 0.0022.
 On the other hand, \pkg{nnet} can find a minima of the error function with a minimum RMSE of 0.0088 in less 
 than a second with only one layer
-<!-- Ref 2 - Comment 14 --> <!-- B??: Christophe, is this referring to the right comment? -->
-\textcolor{blue}{of 5 neurons}.
+\textcolor{cyan}{of 5 neurons}.
 Thus, despite having a ranking of 11 in minimum RMSE in the final run, beating some of the second-order algorithms, users of \pkg{h2o} should be wary of the trade off between performance and speed.
 Moreover, users might hesitate as it is not actually clear what algorithm is used.
 The large number of options to choose from seem capable of changing the basic algorithm itself into what is considered a different algorithm by other packages.
