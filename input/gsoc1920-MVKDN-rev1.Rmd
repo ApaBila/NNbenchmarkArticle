@@ -490,12 +490,12 @@ $$
 \mu_i = 1+ f_0(x_{i,0})+f_1(x_{i,1})+f_2(x_{i,2})+f_3(x_{i,3})
 +f_4(x_{i,4})+f_0(x_{i,5})
 $$
-where $f_j$ are Simon Wood's smooth non-linear functions defined in Appendix B, 
+where $f_j$ are Simon Wood's smooth non-linear functions defined in Appendix B
+(with the first and last terms using $f_0$), 
 $x_{i,j}$ are uniform variates and $n=20,000$.
 \code{bWoodN1} will only be used in the second round of our analysis when the TOP-5 packages
 will be further analyzed with 5 neurons resulting in 41 parameters.
 
-<!-- JN?? above paragraph seems quite opaque for a general reader. 2021-11-22 Still pending discussion -->
 
 To build the final result table, we selected all four multivariate datasets and 4 out of the 8 univariate datasets so that the overall score does not overly weight the univariate datasets. 
 Note that the 2020 GSoC results are available in Section 1 of the supplementary materials, \citep{suppl:material:paper21}.
