@@ -14,3 +14,85 @@ kableExtra.pdf
 *.DS_Store
 Updated r-article RMD file. by theairbend3r · Pull Request #3 · ApaBila:NNbenchmarkArticle.pdf
 useful-doc.R
+datapreppkg/bdpar-v-bdpar.html
+datapreppkg/bdpar-v-bdparExample.html
+datapreppkg/bdpar-v-bdparExampleImage.html
+datapreppkg/bdpar.html
+datapreppkg/bdpar.pdf
+datapreppkg/benthos-v-benthos.html
+datapreppkg/benthos.html
+datapreppkg/benthos.pdf
+datapreppkg/biclust.html
+datapreppkg/biclust.pdf
+datapreppkg/binst.html
+datapreppkg/binst.pdf
+datapreppkg/bulletcp-README.html
+datapreppkg/bulletcp-v-Bayesian_changepoint_groove_detection.html
+datapreppkg/bulletcp.html
+datapreppkg/bulletcp.pdf
+datapreppkg/ChIPtest.html
+datapreppkg/ChIPtest.pdf
+datapreppkg/CITAN.html
+datapreppkg/CITAN.pdf
+datapreppkg/clickR-README.html
+datapreppkg/clickR.html
+datapreppkg/clickR.pdf
+datapreppkg/cobalt-README.html
+datapreppkg/cobalt-v-cobalt.html
+datapreppkg/cobalt-v-cobalt_A1_other_packages.html
+datapreppkg/cobalt-v-cobalt_A2_segmented_data.html
+datapreppkg/cobalt-v-cobalt_A3_longitudinal_treat.html
+datapreppkg/cobalt-v-cobalt_A4_love.plot.html
+datapreppkg/cobalt.html
+datapreppkg/cobalt.pdf
+datapreppkg/dataprep-v-vignettes.html
+datapreppkg/dataprep.html
+datapreppkg/dataprep.pdf
+datapreppkg/discretization.html
+datapreppkg/discretization.pdf
+datapreppkg/ebal.html
+datapreppkg/ebal.pdf
+datapreppkg/eemR-README.html
+datapreppkg/eemR-v-custom-import-function.html
+datapreppkg/eemR-v-introduction.html
+datapreppkg/eemR.html
+datapreppkg/eemR.pdf
+datapreppkg/ff.html
+datapreppkg/ff.pdf
+datapreppkg/fpa.html
+datapreppkg/fpa.pdf
+datapreppkg/ggcharts-README.html
+datapreppkg/ggcharts-v-customize.html
+datapreppkg/ggcharts-v-highlight.html
+datapreppkg/ggcharts-v-themes.html
+datapreppkg/ggcharts.html
+datapreppkg/ggcharts.pdf
+datapreppkg/ggetho.html
+datapreppkg/ggetho.pdf
+input/gsoc1920-MVKDN-rev1_files/figure-latex/unnamed-chunk-7-1.pdf
+input/gsoc1920-MVKDN-rev1_files/figure-latex/unnamed-chunk-8-1.pdf
+input/gsoc1920-MVKDN_files/figure-latex/unnamed-chunk-6-1.pdf
+input/gsoc1920-MVKDN_files/figure-latex/unnamed-chunk-7-1.pdf
+input/gsoc1920_MVKDN_R1_Zenodo_files/figure-latex/unnamed-chunk-7-1.pdf
+input/gsoc1920_MVKDN_R1_Zenodo_files/figure-latex/unnamed-chunk-8-1.pdf
+input/gsoc1920-MVKDN-rev1_files/figure-latex/unnamed-chunk-7-1.pdf
+input/gsoc1920-MVKDN-rev1_files/figure-latex/unnamed-chunk-8-1.pdf
+*.aux
+*.out
+input/gsoc1920_MVKDN_R1_Zenodo.log
+input/gsoc1920_MVKDN_R1_Zenodo.tex
+input/gsoc1920-MVKDN.tex
+input/gsoc1920-MVKDN-rev1.tex
+journal correspondence/R Journal submission 202119.pdf
+journal correspondence/Re RJournal 202119 journal submission.pdf
+journal correspondence/Re RJournal 202119 submission acknowledged.pdf
+journal correspondence/RJournal 202119 journal submission.pdf
+journal correspondence/The R Journal Submissions Revisions and Resubmissions 2.pdf
+journal correspondence/The R Journal Submissions Revisions and Resubmissions.pdf
+output/gsoc1920-MVKDN-rev1.tex
+*.bbl
+*.blg
+*.brf
+input/RJwrapper.tex
+input/RJwrapper.pdf
+input/RJwrapper.log
