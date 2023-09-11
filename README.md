@@ -89,6 +89,10 @@ Previous reviewer's comment `"Comparing the performance only on the training dat
 
 Previous reviewer's comment `"For a benchmark paper, the number of included datasets is quite low, and the chosen datasets are very simple. Given that collections such as OpenML100 are readily available, a benchmark should be based on more and more complex data."`
 
+**Question 6 - do we automate the benchmark on a server?**
+
+there are plenty of resources in LJK, Grenoble.
+
 
 **CREDITS**  
 Students: 
