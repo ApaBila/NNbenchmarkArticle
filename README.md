@@ -70,7 +70,11 @@ Good news: the following depends on torch
 ```
  "cito"     "innsight" "RGAN"     "sits"    
 ```
-So in the end, we have probably 12 packages to look at … probably to test. My ph.d. student knows well torch : he will help us in making the Rmd file and commenting the paper.
+So in the end, we have probably 12 packages to look at … probably to test. My Ph.d. student knows well `torch` : he will help us in making the Rmd file and commenting the paper.
+
+We should also look at https://cran.r-project.org/web/views/ModelDeployment.html, some new packages are mentioned such as `tensorflow` and `tfestimators` which use (as `keras`) the `TensorFlow` library.
+
+To be mentioned but not tested are time series neural networks. A short list is `TSLSTM`, `TSLSTMplus`, `LDNN`, `rnn`.
 
 
 **Question 2 - do we need to benchmark classification?** 
