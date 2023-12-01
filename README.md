@@ -1,6 +1,6 @@
 # NNbenchmarkArticle
 
-This repo was made to contain the code for the R Journal article 
+This repo was made to contain the code for the article 
 based on the work we did during Google Summer of Codes 2019 and 2020.
 
 **IMPORTANT LINKS**  
@@ -14,67 +14,39 @@ Akshaj's website for NNbenchmark                  : https://theairbend3r.github.
 
 # TODO list
 
-**Question 1 - which package** 
+**Question 1 - which package to study?** 
 
-Good news, `AMORE`, `snnR` are archived.
+Good news: `AMORE`, `snnR` are archived.
 
-Searching on CRAN via RWsearch, I found 32 new packages
+Searching on CRAN via RWsearch, I found new packages.
+We need to consider different list of packages.
+The primary list contains core NN packages really implementing NN
 ```
- [1] "aifeducation"    "BayesFluxR"      "cito"           
- [4] "ConvertPar"      "digitalDLSorteR" "edl"            
- [7] "fastai"          "FuncNN"          "ganDataModel"   
-[10] "GRNNs"           "hybridts"        "innsight"       
-[13] "janus"           "long2lstmarray"  "ModTools"       
-[16] "reservr"         "RGAN"            "rMIDAS"         
-[19] "rTG"             "scapGNN"         "shattering"     
-[22] "SignacX"         "sits"            "sjSDM"          
-[25] "snap"            "soundClass"      "SpatialDDLS"    
-[28] "sr"              "survivalmodels"  "torch"          
-[31] "tsensembler"     "WaveletLSTM" 
+ [1] "ANN2"         "automl"       "brnn"         "CaDENCE"      "deep"        
+ [6] "deepNN"       "elmNNRcpp"    "h2o"          "keras"        "neuralnet"   
+[11] "nnet"         "nnlib2Rcpp"   "RSNNS"        "simpleNeural" "tensorflow"  
+[16] "torch"        "validann"  
 ```
-Good news : however the following ones use directly a tested packages :
+The secondary list use at least one the primary NN package and provide additional functionality
 ```
-ConvertPar      "neuralnet"  
-digitalDLSorteR "keras"      
-FuncNN          "keras;caret"
-janus           "keras"      
-ModTools        "nnet"       
-reservr         "keras"      
-rTG             "brnn"       
-SignacX         "neuralnet"  
-snap            "keras"      
-soundClass      "keras"      
-SpatialDDLS     "keras"      
-tsensembler     "monmlp"     
-WaveletLSTM     "caret" 
+ [1] "aifeducation"   "cito"           "DamiaNN"        "fastai"        
+ [5] "innsight"       "janus"          "MachineShop"    "NeuralNetTools"
+ [9] "NeuralSens"     "tfestimators"  
 ```
+We should probably dedicate a section to time serie NN 
+```
+[1] "hybridts"       "long2lstmarray" "NlinTS"         "nnfor"         
+[5] "sits"           "tsensembler"    "WaveletLSTM"
+```
+and also `TSLSTM`, `TSLSTMplus`, `LDNN`, `rnn`.
 
-So we may discard those.
-
-If we check recursive dependencies, the following packages also depend on tested packages
+Finally, we must list advantages of packages providing an interface to a wide set of model
 ```
-fastai   "nnet"          
-hybridts "nnet;neuralnet"
+ [1] "BayesFluxR"    "caret"         "FuncNN"        "gamlss.add"    "GMDHreg"      
+ [6] "gnn"           "ModTools"      "neuralGAM"     "predictoR"     "ProcData"     
+[11] "radiant.model" "regressoR"     "RGAN"          "rMIDAS"        "rminer"       
+[16] "spnn"          "studyStrap"    "traineR"  
 ```
-
-It remains the following packages
-```
-[1] "aifeducation"   "BayesFluxR"     "cito"          
- [4] "edl"            "ganDataModel"   "GRNNs"         
- [7] "innsight"       "long2lstmarray" "RGAN"          
-[10] "rMIDAS"         "scapGNN"        "shattering"    
-[13] "sits"           "sjSDM"          "sr"            
-[16] "survivalmodels" "torch"
-```
-Good news: the following depends on torch
-```
- "cito"     "innsight" "RGAN"     "sits"    
-```
-So in the end, we have probably 12 packages to look at … probably to test. My Ph.d. student knows well `torch` : he will help us in making the Rmd file and commenting the paper.
-
-We should also look at https://cran.r-project.org/web/views/ModelDeployment.html, some new packages are mentioned such as `tensorflow` and `tfestimators` which use (as `keras`) the `TensorFlow` library.
-
-To be mentioned but not tested are time series neural networks. A short list is `TSLSTM`, `TSLSTMplus`, `LDNN`, `rnn`.
 
 
 **Question 2 - do we need to benchmark classification?** 
