@@ -22,30 +22,33 @@ Searching on CRAN via RWsearch, I found new packages.
 We need to consider different list of packages.
 The primary list contains core NN packages really implementing NN
 ```
- [1] "ANN2"         "automl"       "brnn"         "CaDENCE"      "deep"        
- [6] "deepNN"       "elmNNRcpp"    "h2o"          "keras"        "neuralnet"   
-[11] "nnet"         "nnlib2Rcpp"   "RSNNS"        "simpleNeural" "tensorflow"  
-[16] "torch"        "validann"  
+  [1] "ANN2"         "automl"       "Buddle"       "brnn"         "CaDENCE"      "deep"        
+ [7] "deepdive"     "deepnet"      "deepNN"       "ELMR"         "elmNNRcpp"    "h2o"         
+[13] "keras"        "monmlp"       "neuralnet"    "nnet"         "nnlib2Rcpp"   "RSNNS"       
+[19] "simpleMLP"    "simpleNeural" "tensorflow"   "torch"        "validann"    
 ```
 The secondary list use at least one the primary NN package and provide additional functionality
 ```
- [1] "aifeducation"   "cito"           "DamiaNN"        "fastai"        
- [5] "innsight"       "janus"          "MachineShop"    "NeuralNetTools"
- [9] "NeuralSens"     "tfestimators"  
+ [1] "aifeducation"   "cito"           "DamiaNN"        "fastai"         "innsight"      
+ [6] "janus"          "MachineShop"    "NeuralNetTools" "NeuralSens"     "nndiagram"     
+[11] "tfestimators" 
 ```
 We should probably dedicate a section to time serie NN 
 ```
-[1] "hybridts"       "long2lstmarray" "NlinTS"         "nnfor"         
-[5] "sits"           "tsensembler"    "WaveletLSTM"
+ [1] "AriGaMyANNSVR"         "ARIMAANN"              "CEEMDANML"            
+ [4] "ECTTDNN"               "eemdTDNN"              "GMDH"                 
+ [7] "hybridts"              "LDNN"                  "long2lstmarray"       
+[10] "NlinTS"                "nnfor"                 "OptiSembleForecasting"
+[13] "rnn"                   "sits"                  "stlTDNN"              
+[16] "TSANN"                 "tsensembler"           "tsfgrnn"              
+[19] "TSLSTM"                "TSLSTMplus"            "WaveletLSTM"    
 ```
-and also `TSLSTM`, `TSLSTMplus`, `LDNN`, `rnn`.
+
 
 Finally, we must list advantages of packages providing an interface to a wide set of model
 ```
- [1] "BayesFluxR"    "caret"         "FuncNN"        "gamlss.add"    "GMDHreg"      
- [6] "gnn"           "ModTools"      "neuralGAM"     "predictoR"     "ProcData"     
-[11] "radiant.model" "regressoR"     "RGAN"          "rMIDAS"        "rminer"       
-[16] "spnn"          "studyStrap"    "traineR"  
+[1] "caret"         "EnsembleBase"  "gamlss.add"    "ModTools"      "radiant.model" "rminer"       
+[7] "traineR"  
 ```
 
 
